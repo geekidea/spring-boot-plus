@@ -1,0 +1,22 @@
+springbootplus:
+  isEnableAnsi: false
+  login:
+    token:
+      valid:
+        time:
+          minute: 3600
+
+server:
+  port: 8888
+  servlet:
+    context-path: /api
+spring:
+  datasource:
+    password: ''
+    url: ''
+    username: ''
+  redis:
+    database: 0
+    host: ''
+    password: ''
+    port: 6379

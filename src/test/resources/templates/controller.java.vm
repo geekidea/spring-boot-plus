@@ -1,0 +1,109 @@
+package ${package.Controller};
+
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+import ${cfg.queryParamPath};
+import ${cfg.queryVoPath};
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+import io.geekidea.springbootplus.common.api.ApiResult;
+    #if(${swagger2})
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+#end
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+
+import javax.validation.Valid;
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("/${cfg.entityObjectName}")
+@Slf4j
+@Api("$!{table.comment} API")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+    @Autowired
+    private ${table.serviceName} ${cfg.serviceObjectName};
+
+    /**
+    * 添加$!{table.comment}
+    */
+    @PostMapping("/add")
+    @ApiOperation(value = "添加${entity}对象",notes = "添加$!{table.comment}",response = ApiResult.class)
+    public ApiResult<Boolean> addSysUser(@Valid @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception{
+        boolean flag = ${cfg.serviceObjectName}.save(${cfg.entityObjectName});
+        return success(flag);
+    }
+
+    /**
+    * 修改$!{table.comment}
+    */
+    @PostMapping("/update")
+    @ApiOperation(value = "修改${entity}对象",notes = "修改$!{table.comment}",response = ApiResult.class)
+    public ApiResult<Boolean> updateSysUser(@Valid @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception{
+        boolean flag = ${cfg.serviceObjectName}.updateById(${cfg.entityObjectName});
+        return success(flag);
+    }
+
+    /**
+    * 删除$!{table.comment}
+    */
+    @PostMapping("/delete")
+    @ApiOperation(value = "删除${entity}对象",notes = "删除$!{table.comment}",response = ApiResult.class)
+    public ApiResult<Boolean> deleteSysUser(@Valid @RequestBody IdParam idParam) throws Exception{
+        boolean flag = ${cfg.serviceObjectName}.removeById(idParam.getId());
+        return success(flag);
+    }
+
+    /**
+    * 获取$!{table.comment}
+    */
+    @PostMapping("/info")
+    @ApiOperation(value = "获取${entity}对象详情",notes = "查看$!{table.comment}",response = ${entity}QueryVo.class)
+    public ApiResult<${entity}QueryVo> getSysUser(@Valid @RequestBody IdParam idParam) throws Exception{
+        ${entity}QueryVo ${cfg.entityObjectName}QueryVo = ${cfg.serviceObjectName}.get${entity}ById(idParam.getId());
+        return success(${cfg.entityObjectName}QueryVo);
+    }
+
+    /**
+     * $!{table.comment}分页列表
+     */
+    @PostMapping("/getPageList")
+    @ApiOperation(value = "获取${entity}分页列表",notes = "$!{table.comment}分页列表",response = ${entity}QueryVo.class)
+    public ApiResult<Paging<${entity}QueryVo>> get${entity}PageList(@Valid @RequestBody(required = false) ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception{
+        Paging<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
+        return success(paging);
+    }
+
+}
+
+#end

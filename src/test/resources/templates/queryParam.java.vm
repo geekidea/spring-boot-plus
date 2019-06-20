@@ -1,0 +1,20 @@
+package io.geekidea.springbootplus.${package.ModuleName}.web.param;
+
+import io.swagger.annotations.ApiModel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * <p>
+ * $!{table.comment} 查询参数对象
+ * </p>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ApiModel(value="${entity}QueryParam对象", description="$!{table.comment}查询参数")
+public class ${entity}QueryParam extends QueryParam {
+    private static final long serialVersionUID = 1L;
+}
