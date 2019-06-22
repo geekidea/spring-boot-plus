@@ -105,10 +105,6 @@ spring:
     template:
       default-topic: spring-boot-plus-topic
 
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/spring-boot-plus
-
 spring-boot-plus:
   jwt:
     header: token

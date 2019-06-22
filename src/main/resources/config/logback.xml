@@ -75,15 +75,6 @@
         </filter>
     </appender>
 
-    <!-- mongodb日志文件 -->
-    <appender name="MONGO" class="io.geekidea.springbootplus.config.mongo.MongoDBAppender">
-        <source>${CONTEXT_NAME}</source>
-        <!-- 过滤掉低于info级别的日志 -->
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
-        </filter>
-    </appender>
-
     <!-- 异步写日志 -->
     <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
         <discardingThreshold>0</discardingThreshold>
@@ -102,7 +93,6 @@
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="ASYNC" />
-        <appender-ref ref="MONGO" />
     </root>
 
 </configuration>

@@ -18,7 +18,6 @@ package io.geekidea.springbootplus.common.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.mongodb.BasicDBObject;
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.util.AnsiUtil;
@@ -31,8 +30,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.fusesource.jansi.Ansi;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -79,9 +76,6 @@ public class LogAop {
      * POST请求
      **/
     private static final String POST = "POST";
-
-    @Autowired
-    private MongoTemplate mongoTemplate;
 
 
     @Around(POINTCUT)
@@ -136,14 +130,6 @@ public class LogAop {
 
             }
             log.info(AnsiUtil.getAnsi(Ansi.Color.GREEN,"requestInfo:"+requestInfo));
-
-
-
-            // mongodb log
-            BasicDBObject doc = new BasicDBObject();
-            doc.append("requestInfo:",requestInfo);
-            mongoTemplate.insert(doc,"http_log");
-
 
         } catch (Exception e) {
             e.printStackTrace();
