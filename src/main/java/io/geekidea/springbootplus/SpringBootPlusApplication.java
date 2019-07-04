@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableConfigurationProperties
 @SpringBootApplication
-@MapperScan({"io.geekidea.springbootplus.*.mapper"})
+@MapperScan({"io.geekidea.springbootplus.**.mapper"})
 public class SpringBootPlusApplication {
 
     public static void main(String[] args) {
