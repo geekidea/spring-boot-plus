@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 /**
- * Fast Spring Boot 项目启动入口
+ * Spring Boot Plus 项目启动入口
  * @author geekidea
  * @since 2018-11-08
  */
