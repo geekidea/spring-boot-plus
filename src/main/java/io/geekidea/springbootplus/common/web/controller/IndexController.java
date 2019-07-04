@@ -37,6 +37,6 @@ public class IndexController {
     @RequestMapping("/")
     public ApiResult<String> index(){
         log.debug("index...");
-        return ApiResult.ok("Welcome to Fast Spring Boot Project...");
+        return ApiResult.ok("Welcome to Spring Boot Plus Project...");
     }
 }
