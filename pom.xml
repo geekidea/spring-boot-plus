@@ -62,7 +62,7 @@
         <jansi.version>1.18</jansi.version>
         <lombok.version>1.18.8</lombok.version>
         <commons-pool2.version>2.6.2</commons-pool2.version>
-        <jwt.version>3.8.0</jwt.version>
+        <jwt.version>0.9.1</jwt.version>
 
         <maven-compiler-source.version>1.8</maven-compiler-source.version>
         <maven-compiler-target.version>1.8</maven-compiler-target.version>
@@ -252,7 +252,7 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <version>${jwt.version}</version>
         </dependency>
 
         <dependency>
