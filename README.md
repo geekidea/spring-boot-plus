@@ -6,13 +6,11 @@
 > - 可使用代码生成器快速开发项目，使用maven assembly打包发布
 
 #### 项目主页
-   [https://geekidea.io/spring-boot-plus/](https://geekidea.io/spring-boot-plus/)
-
-#### spring-boot-plus CHANGELOG
-   [CHANGELOG](http://geekidea.io/spring-boot-plus/changelog.html)
-   
-#### spring-boot-plus api 访问地址
-   []()
+   [GITHUB](https://github.com/geekidea/spring-boot-plus "GITHUB")
+   [GITEE](https://gitee.com/geekidea/spring-boot-plus "GITHUB")
+ 
+#### spring-boot-plus 文档
+   [https://springboot.plus/](https://springboot.plus/ "docs")
    
 #### 项目目标
 - 快速开发
