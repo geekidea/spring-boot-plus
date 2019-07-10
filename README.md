@@ -1,23 +1,55 @@
-# Introduction
+## Introduction
 
-## spring-boot-plus
+### spring-boot-plus是一套集成spring boot常用开发组件的后台快速开发框架
 
-> - 集成Spring Boot 2.1,Mybatis Plus,Druid,FastJson,Redis,Rabbit MQ,Kafka等
-> - 可使用代码生成器快速开发项目，使用maven assembly打包发布
+## Purpose
+> 每个人都可以独立、快速、高效地开发项目！
 
-#### 项目主页
-   [GITHUB](https://github.com/geekidea/spring-boot-plus "GITHUB")
-   [GITEE](https://gitee.com/geekidea/spring-boot-plus "GITHUB")
- 
-#### spring-boot-plus 文档
-   [https://springboot.plus/](https://springboot.plus/ "docs")
-   
-#### 项目目标
-- 快速开发
-- 灵活配置
-- 方便维护
-- 快速部署
-- 集成缓存
-- 集成消息队列
-- 集成spring boot
-- HTTP请求监控
+> Everyone can develop projects independently, quickly and efficiently！
+
+## Quick Start
+#### 官网地址：[springboot.plus](http://springboot.plus "springboot.plus")
+#### GITHUB：[https://github.com/geekidea/spring-boot-plus](https://github.com/geekidea/spring-boot-plus "spring-boot-plus github")
+#### GITEE：[https://gitee.com/geekidea/spring-boot-plus](https://gitee.com/geekidea/spring-boot-plus "spring-boot-plus gitee")
+
+### 主要特性
+1. 集成spring boot 常用开发组件集、公共配置、AOP日志等
+2. 集成mybatis plus快速dao操作
+3. 快速生成后台代码: entity/param/vo/controller/service/mapper/xml
+4. 集成swagger2，可自动生成api文档
+5. 集成jwt、spring security权限控制
+6. 集成redis、spring cache、ehcache缓存
+7. 集成rabbit/rocket/kafka mq消息队列
+8. 集成druid连接池，JDBC性能和慢查询检测
+9. 集成spring boot admin，实时检测项目运行情况
+10. 使用assembly maven插件进行不同环境打包部署,包含启动、重启命令，配置文件提取到外部config目录
+
+
+### 项目环境 
+中间件 | 版本 |  备注
+-|-|-
+JDK | 1.8+ | JDK1.8及以上 |
+MySQL | 5.7+ | 5.7及以上 |
+Redis | 3.2+ |  |
+
+### 技术选型 
+技术 | 版本 |  备注
+-|-|-
+Spring Boot | 2.1.6.RELEASE | 最新发布稳定版 |
+Spring Framework | 5.1.8.RELEASE | 最新发布稳定版 |
+Mybatis | 3.5.1 | 持久层框架 |
+Mybatis Plus | 3.1.1 | mybatis增强框架 |
+Alibaba Druid | 1.1.17 | 数据源 |
+Fastjson | 1.2.58 | JSON处理工具集 |
+swagger2 | 2.7.0 | api文档生成工具 |
+commons-lang3 | 3.9 | 常用工具包 |
+commons-io | 2.6 | IO工具包 |
+commons-codec | 1.12 | 加密解密等工具包 |
+commons-collections | 3.2.1 | 集合工具包 |
+reflections | 0.9.11 | 反射工具包 |
+hibernate-validator | 6.0.17.Final | 后台参数校验注解 |
+jwt | 0.9.1 | json web token |
+hutool-all | 4.5.10 | 常用工具集 |
+
+#### 官网地址：[springboot.plus](http://springboot.plus "springboot.plus")
+
