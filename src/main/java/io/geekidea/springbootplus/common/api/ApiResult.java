@@ -57,6 +57,13 @@ public class ApiResult<T> implements Serializable {
 
     }
 
+    public static ApiResult result(boolean flag){
+        if (flag){
+            return ok();
+        }
+        return fail("");
+    }
+
     public static ApiResult result(ApiCode apiCode){
         return result(apiCode,null);
     }

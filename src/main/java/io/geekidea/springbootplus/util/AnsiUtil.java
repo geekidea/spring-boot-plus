@@ -27,20 +27,30 @@ import org.springframework.core.env.Environment;
 @Slf4j
 public class AnsiUtil {
 
-    private static boolean isEnableAnsi = false;
+    private static boolean isEnableAnsi;
 
     static {
-        Environment environment = SpringContextUtil.getBean(Environment.class);
-        Boolean value = environment.getProperty("springbootplus.isEnableAnsi",boolean.class);
-        if (value != null){
-            isEnableAnsi = value;
+        Boolean value = false;
+        try {
+            Environment environment = SpringContextUtil.getBean(Environment.class);
+            value = environment.getProperty("springbootplus.isEnableAnsi",boolean.class);
+            value = value == null ? false : value;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        log.info("AnsiUtil isEnableAnsi = " + isEnableAnsi);
+        isEnableAnsi = value;
     }
 
     public static String getAnsi(Ansi.Color color,String text){
 
         if (isEnableAnsi){
+            return Ansi.ansi().eraseScreen().fg(color).a(text).reset().toString();
+        }
+        return text;
+    }
+
+    public static String getAnsi(Ansi.Color color,String text,boolean flag){
+        if (flag){
             return Ansi.ansi().eraseScreen().fg(color).a(text).reset().toString();
         }
         return text;
