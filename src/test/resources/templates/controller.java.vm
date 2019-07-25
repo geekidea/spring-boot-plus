@@ -25,6 +25,8 @@ import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
 
+import ${cfg.paging}
+
 /**
  * <p>
  * $!{table.comment} 前端控制器
@@ -61,7 +63,7 @@ public class ${table.controllerName} {
     @ApiOperation(value = "添加${entity}对象",notes = "添加$!{table.comment}",response = ApiResult.class)
     public ApiResult<Boolean> addSysUser(@Valid @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception{
         boolean flag = ${cfg.serviceObjectName}.save(${cfg.entityObjectName});
-        return success(flag);
+        return ApiResult.result(flag);
     }
 
     /**
@@ -71,7 +73,7 @@ public class ${table.controllerName} {
     @ApiOperation(value = "修改${entity}对象",notes = "修改$!{table.comment}",response = ApiResult.class)
     public ApiResult<Boolean> updateSysUser(@Valid @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception{
         boolean flag = ${cfg.serviceObjectName}.updateById(${cfg.entityObjectName});
-        return success(flag);
+        return ApiResult.result(flag);
     }
 
     /**
@@ -81,7 +83,7 @@ public class ${table.controllerName} {
     @ApiOperation(value = "删除${entity}对象",notes = "删除$!{table.comment}",response = ApiResult.class)
     public ApiResult<Boolean> deleteSysUser(@Valid @RequestBody IdParam idParam) throws Exception{
         boolean flag = ${cfg.serviceObjectName}.removeById(idParam.getId());
-        return success(flag);
+        return ApiResult.result(flag);
     }
 
     /**
@@ -91,7 +93,7 @@ public class ${table.controllerName} {
     @ApiOperation(value = "获取${entity}对象详情",notes = "查看$!{table.comment}",response = ${entity}QueryVo.class)
     public ApiResult<${entity}QueryVo> getSysUser(@Valid @RequestBody IdParam idParam) throws Exception{
         ${entity}QueryVo ${cfg.entityObjectName}QueryVo = ${cfg.serviceObjectName}.get${entity}ById(idParam.getId());
-        return success(${cfg.entityObjectName}QueryVo);
+        return ApiResult.ok(${cfg.entityObjectName}QueryVo);
     }
 
     /**
@@ -101,7 +103,7 @@ public class ${table.controllerName} {
     @ApiOperation(value = "获取${entity}分页列表",notes = "$!{table.comment}分页列表",response = ${entity}QueryVo.class)
     public ApiResult<Paging<${entity}QueryVo>> get${entity}PageList(@Valid @RequestBody(required = false) ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception{
         Paging<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
-        return success(paging);
+        return ApiResult.ok(paging);
     }
 
 }

@@ -68,7 +68,7 @@ public class ${entity} implements Serializable {
     @TableId(value = "${field.name}", type = IdType.AUTO)
 #elseif(!$null.isNull(${idType}) && "$!idType" != "")
 ## 设置主键注解
-@TableId(value = "${field.name}", type = IdType.${idType})
+    @TableId(value = "${field.name}", type = IdType.${idType})
 ## 是主键类型
 #set($custom_is_pk=true)
 #elseif(${field.convert})

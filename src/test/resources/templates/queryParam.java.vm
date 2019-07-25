@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import ${cfg.queryParamPath};
+
 /**
  * <p>
  * $!{table.comment} 查询参数对象
