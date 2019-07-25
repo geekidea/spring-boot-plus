@@ -16,12 +16,11 @@
 
 package io.geekidea.springbootplus.config;
 
-import io.geekidea.springbootplus.security.interceptor.JwtInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.TokenTimeoutInterceptor;
+import io.geekidea.springbootplus.security.interceptor.JwtInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -49,7 +48,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
      * jwt token验证拦截器
      * @return
      */
-    @Bean
+//    @Bean
     public JwtInterceptor jwtInterceptor(){
         return new JwtInterceptor();
     }
@@ -58,7 +57,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
      * 权限拦截器
      * @return
      */
-    @Bean
+//    @Bean
     public PermissionInterceptor permissionInterceptor(){
         return new PermissionInterceptor();
     }
@@ -67,7 +66,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
      * TOKEN超时拦截器
      * @return
      */
-    @Bean
+//    @Bean
     public TokenTimeoutInterceptor tokenTimeoutInterceptor(){
         return new TokenTimeoutInterceptor();
     }
@@ -76,10 +75,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         log.info("PermissionInterceptor excludePaths : {}", Arrays.toString(permissionExcludePaths));
-
-        registry.addInterceptor(jwtInterceptor())
-                .addPathPatterns("/**")
-                .excludePathPatterns(jwtExcludePaths);
+//
+//        registry.addInterceptor(jwtInterceptor())
+//                .addPathPatterns("/**")
+//                .excludePathPatterns(jwtExcludePaths);
 
         // 1.TOKEN超时拦截器
 //        registry.addInterceptor(tokenTimeoutInterceptor())
