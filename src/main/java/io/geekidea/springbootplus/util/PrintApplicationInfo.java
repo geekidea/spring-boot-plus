@@ -31,6 +31,27 @@ import org.springframework.core.env.ConfigurableEnvironment;
 @Slf4j
 public class PrintApplicationInfo {
 
+
+    /**
+     * 执行之前，打印前置条件提示
+     */
+    public static void printTip(){
+        StringBuffer tip = new StringBuffer();
+        tip.append("======================================================================================\n");
+        tip.append("                                                                                  \n");
+        tip.append("                               !!!准备工作!!!                                      \n");
+        tip.append(" 1.请先在MySQL中创建数据库，默认数据库名称为：spring_boot_plus                        \n");
+        tip.append(" 2.数据库脚本在项目docs/spring_boot_plus.sql                                       \n");
+        tip.append(" 3.请先启动redis服务                                                               \n");
+        tip.append(" 4.更多注意事项：请查看: https://springboot.plus                                                                                 \n");
+        tip.append("                                                                                  \n");
+        tip.append("======================================================================================\n");
+        log.info("\n{}",Ansi.ansi().eraseScreen().fg(Ansi.Color.YELLOW).a(tip.toString()).reset().toString());
+    }
+
+    /**
+     * 启动成功之后，打印项目信息
+     */
     public static void print(ConfigurableApplicationContext context){
         ConfigurableEnvironment environment = context.getEnvironment();
 

@@ -53,11 +53,11 @@ public class CodeGenerator {
 
     // ############################ 配置部分 start ############################
     // 模块名称
-    private static final String MODULE_NAME = "system";
+    private static final String MODULE_NAME = "hello";
     // 作者
     private static final String AUTHOR = "geekidea";
     // 生成的表名称
-    private static final String TABLE_NAME = "ip";
+    private static final String TABLE_NAME = "sys_user";
     // 主键数据库列名称
     private static final String PK_ID_COLUMN_NAME = "id";
     // ############################ 配置部分 end ############################
@@ -121,6 +121,8 @@ public class CodeGenerator {
                 map.put("pkIdColumnName",PK_ID_COLUMN_NAME);
                 // 主键ID驼峰名称
                 map.put("pkIdCamelName",underlineToCamel(PK_ID_COLUMN_NAME));
+                // 导入分页类
+                map.put("paging",PARENT_PACKAGE + ".common.web.vo.Paging");
                 this.setMap(map);
             }
         };
