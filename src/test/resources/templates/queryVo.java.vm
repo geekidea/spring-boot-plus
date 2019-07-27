@@ -9,6 +9,8 @@ import lombok.Data;
 #end
 import java.io.Serializable;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * $!{table.comment} 查询结果对象

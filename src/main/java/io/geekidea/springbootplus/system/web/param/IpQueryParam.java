@@ -8,7 +8,7 @@ import io.geekidea.springbootplus.common.web.param.QueryParam;
 
 /**
  * <p>
- * 系统日志 查询参数对象
+ *  查询参数对象
  * </p>
  *
  * @author geekidea
@@ -16,7 +16,7 @@ import io.geekidea.springbootplus.common.web.param.QueryParam;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="SysLogQueryParam对象", description="系统日志查询参数")
-public class SysLogQueryParam extends QueryParam {
+@ApiModel(value="IpQueryParam对象", description="查询参数")
+public class IpQueryParam extends QueryParam {
     private static final long serialVersionUID = 1L;
 }

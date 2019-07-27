@@ -25,7 +25,8 @@ import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
 
-import ${cfg.paging}
+import ${cfg.paging};
+import ${cfg.idParamPath};
 
 /**
  * <p>

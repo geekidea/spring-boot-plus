@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.springbootplus.common.enums.OrderEnum;
 import io.geekidea.springbootplus.common.service.BaseService;
-import io.geekidea.springbootplus.common.web.vo.QueryParam;
+import io.geekidea.springbootplus.common.web.param.QueryParam;
 
 /**
  * @author geekidea
