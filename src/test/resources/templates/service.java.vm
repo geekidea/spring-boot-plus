@@ -4,7 +4,7 @@ import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 import ${cfg.queryParamPath};
 import ${cfg.queryVoPath};
-import ${cfg.paging}
+import ${cfg.paging};
 
 import java.io.Serializable;
 
