@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.web.vo;
+package io.geekidea.springbootplus.common.web.param;
 
 import io.geekidea.springbootplus.common.constant.CommonConstant;
 import io.swagger.annotations.ApiModel;

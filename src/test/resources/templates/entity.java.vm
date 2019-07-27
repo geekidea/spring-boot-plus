@@ -13,6 +13,8 @@ import lombok.EqualsAndHashCode;
 ## import lombok.experimental.Accessors;
 #end
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * $!{table.comment}

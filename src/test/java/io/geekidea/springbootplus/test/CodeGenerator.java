@@ -53,11 +53,11 @@ public class CodeGenerator {
 
     // ############################ 配置部分 start ############################
     // 模块名称
-    private static final String MODULE_NAME = "hello";
+    private static final String MODULE_NAME = "system";
     // 作者
     private static final String AUTHOR = "geekidea";
     // 生成的表名称
-    private static final String TABLE_NAME = "sys_user";
+    private static final String TABLE_NAME = "ip";
     // 主键数据库列名称
     private static final String PK_ID_COLUMN_NAME = "id";
     // ############################ 配置部分 end ############################
@@ -109,6 +109,10 @@ public class CodeGenerator {
                 map.put("customField", "Hello " + this.getConfig().getGlobalConfig().getAuthor());
                 // 查询参数包路径
                 map.put("queryParamPath",PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".web.param." + underlineToPascal(TABLE_NAME) + "QueryParam");
+                // 查询参数共公包路径
+                map.put("queryParamCommonPath",PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "QueryParam");
+                // 查询参数共公包路径
+                map.put("idParamPath",PARENT_PACKAGE + StringPool.DOT  + "common.web.param." + "IdParam");
                 // 响应结果包路径
                 map.put("queryVoPath",PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".web.vo." + underlineToPascal(TABLE_NAME) + "QueryVo");
                 // 实体对象名称
@@ -123,6 +127,8 @@ public class CodeGenerator {
                 map.put("pkIdCamelName",underlineToCamel(PK_ID_COLUMN_NAME));
                 // 导入分页类
                 map.put("paging",PARENT_PACKAGE + ".common.web.vo.Paging");
+                // 导入排序枚举
+                map.put("orderEnum",PARENT_PACKAGE + ".common.enums.OrderEnum");
                 this.setMap(map);
             }
         };
