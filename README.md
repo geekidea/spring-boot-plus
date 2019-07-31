@@ -53,7 +53,7 @@ hutool-all | 4.5.10 | 常用工具集 |
 
 
 ## spring-boot-plus技术交流群
-![](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/spring-boot-plus-qq-group.png)
+![](https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/spring-boot-plus-qq-group.png)
 
 #### 官网地址：[springboot.plus](http://springboot.plus "springboot.plus")
 
