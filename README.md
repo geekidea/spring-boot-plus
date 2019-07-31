@@ -51,5 +51,9 @@ hibernate-validator | 6.0.17.Final | 后台参数校验注解 |
 jwt | 0.9.1 | json web token |
 hutool-all | 4.5.10 | 常用工具集 |
 
+
+## spring-boot-plus技术交流群
+![](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/spring-boot-plus-qq-group.png)
+
 #### 官网地址：[springboot.plus](http://springboot.plus "springboot.plus")
 
