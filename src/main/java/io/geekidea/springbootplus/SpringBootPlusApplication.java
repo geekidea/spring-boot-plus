@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus;
 
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import io.geekidea.springbootplus.util.PrintApplicationInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
@@ -38,6 +39,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @EnableTransactionManagement
 @EnableConfigurationProperties
+@EnableAdminServer
 @SpringBootApplication
 @MapperScan({"io.geekidea.springbootplus.**.mapper"})
 public class SpringBootPlusApplication {

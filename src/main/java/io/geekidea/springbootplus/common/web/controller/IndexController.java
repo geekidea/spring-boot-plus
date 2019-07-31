@@ -34,7 +34,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @Slf4j
 public class IndexController {
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public ApiResult<String> index(){
         log.debug("index...");
         return ApiResult.ok("Welcome to Spring Boot Plus Project...");
