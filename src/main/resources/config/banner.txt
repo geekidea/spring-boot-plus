@@ -10,3 +10,5 @@ ${AnsiColor.BLUE}
 
       :: Spring Boot ::             (v${spring-boot.version})
       :: Spring Boot Plus ::        (v${project.version})
+      :: spring-boot-plus ::        https://springboot.plus
+
