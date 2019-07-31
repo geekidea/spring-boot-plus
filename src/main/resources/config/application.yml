@@ -139,12 +139,6 @@ mybatis-plus:
       logic-not-delete-value: 1
   mapper-locations: classpath*:mapper/**/*Mapper.xml
 
-# 开启和暴露所有端点
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
 
 swagger:
   base:
@@ -160,15 +154,31 @@ swagger:
 
 
 info:
+  project-groupId: '@project.groupId@'
   project-artifactId: '@project.artifactId@'
+  project-name: '@project.name@'
+  project-finalName: '@project.build.finalName@'
   project-author: ${swagger.contact.name}
   project-description: '@project.description@'
-  project-finalName: '@project.build.finalName@'
-  project-groupId: '@project.groupId@'
-  project-name: '@project.name@'
   project-sourceEncoding: '@project.build.sourceEncoding@'
-  project-spring-boot-version: '@project-parent.version@'
+  project-spring-boot-version: '@spring-boot.version@'
+  project-mybatis-plus-version: '@mybatis-plus-boot-starter.version@'
   project-version: '@project.version@'
 
+---
+# spring boot admin
+spring:
+  boot:
+    admin:
+      client:
+        url: 'http://localhost:8888'
 
-
+# 开启和暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
