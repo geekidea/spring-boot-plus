@@ -63,6 +63,7 @@
         <lombok.version>1.18.8</lombok.version>
         <commons-pool2.version>2.6.2</commons-pool2.version>
         <jwt.version>0.9.1</jwt.version>
+        <spring-boot-admin.version>2.1.6</spring-boot-admin.version>
 
         <maven-compiler-source.version>1.8</maven-compiler-source.version>
         <maven-compiler-target.version>1.8</maven-compiler-target.version>
@@ -260,6 +261,19 @@
             <artifactId>hutool-all</artifactId>
             <version>4.5.10</version>
         </dependency>
+
+        <!-- spring boot admin start -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+            <version>${spring-boot-admin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>${spring-boot-admin.version}</version>
+        </dependency>
+        <!-- spring boot admin end -->
 
     </dependencies>
 
