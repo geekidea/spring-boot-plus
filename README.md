@@ -3,8 +3,7 @@
    <img alt="spring-boot-plus logo" src="https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/img/logo.png">
   </a>
 </p>
-<p>&nbsp;</p>
-<p align="center">
+<p align="center" style="padding-top:6px;padding-bottom:14px;">
   Everyone can develop projects independently, quickly and efficiently！
 </p>
 
