@@ -1,10 +1,9 @@
-<p>&nbsp;</p>
 <p align="center">
   <a href="https://github.com/geekidea/spring-boot-plus">
    <img alt="spring-boot-plus logo" src="https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/img/logo.png">
   </a>
 </p>
-
+<p>&nbsp;</p>
 <p align="center">
   Everyone can develop projects independently, quickly and efficiently！
 </p>
