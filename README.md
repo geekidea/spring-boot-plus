@@ -16,7 +16,7 @@
     <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
   </a>
 </p>
-<p>&nbsp;</p>
+
 ## Introduction
 
 ### spring-boot-plus是一套集成spring boot常用开发组件的后台快速开发框架
