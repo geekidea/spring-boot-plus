@@ -71,8 +71,9 @@ jwt | 0.9.1 | json web token |
 hutool-all | 4.5.10 | 常用工具集 |
 
 
-## spring-boot-plus技术交流群
-![](https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/spring-boot-plus-qq-group.png)
+## spring-boot-plus QQ技术交流群
+![spring-boot-plus QQ技术交流群](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-qq-group.png)
+
 
 #### 官网地址：[springboot.plus](http://springboot.plus "springboot.plus")
 
