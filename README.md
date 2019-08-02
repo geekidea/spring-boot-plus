@@ -1,3 +1,23 @@
+<p align="center">
+  <a href="https://github.com/geekidea/spring-boot-plus">
+   <img alt="spring-boot-plus logo" src="https://spring-boot-plus.gitee.io/docs/img/logo.png">
+  </a>
+</p>
+
+<p align="center">
+  Everyone can develop projects independently, quickly and efficiently！
+</p>
+
+<p align="center">
+  <a href="">
+    <img alt="Latest version" src="https://img.shields.io/badge/version-1.1.0--RELEASE-blue">
+  </a>
+
+  <a href="https://www.apache.org/licenses/LICENSE-2.0">
+    <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
+  </a>
+</p>
+
 ## Introduction
 
 ### spring-boot-plus是一套集成spring boot常用开发组件的后台快速开发框架
