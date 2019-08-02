@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/geekidea/spring-boot-plus">
-   <img alt="spring-boot-plus logo" src="https://spring-boot-plus.gitee.io/docs/img/logo.png">
+   <img alt="spring-boot-plus logo" src="https://github.com/geekidea/spring-boot-plus/blob/dev/docs/img/logo.png">
   </a>
 </p>
 
@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="">
+  <a href="https://github.com/geekidea/spring-boot-plus/">
     <img alt="Latest version" src="https://img.shields.io/badge/version-1.1.0--RELEASE-blue">
   </a>
 
