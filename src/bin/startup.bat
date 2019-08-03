@@ -20,6 +20,6 @@ rem  date: 2018-12-2
 rem ======================================================================
 
 rem startup jar
-java -jar ../boot/spring-boot-plus.jar --spring.config.location=../config/ --springbootplus.isEnableAnsi=false
+java -jar ../lib/spring-boot-plus.jar --spring.config.location=../config/ --springbootplus.isEnableAnsi=false
 
 pause
