@@ -1,20 +1,78 @@
-# common config
+# spring-boot-plus Common Config
+
+############################# 访问路径、端口tomcat start ############################
 server:
+  port: 8888
   servlet:
     context-path: /api
   tomcat:
     max-threads: 1000
     min-spare-threads: 30
     uri-encoding: UTF-8
+############################# 访问路径、端口tomcat end ##############################
 
+
+################################ spring config start ###############################
 spring:
   application:
     name: spring-boot-plus
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  jackson:
+    date-format: yyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   banner:
     charset: UTF-8
     location: classpath:config/banner.txt
 
+# 当前项目maven激活环境，例如：local/dev/test，对应pom.xml中profile设置值
+---
+spring:
+  profiles:
+    active: '@profileActive@'
+################################ spring config end ################################
 
+
+############################## spring-boot-plus start #############################
+spring-boot-plus:
+  jwt:
+    header: token
+    secret: 666666
+    issuer: spring-boot-plus
+    subject: spring-boot-plus-jwt
+    audience: web
+    expire-minutes: 2
+
+  interceptor-config:
+    jwt-config:
+      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/login,/verificationCode,/doc/**,/error/**,/docs,/test/**
+    permission-config:
+      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/adminLogin,/sysLogin,/login.html,/verificationCode,/doc/**,/error/**,/docs
+    token-timeout-config:
+      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/docs
+############################### spring-boot-plus end ###############################
+
+
+############################### mybatis-plus start #################################
+mybatis-plus:
+  check-config-location: true
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: id_worker
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+################################ mybatis-plus end #################################
+
+
+############################### DRUID数据源配置 start ##############################
+---
+spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     druid:
@@ -49,18 +107,12 @@ spring:
       time-between-eviction-runs-millis: 60000
       validation-query: SELECT 1 FROM DUAL
     type: com.alibaba.druid.pool.DruidDataSource
-  http:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
-  jackson:
-    date-format: yyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
+############################### DRUID数据源配置 end ################################
 
-  profiles:
-    active: '@profileActive@'
 
+############################### Redis 公共配置 start ###############################
+---
+spring:
   redis:
     jedis:
       pool:
@@ -76,72 +128,10 @@ spring:
         max-wait: 10s
         min-idle: 2
       shutdown-timeout: 3s
-
-  # RabbitMQ 配置
-  rabbitmq:
-    host: 39.106.37.56
-    port: 5672
-    username: admin
-    password: admin123
-    template:
-      # 启用重试机制,重试间隔时间为2s,最多重试3次
-      retry:
-        enabled: true
-        initial-interval: 2s
-        max-attempts: 3
-      queue: spring-boot-plus-queue
-      # 定义默认的交换机名称
-      exchange: spring-boot-plus-exchange
-      # 定义默认的路由key
-      routing-key: spring-boot-plus-key
-
-  kafka:
-    bootstrap-servers: 203.104.37.38:9092
-    producer:
-      retries: 0
-      batch-size: 4096
-      buffer-memory: 40960
-    consumer:
-      group-id: spring-boot-plus-group
-    template:
-      default-topic: spring-boot-plus-topic
-
-spring-boot-plus:
-  jwt:
-    header: token
-    secret: 666666
-    issuer: spring-boot-plus
-    subject: spring-boot-plus-jwt
-    audience: web
-    expire-minutes: 2
-
-# TODO 调整属性位置
-# TODO 简化路径配置，将属性设置到SpringBootProperties文件中
-  interceptor:
-    jwt:
-      exclude:
-        path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/login,/verificationCode,/doc/**,/error/**,/docs,/test/**
-
-    permission:
-      exclude:
-        path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/adminLogin,/sysLogin,/login.html,/verificationCode,/doc/**,/error/**,/docs
-
-    token-timeout:
-      exclude:
-        path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/docs
-
-mybatis-plus:
-  check-config-location: true
-  configuration:
-    map-underscore-to-camel-case: true
-  global-config:
-    db-config:
-      id-type: id_worker
-      logic-delete-value: 0
-      logic-not-delete-value: 1
-  mapper-locations: classpath*:mapper/**/*Mapper.xml
+############################### Redis 公共配置 end ##################################
 
 
+#################################### Swagger start ####################################
 # swagger配置
 swagger:
   base:
@@ -154,10 +144,11 @@ swagger:
   title: spring-boot-plus
   url: ''
   version: 1.0
+#################################### Swagger end #####################################
 
 
----
 ################################ Spring boot admin start ################################
+---
 spring:
   boot:
     admin:
@@ -188,6 +179,4 @@ info:
   project-spring-boot-version: '@spring-boot.version@'
   project-mybatis-plus-version: '@mybatis-plus-boot-starter.version@'
   project-version: '@project.version@'
-
 ################################ Spring boot admin end #################################
-

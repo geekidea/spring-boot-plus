@@ -43,8 +43,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class SpringBootPlusApplication {
 
     public static void main(String[] args) {
-        // 启动项目，准备工作提示
-        PrintApplicationInfo.printTip();
         // 启动spring-boot-plus
         ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusApplication.class, args);
         // 打印项目信息
