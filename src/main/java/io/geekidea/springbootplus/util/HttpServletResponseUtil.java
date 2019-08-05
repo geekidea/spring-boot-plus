@@ -28,9 +28,8 @@ import java.io.PrintWriter;
 public final class HttpServletResponseUtil {
 
     private static String UTF8 = "UTF-8";
-    // TODO
-//    private static String CONTENT_TYPE = "application/json;charset=UTF-8";
     private static String CONTENT_TYPE = "application/json";
+
     private HttpServletResponseUtil(){
         throw new AssertionError();
     }

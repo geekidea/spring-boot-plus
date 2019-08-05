@@ -20,6 +20,8 @@ import java.io.Serializable;
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 #else
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+#if(${cfg.generatorStrategy})
+
     /**
      * 根据ID获取查询对象
      * @param id
@@ -33,6 +35,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      */
     Paging<${entity}QueryVo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
+#end
 
 }
 #end

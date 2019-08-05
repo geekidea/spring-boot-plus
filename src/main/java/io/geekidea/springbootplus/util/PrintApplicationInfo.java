@@ -41,7 +41,7 @@ public class PrintApplicationInfo {
         tip.append("                                                                                  \n");
         tip.append("                               !!!准备工作!!!                                      \n");
         tip.append(" 1.请先在MySQL中创建数据库，默认数据库名称为：spring_boot_plus                        \n");
-        tip.append(" 2.数据库脚本在项目docs/spring_boot_plus.sql                                       \n");
+        tip.append(" 2.数据库脚本在项目docs/mysql_spring_boot_plus.sql                                       \n");
         tip.append(" 3.请先启动redis服务                                                               \n");
         tip.append(" 4.更多注意事项：请查看: https://springboot.plus                                                                                 \n");
         tip.append("                                                                                  \n");

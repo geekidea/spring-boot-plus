@@ -1,10 +1,13 @@
-springbootplus:
-  isEnableAnsi: true
+spring-boot-plus:
+  # 是否启用ansi控制台输出有颜色的字体，local环境建议开启，服务器环境设置为false
+  enable-ansi: true
+  # 请求日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
+  request-log-format: true
+  # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
+  response-log-format: true
+  # 登录设置
   login:
-    token:
-      valid:
-        time:
-          minute: 3600
+    token-valid-time: 60  # 登录token失效时间，单位分钟
 
 server:
   port: 8888
@@ -16,9 +19,14 @@ spring:
     username: root
     password: root
 
+# Redis配置
   redis:
     database: 0
     host: localhost
     password:
     port: 6379
 
+#  方便Spring Boot Admin页面上实时查看日志
+# logback.xml中有详细的日志配置 
+logging:
+  file: logs/spring-boot-plus-log.log

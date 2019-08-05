@@ -4,7 +4,11 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+#if(${cfg.pageListOrder})
+import ${cfg.orderQueryParamPath};
+#else
 import ${cfg.queryParamCommonPath};
+#end
 
 /**
  * <p>
@@ -17,6 +21,10 @@ import ${cfg.queryParamCommonPath};
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value="${entity}QueryParam对象", description="$!{table.comment}查询参数")
+#if(${cfg.pageListOrder})
+public class ${entity}QueryParam extends OrderQueryParam {
+#else
 public class ${entity}QueryParam extends QueryParam {
+#end
     private static final long serialVersionUID = 1L;
 }

@@ -8,7 +8,7 @@
     </sql>
 
     <select id="getSysLogById" resultType="io.geekidea.springbootplus.system.web.vo.SysLogQueryVo">
-        select <include refid="Base_Column_List"/> from sys_log where id = #{id}
+        select <include refid="Base_Column_List"/> from sys_log where log_id = #{id}
     </select>
 
     <select id="getSysLogPageList" resultType="io.geekidea.springbootplus.system.web.vo.SysLogQueryVo">

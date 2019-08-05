@@ -24,6 +24,7 @@ interface ${table.mapperName} : ${superMapperClass}<${entity}>
 #else
 @Repository
 public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+#if(${cfg.generatorStrategy})
 
     /**
      * 根据ID获取查询对象
@@ -39,6 +40,7 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
      * @return
      */
     IPage<${entity}QueryVo> get${entity}PageList(@Param("page") Page page, @Param("param") ${entity}QueryParam ${cfg.entityObjectName}QueryParam);
+#end
 
 }
 #end

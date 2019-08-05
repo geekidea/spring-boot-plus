@@ -42,7 +42,9 @@ public enum ApiCode {
 
     PARAMETER_PARSE_EXCEPTION(5002,"请求参数解析异常"),
 
-    HTTP_MEDIA_TYPE_EXCEPTION(5003,"HTTP Media 类型异常")
+    HTTP_MEDIA_TYPE_EXCEPTION(5003,"HTTP Media 类型异常"),
+
+    SYSTEM_LOGIN_EXCEPTION(5005,"系统登录异常")
 
     ;
 
@@ -72,9 +74,4 @@ public enum ApiCode {
         return msg;
     }
 
-    public static void main(String[] args) {
-        ApiCode apiCode = ApiCode.getApiCode(200);
-        System.out.println("apiCode = " + apiCode);
-
-    }
 }

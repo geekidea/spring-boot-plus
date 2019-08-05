@@ -12,7 +12,7 @@ import io.geekidea.springbootplus.common.web.param.QueryParam;
  * </p>
  *
  * @author geekidea
- * @date 2019-07-27
+ * @date 2019-08-04
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -23,6 +23,7 @@ import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.util.AnsiUtil;
 import io.geekidea.springbootplus.util.DateUtil;
 import io.geekidea.springbootplus.util.IpUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -30,7 +31,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.fusesource.jansi.Ansi;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -50,10 +50,10 @@ import java.util.Map;
  *
  * @author geekidea
  * @date 2018-11-08
-// */
-@Aspect
-@Component
+ */
+@Data
 @Slf4j
+@Aspect
 public class LogAop {
 
     /**
@@ -77,9 +77,19 @@ public class LogAop {
      **/
     private static final String POST = "POST";
 
+    /**
+     * 请求日志是否格式化输出
+     */
+    private boolean requestLogFormat;
+
+    /**
+     * 响应日期是否格式化输出
+     */
+    private boolean responseLogFormat;
 
     @Around(POINTCUT)
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+
         // 获取请求相关信息
         try {
             // 获取当前的HttpServletRequest对象
@@ -125,11 +135,15 @@ public class LogAop {
 
             String requestInfo = null;
             try {
-                requestInfo = JSON.toJSONString(map);
+                if (requestLogFormat){
+                    requestInfo = "\n" + JSON.toJSONString(map,true);
+                }else{
+                    requestInfo = JSON.toJSONString(map);
+                }
             } catch (Exception e) {
 
             }
-            log.info(AnsiUtil.getAnsi(Ansi.Color.GREEN,"requestInfo:"+requestInfo));
+            log.info(AnsiUtil.getAnsi(Ansi.Color.GREEN,"requestInfo:" + requestInfo));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,16 +153,22 @@ public class LogAop {
 
         // 执行目标方法,获得返回值
         Object result = joinPoint.proceed();
-        Object responseResult = null;
         try{
-            if (responseResult != null && responseResult instanceof ApiResult){
-                ApiResult apiResult = (ApiResult) responseResult;
+            if (result != null && result instanceof ApiResult){
+                ApiResult apiResult = (ApiResult) result;
                 int code = apiResult.getCode();
-                if (code != ApiCode.SUCCESS.getCode()){
-                    log.error(AnsiUtil.getAnsi(Ansi.Color.RED,"responseResult:"+JSON.toJSONString(responseResult)));
+                String responseResultInfo = "responseResult:";
+                if (responseLogFormat){
+                    responseResultInfo += "\n" + JSON.toJSONString(apiResult,true);
                 }else{
-                    log.info(AnsiUtil.getAnsi(Ansi.Color.BLUE,"responseResult:"+JSON.toJSONString(responseResult)));
+                    responseResultInfo += JSON.toJSONString(apiResult);
                 }
+                if (code == ApiCode.SUCCESS.getCode()){
+                    log.info(AnsiUtil.getAnsi(Ansi.Color.BLUE,responseResultInfo));
+                }else{
+                    log.error(AnsiUtil.getAnsi(Ansi.Color.RED,responseResultInfo));
+                }
+
             }
         }catch (Exception e){
             log.error("处理响应结果异常",e);

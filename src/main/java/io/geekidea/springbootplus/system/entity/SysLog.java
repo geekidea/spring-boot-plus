@@ -1,7 +1,6 @@
 package io.geekidea.springbootplus.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.geekidea.springbootplus.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -9,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -17,7 +16,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author geekidea
- * @since 2019-07-27
+ * @since 2019-08-04
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -27,7 +26,7 @@ public class SysLog extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
-        @TableId(value = "log_id", type = IdType.ID_WORKER)
+    @TableId(value = "log_id", type = IdType.ID_WORKER)
     private Long logId;
 
     @ApiModelProperty(value = "类型")
@@ -40,6 +39,6 @@ public class SysLog extends BaseEntity {
     private Long createId;
 
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+    private Date createTime;
 
 }

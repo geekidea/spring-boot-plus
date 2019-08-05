@@ -33,6 +33,7 @@
 #end
         ${table.fieldNames}
     </sql>
+#if(${cfg.generatorStrategy})
 
     <select id="get${entity}ById" resultType="${cfg.queryVoPath}">
         select <include refid="Base_Column_List"/> from ${table.name} where ${cfg.pkIdColumnName} = #{id}
@@ -41,5 +42,6 @@
     <select id="get${entity}PageList" resultType="${cfg.queryVoPath}">
         select <include refid="Base_Column_List"/> from ${table.name}
     </select>
+#end
 
 </mapper>

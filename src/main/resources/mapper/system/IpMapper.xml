@@ -7,12 +7,6 @@
         ip_start, ip_end, area, operator, id, ip_start_num, ip_end_num
     </sql>
 
-    <select id="getIpById" resultType="io.geekidea.springbootplus.system.web.vo.IpQueryVo">
-        select <include refid="Base_Column_List"/> from ip where id = #{id}
-    </select>
 
-    <select id="getIpPageList" resultType="io.geekidea.springbootplus.system.web.vo.IpQueryVo">
-        select <include refid="Base_Column_List"/> from ip
-    </select>
 
 </mapper>

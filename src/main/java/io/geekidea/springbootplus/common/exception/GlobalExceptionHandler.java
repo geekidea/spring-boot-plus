@@ -68,25 +68,13 @@ public class GlobalExceptionHandler {
      * @param exception
      * @return
      */
-//    @ExceptionHandler(value = SysLoginException.class)
-//    @ResponseStatus(HttpStatus.OK)
-//    public ApiResult sysLoginExceptionHandler(SysLoginException exception) {
-//        log.warn("系统登录异常:" + exception.getMessage());
-//        return new ApiResult(500,exception.getMessage());
-//    }
-
-
-    /**
-     * 默认的异常处理
-     * @param exception
-     * @return
-     */
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(value = SysLoginException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult exceptionHandler(Exception exception) {
-        log.error("exception:",exception);
-        return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, ApiCode.SYSTEM_EXCEPTION);
+    public ApiResult sysLoginExceptionHandler(SysLoginException exception) {
+        log.warn("系统登录异常:" + exception.getMessage());
+        return ApiResult.fail(ApiCode.SYSTEM_LOGIN_EXCEPTION);
     }
+
 
     /**
      * HTTP解析请求参数异常
@@ -101,7 +89,6 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * TODO
      * HTTP
      * @param exception
      * @return
@@ -112,4 +99,17 @@ public class GlobalExceptionHandler {
         log.error("httpMediaTypeException:",exception);
         return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, ApiCode.HTTP_MEDIA_TYPE_EXCEPTION);
     }
+
+    /**
+     * 默认的异常处理
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = Exception.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult exceptionHandler(Exception exception) {
+        log.error("exception:",exception);
+        return ApiResult.fail(ApiCode.SYSTEM_EXCEPTION);
+    }
+
 }

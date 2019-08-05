@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.io.Serializable;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -13,12 +13,11 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author geekidea
- * @date 2019-07-27
+ * @date 2019-08-04
  */
 @Data
 @ApiModel(value="SysLogQueryVo对象", description="系统日志查询参数")
 public class SysLogQueryVo implements Serializable{
-
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
@@ -34,7 +33,6 @@ public class SysLogQueryVo implements Serializable{
     private Long createId;
 
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
-
+    private Date createTime;
 
 }
