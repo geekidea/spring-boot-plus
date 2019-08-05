@@ -18,15 +18,14 @@ package io.geekidea.springbootplus.config;
 
 import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.TokenTimeoutInterceptor;
+import io.geekidea.springbootplus.config.core.SpringBootPlusProperties;
 import io.geekidea.springbootplus.security.interceptor.JwtInterceptor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.Arrays;
 
 /**
  * @author geekidea
@@ -36,61 +35,35 @@ import java.util.Arrays;
 @Slf4j
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Value("${spring-boot-plus.interceptor.jwt.exclude.path}")
-    private String[] jwtExcludePaths;
+    @Autowired
+    private SpringBootPlusProperties springBootPlusProperties;
 
-    @Value("${spring-boot-plus.interceptor.token-timeout.exclude.path}")
-    private String[] tokenTimeoutExcludePaths;
+    @Autowired
+    private JwtInterceptor jwtInterceptor;
 
-    @Value("${spring-boot-plus.interceptor.permission.exclude.path}")
-    private String[] permissionExcludePaths;
+    @Autowired
+    private PermissionInterceptor permissionInterceptor;
 
-    /**
-     * jwt token验证拦截器
-     * @return
-     */
-//    @Bean
-    public JwtInterceptor jwtInterceptor(){
-        return new JwtInterceptor();
-    }
-
-    /**
-     * 权限拦截器
-     * @return
-     */
-//    @Bean
-    public PermissionInterceptor permissionInterceptor(){
-        return new PermissionInterceptor();
-    }
-
-    /**
-     * TOKEN超时拦截器
-     * @return
-     */
-//    @Bean
-    public TokenTimeoutInterceptor tokenTimeoutInterceptor(){
-        return new TokenTimeoutInterceptor();
-    }
-
+    @Autowired
+    private TokenTimeoutInterceptor tokenTimeoutInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        log.info("PermissionInterceptor excludePaths : {}", Arrays.toString(permissionExcludePaths));
-//
-//        registry.addInterceptor(jwtInterceptor())
-//                .addPathPatterns("/**")
-//                .excludePathPatterns(jwtExcludePaths);
 
-        // 1.TOKEN超时拦截器
-//        registry.addInterceptor(tokenTimeoutInterceptor())
+//        // JWT拦截器
+//        registry.addInterceptor(jwtInterceptor)
 //                .addPathPatterns("/**")
-//                .excludePathPatterns(tokenTimeoutExcludePaths);
+//                .excludePathPatterns(springBootPlusProperties.getInterceptorConfig().getJwtConfig().getExcludePath());
 //
-//        // 2.权限拦截器
-//        registry.addInterceptor(permissionInterceptor())
+//        // TOKEN超时拦截器
+//        registry.addInterceptor(tokenTimeoutInterceptor)
 //                .addPathPatterns("/**")
-//                .excludePathPatterns(permissionExcludePaths)
-//                .excludePathPatterns(operationPlatformIncludePaths);
+//                .excludePathPatterns(springBootPlusProperties.getInterceptorConfig().getTokenTimeoutConfig().getExcludePath());
+//
+//        // 权限拦截器
+//        registry.addInterceptor(permissionInterceptor)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns(springBootPlusProperties.getInterceptorConfig().getPermissionConfig().getExcludePath());
 
     }
 

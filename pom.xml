@@ -21,7 +21,7 @@
 
     <groupId>io.geekidea</groupId>
     <artifactId>spring-boot-plus</artifactId>
-    <version>1.1.0.RELEASE</version>
+    <version>1.2.0.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-plus</name>
@@ -49,7 +49,7 @@
         <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
         <fastjson.version>1.2.59</fastjson.version>
-        <swagger2.version>2.7.0</swagger2.version>
+        <swagger2.version>2.6.1</swagger2.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <velocity.version>1.7</velocity.version>
         <mysql.version>5.1.47</mysql.version>
@@ -65,10 +65,9 @@
         <jwt.version>0.9.1</jwt.version>
         <spring-boot-admin.version>2.1.6</spring-boot-admin.version>
 
-        <maven-compiler-source.version>1.8</maven-compiler-source.version>
-        <maven-compiler-target.version>1.8</maven-compiler-target.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -185,7 +184,6 @@
             <version>3.2.1</version>
         </dependency>
 
-
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -231,18 +229,6 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>compile</scope>
-        </dependency>
-
-        <!-- RabbitMQ -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-
-        <!-- KafkaMQ -->
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
         </dependency>
 
         <dependency>
@@ -306,7 +292,6 @@
         </resources>
 
         <plugins>
-
             <!-- 由于没有直接继承spring-boot-starter-parent，此处修添加主类和设置repackage -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -327,11 +312,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>

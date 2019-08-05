@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.config;
+package io.geekidea.springbootplus.config.core;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 /**
  * spring-boot-plus属性配置信息
@@ -50,5 +51,11 @@ public class SpringBootPlusProperties {
      * 登录token失效时间，单位分钟，默认60分钟失效
      */
     private Integer tokenValidTime = 60;
+
+    /**
+     * 拦截器配置
+     */
+    @NestedConfigurationProperty
+    private SpringBootPlusInterceptorConfig interceptorConfig;
 
 }
