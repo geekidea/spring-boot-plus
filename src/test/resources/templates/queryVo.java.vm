@@ -9,7 +9,7 @@ import lombok.Data;
 #end
 import java.io.Serializable;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -27,7 +27,6 @@ import java.time.LocalDateTime;
 #end
 @ApiModel(value="${entity}QueryVo对象", description="$!{table.comment}查询参数")
 public class ${entity}QueryVo implements Serializable{
-
     private static final long serialVersionUID = 1L;
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
@@ -67,7 +66,6 @@ public class ${entity}QueryVo implements Serializable{
 private ${field.propertyType} ${field.propertyName};
 #end
 ## ----------  END 字段循环遍历  ----------
-
 #if(!${entityLombokModel})
 #foreach($field in ${table.fields})
 #if(${field.propertyType.equals("boolean")})
@@ -108,7 +106,6 @@ private ${field.propertyType} ${field.propertyName};
         return null;
 #end
     }
-
 #end
 #if(!${entityLombokModel})
     @Override

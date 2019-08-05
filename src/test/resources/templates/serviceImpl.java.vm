@@ -7,13 +7,13 @@ import ${cfg.queryParamPath};
 import ${cfg.queryVoPath};
 import ${superServiceImplClassPackage};
 import ${cfg.paging};
-import ${cfg.orderEnum};
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.io.Serializable;
 
@@ -26,9 +26,9 @@ import java.io.Serializable;
  * @author ${author}
  * @since ${date}
  */
+@Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-@Slf4j
 #if(${kotlin})
 open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
 
@@ -38,6 +38,7 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
 
     @Autowired
     private ${table.mapperName} ${cfg.mapperObjectName};
+#if(${cfg.generatorStrategy})
 
     @Override
     public ${entity}QueryVo get${entity}ById(Serializable id) throws Exception{
@@ -46,10 +47,11 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
 
     @Override
     public Paging<${entity}QueryVo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception{
-        Page page = setPageParam(${cfg.entityObjectName}QueryParam,"create_time", OrderEnum.DESC);
+        Page page = setPageParam(${cfg.entityObjectName}QueryParam,OrderItem.desc("create_time"));
         IPage<${entity}QueryVo> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page,${cfg.entityObjectName}QueryParam);
         return new Paging(iPage);
     }
+#end
 
 }
 #end

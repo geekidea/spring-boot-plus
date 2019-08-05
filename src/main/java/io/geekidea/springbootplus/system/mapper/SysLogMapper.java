@@ -17,7 +17,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author geekidea
- * @since 2019-07-27
+ * @since 2019-08-04
  */
 @Repository
 public interface SysLogMapper extends BaseMapper<SysLog> {

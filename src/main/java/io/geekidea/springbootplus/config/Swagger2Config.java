@@ -42,35 +42,52 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
-    // 标题
+
+    /**
+     * 标题
+     */
     @Value("${swagger.title}")
     private String title;
 
-    // 基本包
+    /**
+     * 基本包
+     */
     @Value("${swagger.base.package}")
     private String basePackage;
 
-    // 描述
+    /**
+     * 描述
+     */
     @Value("${swagger.description}")
     private String description;
 
-    // URL
+    /**
+     * URL
+     */
     @Value("${swagger.url}")
     private String url;
 
-    // 作者
+    /**
+     * 作者
+     */
     @Value("${swagger.contact.name}")
     private String contactName;
 
-    // 作者网址
+    /**
+     * 作者网址
+     */
     @Value("${swagger.contact.url}")
     private String contactUrl;
 
-    // 作者邮箱
+    /**
+     * 作者邮箱
+     */
     @Value("${swagger.contact.email}")
     private String contactEmail;
 
-    // 版本
+    /**
+     * 版本
+     */
     @Value("${swagger.version}")
     private String version;
 

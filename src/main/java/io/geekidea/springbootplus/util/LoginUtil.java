@@ -38,7 +38,7 @@ public class LoginUtil {
 
     static {
         Environment environment = SpringContextUtil.getBean(Environment.class);
-        String time = environment.getProperty("springbootplus.login.token.valid.time.minute");
+        String time = environment.getProperty("spring-boot-plus.login.token-valid-time");
         TOKEN_VALID_TIME_MINUTE = Integer.valueOf(time);
         log.info("TOKEN_VALID_TIME_MINUTE:{}",TOKEN_VALID_TIME_MINUTE);
     }

@@ -1,12 +1,14 @@
 package io.geekidea.springbootplus.system.web.controller;
 
+import io.geekidea.springbootplus.common.api.ApiResult;
+import io.geekidea.springbootplus.common.web.controller.BaseController;
+import io.geekidea.springbootplus.common.web.param.IdParam;
+import io.geekidea.springbootplus.common.web.vo.Paging;
 import io.geekidea.springbootplus.system.entity.SysLog;
 import io.geekidea.springbootplus.system.service.SysLogService;
 import io.geekidea.springbootplus.system.web.param.SysLogQueryParam;
 import io.geekidea.springbootplus.system.web.vo.SysLogQueryVo;
-import io.geekidea.springbootplus.common.web.controller.BaseController;
-import io.geekidea.springbootplus.common.api.ApiResult;
-    import io.swagger.annotations.Api;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import io.geekidea.springbootplus.common.web.vo.Paging;
-import io.geekidea.springbootplus.common.web.param.IdParam;
-
 /**
  * <p>
  * 系统日志 前端控制器
  * </p>
  *
  * @author geekidea
- * @since 2019-07-27
+ * @since 2019-08-04
  */
+@Slf4j
 @RestController
 @RequestMapping("/sysLog")
-@Slf4j
 @Api("系统日志 API")
 public class SysLogController extends BaseController {
 

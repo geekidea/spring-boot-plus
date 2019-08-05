@@ -25,3 +25,6 @@
 /.nb-gradle/
 
 .DS_Store
+
+*.log
+logs

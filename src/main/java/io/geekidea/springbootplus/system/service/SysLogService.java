@@ -14,9 +14,10 @@ import java.io.Serializable;
  * </p>
  *
  * @author geekidea
- * @since 2019-07-27
+ * @since 2019-08-04
  */
 public interface SysLogService extends BaseService<SysLog> {
+
     /**
      * 根据ID获取查询对象
      * @param id

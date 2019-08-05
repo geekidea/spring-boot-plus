@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,13 +32,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * spring-boot-plus代码生成器入口类
  * @author geekidea
- * @date 2018/11/7
+ * @date 2018-11-08
  */
 public class CodeGenerator {
 
     private static final String USER_NAME = "root";
-    private static final String PASSWORD = "rootroot";
+    private static final String PASSWORD = "root";
     private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
     private static final String DRIVER_URL = "jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false";
 
@@ -57,9 +59,13 @@ public class CodeGenerator {
     // 作者
     private static final String AUTHOR = "geekidea";
     // 生成的表名称
-    private static final String TABLE_NAME = "ip";
+    private static final String TABLE_NAME = "sys_log";
     // 主键数据库列名称
-    private static final String PK_ID_COLUMN_NAME = "id";
+    private static final String PK_ID_COLUMN_NAME = "log_id";
+    // 代码生成策略 true：All/false:SIMPLE
+    private static final boolean GENERATOR_STRATEGY = true;
+    // 分页列表查询是否排序 true：有排序参数/false：无
+    private static final boolean PAGE_LIST_ORDER = false;
     // ############################ 配置部分 end ############################
 
 
@@ -75,12 +81,9 @@ public class CodeGenerator {
         gc.setOpen(false);                  // 是否打开输出目录
         gc.setSwagger2(true);               // 启用swagger注解
         gc.setIdType(IdType.ID_WORKER);     // 主键类型:ID_WORKER
-
-        // 自定义文件命名，注意 %s 会自动填充表实体属性！
-        gc.setServiceName("%sService");
-
-        // 是否覆盖已有文件
-        gc.setFileOverride(true);
+        gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
+        gc.setFileOverride(true);           // 是否覆盖已有文件
+        gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date
 
         mpg.setGlobalConfig(gc);
 
@@ -129,6 +132,12 @@ public class CodeGenerator {
                 map.put("paging",PARENT_PACKAGE + ".common.web.vo.Paging");
                 // 导入排序枚举
                 map.put("orderEnum",PARENT_PACKAGE + ".common.enums.OrderEnum");
+                // 分页列表查询是否排序
+                map.put("pageListOrder",PAGE_LIST_ORDER);
+                // 导入排序查询参数类
+                map.put("orderQueryParamPath",PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "OrderQueryParam");
+                // 代码生成策略
+                map.put("generatorStrategy",GENERATOR_STRATEGY);
                 this.setMap(map);
             }
         };

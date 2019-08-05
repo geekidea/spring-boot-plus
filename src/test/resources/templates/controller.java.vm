@@ -36,13 +36,13 @@ import ${cfg.idParamPath};
  * @author ${author}
  * @since ${date}
  */
+@Slf4j
 #if(${restControllerStyle})
 @RestController
 #else
 @Controller
 #end
 @RequestMapping("/${cfg.entityObjectName}")
-@Slf4j
 @Api("$!{table.comment} API")
 #if(${kotlin})
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
@@ -57,6 +57,7 @@ public class ${table.controllerName} {
     @Autowired
     private ${table.serviceName} ${cfg.serviceObjectName};
 
+#if(${cfg.generatorStrategy})
     /**
     * 添加$!{table.comment}
     */
@@ -106,6 +107,7 @@ public class ${table.controllerName} {
         Paging<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
         return ApiResult.ok(paging);
     }
+#end
 
 }
 
