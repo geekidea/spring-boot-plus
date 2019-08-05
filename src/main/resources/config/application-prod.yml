@@ -1,10 +1,10 @@
 spring-boot-plus:
   # 是否启用ansi控制台输出有颜色的字体，local环境建议开启，服务器环境设置为false
-  enable-ansi: true
+  enable-ansi: false
   # 请求日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
-  request-log-format: true
+  request-log-format: false
   # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
-  response-log-format: true
+  response-log-format: false
   # 登录设置
   login:
     token-valid-time: 60  # 登录token失效时间，单位分钟
