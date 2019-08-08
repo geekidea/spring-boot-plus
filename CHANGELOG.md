@@ -1,8 +1,4 @@
----
-sidebarDepth: 3
----
-
-# 更新日志
+# 更新日志 CHANGELOG
 
 ## [V1.2.0-RELEASE] 2019.08.06
 ### 🚀 spring-boot-plus演示地址
