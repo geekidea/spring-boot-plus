@@ -64,7 +64,7 @@ Mybatis | 3.5.1 | 持久层框架 |
 Mybatis Plus | 3.1.1 | mybatis增强框架 |
 Alibaba Druid | 1.1.17 | 数据源 |
 Fastjson | 1.2.58 | JSON处理工具集 |
-swagger2 | 2.7.0 | api文档生成工具 |
+swagger2 | 2.6.1 | api文档生成工具 |
 commons-lang3 | 3.9 | 常用工具包 |
 commons-io | 2.6 | IO工具包 |
 commons-codec | 1.12 | 加密解密等工具包 |
