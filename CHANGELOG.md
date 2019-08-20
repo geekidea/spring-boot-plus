@@ -19,6 +19,9 @@
 - Add `ImageController` 图片访问控制器
 - Add `ResourceInterceptor` 资源拦截器
 
+- Add `welcome.html` 在`static`目录下
+- Add `springbootplus.html` 在`templates`目录下
+
 - Modify `WebMvcConfig` 注册资源拦截器，项目静态资源访问配置
 - Modify `SpringBootPlusConfig` 创建 `ResourceInterceptor` 资源拦截器
 - Modify `SpringBootPlusInterceptorConfig` 添加 `resourceConfig` 资源拦截器配置 
