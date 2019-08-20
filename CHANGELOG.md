@@ -38,7 +38,7 @@
 - 拦截器`exclude-path`,`include-path`字符串配置问题，已修改为数组接收`String[] excludePath`,`String[] includePath`
 
 ### 📔  Documentation
--[https://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?revision=1752884&view=co](https://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?revision=1752884&view=co)
+- [mime-type大全](https://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?revision=1752884&view=co)
 
 ### 🔨 Dependency Upgrades
 - Upgrade to springboot 2.1.7.RELEASE
