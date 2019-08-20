@@ -1,5 +1,38 @@
 # 更新日志 CHANGELOG
 
+## [V1.2.1-RELEASE] 2019.08.20
+
+### ⚡️ Optimization
+- 启用项目静态资源访问，可访问static/templates目录下资源
+- static资源访问：http://127.0.0.1:8888/static/welcome.html
+- templates资源访问：http://127.0.0.1:8888/templates/springbootplus.html
+
+###  ⭐️  New Features
+- 文件上传保存到服务器指定目录
+- 文件下载
+- 访问上传的图片等资源
+- static/templates项目静态资源访问
+
+### 📝 Added/Modified
+- Add `UploadController` 上传控制器
+- Add `DownloadController` 下载控制器
+- Add `ImageController` 图片访问控制器
+- Add `ResourceInterceptor` 资源拦截器
+
+- Modify `WebMvcConfig` 注册资源拦截器，项目静态资源访问配置
+- Modify `SpringBootPlusConfig` 创建 `ResourceInterceptor` 资源拦截器
+- Modify `SpringBootPlusInterceptorConfig` 添加 `resourceConfig` 资源拦截器配置 
+- Modify `SpringBootPlusProperties`  添加 `uploadPath`,`resourceAccessPath`,`resourceAccessPatterns`,`resourceAccessUrl`属性
+- Modify `application.yml`, `application-local.yml` 添加文件上传/下载配置
+
+- Modify `mysql_spring_boot_plus.sql` 添加创建数据库语句，如果不存在，则创建
+
+
+### 🔨 Dependency Upgrades
+- Upgrade to springboot 2.1.7.RELEASE
+
+
+
 ## [V1.2.0-RELEASE] 2019.08.06
 ### 🚀 spring-boot-plus演示地址
 - 👉 [spring-boot-plus演示地址-Spring Boot Admin](http://47.105.159.10:8888)

@@ -17,6 +17,7 @@
 package io.geekidea.springbootplus.config;
 
 import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
+import io.geekidea.springbootplus.common.web.interceptor.ResourceInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.TokenTimeoutInterceptor;
 import io.geekidea.springbootplus.config.core.SpringBootPlusProperties;
 import io.geekidea.springbootplus.security.interceptor.JwtInterceptor;
@@ -47,20 +48,26 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private TokenTimeoutInterceptor tokenTimeoutInterceptor;
 
+    @Autowired
+    private ResourceInterceptor resourceInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // 资源拦截器注册
+        registry.addInterceptor(resourceInterceptor)
+                .addPathPatterns(springBootPlusProperties.getInterceptorConfig().getResourceConfig().getIncludePath());
 
-//        // JWT拦截器
+//        // JWT拦截器注册
 //        registry.addInterceptor(jwtInterceptor)
 //                .addPathPatterns("/**")
 //                .excludePathPatterns(springBootPlusProperties.getInterceptorConfig().getJwtConfig().getExcludePath());
 //
-//        // TOKEN超时拦截器
+//        // TOKEN超时拦截器注册
 //        registry.addInterceptor(tokenTimeoutInterceptor)
 //                .addPathPatterns("/**")
 //                .excludePathPatterns(springBootPlusProperties.getInterceptorConfig().getTokenTimeoutConfig().getExcludePath());
 //
-//        // 权限拦截器
+//        // 权限拦截器注册
 //        registry.addInterceptor(permissionInterceptor)
 //                .addPathPatterns("/**")
 //                .excludePathPatterns(springBootPlusProperties.getInterceptorConfig().getPermissionConfig().getExcludePath());
@@ -69,9 +76,18 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 设置项目静态资源访问
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/templates/**")
+                .addResourceLocations("classpath:/templates/");
+        // 设置swagger静态资源访问
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        // 设置上传文件访问路径
+        registry.addResourceHandler(springBootPlusProperties.getResourceAccessPatterns())
+                .addResourceLocations("file:" + springBootPlusProperties.getUploadPath());
     }
 }

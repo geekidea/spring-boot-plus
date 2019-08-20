@@ -17,6 +17,7 @@ package io.geekidea.springbootplus.config.core;
 
 import io.geekidea.springbootplus.common.aop.LogAop;
 import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
+import io.geekidea.springbootplus.common.web.interceptor.ResourceInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.TokenTimeoutInterceptor;
 import io.geekidea.springbootplus.security.interceptor.JwtInterceptor;
 import lombok.extern.slf4j.Slf4j;
@@ -77,6 +78,16 @@ public class SpringBootPlusConfig {
     public TokenTimeoutInterceptor tokenTimeoutInterceptor(){
         TokenTimeoutInterceptor tokenTimeoutInterceptor = new TokenTimeoutInterceptor();
         return tokenTimeoutInterceptor;
+    }
+
+    /**
+     * 资源拦截器
+     * @return
+     */
+    @Bean
+    public ResourceInterceptor resourceInterceptor(){
+        ResourceInterceptor resourceInterceptor = new ResourceInterceptor();
+        return resourceInterceptor;
     }
 
 }

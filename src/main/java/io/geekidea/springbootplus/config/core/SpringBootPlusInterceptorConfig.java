@@ -45,6 +45,11 @@ public class SpringBootPlusInterceptorConfig implements Serializable {
      */
     private InterceptorConfig permissionConfig;
 
+    /**
+     * 资源拦截器
+     */
+    private InterceptorConfig resourceConfig;
+
     @Data
     public static class InterceptorConfig {
 
@@ -52,6 +57,11 @@ public class SpringBootPlusInterceptorConfig implements Serializable {
          * 排除路径
          */
         private String excludePath;
+
+        /**
+         * 包含的路径
+         */
+        private String includePath;
 
     }
 

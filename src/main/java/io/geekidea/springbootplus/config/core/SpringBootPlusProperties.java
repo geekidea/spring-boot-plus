@@ -58,4 +58,22 @@ public class SpringBootPlusProperties {
     @NestedConfigurationProperty
     private SpringBootPlusInterceptorConfig interceptorConfig;
 
+
+    /**
+     * 上传目录
+     */
+    private String uploadPath;
+    /**
+     * 资源访问路径，前端访问
+     */
+    private String resourceAccessPath;
+    /**
+     * 资源访问路径，后段配置，资源映射/拦截器使用
+     */
+    private String resourceAccessPatterns;
+    /**
+     * 资源访问全路径
+     */
+    private String resourceAccessUrl;
+
 }

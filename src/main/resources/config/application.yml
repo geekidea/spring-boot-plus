@@ -38,6 +38,7 @@ spring:
 
 ############################## spring-boot-plus start #############################
 spring-boot-plus:
+  # jwt配置
   jwt:
     header: token
     secret: 666666
@@ -45,14 +46,24 @@ spring-boot-plus:
     subject: spring-boot-plus-jwt
     audience: web
     expire-minutes: 2
-
+  # 拦截器配置
   interceptor-config:
     jwt-config:
-      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/login,/verificationCode,/doc/**,/error/**,/docs,/test/**
+      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/login,/verificationCode,/doc/**,/error/**,/docs,/test/**,/resource/**
     permission-config:
-      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/adminLogin,/sysLogin,/login.html,/verificationCode,/doc/**,/error/**,/docs
+      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/adminLogin,/sysLogin,/login.html,/verificationCode,/doc/**,/error/**,/docs,/resource/**
     token-timeout-config:
-      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/docs
+      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/docs,/resource/**
+    resource-config:
+      include-path: ${spring-boot-plus.resource-access-patterns}
+  # 文件上传下载配置
+  upload-path: /opt/upload/
+  # 资源访问路径
+  resource-access-path: /resource/
+  # 资源访问路径匹配：/resource/**
+  resource-access-patterns: ${spring-boot-plus.resource-access-path}**
+  # 资源访问全路径前缀：http://localhost:8888/resource/
+  resource-access-url: http://localhost:${server.port}${server.servlet.context-path}${spring-boot-plus.resource-access-path}
 ############################### spring-boot-plus end ###############################
 
 
