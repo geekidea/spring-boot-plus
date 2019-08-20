@@ -25,6 +25,8 @@
 - Add `springbootplus.html` 在`templates`目录下
 - Add `ContentTypeUtil` 文件类型工具
 - Add `mime-type.properties` 文件类型自定义拓展配置
+- Add `UploadUtil` 上传工具类
+- Add `DownloadUtil` 下载工具类
 
 - Modify `WebMvcConfig` 注册资源拦截器，项目静态资源访问配置
 - Modify `SpringBootPlusConfig` 创建 `ResourceInterceptor` 资源拦截器
