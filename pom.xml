@@ -286,6 +286,7 @@
                     <include>application-${profileActive}.yml</include>
                     <include>banner.txt</include>
                     <include>logback.xml</include>
+                    <include>*.properties</include>
                 </includes>
             </resource>
 

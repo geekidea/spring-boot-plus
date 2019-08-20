@@ -1,17 +1,19 @@
 # 更新日志 CHANGELOG
 
-## [V1.2.1-RELEASE] 2019.08.20
-
-### ⚡️ Optimization
-- 启用项目静态资源访问，可访问static/templates目录下资源
-- static资源访问：http://127.0.0.1:8888/static/welcome.html
-- templates资源访问：http://127.0.0.1:8888/templates/springbootplus.html
+## [V1.2.1-RELEASE] 2019.08.21
 
 ###  ⭐️  New Features
 - 文件上传保存到服务器指定目录
 - 文件下载
 - 访问上传的图片等资源
-- static/templates项目静态资源访问
+- 启用项目静态资源访问，可访问static/templates目录下资源
+
+### ⚡️ Optimization
+- static资源访问：[http://localhost:8888/static/welcome.html](http://localhost:8888/static/welcome.html)
+- templates资源访问：[http://localhost:8888/templates/springbootplus.html](http://localhost:8888/templates/springbootplus.html)
+- 上传swagger：[http://localhost:8888/swagger-ui.html#!/upload-controller/uploadUsingPOST](http://localhost:8888/swagger-ui.html#!/upload-controller/uploadUsingPOST)
+- 上传后，图片文件访问：[http://localhost:8888//resource/201908210134467.png](http://localhost:8888//resource/201908210134467.png)
+- 图片自定义控制访问：[http://localhost:8888/image/201908210134467.png](http://localhost:8888/image/201908210134467.png)
 
 ### 📝 Added/Modified
 - Add `UploadController` 上传控制器
@@ -21,6 +23,8 @@
 
 - Add `welcome.html` 在`static`目录下
 - Add `springbootplus.html` 在`templates`目录下
+- Add `ContentTypeUtil` 文件类型工具
+- Add `mime-type.properties` 文件类型自定义拓展配置
 
 - Modify `WebMvcConfig` 注册资源拦截器，项目静态资源访问配置
 - Modify `SpringBootPlusConfig` 创建 `ResourceInterceptor` 资源拦截器
@@ -30,6 +34,11 @@
 
 - Modify `mysql_spring_boot_plus.sql` 添加创建数据库语句，如果不存在，则创建
 
+### 🐞  Bug Fixes
+- 拦截器`exclude-path`,`include-path`字符串配置问题，已修改为数组接收`String[] excludePath`,`String[] includePath`
+
+### 📔  Documentation
+-[https://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?revision=1752884&view=co](https://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?revision=1752884&view=co)
 
 ### 🔨 Dependency Upgrades
 - Upgrade to springboot 2.1.7.RELEASE

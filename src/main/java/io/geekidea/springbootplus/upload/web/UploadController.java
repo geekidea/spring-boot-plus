@@ -18,16 +18,17 @@ package io.geekidea.springbootplus.upload.web;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.config.core.SpringBootPlusProperties;
+import io.geekidea.springbootplus.util.UploadUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -57,28 +58,15 @@ public class UploadController {
         log.info("Name = " + multipartFile.getName());
         log.info("Size = " + multipartFile.getSize());
 
-        InputStream inputStream = multipartFile.getInputStream();
-        // 文件保存目录
-        File saveDir = new File(springBootPlusProperties.getUploadPath());
-        // 判断目录是否存在，不存在，则创建，如创建失败，则抛出异常
-        if (!saveDir.exists()){
-            boolean flag = saveDir.mkdirs();
-            if (!flag){
-                throw new RuntimeException("创建" +saveDir + "目录失败！");
-            }
-        }
-        String srcFileName = multipartFile.getOriginalFilename();
-        String fileExtension= FilenameUtils.getExtension(srcFileName);
-        // 这里可自定义文件名称，比如按照业务类型/文件格式/日期
-        // 此处按照文件日期存储
-        String dateString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssS"));
-        log.info("dateString = " + dateString);
-
-        String saveFileName = dateString + "." +fileExtension;
-        log.info("saveFileName = " + saveFileName);
-        File saveFile = new File(saveDir,saveFileName);
-        // 保存文件到服务器指定路径
-        FileUtils.copyToFile(inputStream,saveFile);
+        // 上传文件，返回保存的文件名称
+        String saveFileName = UploadUtil.upload(springBootPlusProperties.getUploadPath(), multipartFile, originalFilename -> {
+            // 文件后缀
+            String fileExtension= FilenameUtils.getExtension(originalFilename);
+            // 这里可自定义文件名称，比如按照业务类型/文件格式/日期
+            String dateString = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssS"));
+            String fileName = dateString + "." +fileExtension;
+            return fileName;
+        });
 
         // 上传成功之后，返回访问路径，请根据实际情况设置
 
