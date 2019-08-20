@@ -21,7 +21,7 @@
 
     <groupId>io.geekidea</groupId>
     <artifactId>spring-boot-plus</artifactId>
-    <version>1.2.0.RELEASE</version>
+    <version>1.2.1.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-plus</name>
@@ -46,7 +46,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project-parent.version>${parent.version}</project-parent.version>
         <java.version>1.8</java.version>
-        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
+        <spring-boot.version>2.1.7.RELEASE</spring-boot.version>
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
         <fastjson.version>1.2.59</fastjson.version>
         <swagger2.version>2.6.1</swagger2.version>

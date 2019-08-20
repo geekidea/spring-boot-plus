@@ -15,6 +15,11 @@
 */
 
 -- ----------------------------
+-- Create Database for spring_boot_plus
+-- ----------------------------
+create database if not exists spring_boot_plus character set utf8mb4;
+
+-- ----------------------------
 -- Table structure for ip
 -- ----------------------------
 DROP TABLE IF EXISTS `ip`;
