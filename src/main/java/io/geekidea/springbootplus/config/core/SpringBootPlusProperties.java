@@ -21,6 +21,8 @@ import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
+import java.util.List;
+
 /**
  * spring-boot-plus属性配置信息
  * @author geekidea
@@ -75,5 +77,14 @@ public class SpringBootPlusProperties {
      * 资源访问全路径
      */
     private String resourceAccessUrl;
+
+    /**
+     * 允许上传的文件后缀集合
+     */
+    private List<String> allowUploadFileExtensions;
+    /**
+     * 允许下载的文件后缀集合
+     */
+    private List<String> allowDownloadFileExtensions;
 
 }

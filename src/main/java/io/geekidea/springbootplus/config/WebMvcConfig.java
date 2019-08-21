@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus.config;
 
+import io.geekidea.springbootplus.common.web.interceptor.DownloadInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.ResourceInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.TokenTimeoutInterceptor;
@@ -51,11 +52,18 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private ResourceInterceptor resourceInterceptor;
 
+    @Autowired
+    private DownloadInterceptor downloadInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 资源拦截器注册
         registry.addInterceptor(resourceInterceptor)
                 .addPathPatterns(springBootPlusProperties.getInterceptorConfig().getResourceConfig().getIncludePath());
+
+        // 下载拦截器注册
+        registry.addInterceptor(downloadInterceptor)
+                .addPathPatterns(springBootPlusProperties.getInterceptorConfig().getDownloadConfig().getIncludePath());
 
 //        // JWT拦截器注册
 //        registry.addInterceptor(jwtInterceptor)

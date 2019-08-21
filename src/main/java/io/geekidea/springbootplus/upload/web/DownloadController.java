@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 下载控制器
@@ -48,7 +49,23 @@ public class DownloadController {
     @RequestMapping("/{downloadFileName}")
     @ApiOperation(value = "下载文件",notes = "下载文件",response = ApiResult.class)
     public void download(@PathVariable(required = true) String downloadFileName, HttpServletResponse response) throws Exception{
-        DownloadUtil.download(springBootPlusProperties.getUploadPath(),downloadFileName,response);
+        // 下载目录，既是上传目录
+        String downloadDir = springBootPlusProperties.getUploadPath();
+        // 允许下载的文件后缀
+        List<String> allowFileExtensions = springBootPlusProperties.getAllowDownloadFileExtensions();
+        // 文件下载，使用默认下载处理器
+//        DownloadUtil.download(downloadDir,downloadFileName,allowFileExtensions,response);
+        // 文件下载，使用自定义下载处理器
+        DownloadUtil.download(downloadDir,downloadFileName,allowFileExtensions,response, (dir, fileName, file, fileExtension, contentType, length) -> {
+            // 下载自定义处理，返回true：执行下载，false：取消下载
+            System.out.println("dir = " + dir);
+            System.out.println("fileName = " + fileName);
+            System.out.println("file = " + file);
+            System.out.println("fileExtension = " + fileExtension);
+            System.out.println("contentType = " + contentType);
+            System.out.println("length = " + length);
+            return true;
+        });
     }
 
 }

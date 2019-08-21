@@ -50,6 +50,11 @@ public class SpringBootPlusInterceptorConfig implements Serializable {
      */
     private InterceptorConfig resourceConfig;
 
+    /**
+     * 下载拦截器
+     */
+    private InterceptorConfig downloadConfig;
+
     @Data
     public static class InterceptorConfig {
 

@@ -16,6 +16,7 @@
 package io.geekidea.springbootplus.config.core;
 
 import io.geekidea.springbootplus.common.aop.LogAop;
+import io.geekidea.springbootplus.common.web.interceptor.DownloadInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.ResourceInterceptor;
 import io.geekidea.springbootplus.common.web.interceptor.TokenTimeoutInterceptor;
@@ -90,4 +91,13 @@ public class SpringBootPlusConfig {
         return resourceInterceptor;
     }
 
+    /**
+     * 下载拦截器
+     * @return
+     */
+    @Bean
+    public DownloadInterceptor downloadInterceptor(){
+        DownloadInterceptor downloadInterceptor = new DownloadInterceptor();
+        return downloadInterceptor;
+    }
 }
