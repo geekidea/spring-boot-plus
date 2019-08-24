@@ -129,15 +129,6 @@ public final class DownloadUtil {
         FileCopyUtils.copy(in, response.getOutputStream());
     }
 
-    public static void main(String[] args) throws Exception {
-        String downloadFileName = "../../hello/123.txt";
-        // 安全判断，防止../情况
-        if (downloadFileName.contains("..")||downloadFileName.contains("../")){
-            throw new IOException("非法的文件名称");
-        }
-        log.info("ok");
-    }
-
     public static interface DownloadHandler{
         boolean handle(String dir, String fileName,File file,String fileExtension,String contentType,long length) throws Exception;
     }
