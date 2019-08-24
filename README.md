@@ -27,7 +27,7 @@
 ## Purpose
 > Everyone can develop projects independently, quickly and efficiently！
 
-## DOCS
+## Docs
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
 #### Website：[springboot.plus](http://springboot.plus "springboot.plus")
