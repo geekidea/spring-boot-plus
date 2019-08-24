@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.config.core;
+package io.geekidea.springbootplus.core;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -59,7 +59,6 @@ public class SpringBootPlusProperties {
      */
     @NestedConfigurationProperty
     private SpringBootPlusInterceptorConfig interceptorConfig;
-
 
     /**
      * 上传目录

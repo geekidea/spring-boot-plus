@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.geekidea.springbootplus.config.core;
+package io.geekidea.springbootplus.core;
 
 import io.geekidea.springbootplus.common.aop.LogAop;
-import io.geekidea.springbootplus.common.web.interceptor.DownloadInterceptor;
-import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
-import io.geekidea.springbootplus.common.web.interceptor.ResourceInterceptor;
-import io.geekidea.springbootplus.common.web.interceptor.TokenTimeoutInterceptor;
+import io.geekidea.springbootplus.common.web.interceptor.*;
+import io.geekidea.springbootplus.resource.web.interceptor.DownloadInterceptor;
+import io.geekidea.springbootplus.resource.web.interceptor.ResourceInterceptor;
+import io.geekidea.springbootplus.resource.web.interceptor.UploadInterceptor;
 import io.geekidea.springbootplus.security.interceptor.JwtInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -79,6 +79,16 @@ public class SpringBootPlusConfig {
     public TokenTimeoutInterceptor tokenTimeoutInterceptor(){
         TokenTimeoutInterceptor tokenTimeoutInterceptor = new TokenTimeoutInterceptor();
         return tokenTimeoutInterceptor;
+    }
+
+    /**
+     * 上传拦截器
+     * @return
+     */
+    @Bean
+    public UploadInterceptor uploadInterceptor(){
+        UploadInterceptor uploadInterceptor = new UploadInterceptor();
+        return uploadInterceptor;
     }
 
     /**

@@ -33,6 +33,7 @@ import io.geekidea.springbootplus.util.MapUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,7 @@ import java.util.Map;
  * @date 2019-05-23
  **/
 @Api
+@Slf4j
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -63,7 +65,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ApiResult login(LoginParam loginParam) {
-        System.out.println("loginParam = " + loginParam);
+        log.info("loginParam = " + loginParam);
 
         // 数据库校验账号密码
 
@@ -112,7 +114,7 @@ public class LoginServiceImpl implements LoginService {
         HttpServletRequest request = HttpServletRequestUtil.getRequest();
         String userAgent = request.getHeader("User-Agent");
         ClientInfo clientInfo = ClientInfoUtil.get(userAgent);
-        System.out.println("clientInfo = " + JSON.toJSONString(clientInfo,true));
+        log.info("clientInfo = " + JSON.toJSONString(clientInfo,true));
 
         // jwt token对象
         JwtTokenRedisVo jwtTokenRedisVo = new JwtTokenRedisVo();
@@ -154,7 +156,7 @@ public class LoginServiceImpl implements LoginService {
         Date expiredDate = jws.getBody().getExpiration();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String string = dateFormat.format(expiredDate);
-        System.out.println("expiredDate = " + string);
+        log.info("expiredDate = " + string);
 
         // 如果token还有1分钟要过期，则重新生成token，并响应到response头中
         Date beforeExpiredDate = DateUtils.addMinutes(expiredDate,-1);
@@ -163,18 +165,18 @@ public class LoginServiceImpl implements LoginService {
         Date currentDate = new Date(System.currentTimeMillis());
         long currentTime = currentDate.getTime();
 
-        System.out.println("beforeExpiredTime = " + beforeExpiredTime);
-        System.out.println("currentTime = " + currentTime);
+        log.info("beforeExpiredTime = " + beforeExpiredTime);
+        log.info("currentTime = " + currentTime);
 
-        System.out.println("beforeExpiredDate = " + dateFormat.format(beforeExpiredDate));
-        System.out.println("currentDate = " + dateFormat.format(currentDate));
+        log.info("beforeExpiredDate = " + dateFormat.format(beforeExpiredDate));
+        log.info("currentDate = " + dateFormat.format(currentDate));
 
-        System.out.println(beforeExpiredTime <= currentTime);
-        System.out.println(beforeExpiredTime - currentTime);
+        log.info((beforeExpiredTime <= currentTime)+"");
+        log.info((beforeExpiredTime - currentTime)+"");
 
 
         if (beforeExpiredTime <= currentTime){
-            System.out.println("====>>>>>");
+            log.info("====>>>>>");
             response.setHeader(CommonConstant.REFRESH_TOKEN,"123456");
         }
 
