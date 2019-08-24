@@ -35,6 +35,9 @@
 #### GITHUB：[https://github.com/geekidea/spring-boot-plus](https://github.com/geekidea/spring-boot-plus "spring-boot-plus github")
 #### GITEE：[https://gitee.com/geekidea/spring-boot-plus](https://gitee.com/geekidea/spring-boot-plus "spring-boot-plus gitee")
 
+![](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.png)
+
+
 ### 主要特性
 1. 集成spring boot 常用开发组件集、公共配置、AOP日志等
 2. 集成mybatis plus快速dao操作
@@ -46,7 +49,6 @@
 8. 集成druid连接池，JDBC性能和慢查询检测
 9. 集成spring boot admin，实时检测项目运行情况
 10. 使用assembly maven插件进行不同环境打包部署,包含启动、重启命令，配置文件提取到外部config目录
-
 
 ### 项目环境 
 中间件 | 版本 |  备注
