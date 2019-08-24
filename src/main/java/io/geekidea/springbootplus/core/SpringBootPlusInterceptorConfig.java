@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.config.core;
+package io.geekidea.springbootplus.core;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -51,12 +51,22 @@ public class SpringBootPlusInterceptorConfig implements Serializable {
     private InterceptorConfig resourceConfig;
 
     /**
+     * 上传拦截器
+     */
+    private InterceptorConfig uploadConfig;
+
+    /**
      * 下载拦截器
      */
     private InterceptorConfig downloadConfig;
 
     @Data
     public static class InterceptorConfig {
+
+        /**
+         * 是否启用
+         */
+        private boolean enabled;
 
         /**
          * 排除路径

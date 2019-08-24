@@ -135,7 +135,7 @@ public final class DownloadUtil {
         if (downloadFileName.contains("..")||downloadFileName.contains("../")){
             throw new IOException("非法的文件名称");
         }
-        System.out.println("ok");
+        log.info("ok");
     }
 
     public static interface DownloadHandler{

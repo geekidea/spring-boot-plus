@@ -27,7 +27,7 @@
 ## Purpose
 > Everyone can develop projects independently, quickly and efficiently！
 
-## DOCS
+## Docs
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
 #### Website：[springboot.plus](http://springboot.plus "springboot.plus")
@@ -86,6 +86,32 @@ cd spring-boot-plus
 > Local environment is used by default, The configuration file：application-local.yml
 ```bash
 mvn clean package -Plocal
+```
+
+### Project Main Class
+```java
+/**
+ * spring-boot-plus Project Main Class
+ * @author geekidea
+ * @since 2018-11-08
+ */
+@EnableAsync
+@EnableScheduling
+@EnableTransactionManagement
+@EnableConfigurationProperties
+@EnableAdminServer
+@MapperScan({"io.geekidea.springbootplus.**.mapper"})
+@SpringBootApplication
+public class SpringBootPlusApplication {
+
+    public static void main(String[] args) {
+        // Run spring-boot-plus
+        ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusApplication.class, args);
+        // Print Project Info
+        PrintApplicationInfo.print(context);
+    }
+
+}
 ```
 
 ## Quick Start

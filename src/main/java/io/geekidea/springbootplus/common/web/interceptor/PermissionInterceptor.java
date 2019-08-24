@@ -35,6 +35,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		log.info(request.getRequestURI());
 		log.info("\n\nPermissionInterceptor...\n\n");
 		return true;
 	}

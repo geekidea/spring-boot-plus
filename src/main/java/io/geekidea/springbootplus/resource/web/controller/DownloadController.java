@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.upload.web;
+package io.geekidea.springbootplus.resource.web.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.config.core.SpringBootPlusProperties;
+import io.geekidea.springbootplus.core.SpringBootPlusProperties;
 import io.geekidea.springbootplus.util.DownloadUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -58,12 +58,12 @@ public class DownloadController {
         // 文件下载，使用自定义下载处理器
         DownloadUtil.download(downloadDir,downloadFileName,allowFileExtensions,response, (dir, fileName, file, fileExtension, contentType, length) -> {
             // 下载自定义处理，返回true：执行下载，false：取消下载
-            System.out.println("dir = " + dir);
-            System.out.println("fileName = " + fileName);
-            System.out.println("file = " + file);
-            System.out.println("fileExtension = " + fileExtension);
-            System.out.println("contentType = " + contentType);
-            System.out.println("length = " + length);
+            log.info("dir = " + dir);
+            log.info("fileName = " + fileName);
+            log.info("file = " + file);
+            log.info("fileExtension = " + fileExtension);
+            log.info("contentType = " + contentType);
+            log.info("length = " + length);
             return true;
         });
     }

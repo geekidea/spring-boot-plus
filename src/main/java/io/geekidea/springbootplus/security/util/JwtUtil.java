@@ -47,7 +47,7 @@ public class JwtUtil {
 
     public JwtUtil(JwtProperties jwtProperties){
         JwtUtil.jwtProperties = jwtProperties;
-        System.out.println(JSON.toJSONString(JwtUtil.jwtProperties,true));
+        log.info(JSON.toJSONString(JwtUtil.jwtProperties));
     }
 
     public static String create() {
