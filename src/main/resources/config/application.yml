@@ -49,16 +49,28 @@ spring-boot-plus:
   # 拦截器配置
   interceptor-config:
     jwt-config:
+      enabled: false
+      include-path: /**
       exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/login,/verificationCode,/doc/**,/error/**,/docs,/test/**,/resource/**
     permission-config:
+      enabled: false
+      include-path: /**
       exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/adminLogin,/sysLogin,/login.html,/verificationCode,/doc/**,/error/**,/docs,/resource/**
     token-timeout-config:
+      enabled: false
+      include-path: /**
       exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/docs,/resource/**
     resource-config:
+      enabled: true
       include-path: ${spring-boot-plus.resource-access-patterns}
+    upload-config:
+      enabled: true
+      include-path: /upload/**
     download-config:
+      enabled: true
       include-path: /download/**
   # 文件上传下载配置
+  # 上传路径配置
   upload-path: /opt/upload/
   # 资源访问路径
   resource-access-path: /resource/

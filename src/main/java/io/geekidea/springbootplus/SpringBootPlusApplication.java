@@ -47,6 +47,10 @@ public class SpringBootPlusApplication {
         ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusApplication.class, args);
         // 打印项目信息
         PrintApplicationInfo.print(context);
+        /**
+         * TODO 日志现实行号
+         * 拦截器配置是否启用，参照文件上传拦截器
+         */
     }
 
 }

@@ -1,0 +1,1 @@
+package io.geekidea.springbootplus.resource;

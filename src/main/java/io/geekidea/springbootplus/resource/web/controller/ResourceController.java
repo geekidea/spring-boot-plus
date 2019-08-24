@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.upload.web;
+package io.geekidea.springbootplus.resource.web.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.config.core.SpringBootPlusProperties;
+import io.geekidea.springbootplus.core.SpringBootPlusProperties;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 图片访问控制器
+ * 图片等文件资源访问控制器
  * @author geekidea
  * @date 2019/8/20
  * @since 1.2.1-RELEASE
@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @Controller
 @RequestMapping("/image")
-public class ImageController {
+public class ResourceController {
 
     @Autowired
     private SpringBootPlusProperties springBootPlusProperties;

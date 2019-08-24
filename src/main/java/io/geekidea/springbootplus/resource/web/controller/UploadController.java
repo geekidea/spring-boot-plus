@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.upload.web;
+package io.geekidea.springbootplus.resource.web.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.config.core.SpringBootPlusProperties;
+import io.geekidea.springbootplus.common.web.param.IdParam;
+import io.geekidea.springbootplus.core.SpringBootPlusProperties;
+import io.geekidea.springbootplus.system.web.vo.SysLogQueryVo;
 import io.geekidea.springbootplus.util.UploadUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -45,6 +45,22 @@ public class UploadController {
 
     @Autowired
     private SpringBootPlusProperties springBootPlusProperties;
+
+    @GetMapping("/hello")
+    public ApiResult hello(){
+        log.info("hello...");
+        return ApiResult.ok();
+    }
+
+    /**
+     * 获取系统日志
+     */
+    @PostMapping("/info")
+    @ApiOperation(value = "获取SysLog对象详情",notes = "查看系统日志",response = SysLogQueryVo.class)
+    public ApiResult<SysLogQueryVo> getSysUser(@Valid @RequestBody IdParam idParam) throws Exception{
+        log.info("idParam = " + idParam);
+        return ApiResult.ok();
+    }
 
     /**
      * 上传单个文件
