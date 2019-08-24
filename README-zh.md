@@ -117,7 +117,7 @@ public class SpringBootPlusApplication {
 ## 快速开始
 [快速开始](https://springboot.plus/guide/quick-start.html)
 
-## 文档
+## 详细文档
  [https://springboot.plus](https://springboot.plus)
 
 ## 联系
