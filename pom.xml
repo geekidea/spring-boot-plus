@@ -21,7 +21,7 @@
 
     <groupId>io.geekidea</groupId>
     <artifactId>spring-boot-plus</artifactId>
-    <version>1.2.1.RELEASE</version>
+    <version>1.2.2.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-plus</name>
@@ -56,7 +56,6 @@
         <druid.version>1.1.18</druid.version>
         <commons-io.version>2.6</commons-io.version>
         <reflections.version>0.9.11</reflections.version>
-        <hibernate-validator.version>6.0.17.Final</hibernate-validator.version>
         <commons-codec.version>1.12</commons-codec.version>
         <commons-net.version>3.6</commons-net.version>
         <jansi.version>1.18</jansi.version>
@@ -108,6 +107,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-json</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -210,12 +214,6 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>${reflections.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate-validator.version}</version>
         </dependency>
 
         <dependency>

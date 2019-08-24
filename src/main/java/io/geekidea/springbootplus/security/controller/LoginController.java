@@ -48,7 +48,7 @@ public class LoginController extends BaseController {
 
     @GetMapping("/non")
     public ApiResult nonLogin() throws Exception{
-        System.out.println("nonLogin....");
+        log.info("nonLogin....");
         return ApiResult.fail(ApiCode.UNAUTHORIZED);
     }
 }

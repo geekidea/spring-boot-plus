@@ -35,9 +35,12 @@ public class RequestPathFilter implements Filter {
     private static List<String> excludes = new ArrayList<>();
 
     static {
-        excludes.add("/api");
-        excludes.add("/health/");
+        // 控制台日志忽略spring boot admin访问路径
+        excludes.add("/actuator");
+        excludes.add("/instances");
         excludes.add("/logfile");
+        excludes.add("/sba-settings.js");
+        excludes.add("/assets/img/favicon.png");
     }
 
     @Override
@@ -50,6 +53,7 @@ public class RequestPathFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         String path = req.getServletPath();
         String url = req.getRequestURL().toString();
+
         boolean isOut = true;
         for (String p : excludes){
             if (path.startsWith(p)){
