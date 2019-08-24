@@ -21,24 +21,19 @@
   </a>
 </p>
 
-
-#### SpringBoot Scaffolding
-
 ### spring-boot-plus是一套集成spring boot常用开发组件的后台快速开发框架
+> Spring-Boot-Plus是易于使用，快速，高效，功能丰富，开源的spring boot 脚手架.
 
-## Purpose
+## 目标
 > 每个人都可以独立、快速、高效地开发项目！
 
-> Everyone can develop projects independently, quickly and efficiently！
+## 文档
+#### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
-## Quick Start
-#### 官网地址：[springboot.plus](http://springboot.plus "springboot.plus")
-#### GITHUB：[https://github.com/geekidea/spring-boot-plus](https://github.com/geekidea/spring-boot-plus "spring-boot-plus github")
-#### GITEE：[https://gitee.com/geekidea/spring-boot-plus](https://gitee.com/geekidea/spring-boot-plus "spring-boot-plus gitee")
+#### Website：[springboot.plus](http://springboot.plus "springboot.plus")
 
-# Architecture
+# 项目架构
 ![spring-boot-plus-architecture.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.png)
-
 
 ### 主要特性
 1. 集成spring boot 常用开发组件集、公共配置、AOP日志等
@@ -79,8 +74,58 @@ jwt | 0.9.1 | json web token |
 hutool-all | 4.5.10 | 常用工具集 |
 
 
-## spring-boot-plus QQ技术交流群
-![spring-boot-plus QQ技术交流群](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-qq-group.png)
+## 使用
+### 克隆 spring-boot-plus
+```bash
+git clone https://github.com/geekidea/spring-boot-plus.git
+cd spring-boot-plus
+```
+
+### Maven 构建
+> 默认使用local环境,对应配置文件：application-local.yml
+
+```bash
+mvn clean package -Plocal
+```
+
+### 项目入口类
+```bash
+/**
+ * spring-boot-plus 项目启动入口
+ * @author geekidea
+ * @since 2018-11-08
+ */
+@EnableAsync
+@EnableScheduling
+@EnableTransactionManagement
+@EnableConfigurationProperties
+@EnableAdminServer
+@MapperScan({"io.geekidea.springbootplus.**.mapper"})
+@SpringBootApplication
+public class SpringBootPlusApplication {
+
+    public static void main(String[] args) {
+        // 启动spring-boot-plus
+        ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusApplication.class, args);
+        // 打印项目信息
+        PrintApplicationInfo.print(context);
+    }
+
+}
+```
+
+## 快速开始
+[快速开始](https://springboot.plus/guide/quick-start.html)
+
+## 文档
+ [https://springboot.plus](https://springboot.plus)
+
+## 联系
+- Gmail: [springbootplus@gmail.com](mailto:springbootplus@gmail.com)
+- spring-boot-plus技术交流群
+
+![spring-boot-plus QQ Group](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-qq-group.png)
 
 
-#### 官网地址：[springboot.plus](http://springboot.plus "springboot.plus")
+## License
+spring-boot-plus is under the Apache 2.0 license. See the [LICENSE](https://github.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.
