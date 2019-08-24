@@ -12,10 +12,6 @@
 - logback.xml显示行号
 - `application.yml` 拦截器配置新增 `include-path` 拦截路径配置
 	
-### 🔨 Dependency Upgrades
-- `pom.xml` 使用 `spring-boot-starter-validation` 替换 `hibernate-validator` 依赖
-
-
 ### 📝 Added/Modified
 - Add `UploadInterceptor` 文件上传全局拦截器
 - Add `DownloadInterceptor` 文件下载全局拦截器
@@ -23,12 +19,15 @@
 - Modify `config/WebMvcConfig` --> `core/SpringBootPlusWebMvcConfig`
 - Modify `ImageController` --> `ResouceController`，请求路径 `/api/resource`
 
-### 📔  Documentation
-- [spring-boot-plus-architecture](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.png)
-
 ### 🐞  Bug Fixes
 - Fix 文件下载路径潜在安全漏洞，过滤 `../` 非法路径参数
 - Fix 优化文件下载，Firefox 中文乱码问题
+
+### 📔  Documentation
+- [spring-boot-plus-architecture](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
+
+### 🔨 Dependency Upgrades
+- `pom.xml` 使用 `spring-boot-starter-validation` 替换 `hibernate-validator` 依赖
 
 
 ## [V1.2.1-RELEASE] 2019.08.21
