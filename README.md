@@ -88,6 +88,32 @@ cd spring-boot-plus
 mvn clean package -Plocal
 ```
 
+### Project Main Class
+```bash
+/**
+ * spring-boot-plus Project Main Class
+ * @author geekidea
+ * @since 2018-11-08
+ */
+@EnableAsync
+@EnableScheduling
+@EnableTransactionManagement
+@EnableConfigurationProperties
+@EnableAdminServer
+@MapperScan({"io.geekidea.springbootplus.**.mapper"})
+@SpringBootApplication
+public class SpringBootPlusApplication {
+
+    public static void main(String[] args) {
+        // Run spring-boot-plus
+        ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusApplication.class, args);
+        // Print Project Info
+        PrintApplicationInfo.print(context);
+    }
+
+}
+```
+
 ## Quick Start
 [Quick Start](https://springboot.plus/guide/quick-start.html)
 
