@@ -1,5 +1,31 @@
 # 更新日志 CHANGELOG
 
+## [V1.2.2-RELEASE] 2019.08.26 🏇 
+###  ⭐️  New Features
+- 拦截器启用禁用配置
+- 文件上传下载安全/权限控制
+- 启用 `logback.xml` 日志配置
+
+### ⚡️ Optimization
+- 更改core包目录
+- 下载上传拦截器
+- logback.xml显示行号
+- `application.yml` 拦截器配置新增 `include-path` 拦截路径配置
+ 	
+
+### 📝 Added/Modified
+- Add `UploadInterceptor` 文件上传全局拦截器
+- Add `DownloadInterceptor` 文件下载全局拦截器
+- Add `DownloadHandler` `DefaultDownloadHandler` 文件下载回调自定义处理器
+- Modify `config/WebMvcConfig` --> `core/SpringBootPlusWebMvcConfig`
+- Modify `ImageController` --> `ResouceController`，请求路径 `/api/resource`
+
+
+### 🐞  Bug Fixes
+- Fix 文件下载路径潜在安全漏洞，过滤 `../` 非法路径参数
+- Fix 优化文件下载，Firefox 中文乱码问题
+
+
 ## [V1.2.1-RELEASE] 2019.08.21
 
 ###  ⭐️  New Features
