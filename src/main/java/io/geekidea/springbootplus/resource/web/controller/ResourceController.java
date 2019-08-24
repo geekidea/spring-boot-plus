@@ -28,13 +28,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 图片等文件资源访问控制器
+ * /api/resource 访问路径 用于区分 文件访问虚拟目录映射 /resource
  * @author geekidea
  * @date 2019/8/20
  * @since 1.2.1-RELEASE
  */
 @Slf4j
 @Controller
-@RequestMapping("/image")
+@RequestMapping("/api/resource")
 public class ResourceController {
 
     @Autowired
@@ -43,7 +44,7 @@ public class ResourceController {
     /**
      * 访问图片
      */
-    @GetMapping("/{imageFileName}")
+    @GetMapping("/image/{imageFileName}")
     @ApiOperation(value = "访问图片",notes = "访问图片",response = ApiResult.class)
     public void getImage(@PathVariable(required = true) String imageFileName, HttpServletResponse response) throws Exception{
         log.info("imageFileName:{}",imageFileName);
