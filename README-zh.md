@@ -89,7 +89,7 @@ mvn clean package -Plocal
 ```
 
 ### 项目入口类
-```bash
+```java
 /**
  * spring-boot-plus 项目启动入口
  * @author geekidea

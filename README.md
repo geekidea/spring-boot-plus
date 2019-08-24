@@ -89,7 +89,7 @@ mvn clean package -Plocal
 ```
 
 ### Project Main Class
-```bash
+```java
 /**
  * spring-boot-plus Project Main Class
  * @author geekidea
