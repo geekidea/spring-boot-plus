@@ -27,14 +27,14 @@
 ## Purpose
 > Everyone can develop projects independently, quickly and efficiently！
 
-## Docs
+## Repository
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
-#### Website：[springboot.plus](http://springboot.plus "springboot.plus")
+#### Website
+#### [springboot.plus](http://springboot.plus "springboot.plus")
 
 # Architecture
 ![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
-
 
 ## Features
 - Integrated spring boot common development component set, common configuration, AOP log, etc
@@ -47,7 +47,6 @@
 - Integration alibaba druid connection pool, JDBC performance and slow query detection
 - Integrated Spring Boot Admin, real-time detection of project operation
 - Integrate maven-assembly-plugin for different environment package deployment, including startup and restart commands, and extract configuration files to external config directory
-
 
 ### Project Environment 
 Middleware | Version |  Remark
@@ -88,7 +87,82 @@ cd spring-boot-plus
 mvn clean package -Plocal
 ```
 
-### Project Main Class
+
+## 5 Minutes Finish CRUD
+
+### 1. Create Table
+```sql
+-- ----------------------------
+-- Table structure for sys_user
+-- ----------------------------
+drop table if exists `sys_user`;
+create table sys_user(
+    id          bigint                              not null comment 'id',
+    name        varchar(20)                         null comment 'name',
+    account     varchar(20)                         not null comment 'account',
+    pwd         varchar(20)                         not null comment 'password',
+    remark      varchar(200)                        null comment 'remark',
+    create_time timestamp default CURRENT_TIMESTAMP null comment 'create time',
+    update_time timestamp                           null comment 'update time',
+    primary key (`id`),
+    constraint sys_user_account_uindex
+        unique (account)
+) comment 'SystemUser';
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO sys_user (id, name, account, pwd, remark, create_time, update_time) VALUES (1, 'Administrator', 'admin', '123456', 'Administrator Account', '2019-08-26 00:52:01', null);
+
+```
+
+### 2. Generator CRUD CODE
+> Modify database info
+
+> Modify module name / author / table name / primary key id
+
+```text
+/src/test/java/io/geekidea/springbootplus/test/CodeGenerator.java
+```
+
+```java
+/**
+ * spring-boot-plus Code Generator
+ * @author geekidea
+ * @date 2018-11-08
+ */
+public class CodeGenerator {
+    private static final String USER_NAME = "root";
+    private static final String PASSWORD = "root";
+    private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
+    private static final String DRIVER_URL = "jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false";   
+    // CODE... 
+    // ############################ Config start ############################
+    // Module name
+    private static final String MODULE_NAME = "system";
+    // Author
+    private static final String AUTHOR = "geekidea";
+    // Table name
+    private static final String TABLE_NAME = "sys_user";
+    // Primary key id
+    private static final String PK_ID_COLUMN_NAME = "id";
+    // Generator strategy.  true：All / false:SIMPLE
+    private static final boolean GENERATOR_STRATEGY = true;
+    // Pagination list query Whether to sort. true：sort/false：non
+    private static final boolean PAGE_LIST_ORDER = false;
+    // ############################ Config end ############################
+
+    public static void main(String[] args) {
+        // Run...
+    }
+}
+```
+
+### 3. Startup Project
+> Project Main Class
+```text
+/src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
+```
+
 ```java
 /**
  * spring-boot-plus Project Main Class
@@ -113,6 +187,13 @@ public class SpringBootPlusApplication {
 
 }
 ```
+
+### 4. Access project swagger docs
+[http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html)
+
+### 5. SysUser CRUD Swagger
+![sys_user_swagger.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/sys_user_swagger.png)
+
 
 ## Quick Start
 [Quick Start](https://springboot.plus/guide/quick-start.html)
