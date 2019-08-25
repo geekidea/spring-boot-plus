@@ -33,7 +33,7 @@
 #### Website：[springboot.plus](http://springboot.plus "springboot.plus")
 
 # 项目架构
-![spring-boot-plus-architecture.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.png)
+![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
 
 ### 主要特性
 1. 集成spring boot 常用开发组件集、公共配置、AOP日志等
