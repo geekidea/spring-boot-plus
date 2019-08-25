@@ -88,7 +88,82 @@ cd spring-boot-plus
 mvn clean package -Plocal
 ```
 
-### 项目入口类
+
+## 5分钟完成增删改查
+
+### 创建数据库表
+```sql
+-- ----------------------------
+-- Table structure for sys_user
+-- ----------------------------
+drop table if exists `sys_user`;
+create table sys_user(
+    id          bigint                              not null comment '主键',
+    name        varchar(20)                         null comment '用户名称',
+    account     varchar(20)                         not null comment '账号',
+    pwd         varchar(20)                         not null comment '密码',
+    remark      varchar(200)                        null comment '备注',
+    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time timestamp                           null comment '修改时间',
+    primary key (`id`),
+    constraint sys_user_account_uindex
+        unique (account)
+) comment '系统用户';
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO sys_user (id, name, account, pwd, remark, create_time, update_time) VALUES (1, 'Administrator', 'admin', '123456', 'Administrator Account', '2019-08-26 00:52:01', null);
+
+```
+
+### CodeGenerator CRUD
+> 修改数据库信息
+
+>修改组件名称/作者/数据库表名称/主键id
+
+```text
+/src/test/java/io/geekidea/springbootplus/test/CodeGenerator.java
+```
+
+```java
+/**
+ * spring-boot-plus代码生成器入口类
+ * @author geekidea
+ * @date 2018-11-08
+ */
+public class CodeGenerator {
+    private static final String USER_NAME = "root";
+    private static final String PASSWORD = "root";
+    private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
+    private static final String DRIVER_URL = "jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false";   
+    // CODE... 
+    // ############################ 配置部分 start ############################
+    // 模块名称
+    private static final String MODULE_NAME = "system";
+    // 作者
+    private static final String AUTHOR = "geekidea";
+    // 生成的表名称
+    private static final String TABLE_NAME = "sys_user";
+    // 主键数据库列名称
+    private static final String PK_ID_COLUMN_NAME = "id";
+    // 代码生成策略 true：All/false:SIMPLE
+    private static final boolean GENERATOR_STRATEGY = true;
+    // 分页列表查询是否排序 true：有排序参数/false：无
+    private static final boolean PAGE_LIST_ORDER = false;
+    // ############################ 配置部分 end ############################
+    
+    public static void main(String[] args) {
+        // Run...
+    }
+}
+```
+
+### 启动项目
+> 项目入口类
+```text
+/src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
+```
+
 ```java
 /**
  * spring-boot-plus 项目启动入口
@@ -113,6 +188,12 @@ public class SpringBootPlusApplication {
 
 }
 ```
+
+### 访问项目swagger文档
+[http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html)
+
+### 系统用户 增删改查分页Swagger
+![sys_user_swagger-zh.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/sys_user_swagger-zh.png)
 
 ## 快速开始
 [快速开始](https://springboot.plus/guide/quick-start.html)
