@@ -33,7 +33,7 @@
 #### Website：[springboot.plus](http://springboot.plus "springboot.plus")
 
 # Architecture
-![spring-boot-plus-architecture.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.png)
+![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
 
 
 ## Features
