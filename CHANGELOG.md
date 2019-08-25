@@ -18,6 +18,7 @@
 - Add `DownloadHandler` `DefaultDownloadHandler` 文件下载回调自定义处理器
 - Modify `config/WebMvcConfig` --> `core/SpringBootPlusWebMvcConfig`
 - Modify `ImageController` --> `ResouceController`，请求路径 `/api/resource`
+- Add `SysUser` CRUD
 
 ### 🐞  Bug Fixes
 - Fix 文件下载路径潜在安全漏洞，过滤 `../` 非法路径参数
@@ -25,6 +26,7 @@
 
 ### 📔  Documentation
 - [spring-boot-plus-architecture](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
+- [5 Minutes Finish CRUD](https://github.com/geekidea/spring-boot-plus#5-minutes-finish-crud)
 
 ### 🔨 Dependency Upgrades
 - `pom.xml` 使用 `spring-boot-starter-validation` 替换 `hibernate-validator` 依赖
