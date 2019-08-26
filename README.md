@@ -30,7 +30,7 @@
 ## Repository
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
-#### Website
+## Website
 #### [springboot.plus](http://springboot.plus "springboot.plus")
 
 # Architecture
@@ -73,6 +73,7 @@ reflections | 0.9.11 | Reflection Toolkit  |
 hibernate-validator | 6.0.17.Final | Validator toolkit |
 jwt | 0.9.1 | JSON WEB TOKEN |
 hutool-all | 4.5.10 | Common toolset |
+lombok | 1.18.8 | Automatically plugs |
 
 ## Getting started
 ### Clone spring-boot-plus

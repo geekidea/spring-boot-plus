@@ -27,10 +27,11 @@
 ## 目标
 > 每个人都可以独立、快速、高效地开发项目！
 
-## 文档
+## 版本库
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
-#### Website：[springboot.plus](http://springboot.plus "springboot.plus")
+## 官网
+#### [springboot.plus](http://springboot.plus "springboot.plus")
 
 # 项目架构
 ![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
@@ -72,6 +73,7 @@ reflections | 0.9.11 | 反射工具包 |
 hibernate-validator | 6.0.17.Final | 后台参数校验注解 |
 jwt | 0.9.1 | json web token |
 hutool-all | 4.5.10 | 常用工具集 |
+lombok | 1.18.8 | 注解生成Java Bean等工具 |
 
 
 ## 使用
