@@ -9,7 +9,7 @@
 
 <p align="center">  
   <a href="https://github.com/geekidea/spring-boot-plus/">
-    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.2.1--RELEASE-blue">
+    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.2.2--RELEASE-blue">
   </a>
 
   <a href="https://github.com/spring-projects/spring-boot">
@@ -93,7 +93,7 @@ mvn clean package -Plocal
 
 ## 5分钟完成增删改查
 
-### 创建数据库表
+### 1. 创建数据库表
 ```sql
 -- ----------------------------
 -- Table structure for sys_user
@@ -118,7 +118,7 @@ INSERT INTO sys_user (id, name, account, pwd, remark, create_time, update_time) 
 
 ```
 
-### CodeGenerator CRUD
+### 2.使用代码生成器生成增删改查代码
 > 修改数据库信息
 
 >修改组件名称/作者/数据库表名称/主键id
@@ -160,7 +160,37 @@ public class CodeGenerator {
 }
 ```
 
-### 启动项目
+> 生成的代码结构
+
+```text
+/src/main/java/io/geekidea/springbootplus/system
+```
+
+```text
+└── system
+    ├── entity
+    │   └── SysUser.java
+    ├── mapper
+    │   └── SysUserMapper.java
+    ├── service
+    │   ├── SysUserService.java
+    │   └── impl
+    │       └── SysUserServiceImpl.java
+    └── web
+        ├── controller
+        │   └── SysUserController.java
+        ├── param
+        │   └── SysUserQueryParam.java
+        └── vo
+            └── SysUserQueryVo.java
+```
+
+> Mapper XML
+```text
+/src/main/resources/mapper/system/SysUserMapper.xml
+```
+
+### 3. 启动项目
 > 项目入口类
 ```text
 /src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
@@ -191,10 +221,10 @@ public class SpringBootPlusApplication {
 }
 ```
 
-### 访问项目swagger文档
+### 4. 访问项目swagger文档
 [http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html)
 
-### 系统用户 增删改查分页Swagger
+### 5. 系统用户 增删改查分页Swagger
 ![sys_user_swagger-zh.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/sys_user_swagger-zh.png)
 
 ## 快速开始
