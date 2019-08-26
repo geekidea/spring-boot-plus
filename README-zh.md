@@ -33,7 +33,7 @@
 ## 官网
 #### [springboot.plus](http://springboot.plus "springboot.plus")
 
-# 项目架构
+## 项目架构
 ![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
 
 ### 主要特性
