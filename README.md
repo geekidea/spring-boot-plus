@@ -9,7 +9,7 @@
 
 <p align="center">  
   <a href="https://github.com/geekidea/spring-boot-plus/">
-    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.2.1--RELEASE-blue">
+    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.2.2--RELEASE-blue">
   </a>
   <a href="https://github.com/spring-projects/spring-boot">
     <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.6.RELEASE-brightgreen">
@@ -156,6 +156,36 @@ public class CodeGenerator {
         // Run...
     }
 }
+```
+
+> Generated code structure
+
+```text
+/src/main/java/io/geekidea/springbootplus/system
+```
+
+```text
+└── system
+    ├── entity
+    │   └── SysUser.java
+    ├── mapper
+    │   └── SysUserMapper.java
+    ├── service
+    │   ├── SysUserService.java
+    │   └── impl
+    │       └── SysUserServiceImpl.java
+    └── web
+        ├── controller
+        │   └── SysUserController.java
+        ├── param
+        │   └── SysUserQueryParam.java
+        └── vo
+            └── SysUserQueryVo.java
+```
+
+> Mapper XML
+```text
+/src/main/resources/mapper/system/SysUserMapper.xml
 ```
 
 ### 3. Startup Project
