@@ -54,7 +54,7 @@ PWD=${TEMP_PWD##* }
 echo "${PWD}"
 
 # 登陆
-mysql -uroot -p
+mysql -uroot -p${PWD}
 
 # 修改密码
 # ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass4!';
