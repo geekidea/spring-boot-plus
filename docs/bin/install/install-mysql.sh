@@ -58,3 +58,5 @@ mysql -uroot -p${PWD}
 
 # 修改密码
 # ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass4!';
+
+
