@@ -234,7 +234,7 @@ public class SpringBootPlusApplication {
  [https://springboot.plus](https://springboot.plus)
 
 ## 联系
-- Gmail: [springbootplus@gmail.com](mailto:springbootplus@gmail.com)
+- Gmail: [springbootplus@aliyun.com](mailto:springbootplus@aliyun.com)
 - spring-boot-plus技术交流群
 
 ![spring-boot-plus QQ Group](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-qq-group.png)
