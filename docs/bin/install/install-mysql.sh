@@ -56,7 +56,10 @@ echo "${PWD}"
 # 登陆
 mysql -uroot -p${PWD}
 
+# 进入到mysql命令行时，修改密码
 # 修改密码
-# ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass4!';
+# ALTER USER 'root'@'localhost' IDENTIFIED BY 'Springbootplus666!';
 
-
+# 使用新密码登陆
+# exit
+# mysql -uroot -pSpringbootplus666!

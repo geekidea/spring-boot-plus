@@ -17,13 +17,14 @@
 
 <assembly>
     <!-- 可自定义，这里指定的是项目环境 -->
-    <!-- spring-boot-plus-1.0.1-RELEASE-local.tar.gz  -->
-    <id>${project.version}-${profileActive}</id>
+    <!-- spring-boot-plus-server-1.0.1-RELEASE-local.tar.gz  -->
+    <!-- <id>${project.version}-${profileActive}</id> -->
+    <id>assembly</id>
 
     <!-- 打包的类型，如果有N个，将会打N个类型的包 -->
     <formats>
         <format>tar.gz</format>
-        <format>zip</format>
+        <!-- <format>zip</format> -->
     </formats>
 
     <includeBaseDirectory>true</includeBaseDirectory>
