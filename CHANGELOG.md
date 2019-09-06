@@ -1,5 +1,62 @@
 # 更新日志 CHANGELOG
 
+##
+## [V1.2.3-RELEASE] 2019.09.09 :computer: 
+###  ⭐️  New Features
+# spring-boot-plusV1.2.3发布，CentOS快速安装环境/构建/部署/启动项目
+## 1. 下载安装脚本
+> 安装 `jdk`, `git`, `maven`, `redis`, `mysql`
+
+```bash
+wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/bin/install/download-install-all.sh
+```
+
+## 2. 运行安装脚本
+```bash
+sh download-install-all.sh
+```
+
+## 3. 修改MySQL密码
+```bash
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'Springbootplus666!';
+exit
+mysql -uroot -pSpringbootplus666!
+```
+
+## 4. 导入MySQL脚本
+```bash
+create database if not exists spring_boot_plus character set utf8mb4;
+use spring_boot_plus;
+source /root/mysql_spring_boot_plus.sql;
+show tables;
+exit
+```
+
+## 5. 下载部署脚本 `deploy.sh`
+```bash
+wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/deploy/deploy.sh
+```
+
+## 6. 执行脚本
+```bash
+sh deploy.sh
+```
+
+## 7.访问项目
+> SpringBootAdmin管理页面
+
+[http://localhost:8888](http://localhost:8888)
+
+> spring-boot-plus Swagger文档页面
+
+[http://localhost:8888/docs](http://localhost:8888/docs)
+
+## 8. 查看项目运行日志
+```bash
+tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
+```
+
+
 ## [V1.2.2-RELEASE] 2019.08.26 🏇 
 ###  ⭐️  New Features
 - 拦截器启用禁用配置
