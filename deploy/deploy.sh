@@ -23,6 +23,9 @@
 # date: 2019-9-6
 #======================================================================
 
+NOW=$(date --date='0 days ago' "+%Y-%m-%d-%H-%M-%S")
+echo "${NOW}"
+
 # 1. 下载或更新spring-boot-plus版本库
 # 先判断当前目录下是否有spring-boot-plus目录
 # 如果有，则执行git pull
@@ -45,6 +48,13 @@ if [ -d "spring-boot-plus-server" ]; then
 fi
 
 # 4. 复制spring-boot-plus-server-assembly.tar.gz到项目同级目录下
+# 备份之前的server
+
+if [ ! -d "spring-boot-plus-server-back" ]; then
+  mkdir spring-boot-plus-server-back
+fi
+mv spring-boot-plus-server spring-boot-plus-server-back/spring-boot-plus-server-back-"${NOW}"
+
 cp spring-boot-plus/target/spring-boot-plus-server-assembly.tar.gz spring-boot-plus-server-assembly.tar.gz
 
 # 5. 运行spring-boot-plus
