@@ -63,3 +63,7 @@ mysql -uroot -p${PWD}
 # 使用新密码登陆
 # exit
 # mysql -uroot -pSpringbootplus666!
+
+# 导入spring-boot-plus数据库脚本
+# use mysql;
+# source /root/mysql_spring_boot_plus.sql;
