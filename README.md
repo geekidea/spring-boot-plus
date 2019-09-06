@@ -233,6 +233,60 @@ public class SpringBootPlusApplication {
 ## Documentation
  [https://springboot.plus](https://springboot.plus)
 
+
+## CentOS Quick Installation Environment / Build / Deploy / Launch Spring-boot-plus Project
+### 1. Download the installation script
+> Install `jdk`, `git`, `maven`, `redis`, `mysql`
+
+```bash
+wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/bin/install/download-install-all.sh
+```
+
+### 2. Run the installation script
+```bash
+sh download-install-all.sh
+```
+
+### 3. Modify MySQL password
+```bash
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'Springbootplus666!';
+exit
+mysql -uroot -pSpringbootplus666!
+```
+
+### 4. Import MySQL scripts
+```bash
+create database if not exists spring_boot_plus character set utf8mb4;
+use spring_boot_plus;
+source /root/mysql_spring_boot_plus.sql;
+show tables;
+exit
+```
+
+### 5. Download deployment script `deploy.sh`
+```bash
+wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/deploy/deploy.sh
+```
+
+### 6. Execution script
+```bash
+sh deploy.sh
+```
+
+### 7.Access project
+> SpringBootAdmin Management page
+
+[http://47.105.159.10:8888](http://47.105.159.10:8888)
+
+> spring-boot-plus Swagger Document page
+
+[http://47.105.159.10:8888/docs](http://47.105.159.10:8888/docs)
+
+### 8. View project run log
+```bash
+tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
+```
+
 ## Contact
 - Gmail: [springbootplus@aliyun.com](mailto:springbootplus@aliyun.com)
 - QQ Group

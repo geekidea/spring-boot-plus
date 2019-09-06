@@ -116,6 +116,7 @@ create table sys_user(
 -- ----------------------------
 INSERT INTO sys_user (id, name, account, pwd, remark, create_time, update_time) VALUES (1, 'Administrator', 'admin', '123456', 'Administrator Account', '2019-08-26 00:52:01', null);
 
+
 ```
 
 ### 2.使用代码生成器生成增删改查代码
@@ -232,6 +233,59 @@ public class SpringBootPlusApplication {
 
 ## 详细文档
  [https://springboot.plus](https://springboot.plus)
+
+## CentOS快速安装环境/构建/部署/启动spring-boot-plus项目
+### 1. 下载安装脚本
+> 安装 `jdk`, `git`, `maven`, `redis`, `mysql`
+
+```bash
+wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/bin/install/download-install-all.sh
+```
+
+### 2. 运行安装脚本
+```bash
+sh download-install-all.sh
+```
+
+### 3. 修改MySQL密码
+```bash
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'Springbootplus666!';
+exit
+mysql -uroot -pSpringbootplus666!
+```
+
+### 4. 导入MySQL脚本
+```bash
+create database if not exists spring_boot_plus character set utf8mb4;
+use spring_boot_plus;
+source /root/mysql_spring_boot_plus.sql;
+show tables;
+exit
+```
+
+### 5. 下载部署脚本 `deploy.sh`
+```bash
+wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/deploy/deploy.sh
+```
+
+### 6. 执行脚本
+```bash
+sh deploy.sh
+```
+
+### 7.访问项目
+> SpringBootAdmin管理页面
+
+[http://47.105.159.10:8888](http://47.105.159.10:8888)
+
+> spring-boot-plus Swagger文档页面
+
+[http://47.105.159.10:8888/docs](http://47.105.159.10:8888/docs)
+
+### 8. 查看项目运行日志
+```bash
+tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
+```
 
 ## 联系
 - Gmail: [springbootplus@aliyun.com](mailto:springbootplus@aliyun.com)
