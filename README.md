@@ -114,6 +114,7 @@ create table sys_user(
 -- ----------------------------
 INSERT INTO sys_user (id, name, account, pwd, remark, create_time, update_time) VALUES (1, 'Administrator', 'admin', '123456', 'Administrator Account', '2019-08-26 00:52:01', null);
 
+
 ```
 
 ### 2. Generator CRUD CODE

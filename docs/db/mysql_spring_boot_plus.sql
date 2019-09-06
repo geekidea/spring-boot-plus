@@ -55,3 +55,24 @@ INSERT INTO `sys_log` VALUES (1060438788502732802, 0, 'B', 100000, '2018-11-08 1
 INSERT INTO `sys_log` VALUES (1060438799600861185, 0, 'C', 100000, '2018-11-08 15:42:10');
 INSERT INTO `sys_log` VALUES (1060438809495224322, 0, 'D', 100000, '2018-11-08 15:42:13');
 
+-- ----------------------------
+-- Table structure for sys_user
+-- ----------------------------
+drop table if exists `sys_user`;
+create table sys_user(
+     id          bigint                              not null comment 'id',
+     name        varchar(20)                         null comment 'name',
+     account     varchar(20)                         not null comment 'account',
+     pwd         varchar(20)                         not null comment 'password',
+     remark      varchar(200)                        null comment 'remark',
+     create_time timestamp default CURRENT_TIMESTAMP null comment 'create time',
+     update_time timestamp                           null comment 'update time',
+     primary key (`id`),
+     constraint sys_user_account_uindex
+         unique (account)
+) comment 'SystemUser';
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO sys_user (id, name, account, pwd, remark, create_time, update_time) VALUES (1, 'Administrator', 'admin', '123456', 'Administrator Account', '2019-08-26 00:52:01', null);
+
