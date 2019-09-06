@@ -21,7 +21,7 @@
 
     <groupId>io.geekidea</groupId>
     <artifactId>spring-boot-plus</artifactId>
-    <version>1.2.2.RELEASE</version>
+    <version>1.2.3.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-plus</name>
@@ -339,6 +339,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
+                    <finalName>${project.build.finalName}-server</finalName>
                     <descriptors>
                         <descriptor>src/main/assembly/assembly.xml</descriptor>
                     </descriptors>
