@@ -63,5 +63,3 @@ mysql -uroot -p${PWD}
 # 使用新密码登陆
 # exit
 # mysql -uroot -pSpringbootplus666!
-
-
