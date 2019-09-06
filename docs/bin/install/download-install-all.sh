@@ -15,7 +15,7 @@
 # limitations under the License.
 
 #======================================================================
-# 先下载按照脚本
+# 先下载按照脚本，多次执行该脚本，会覆盖以下下载的文件
 # 快速安装jdk/git/maven/redis/mysql
 #
 # author: geekidea
@@ -23,11 +23,11 @@
 #======================================================================
 
 
-wget https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-all.sh
-wget https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-jdk.sh
-wget https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-git.sh
-wget https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-maven.sh
-wget https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-redis.sh
-wget https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-mysql.sh
+wget -O install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-all.sh
+wget -O install-jdk.sh  https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-jdk.sh
+wget -O install-git.sh  https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-git.sh
+wget -O install-maven.sh  https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-maven.sh
+wget -O install-redis.sh  https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-redis.sh
+wget -O install-mysql.sh  https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-mysql.sh
 
 sh install-all.sh
