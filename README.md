@@ -35,15 +35,6 @@
 ## Website
 #### [springboot.plus](http://springboot.plus)
 
-## CHANGELOG
-#### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
-
-## Java Docs
-#### [Java Api Docs](http://geekidea.io/spring-boot-plus-apidocs/)
-
-## Architecture
-![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
-
 ## Features
 - Integrated spring boot common development component set, common configuration, AOP log, etc
 - Integrated mybatis-plus fast dao operation
@@ -55,6 +46,9 @@
 - Integration alibaba druid connection pool, JDBC performance and slow query detection
 - Integrated Spring Boot Admin, real-time detection of project operation
 - Integrate maven-assembly-plugin for different environment package deployment, including startup and restart commands, and extract configuration files to external config directory
+
+## Architecture
+![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
 
 ### Project Environment 
 Middleware | Version |  Remark
@@ -82,6 +76,12 @@ hibernate-validator | 6.0.17.Final | Validator toolkit |
 jwt | 0.9.1 | JSON WEB TOKEN |
 hutool-all | 4.6.4 | Common toolset |
 lombok | 1.18.8 | Automatically plugs |
+
+## CHANGELOG
+#### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
+
+## Java Docs
+#### [Java Api Docs](http://geekidea.io/spring-boot-plus-apidocs/)
 
 ## Getting started
 ### Clone spring-boot-plus
