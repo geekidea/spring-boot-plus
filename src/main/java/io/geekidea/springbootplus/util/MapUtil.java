@@ -23,7 +23,7 @@ import java.util.Map;
  * <p>
  *  Map构建工具类
  * </p>
- * @auth geekidea
+ * @author geekidea
  * @date 2019-05-23
  **/
 public class MapUtil {

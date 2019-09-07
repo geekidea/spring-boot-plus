@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
  * <p>
  *  Jwt配置属性
  * </p>
- * @auth geekidea
+ * @author geekidea
  * @date 2019-05-22
  **/
 @Data

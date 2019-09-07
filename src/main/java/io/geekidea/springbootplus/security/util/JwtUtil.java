@@ -34,7 +34,7 @@ import java.util.Map;
  * <p>
  *  jwt工具类
  * </p>
- * @auth geekidea
+ * @author geekidea
  * @date 2019-05-15
  **/
 @Slf4j
