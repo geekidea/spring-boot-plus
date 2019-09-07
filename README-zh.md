@@ -9,13 +9,11 @@
 
 <p align="center">  
   <a href="https://github.com/geekidea/spring-boot-plus/">
-    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.2.2--RELEASE-blue">
+    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.2.3--RELEASE-blue">
   </a>
-
   <a href="https://github.com/spring-projects/spring-boot">
-    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.7.RELEASE-brightgreen">
+    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.8.RELEASE-brightgreen">
   </a>
-  
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
   </a>
@@ -31,7 +29,7 @@
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
 ## 官网
-#### [springboot.plus](http://springboot.plus "springboot.plus")
+#### [springboot.plus](http://springboot.plus?_blank)
 
 ## 项目架构
 ![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
@@ -223,16 +221,16 @@ public class SpringBootPlusApplication {
 ```
 
 ### 4. 访问项目swagger文档
-[http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html)
+[http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html?_blank)
 
 ### 5. 系统用户 增删改查分页Swagger
 ![sys_user_swagger-zh.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/sys_user_swagger-zh.png)
 
 ## 快速开始
-[快速开始](https://springboot.plus/guide/quick-start.html)
+[快速开始](https://springboot.plus/guide/quick-start.html?_blank)
 
 ## 详细文档
- [https://springboot.plus](https://springboot.plus)
+ [https://springboot.plus](https://springboot.plus?_blank)
 
 ## CentOS快速安装环境/构建/部署/启动spring-boot-plus项目
 ### 1. 下载安装脚本
@@ -276,11 +274,11 @@ sh deploy.sh
 ### 7.访问项目
 > SpringBootAdmin管理页面
 
-[http://47.105.159.10:8888](http://47.105.159.10:8888)
+[http://47.105.159.10:8888](http://47.105.159.10:8888?_blank)
 
 > spring-boot-plus Swagger文档页面
 
-[http://47.105.159.10:8888/docs](http://47.105.159.10:8888/docs)
+[http://47.105.159.10:8888/docs](http://47.105.159.10:8888/docs?_blank)
 
 ### 8. 查看项目运行日志
 ```bash
