@@ -46,23 +46,25 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project-parent.version>${parent.version}</project-parent.version>
         <java.version>1.8</java.version>
-        <spring-boot.version>2.1.7.RELEASE</spring-boot.version>
-        <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
-        <fastjson.version>1.2.59</fastjson.version>
+        <spring-boot.version>2.1.8.RELEASE</spring-boot.version>
+        <mybatis-plus-boot-starter.version>3.2.0</mybatis-plus-boot-starter.version>
+        <fastjson.version>1.2.60</fastjson.version>
         <swagger2.version>2.6.1</swagger2.version>
         <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
         <velocity.version>1.7</velocity.version>
         <mysql.version>5.1.47</mysql.version>
-        <druid.version>1.1.18</druid.version>
+        <druid.version>1.1.20</druid.version>
         <commons-io.version>2.6</commons-io.version>
         <reflections.version>0.9.11</reflections.version>
-        <commons-codec.version>1.12</commons-codec.version>
+        <commons-codec.version>1.13</commons-codec.version>
         <commons-net.version>3.6</commons-net.version>
         <jansi.version>1.18</jansi.version>
         <lombok.version>1.18.8</lombok.version>
-        <commons-pool2.version>2.6.2</commons-pool2.version>
+        <commons-pool2.version>2.7.0</commons-pool2.version>
         <jwt.version>0.9.1</jwt.version>
         <spring-boot-admin.version>2.1.6</spring-boot-admin.version>
+        <hutool.version>4.6.4</hutool.version>
 
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -183,9 +185,9 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons-collections4.version}</version>
         </dependency>
 
         <dependency>
@@ -243,7 +245,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>4.5.10</version>
+            <version>${hutool.version}</version>
         </dependency>
 
         <!-- spring boot admin start -->

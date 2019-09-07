@@ -1,60 +1,37 @@
 # 更新日志 CHANGELOG
 
-##
 ## [V1.2.3-RELEASE] 2019.09.09 :computer: 
+> spring-boot-plusV1.2.3发布，CentOS快速安装环境/构建/部署/启动项目
+
 ###  ⭐️  New Features
-# spring-boot-plusV1.2.3发布，CentOS快速安装环境/构建/部署/启动项目
-## 1. 下载安装脚本
-> 安装 `jdk`, `git`, `maven`, `redis`, `mysql`
+- 项目运行环境安装脚本
+- CentOS快速构建/部署/启动项目脚本
 
-```bash
-wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/bin/install/download-install-all.sh
-```
+### ⚡️ Optimization
+- 优化 `maven-assembly-plugin` 项目打包插件
+	
+### 📝 Added/Modified
+Add [install-jdk.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-jdk.sh) yum安装`jdk8`脚本
+Add [install-git.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-git.sh) yum安装`git`脚本
+Add [install-maven.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-maven.sh) yum安装`maven`脚本
+Add [install-redis.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-redis.sh) yum安装`redis`脚本
+Add [install-mysql.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-mysql.sh) yum安装`mysql`脚本
+Add [install-all.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-all.sh) 安装所有环境脚本
+Add [download-install-all.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/download-install-all.sh) 下载并安装所有环境脚本
+Add [deploy.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/deploy/deploy.sh) 下载项目/构建/部署/启动项目脚本
 
-## 2. 运行安装脚本
-```bash
-sh download-install-all.sh
-```
+### 📔  Documentation
+[CentOS Quick Installation Environment / Build / Deploy / Launch Spring-boot-plus Project](https://github.com/geekidea/spring-boot-plus#centos-quick-installation-environment--build--deploy--launch-spring-boot-plus-project)
 
-## 3. 修改MySQL密码
-```bash
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'Springbootplus666!';
-exit
-mysql -uroot -pSpringbootplus666!
-```
-
-## 4. 导入MySQL脚本
-```bash
-create database if not exists spring_boot_plus character set utf8mb4;
-use spring_boot_plus;
-source /root/mysql_spring_boot_plus.sql;
-show tables;
-exit
-```
-
-## 5. 下载部署脚本 `deploy.sh`
-```bash
-wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/deploy/deploy.sh
-```
-
-## 6. 执行脚本
-```bash
-sh deploy.sh
-```
-
-## 7.访问项目
-> SpringBootAdmin管理页面
-
-[http://localhost:8888](http://localhost:8888)
-
-> spring-boot-plus Swagger文档页面
-
-[http://localhost:8888/docs](http://localhost:8888/docs)
-
-## 8. 查看项目运行日志
-```bash
-tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
-```
+### 🔨 Dependency Upgrades
+- Upgrade to `springboot` 2.1.8.RELEASE
+- Upgrade to `Mybatis` 3.5.2
+- Upgrade to `Mybatis Plus` 3.2.0
+- Upgrade to `Alibaba Druid` 1.1.20
+- Upgrade to `Fastjson` 1.2.60
+- Upgrade to `commons-codec` 1.13
+- Upgrade to `commons-collections` 4.4
+- Upgrade to `hutool-all` 4.6.4
 
 
 ## [V1.2.2-RELEASE] 2019.08.26 🏇 

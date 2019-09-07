@@ -58,21 +58,21 @@ Redis | 3.2+ |  |
 ### 技术选型 
 技术 | 版本 |  备注
 -|-|-
-Spring Boot | 2.1.7.RELEASE | 最新发布稳定版 |
+Spring Boot | 2.1.8.RELEASE | 最新发布稳定版 |
 Spring Framework | 5.1.9.RELEASE | 最新发布稳定版 |
-Mybatis | 3.5.1 | 持久层框架 |
-Mybatis Plus | 3.1.2 | mybatis增强框架 |
-Alibaba Druid | 1.1.18 | 数据源 |
-Fastjson | 1.2.59 | JSON处理工具集 |
+Mybatis | 3.5.2 | 持久层框架 |
+Mybatis Plus | 3.2.0 | mybatis增强框架 |
+Alibaba Druid | 1.1.20 | 数据源 |
+Fastjson | 1.2.60 | JSON处理工具集 |
 swagger2 | 2.6.1 | api文档生成工具 |
 commons-lang3 | 3.9 | 常用工具包 |
 commons-io | 2.6 | IO工具包 |
-commons-codec | 1.12 | 加密解密等工具包 |
-commons-collections | 3.2.1 | 集合工具包 |
+commons-codec | 1.13 | 加密解密等工具包 |
+commons-collections4 | 4.4 | 集合工具包 |
 reflections | 0.9.11 | 反射工具包 |
 hibernate-validator | 6.0.17.Final | 后台参数校验注解 |
 jwt | 0.9.1 | json web token |
-hutool-all | 4.5.10 | 常用工具集 |
+hutool-all | 4.6.4 | 常用工具集 |
 lombok | 1.18.8 | 注解生成Java Bean等工具 |
 
 
