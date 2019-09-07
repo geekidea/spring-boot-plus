@@ -11,14 +11,14 @@
 - 优化 `maven-assembly-plugin` 项目打包插件
 	
 ### 📝 Added/Modified
-Add [install-jdk.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-jdk.sh) yum安装`jdk8`脚本
-Add [install-git.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-git.sh) yum安装`git`脚本
-Add [install-maven.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-maven.sh) yum安装`maven`脚本
-Add [install-redis.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-redis.sh) yum安装`redis`脚本
-Add [install-mysql.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-mysql.sh) yum安装`mysql`脚本
-Add [install-all.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-all.sh) 安装所有环境脚本
-Add [download-install-all.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/download-install-all.sh) 下载并安装所有环境脚本
-Add [deploy.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/deploy/deploy.sh) 下载项目/构建/部署/启动项目脚本
+- Add [install-jdk.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-jdk.sh) yum安装`jdk8`脚本
+- Add [install-git.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-git.sh) yum安装`git`脚本
+- Add [install-maven.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-maven.sh) yum安装`maven`脚本
+- Add [install-redis.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-redis.sh) yum安装`redis`脚本
+- Add [install-mysql.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-mysql.sh) yum安装`mysql`脚本
+- Add [install-all.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/install-all.sh) 安装所有环境脚本
+- Add [download-install-all.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/download-install-all.sh) 下载并安装所有环境脚本
+- Add [deploy.sh](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/deploy/deploy.sh) 下载项目/构建/部署/启动项目脚本
 
 ### 📔  Documentation
 [CentOS Quick Installation Environment / Build / Deploy / Launch Spring-boot-plus Project](https://github.com/geekidea/spring-boot-plus#centos-quick-installation-environment--build--deploy--launch-spring-boot-plus-project)
