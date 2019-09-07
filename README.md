@@ -31,7 +31,7 @@
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
 ## Website
-#### [springboot.plus](http://springboot.plus "springboot.plus")
+#### [springboot.plus](http://springboot.plus?_blank)
 
 ## Architecture
 ![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
@@ -221,17 +221,17 @@ public class SpringBootPlusApplication {
 ```
 
 ### 4. Access project swagger docs
-[http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html)
+[http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html?_blank)
 
 ### 5. SysUser CRUD Swagger
 ![sys_user_swagger.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/sys_user_swagger.png)
 
 
 ## Quick Start
-[Quick Start](https://springboot.plus/guide/quick-start.html)
+[Quick Start](https://springboot.plus/guide/quick-start.html?_blank)
 
 ## Documentation
- [https://springboot.plus](https://springboot.plus)
+ [https://springboot.plus](https://springboot.plus?_blank)
 
 
 ## CentOS Quick Installation Environment / Build / Deploy / Launch Spring-boot-plus Project
@@ -276,11 +276,11 @@ sh deploy.sh
 ### 7.Access project
 > SpringBootAdmin Management page
 
-[http://47.105.159.10:8888](http://47.105.159.10:8888)
+[http://47.105.159.10:8888](http://47.105.159.10:8888?_blank)
 
 > spring-boot-plus Swagger Document page
 
-[http://47.105.159.10:8888/docs](http://47.105.159.10:8888/docs)
+[http://47.105.159.10:8888/docs](http://47.105.159.10:8888/docs?_blank)
 
 ### 8. View project run log
 ```bash
