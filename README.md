@@ -9,10 +9,10 @@
 
 <p align="center">  
   <a href="https://github.com/geekidea/spring-boot-plus/">
-    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.2.2--RELEASE-blue">
+    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.2.3--RELEASE-blue">
   </a>
   <a href="https://github.com/spring-projects/spring-boot">
-    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.7.RELEASE-brightgreen">
+    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.8.RELEASE-brightgreen">
   </a>
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
@@ -58,21 +58,21 @@ Redis | 3.2+ |  |
 ### Technology stack 
 Component| Version |  Remark
 -|-|-
-Spring Boot | 2.1.7.RELEASE | Latest release stable version |
+Spring Boot | 2.1.8.RELEASE | Latest release stable version |
 Spring Framework | 5.1.9.RELEASE | Latest release stable version |
-Mybatis | 3.5.1 | DAO Framework |
-Mybatis Plus | 3.1.2 | mybatis Enhanced framework |
-Alibaba Druid | 1.1.18 | Data source |
-Fastjson | 1.2.59 | JSON processing toolset |
+Mybatis | 3.5.2 | DAO Framework |
+Mybatis Plus | 3.2.0 | mybatis Enhanced framework |
+Alibaba Druid | 1.1.20 | Data source |
+Fastjson | 1.2.60 | JSON processing toolset |
 swagger2 | 2.6.1 | Api document generation tool |
 commons-lang3 | 3.9 | Apache language toolkit |
 commons-io | 2.6 | Apache IO Toolkit |
-commons-codec | 1.12 | Apache Toolkit such as encryption and decryption |
-commons-collections | 3.2.1 | Apache collections toolkit |
+commons-codec | 1.13 | Apache Toolkit such as encryption and decryption |
+commons-collections4 | 4.4 | Apache collections toolkit |
 reflections | 0.9.11 | Reflection Toolkit  |
 hibernate-validator | 6.0.17.Final | Validator toolkit |
 jwt | 0.9.1 | JSON WEB TOKEN |
-hutool-all | 4.5.10 | Common toolset |
+hutool-all | 4.6.4 | Common toolset |
 lombok | 1.18.8 | Automatically plugs |
 
 ## Getting started
