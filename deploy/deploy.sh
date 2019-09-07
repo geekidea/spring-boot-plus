@@ -25,6 +25,8 @@
 
 NOW=$(date --date='0 days ago' "+%Y-%m-%d-%H-%M-%S")
 echo "${NOW}"
+PULL_RESULT=""
+IS_UPDATE=0
 
 # 1. 下载或更新spring-boot-plus版本库
 # 先判断当前目录下是否有spring-boot-plus目录
@@ -34,7 +36,17 @@ if [ ! -d "spring-boot-plus" ]; then
   git clone https://github.com/geekidea/spring-boot-plus.git
 else
   cd spring-boot-plus
-  git pull
+
+  # 拉取代码，并获取结果判断，是否有新的代码更新，如果有，则备份之前的server，否则替换
+  PULL_RESULT=$(git pull)
+  echo "${PULL_RESULT}"
+
+  if [[ ! $PULL_RESULT == *up-to-date* ]]
+  then
+    echo "Update code..."
+    IS_UPDATE=1
+  fi
+
 fi
 
 # 2. maven打包
@@ -53,9 +65,16 @@ fi
 if [ ! -d "spring-boot-plus-server-back" ]; then
   mkdir spring-boot-plus-server-back
 fi
-mv spring-boot-plus-server spring-boot-plus-server-back/spring-boot-plus-server-back-"${NOW}"
 
-cp spring-boot-plus/target/spring-boot-plus-server-assembly.tar.gz spring-boot-plus-server-assembly.tar.gz
+if [[ $IS_UPDATE == 1 ]]
+then
+	echo "Back spring-boot-plus-server..."
+  mv spring-boot-plus-server spring-boot-plus-server-back/spring-boot-plus-server-back-"${NOW}"
+fi
+
+echo "Copy spring-boot-plus-server-assembly.tar.gz..."
+# 复制到项目同级目录，如果有，则覆盖
+cp -r -f spring-boot-plus/target/spring-boot-plus-server-assembly.tar.gz spring-boot-plus-server-assembly.tar.gz
 
 # 5. 运行spring-boot-plus
 tar -zxvf spring-boot-plus-server-assembly.tar.gz
