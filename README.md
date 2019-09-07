@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/geekidea/spring-boot-plus">
-   <img alt="spring-boot-plus logo" src="https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/img/logo.png">
+   <img alt="spring-boot-plus logo" src="https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/logo.png">
   </a>
 </p>
 <p align="center">
@@ -24,6 +24,8 @@
 ### A **easy-to-use**, **high-speed**, **high-efficient**, **feature-rich**, **open source** spring boot scaffolding.
 > spring-boot-plus is a background rapid development framework that integrates spring boot common development components.
 
+> Front-end and back-end separation, focusing on back-end services
+
 ## Purpose
 > Everyone can develop projects independently, quickly and efficiently！
 
@@ -31,7 +33,10 @@
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
 ## Website
-#### [springboot.plus](http://springboot.plus?_blank)
+#### [springboot.plus](http://springboot.plus)
+
+## CHANGELOG
+#### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
 ## Architecture
 ![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
@@ -221,17 +226,17 @@ public class SpringBootPlusApplication {
 ```
 
 ### 4. Access project swagger docs
-[http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html?_blank)
+[http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html)
 
 ### 5. SysUser CRUD Swagger
 ![sys_user_swagger.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/sys_user_swagger.png)
 
 
 ## Quick Start
-[Quick Start](https://springboot.plus/guide/quick-start.html?_blank)
+[Quick Start](https://springboot.plus/guide/quick-start.html)
 
 ## Documentation
- [https://springboot.plus](https://springboot.plus?_blank)
+ [https://springboot.plus](https://springboot.plus)
 
 
 ## CentOS Quick Installation Environment / Build / Deploy / Launch Spring-boot-plus Project
@@ -239,7 +244,7 @@ public class SpringBootPlusApplication {
 > Install `jdk`, `git`, `maven`, `redis`, `mysql`
 
 ```bash
-wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/bin/install/download-install-all.sh
+wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/download-install-all.sh
 ```
 
 ### 2. Run the installation script
@@ -265,7 +270,7 @@ exit
 
 ### 5. Download deployment script `deploy.sh`
 ```bash
-wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/deploy/deploy.sh
+wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/deploy/deploy.sh
 ```
 
 ### 6. Execution script
@@ -276,11 +281,11 @@ sh deploy.sh
 ### 7.Access project
 > SpringBootAdmin Management page
 
-[http://47.105.159.10:8888](http://47.105.159.10:8888?_blank)
+[http://47.105.159.10:8888](http://47.105.159.10:8888)
 
 > spring-boot-plus Swagger Document page
 
-[http://47.105.159.10:8888/docs](http://47.105.159.10:8888/docs?_blank)
+[http://47.105.159.10:8888/docs](http://47.105.159.10:8888/docs)
 
 ### 8. View project run log
 ```bash

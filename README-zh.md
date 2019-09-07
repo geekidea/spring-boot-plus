@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/geekidea/spring-boot-plus">
-   <img alt="spring-boot-plus logo" src="https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/img/logo.png">
+   <img alt="spring-boot-plus logo" src="https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/logo.png">
   </a>
 </p>
 <p align="center">
@@ -22,6 +22,8 @@
 ### spring-boot-plus是一套集成spring boot常用开发组件的后台快速开发框架
 > Spring-Boot-Plus是易于使用，快速，高效，功能丰富，开源的spring boot 脚手架.
 
+> 前后端分离,专注于后端服务
+
 ## 目标
 > 每个人都可以独立、快速、高效地开发项目！
 
@@ -29,7 +31,10 @@
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
 ## 官网
-#### [springboot.plus](http://springboot.plus?_blank)
+#### [springboot.plus](http://springboot.plus)
+
+## CHANGELOG
+#### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
 ## 项目架构
 ![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
@@ -221,23 +226,23 @@ public class SpringBootPlusApplication {
 ```
 
 ### 4. 访问项目swagger文档
-[http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html?_blank)
+[http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html)
 
 ### 5. 系统用户 增删改查分页Swagger
 ![sys_user_swagger-zh.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/sys_user_swagger-zh.png)
 
 ## 快速开始
-[快速开始](https://springboot.plus/guide/quick-start.html?_blank)
+[快速开始](https://springboot.plus/guide/quick-start.html)
 
 ## 详细文档
- [https://springboot.plus](https://springboot.plus?_blank)
+ [https://springboot.plus](https://springboot.plus)
 
 ## CentOS快速安装环境/构建/部署/启动spring-boot-plus项目
 ### 1. 下载安装脚本
 > 安装 `jdk`, `git`, `maven`, `redis`, `mysql`
 
 ```bash
-wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/docs/bin/install/download-install-all.sh
+wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/download-install-all.sh
 ```
 
 ### 2. 运行安装脚本
@@ -263,7 +268,7 @@ exit
 
 ### 5. 下载部署脚本 `deploy.sh`
 ```bash
-wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/dev/deploy/deploy.sh
+wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/deploy/deploy.sh
 ```
 
 ### 6. 执行脚本
@@ -274,11 +279,11 @@ sh deploy.sh
 ### 7.访问项目
 > SpringBootAdmin管理页面
 
-[http://47.105.159.10:8888](http://47.105.159.10:8888?_blank)
+[http://47.105.159.10:8888](http://47.105.159.10:8888)
 
 > spring-boot-plus Swagger文档页面
 
-[http://47.105.159.10:8888/docs](http://47.105.159.10:8888/docs?_blank)
+[http://47.105.159.10:8888/docs](http://47.105.159.10:8888/docs)
 
 ### 8. 查看项目运行日志
 ```bash
