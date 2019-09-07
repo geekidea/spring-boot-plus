@@ -51,7 +51,7 @@ import java.util.Map;
  * <p>
  *  登录服务实现类
  * </p>
- * @auth geekidea
+ * @author geekidea
  * @date 2019-05-23
  **/
 @Api

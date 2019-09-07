@@ -20,7 +20,7 @@ package io.geekidea.springbootplus.common.constant;
  * <p>
  *  redis key 常量
  * </p>
- * @auth geekidea
+ * @author geekidea
  * @date 2019-05-23
  **/
 public interface CommonRedisKey {

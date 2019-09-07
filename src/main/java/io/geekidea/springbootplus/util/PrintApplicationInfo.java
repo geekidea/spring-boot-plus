@@ -25,7 +25,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * <p>
  *  打印项目信息
  * </p>
- * @auth geekidea
+ * @author geekidea
  * @date 2019-05-08
  **/
 @Slf4j
