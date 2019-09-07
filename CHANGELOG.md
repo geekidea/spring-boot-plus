@@ -4,6 +4,7 @@
 > spring-boot-plusV1.2.3发布，CentOS快速安装环境/构建/部署/启动项目
 
 
+
 ## [V1.2.2-RELEASE] 2019.08.26 🏇 
 ###  ⭐️  New Features
 - 拦截器启用禁用配置
