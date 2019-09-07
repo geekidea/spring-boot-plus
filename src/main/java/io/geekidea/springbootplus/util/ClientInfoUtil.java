@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * <p>
  *  用户客户端信息工具类
  * </p>
- * @auth geekidea
+ * @author geekidea
  * @date 2019-05-24
  **/
 public class ClientInfoUtil {

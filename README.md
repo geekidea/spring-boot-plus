@@ -38,6 +38,9 @@
 ## CHANGELOG
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
+## Java Docs
+#### [Java Api Docs](http://geekidea.io/spring-boot-plus-apidocs/)
+
 ## Architecture
 ![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
 
