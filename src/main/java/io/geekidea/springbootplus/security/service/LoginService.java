@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  * <p>
  *  登录服务接口
  * </p>
- * @auth geekidea
+ * @author geekidea
  * @date 2019-05-23
  **/
 public interface LoginService {

@@ -24,7 +24,7 @@ import java.io.Serializable;
  * <p>
  *  用户客户端信息对象
  * </p>
- * @auth geekidea
+ * @author geekidea
  * @date 2019-05-23
  **/
 @Data

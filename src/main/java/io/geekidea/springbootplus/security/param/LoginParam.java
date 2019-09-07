@@ -26,7 +26,7 @@ import javax.validation.constraints.NotBlank;
  * <p>
  *  登录参数
  * </p>
- * @auth geekidea
+ * @author geekidea
  * @date 2019-05-15
  **/
 @Data

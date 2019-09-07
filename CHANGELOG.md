@@ -22,6 +22,7 @@
 
 ### 📔  Documentation
 [CentOS Quick Installation Environment / Build / Deploy / Launch Spring-boot-plus Project](https://github.com/geekidea/spring-boot-plus#centos-quick-installation-environment--build--deploy--launch-spring-boot-plus-project)
+[spring-boot-plus java docs](http://geekidea.io/spring-boot-plus-apidocs/)
 
 ### 🔨 Dependency Upgrades
 - Upgrade to `springboot` 2.1.8.RELEASE
