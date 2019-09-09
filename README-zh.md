@@ -79,7 +79,7 @@ lombok | 1.18.8 | 注解生成Java Bean等工具 |
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
 ## Java Docs
-#### [Java Api Docs](http://geekidea.io/spring-boot-plus-apidocs/)
+#### [Java Api Docs](https://apidoc.gitee.com/geekidea/spring-boot-plus/)
 
 ## 使用
 ### 克隆 spring-boot-plus
