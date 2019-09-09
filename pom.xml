@@ -335,6 +335,7 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <skipTests>true</skipTests>
+                    <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
 
