@@ -49,6 +49,7 @@ fi
 cd spring-boot-plus
 
 # 2. maven打包
+mvn clean
 mvn clean package -Ptest
 
 # 3. 停服
