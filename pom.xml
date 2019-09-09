@@ -66,6 +66,7 @@
         <jwt.version>0.9.1</jwt.version>
         <spring-boot-admin.version>2.1.6</spring-boot-admin.version>
         <hutool.version>4.6.4</hutool.version>
+        <junit.version>4.12</junit.version>
 
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -262,6 +263,13 @@
             <version>${spring-boot-admin.version}</version>
         </dependency>
         <!-- spring boot admin end -->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
