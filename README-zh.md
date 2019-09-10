@@ -292,8 +292,13 @@ sh deploy.sh
 tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 ```
 
+## spring-boot-plus 视频  :movie_camera:
+- [CentOS 快速安装 JDK/Git/Maven/Redis/MySQL](https://www.bilibili.com/video/av67218836/)
+- [CentOS 快速部署/构建/打包/运行项目](https://www.bilibili.com/video/av67218970/)
+
+
 ## 联系
-- Gmail: [springbootplus@aliyun.com](mailto:springbootplus@aliyun.com)
+- Email: [springbootplus@aliyun.com](mailto:springbootplus@aliyun.com)
 - spring-boot-plus技术交流群
 
 ![spring-boot-plus QQ Group](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-qq-group.png)
