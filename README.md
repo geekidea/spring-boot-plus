@@ -83,6 +83,7 @@ lombok | 1.18.8 | Automatically plugs |
 ## Java Docs
 #### [Java Api Docs](http://geekidea.io/spring-boot-plus-apidocs/)
 
+
 ## Getting started
 ### Clone spring-boot-plus
 ```bash
@@ -243,6 +244,7 @@ public class SpringBootPlusApplication {
 
 
 ## CentOS Quick Installation Environment / Build / Deploy / Launch Spring-boot-plus Project
+
 ### 1. Download the installation script
 > Install `jdk`, `git`, `maven`, `redis`, `mysql`
 
@@ -295,8 +297,14 @@ sh deploy.sh
 tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 ```
 
+
+## spring-boot-plus Video  :movie_camera: 
+- [CentOS Quick Installation JDK/Git/Maven/Redis/MySQL](https://www.bilibili.com/video/av67218836/)
+- [CentOS Quick Build / Deploy / Launch Spring-boot-plus Project](https://www.bilibili.com/video/av67218970/)
+
+
 ## Contact
-- Gmail: [springbootplus@aliyun.com](mailto:springbootplus@aliyun.com)
+- Email: [springbootplus@aliyun.com](mailto:springbootplus@aliyun.com)
 - QQ Group
 
 ![spring-boot-plus QQ Group](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-qq-group.png)
