@@ -14,44 +14,51 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.security.vo;
+package io.geekidea.springbootplus.shiro.vo;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * <p>
- *  登录用户redis对象，后台使用
- * </p>
+ * JwtToken Redis缓存对象
+ *
  * @author geekidea
- * @date 2019-05-15
+ * @date 2019-09-30
  **/
 @Data
-@ApiModel("系统用户登录值对象")
-public class LoginSysUserRedisVo implements Serializable {
-
-    private static final long serialVersionUID = -4497185071769175695L;
-
+@Accessors(chain = true)
+public class JwtTokenRedisVo implements Serializable {
+    private static final long serialVersionUID = 1831633309466775223L;
     /**
-     * 登录对象vo
+     * 登陆ip
      */
-    private LoginSysUserVo loginSysUserVo;
-
+    private String host;
     /**
-     * jwt token对象
+     * 登陆用户名称
      */
-    private JwtTokenRedisVo jwtTokenRedisVo;
-
+    private String username;
     /**
-     * 唯一标识
+     * 登陆盐值
      */
-    private String uuid;
-
+    private String salt;
     /**
-     * 登录ip
+     * 登陆token
      */
-    private ClientInfo clientInfo;
+    private String token;
+    /**
+     * 创建时间
+     */
+    private Date createDate;
+    /**
+     * 多长时间过期，默认一小时
+     */
+    private long expireSecond;
+    /**
+     * 过期日期
+     */
+    private Date expireDate;
 
 }

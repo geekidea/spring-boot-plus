@@ -1,12 +1,14 @@
 package io.geekidea.springbootplus.system.web.controller;
 
+import io.geekidea.springbootplus.common.api.ApiResult;
+import io.geekidea.springbootplus.common.web.controller.BaseController;
+import io.geekidea.springbootplus.common.web.param.IdParam;
+import io.geekidea.springbootplus.common.web.vo.Paging;
 import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.service.SysUserService;
 import io.geekidea.springbootplus.system.web.param.SysUserQueryParam;
 import io.geekidea.springbootplus.system.web.vo.SysUserQueryVo;
-import io.geekidea.springbootplus.common.web.controller.BaseController;
-import io.geekidea.springbootplus.common.api.ApiResult;
-    import io.swagger.annotations.Api;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-
-import io.geekidea.springbootplus.common.web.vo.Paging;
-import io.geekidea.springbootplus.common.web.param.IdParam;
 
 /**
  * <p>

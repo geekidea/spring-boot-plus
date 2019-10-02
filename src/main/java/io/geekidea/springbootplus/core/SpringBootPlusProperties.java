@@ -16,6 +16,8 @@
 
 package io.geekidea.springbootplus.core;
 
+import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
+import io.geekidea.springbootplus.shiro.config.ShiroProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -61,6 +63,12 @@ public class SpringBootPlusProperties {
     private SpringBootPlusInterceptorConfig interceptorConfig;
 
     /**
+     * 过滤器配置
+     */
+    @NestedConfigurationProperty
+    private SpringBootPlusFilterConfig filterConfig;
+
+    /**
      * 上传目录
      */
     private String uploadPath;
@@ -85,5 +93,23 @@ public class SpringBootPlusProperties {
      * 允许下载的文件后缀集合
      */
     private List<String> allowDownloadFileExtensions;
+
+    /**
+     * JWT配置
+     */
+    @NestedConfigurationProperty
+    private JwtProperties jwt;
+
+    /**
+     * Shiro配置
+     */
+    @NestedConfigurationProperty
+    private ShiroProperties shiro = new ShiroProperties();
+
+    /**
+     * 项目静态资源访问配置
+     * @see SpringBootPlusWebMvcConfig addResourceHandlers
+     */
+    private String resourceHandlers;
 
 }

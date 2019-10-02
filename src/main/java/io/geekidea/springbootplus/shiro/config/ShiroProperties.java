@@ -11,30 +11,33 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.exception;
+package io.geekidea.springbootplus.shiro.config;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
- * 自定义异常
+ * Shiro配置映射类
+ *
  * @author geekidea
- * @date 2018-11-08
- */
+ * @date 2019-09-28
+ * @since 1.3.0.RELEASE
+ **/
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class SpringBootPlusException extends RuntimeException{
-    private Integer errorCode;
-    private String message;
+@Component
+@ConfigurationProperties(prefix = "spring-boot-plus.shiro")
+public class ShiroProperties {
 
-    public SpringBootPlusException(String message) {
-        super(message);
-        this.message = message;
-    }
+    private String filterChainDefinitions;
 
-    public SpringBootPlusException(Integer errorCode, String message) {
-        super(message);
-        this.errorCode = errorCode;
-        this.message = message;
-    }
+    /**
+     * 权限配置集合
+     */
+    @NestedConfigurationProperty
+    private List<ShiroPermissionConfig> permissionConfig;
+
 }

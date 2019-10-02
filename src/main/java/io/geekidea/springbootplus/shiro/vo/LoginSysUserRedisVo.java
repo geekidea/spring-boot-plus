@@ -1,12 +1,9 @@
-/**
+/*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
- * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *     http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,35 +11,33 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.constant;
+package io.geekidea.springbootplus.shiro.vo;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
- * <p>
- *  redis key 常量
- * </p>
+ * 登录用户Redis对象，后台使用
+ *
  * @author geekidea
- * @date 2019-05-23
+ * @date 2019-9-30
  **/
-public interface CommonRedisKey {
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = false)
+public class LoginSysUserRedisVo extends LoginSysUserVo {
+
+    private static final long serialVersionUID = 2783720332894188358L;
 
     /**
-     * 登陆用户token信息key
+     * 包装后的盐值
      */
-    String LOGIN_TOKEN = "login:token:%s";
+    private String salt;
 
     /**
-     * 登陆用户信息key
+     * 登录ip
      */
-    String LOGIN_USER = "login:user:%s";
-
-    /**
-     * 登陆用户盐值信息key
-     */
-    String LOGIN_SALT= "login:salt:%s";
-
-    /**
-     * 登陆user hash key
-     */
-    String LOGIN_USER_HASH = "login:user:hash";
+    private ClientInfo clientInfo;
 
 }

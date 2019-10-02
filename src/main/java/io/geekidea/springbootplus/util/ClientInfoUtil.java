@@ -18,9 +18,10 @@ package io.geekidea.springbootplus.util;
 
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-import io.geekidea.springbootplus.security.vo.ClientInfo;
-import io.geekidea.springbootplus.security.vo.DeviceInfo;
+import io.geekidea.springbootplus.shiro.vo.ClientInfo;
+import io.geekidea.springbootplus.shiro.vo.DeviceInfo;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +33,16 @@ import java.util.regex.Pattern;
  * @date 2019-05-24
  **/
 public class ClientInfoUtil {
+
+    /**
+     * 获取用户客户端信息
+     * @param request
+     * @return
+     */
+    public static ClientInfo get(HttpServletRequest request){
+        String userAgent = request.getHeader("User-Agent");
+        return get(userAgent);
+    }
 
     /**
      * 获取用户客户端信息

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.security.vo;
+package io.geekidea.springbootplus.shiro.vo;
 
 import lombok.Data;
 
@@ -22,8 +22,9 @@ import java.io.Serializable;
 
 /**
  * <p>
- *  用户客户端信息对象
+ * 用户客户端信息对象
  * </p>
+ *
  * @author geekidea
  * @date 2019-05-23
  **/
