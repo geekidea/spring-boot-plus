@@ -26,12 +26,23 @@ package io.geekidea.springbootplus.common.constant;
 public interface CommonRedisKey {
 
     /**
-     * 系统登录用户
+     * 登陆用户token信息key
      */
-    String LOGIN_SYS_USER = "login:sys:user:%s";
+    String LOGIN_TOKEN = "login:token:%s";
+
     /**
-     * 系统登录token
+     * 登陆用户信息key
      */
-    String LOGIN_TOKEN = "login:token";
+    String LOGIN_USER = "login:user:%s";
+
+    /**
+     * 登陆用户盐值信息key
+     */
+    String LOGIN_SALT= "login:salt:%s";
+
+    /**
+     * 登陆user hash key
+     */
+    String LOGIN_USER_HASH = "login:user:hash";
 
 }

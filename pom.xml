@@ -21,7 +21,7 @@
 
     <groupId>io.geekidea</groupId>
     <artifactId>spring-boot-plus</artifactId>
-    <version>1.2.3.RELEASE</version>
+    <version>1.3.0.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-plus</name>
@@ -47,7 +47,7 @@
         <project.reporting.outputEncoding>${utf8}</project.reporting.outputEncoding>
         <project-parent.version>${parent.version}</project-parent.version>
         <java.version>1.8</java.version>
-        <spring-boot.version>2.1.8.RELEASE</spring-boot.version>
+        <spring-boot.version>2.1.0.RELEASE</spring-boot.version>
         <mybatis-plus-boot-starter.version>3.2.0</mybatis-plus-boot-starter.version>
         <fastjson.version>1.2.60</fastjson.version>
         <swagger2.version>2.6.1</swagger2.version>
@@ -67,6 +67,7 @@
         <spring-boot-admin.version>2.1.6</spring-boot-admin.version>
         <hutool.version>4.6.4</hutool.version>
         <junit.version>4.12</junit.version>
+        <mapstruct.version>1.3.0.Final</mapstruct.version>
 
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -240,12 +241,6 @@
         </dependency>
 
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jwt.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
@@ -256,6 +251,12 @@
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-server</artifactId>
             <version>${spring-boot-admin.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>de.codecentric</groupId>
+                    <artifactId>spring-boot-admin-server-cloud</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>de.codecentric</groupId>
@@ -265,11 +266,43 @@
         <!-- spring boot admin end -->
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
+            <groupId>org.ini4j</groupId>
+            <artifactId>ini4j</artifactId>
+            <version>0.5.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Shiro JWT start -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-web-starter</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.8.3</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>io.jsonwebtoken</groupId>-->
+<!--            <artifactId>jjwt</artifactId>-->
+<!--            <version>${jwt.version}</version>-->
+<!--        </dependency>-->
+
+        <!-- Spring Security JWT start -->
 
     </dependencies>
 
@@ -386,7 +419,6 @@
                     </execution>
                 </executions>
             </plugin>
-
 
         </plugins>
 

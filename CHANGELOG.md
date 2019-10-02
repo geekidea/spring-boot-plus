@@ -1,5 +1,20 @@
 # 更新日志 CHANGELOG
 
+## [V1.3.0-RELEASE] 
+
+###  ⭐️  New Features
+
+### ⚡️ Optimization
+	
+### 📝 Added/Modified
+
+
+### 📔  Documentation
+
+### 🔨 Dependency Upgrades
+- Upgrade to `Fastjson` 1.2.61
+
+
 ## [V1.2.3-RELEASE] 2019.09.09 :computer: 
 > spring-boot-plusV1.2.3发布，CentOS快速安装环境/构建/部署/启动项目
 
