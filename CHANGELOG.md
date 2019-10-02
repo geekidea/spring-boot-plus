@@ -1,6 +1,6 @@
 # 更新日志 CHANGELOG
 
-## [V1.3.0-RELEASE] 
+## [V1.3.0-RELEASE] 2019.10.05
 
 ###  ⭐️  New Features
 
