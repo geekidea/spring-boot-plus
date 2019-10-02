@@ -40,13 +40,15 @@ spring:
 spring-boot-plus:
   # jwt配置
   jwt:
-    header: token
     secret: 666666
     issuer: spring-boot-plus
-    subject: spring-boot-plus-jwt
     audience: web
-    # 默认过期时间30分钟，单位：秒
-    expire-second: 1800
+    # 默认过期时间1小时，单位：秒
+    expire-second: 3600
+    # 是否刷新token
+    refresh_token: true
+    # 刷新token的时间间隔，默认10分钟，单位：秒
+    refresh_token_countdown: 600
   # 拦截器配置
   interceptor-config:
     permission-config:
@@ -87,8 +89,15 @@ spring-boot-plus:
   allow-upload-file-extensions: jpg,png,docx,xlsx,pptx,pdf
   allow-download-file-extensions: jpg,png,docx,xlsx,pptx,pdf
 
+  # 静态资源访问配置
+  resource-handlers: |
+    /static/**=classpath:/static/
+    /templates/**=classpath:/templates/
+    swagger-ui.html=classpath:/META-INF/resources/
+    /webjars/**=classpath:/META-INF/resources/webjars/
+
   # Shiro配置
-  shiro-config:
+  shiro:
     # shiro ini 多行字符串配置
     filter-chain-definitions: |
       /=anon
@@ -108,6 +117,8 @@ spring-boot-plus:
         # 测试
       - url: /sysUser/getPageList
         permission: anon
+
+
 
 ############################### spring-boot-plus end ###############################
 

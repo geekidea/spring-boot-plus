@@ -14,30 +14,38 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.security.vo;
+package io.geekidea.springbootplus.shiro.vo;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * <p>
- *  设备信息
+ * 登录用户对象，响应给前端
  * </p>
+ *
  * @author geekidea
- * @date 2019-05-24
+ * @date 2019-05-15
  **/
 @Data
-public class DeviceInfo implements Serializable {
-    private static final long serialVersionUID = -5912785220335057555L;
+@Accessors(chain = true)
+public class LoginSysUserVo implements Serializable {
 
-    /**
-     * 设备名称
-     */
-    private String name;
+    private static final long serialVersionUID = -1758338570596088158L;
 
-    /**
-     * 设备型号
-     */
-    private String model;
+    private Long id;
+
+    private String username;
+
+    private String salt;
+
+    private Set<String> roles;
+
+    private Set<String> permissions;
+
+    private ClientInfo clientInfo;
+
 }

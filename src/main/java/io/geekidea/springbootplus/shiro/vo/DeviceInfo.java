@@ -14,26 +14,31 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.security.service;
+package io.geekidea.springbootplus.shiro.vo;
 
-import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.security.param.LoginParam;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
+import lombok.Data;
 
-import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
 
 /**
  * <p>
- *  登录服务接口
+ * 设备信息
  * </p>
+ *
  * @author geekidea
- * @date 2019-05-23
+ * @date 2019-05-24
  **/
-public interface LoginService {
+@Data
+public class DeviceInfo implements Serializable {
+    private static final long serialVersionUID = -5912785220335057555L;
 
-    ApiResult login(LoginParam loginParam);
+    /**
+     * 设备名称
+     */
+    private String name;
 
-    void refreshToken(HttpServletResponse response, Jws<Claims> jws);
-
+    /**
+     * 设备型号
+     */
+    private String model;
 }

@@ -1,12 +1,9 @@
-/**
+/*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
- * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *     http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,16 +11,15 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.security.config;
+package io.geekidea.springbootplus.shiro.jwt;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * <p>
- *  Jwt配置属性
- * </p>
+ * JWT属性配置
+ *
  * @author geekidea
  * @date 2019-05-22
  **/
@@ -35,31 +31,36 @@ public class JwtProperties {
     /**
      * 密码
      */
-//    @Value("spring-boot-plus.jwt.secret:spring-boot-plus")
-    private String secret;
+    private String secret = "666666";
 
     /**
      * 签发人
      */
-//    @Value("spring-boot-plus.jwt.issuer:spring-boot-plus")
     private String issuer;
 
     /**
      * 主题
      */
-//    @Value("spring-boot-plus.jwt.subject:spring-boot-plus-jwt")
     private String subject;
 
     /**
      * 签发的目标
      */
-//    @Value("spring-boot-plus.jwt.audience:web")
     private String audience;
 
     /**
-     * token失效时间,默认30分钟
+     * token失效时间,默认1小时，60*60=3600
      */
-//    @Value("spring-boot-plus.jwt.default.expire.minutes:30")
-    private Integer expireMinutes;
+    private Long expireSecond = 3600L;
+
+    /**
+     * 是否刷新token，默认为true
+     */
+    private boolean refreshToken = true;
+
+    /**
+     * 刷新token倒计时，默认10分钟，10*60=600
+     */
+    private Integer refreshTokenCountdown;
 
 }

@@ -50,10 +50,10 @@ public class LoginUtil {
      */
     public static String getToken(HttpServletRequest request){
         // 从请求头中获取token
-        String token = request.getHeader(CommonConstant.TOKEN);
+        String token = request.getHeader(CommonConstant.JWT_TOKEN_NAME);
         if (StringUtils.isBlank(token)){
             // 从请求参数中获取token
-            token = request.getParameter(CommonConstant.TOKEN);
+            token = request.getParameter(CommonConstant.JWT_TOKEN_NAME);
         }
         return token;
     }

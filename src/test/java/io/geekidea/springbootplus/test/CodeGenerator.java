@@ -59,9 +59,9 @@ public class CodeGenerator {
     // 作者
     private static final String AUTHOR = "geekidea";
     // 生成的表名称
-    private static final String TABLE_NAME = "sys_user";
+    private static final String TABLE_NAME = "sys_log";
     // 主键数据库列名称
-    private static final String PK_ID_COLUMN_NAME = "id";
+    private static final String PK_ID_COLUMN_NAME = "log_id";
     // 代码生成策略 true：All/false:SIMPLE
     private static final boolean GENERATOR_STRATEGY = true;
     // 分页列表查询是否排序 true：有排序参数/false：无
