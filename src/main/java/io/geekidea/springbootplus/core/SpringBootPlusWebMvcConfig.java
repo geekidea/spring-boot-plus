@@ -18,12 +18,12 @@ package io.geekidea.springbootplus.core;
 
 import com.alibaba.fastjson.JSON;
 import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
-import io.geekidea.springbootplus.common.web.interceptor.TokenTimeoutInterceptor;
 import io.geekidea.springbootplus.resource.web.interceptor.DownloadInterceptor;
 import io.geekidea.springbootplus.resource.web.interceptor.ResourceInterceptor;
 import io.geekidea.springbootplus.resource.web.interceptor.UploadInterceptor;
-import io.geekidea.springbootplus.security.interceptor.JwtInterceptor;
+import io.geekidea.springbootplus.util.IniUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -31,27 +31,22 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
 
 /**
  * WebMvc配置
  * @author geekidea
  * @date 2018-11-08
  */
-@Configuration
 @Slf4j
+@Configuration
 public class SpringBootPlusWebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private SpringBootPlusProperties springBootPlusProperties;
 
     @Autowired
-    private JwtInterceptor jwtInterceptor;
-
-    @Autowired
     private PermissionInterceptor permissionInterceptor;
-
-    @Autowired
-    private TokenTimeoutInterceptor tokenTimeoutInterceptor;
 
     @Autowired
     private ResourceInterceptor resourceInterceptor;
@@ -65,7 +60,7 @@ public class SpringBootPlusWebMvcConfig implements WebMvcConfigurer {
     @PostConstruct
     public void init(){
         // 打印SpringBootPlusProperties配置信息
-        log.info("SpringBootPlusProperties：{}", JSON.toJSONString(springBootPlusProperties));
+        log.debug("SpringBootPlusProperties：{}", JSON.toJSONString(springBootPlusProperties));
     }
 
     @Override
@@ -73,51 +68,45 @@ public class SpringBootPlusWebMvcConfig implements WebMvcConfigurer {
         SpringBootPlusInterceptorConfig interceptorConfig = springBootPlusProperties.getInterceptorConfig();
 
         // 上传拦截器
-        registry.addInterceptor(uploadInterceptor)
-                .addPathPatterns(interceptorConfig.getUploadConfig().getIncludePath());
-
-        // 资源拦截器注册
-        registry.addInterceptor(resourceInterceptor)
-                .addPathPatterns(interceptorConfig.getResourceConfig().getIncludePath());
-
-        // 下载拦截器注册
-        registry.addInterceptor(downloadInterceptor)
-                .addPathPatterns(interceptorConfig.getDownloadConfig().getIncludePath());
-
-        if (interceptorConfig.getJwtConfig().isEnabled()){
-            // JWT拦截器注册
-            registry.addInterceptor(jwtInterceptor)
-                    .addPathPatterns(interceptorConfig.getJwtConfig().getIncludePath())
-                    .excludePathPatterns(interceptorConfig.getJwtConfig().getExcludePath());
+        if (interceptorConfig.getUploadConfig().isEnabled()){
+            registry.addInterceptor(uploadInterceptor)
+                    .addPathPatterns(interceptorConfig.getUploadConfig().getIncludePaths());
         }
 
-        if (interceptorConfig.getTokenTimeoutConfig().isEnabled()){
-            // TOKEN超时拦截器注册
-            registry.addInterceptor(tokenTimeoutInterceptor)
-                    .addPathPatterns(interceptorConfig.getTokenTimeoutConfig().getIncludePath())
-                    .excludePathPatterns(interceptorConfig.getTokenTimeoutConfig().getExcludePath());
+        // 资源拦截器注册
+        if (interceptorConfig.getResourceConfig().isEnabled()){
+            registry.addInterceptor(resourceInterceptor)
+                    .addPathPatterns(interceptorConfig.getResourceConfig().getIncludePaths());
+        }
+
+        // 下载拦截器注册
+        if (interceptorConfig.getDownloadConfig().isEnabled()){
+            registry.addInterceptor(downloadInterceptor)
+                    .addPathPatterns(interceptorConfig.getDownloadConfig().getIncludePaths());
         }
 
         if (interceptorConfig.getPermissionConfig().isEnabled()){
             // 权限拦截器注册
             registry.addInterceptor(permissionInterceptor)
-                    .addPathPatterns(interceptorConfig.getPermissionConfig().getIncludePath())
-                    .excludePathPatterns(interceptorConfig.getPermissionConfig().getExcludePath());
+                    .addPathPatterns(interceptorConfig.getPermissionConfig().getIncludePaths())
+                    .excludePathPatterns(interceptorConfig.getPermissionConfig().getExcludePaths());
         }
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 设置项目静态资源访问
-        registry.addResourceHandler("/static/**")
-                .addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/templates/**")
-                .addResourceLocations("classpath:/templates/");
-        // 设置swagger静态资源访问
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        String resourceHandlers = springBootPlusProperties.getResourceHandlers();
+        if (StringUtils.isNotBlank(resourceHandlers)){
+            Map<String,String> map = IniUtil.parseIni(resourceHandlers);
+            for (Map.Entry<String,String> entry : map.entrySet()){
+                String pathPatterns = entry.getKey();
+                String resourceLocations = entry.getValue();
+                registry.addResourceHandler(pathPatterns)
+                        .addResourceLocations(resourceLocations);
+            }
+        }
+
         // 设置上传文件访问路径
         registry.addResourceHandler(springBootPlusProperties.getResourceAccessPatterns())
                 .addResourceLocations("file:" + springBootPlusProperties.getUploadPath());

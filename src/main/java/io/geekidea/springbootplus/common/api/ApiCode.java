@@ -32,9 +32,13 @@ public enum ApiCode {
 
     NOT_PERMISSION(403, "没有权限"),
 
-    NOT_FOUND(404, "你请求的路径不存在"),
+    NOT_FOUND(404, "你请求的资源不存在"),
 
     FAIL(500, "操作失败"),
+
+
+    LOGIN_EXCEPTION(4000,"登陆失败"),
+
 
     SYSTEM_EXCEPTION(5000,"系统异常!"),
 
@@ -44,7 +48,6 @@ public enum ApiCode {
 
     HTTP_MEDIA_TYPE_EXCEPTION(5003,"HTTP Media 类型异常"),
 
-    SYSTEM_LOGIN_EXCEPTION(5005,"系统登录异常")
 
     ;
 

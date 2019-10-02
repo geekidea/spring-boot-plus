@@ -41,11 +41,25 @@ public interface CommonConstant {
     /**
      * 登陆token
      */
-    String TOKEN = "token";
+    String JWT_TOKEN_NAME = "token";
+
     /**
-     * 刷新token
+     * JWT用户名
      */
-    String REFRESH_TOKEN = "refresh_token";
+    String JWT_USERNAME = "username";
+
+
+    /**
+     * JWT刷新新token响应状态码
+     */
+    int JWT_REFRESH_TOKEN_CODE = 460;
+
+    /**
+     * JWT刷新新token响应状态码，
+     * Redis中不存在，但jwt未过期，不生成新的token，返回361状态码
+     */
+    int JWT_INVALID_TOKEN_CODE = 461;
+
 
     /**
      * 初始密码

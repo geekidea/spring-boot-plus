@@ -33,42 +33,49 @@ spring:
 spring:
   profiles:
     active: '@profileActive@'
-################################ spring config end ################################
+################################ spring config end #################################
 
 
-############################## spring-boot-plus start #############################
+############################## spring-boot-plus start ##############################
 spring-boot-plus:
   # jwt配置
   jwt:
-    header: token
     secret: 666666
     issuer: spring-boot-plus
-    subject: spring-boot-plus-jwt
     audience: web
-    expire-minutes: 2
+    # 默认过期时间1小时，单位：秒
+    expire-second: 3600
+    # 是否刷新token
+    refresh_token: true
+    # 刷新token的时间间隔，默认10分钟，单位：秒
+    refresh_token_countdown: 600
   # 拦截器配置
   interceptor-config:
-    jwt-config:
-      enabled: false
-      include-path: /**
-      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/login,/verificationCode,/doc/**,/error/**,/docs,/test/**,/resource/**
     permission-config:
       enabled: false
-      include-path: /**
-      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/adminLogin,/sysLogin,/login.html,/verificationCode,/doc/**,/error/**,/docs,/resource/**
-    token-timeout-config:
-      enabled: false
-      include-path: /**
-      exclude-path: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/docs,/resource/**
+      include-paths: /**
+      exclude-paths: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/adminLogin,/sysLogin,/login.html,/verificationCode,/doc/**,/error/**,/docs,/resource/**
     resource-config:
       enabled: true
-      include-path: ${spring-boot-plus.resource-access-patterns}
+      include-paths: ${spring-boot-plus.resource-access-patterns}
     upload-config:
       enabled: true
-      include-path: /upload/**
+      include-paths: /upload/**
     download-config:
       enabled: true
-      include-path: /download/**
+      include-paths: /download/**
+
+  # 过滤器配置
+  filter-config:
+    # 请求路径Filter配置
+    request-path-config:
+      enabled: true
+      include-paths: /**
+    # 跨域Filter配置
+    cross-domain-config:
+      enabled: true
+      include-paths: /**
+
   # 文件上传下载配置
   # 上传路径配置
   upload-path: /opt/upload/
@@ -81,7 +88,45 @@ spring-boot-plus:
   # 全局允许上传的类型
   allow-upload-file-extensions: jpg,png,docx,xlsx,pptx,pdf
   allow-download-file-extensions: jpg,png,docx,xlsx,pptx,pdf
+
+  # 静态资源访问配置
+  resource-handlers: |
+    /static/**=classpath:/static/
+    /templates/**=classpath:/templates/
+    swagger-ui.html=classpath:/META-INF/resources/
+    /webjars/**=classpath:/META-INF/resources/webjars/
+
+  # Shiro配置
+  shiro:
+    # shiro ini 多行字符串配置
+    filter-chain-definitions: |
+      /=anon
+      /static/**=anon
+      /templates/**=anon
+    # 权限配置
+    permission-config:
+      # 排除登陆相关
+      - urls: /login,/login.html,/welcome.html,/index.html
+        permission: anon
+        # 排除Swagger
+      - urls: /docs,/swagger-ui.html, /webjars/springfox-swagger-ui/**,/swagger-resources/**,/v2/api-docs
+        permission: anon
+        # 排除SpringBootAdmin
+      - urls: /,/favicon.ico,/actuator/**,/instances/**,/assets/**,/sba-settings.js,/applications/**
+        permission: anon
+        # 测试
+      - url: /sysUser/getPageList
+        permission: anon
+
+
+
 ############################### spring-boot-plus end ###############################
+
+
+############################## Spring Shiro start ##############################
+
+
+############################### Spring Shiro end ###############################
 
 
 ############################### mybatis-plus start #################################

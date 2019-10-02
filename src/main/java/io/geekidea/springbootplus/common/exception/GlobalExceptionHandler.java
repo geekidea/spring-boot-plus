@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiResult sysLoginExceptionHandler(SysLoginException exception) {
         log.warn("系统登录异常:" + exception.getMessage());
-        return ApiResult.fail(ApiCode.SYSTEM_LOGIN_EXCEPTION);
+        return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
     }
 
 

@@ -116,7 +116,7 @@ STARTUP_LOG="${STARTUP_LOG}application JAVA_OPT : ${JAVA_OPT}\n"
 
 
 # 打印启动命令
-STARTUP_LOG="${STARTUP_LOG}application background startup command: nohup java ${JAVA_OPT} -jar ${BASE_PATH}/lib/${APPLICATION_JAR} --spring.config.location=${CONFIG_DIR} > ${LOG_PATH} 2>&1 &\n"
+STARTUP_LOG="${STARTUP_LOG}application background startup command: nohup java ${JAVA_OPT} -jar ${BASE_PATH}/lib/${APPLICATION_JAR} --spring.config.location=${CONFIG_DIR} --logging.config=${CONFIG_DIR}logback.xml > ${LOG_PATH} 2>&1 &\n"
 
 
 #======================================================================

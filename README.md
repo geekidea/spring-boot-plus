@@ -298,16 +298,10 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 ```
 
 
-## spring-boot-plus Video  :movie_camera: 
+## spring-boot-plus Videos  :movie_camera: 
+- [5-Minutes-Finish-CRUD](https://www.bilibili.com/video/av67401204)
 - [CentOS Quick Installation JDK/Git/Maven/Redis/MySQL](https://www.bilibili.com/video/av67218836/)
 - [CentOS Quick Build / Deploy / Launch Spring-boot-plus Project](https://www.bilibili.com/video/av67218970/)
-
-
-## Contact
-- Email: [springbootplus@aliyun.com](mailto:springbootplus@aliyun.com)
-- QQ Group
-
-![spring-boot-plus QQ Group](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-qq-group.png)
 
 
 ## License

@@ -18,6 +18,7 @@ package io.geekidea.springbootplus.core;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.Serializable;
 
@@ -31,34 +32,28 @@ public class SpringBootPlusInterceptorConfig implements Serializable {
     private static final long serialVersionUID = -2738042100246082469L;
 
     /**
-     * JWT拦截器排除路径
-     */
-    private InterceptorConfig jwtConfig;
-
-    /**
-     * TOKEN超时拦截器排除路径
-     */
-    private InterceptorConfig tokenTimeoutConfig;
-
-    /**
      * 权限拦截器排除路径
      */
-    private InterceptorConfig permissionConfig;
+    @NestedConfigurationProperty
+    private InterceptorConfig permissionConfig = new InterceptorConfig();
 
     /**
      * 资源拦截器
      */
-    private InterceptorConfig resourceConfig;
+    @NestedConfigurationProperty
+    private InterceptorConfig resourceConfig = new InterceptorConfig();
 
     /**
      * 上传拦截器
      */
-    private InterceptorConfig uploadConfig;
+    @NestedConfigurationProperty
+    private InterceptorConfig uploadConfig = new InterceptorConfig();
 
     /**
      * 下载拦截器
      */
-    private InterceptorConfig downloadConfig;
+    @NestedConfigurationProperty
+    private InterceptorConfig downloadConfig = new InterceptorConfig();
 
     @Data
     public static class InterceptorConfig {
@@ -71,12 +66,12 @@ public class SpringBootPlusInterceptorConfig implements Serializable {
         /**
          * 排除路径
          */
-        private String[] excludePath;
+        private String[] excludePaths;
 
         /**
          * 包含的路径
          */
-        private String[] includePath;
+        private String[] includePaths;
 
     }
 
