@@ -20,11 +20,12 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.constant.CommonConstant;
+import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
 import io.geekidea.springbootplus.shiro.jwt.JwtToken;
-import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.param.LoginParam;
 import io.geekidea.springbootplus.shiro.service.LoginService;
+import io.geekidea.springbootplus.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.shiro.util.JwtUtil;
 import io.geekidea.springbootplus.shiro.util.SaltUtil;
 import io.geekidea.springbootplus.shiro.vo.LoginSysUserRedisVo;
@@ -40,6 +41,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.util.Arrays;
@@ -99,7 +101,8 @@ public class LoginServiceImpl implements LoginService {
         // 缓存登陆信息到Redis
         loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo, true);
         // 设置响应头
-        response.setHeader(CommonConstant.JWT_TOKEN_NAME, token);
+        response.setHeader(JwtTokenUtil.getTokenName(), token);
+        log.debug("登陆成功,username:{}", username);
         // 返回token
         return ApiResult.ok(token, "登陆成功");
     }
@@ -150,19 +153,20 @@ public class LoginServiceImpl implements LoginService {
         // 设置响应头
         // 刷新token
         httpServletResponse.setStatus(CommonConstant.JWT_REFRESH_TOKEN_CODE);
-        httpServletResponse.setHeader(CommonConstant.JWT_TOKEN_NAME, newToken);
+        httpServletResponse.setHeader(JwtTokenUtil.getTokenName(), newToken);
     }
 
     @Override
-    public void logout(String username) {
-        log.info("logout,username:{}", username);
+    public void logout(HttpServletRequest request) {
         Subject subject = SecurityUtils.getSubject();
         //注销
         subject.logout();
+        // 获取token
+        String token = JwtTokenUtil.getToken(request);
+        String username = JwtUtil.getUsername(token);
         // 删除Redis缓存信息
-        JwtToken jwtToken = (JwtToken) subject.getPrincipal();
-        log.debug("jwtToken = " + jwtToken);
-        loginRedisService.deleteLoginInfo(jwtToken);
+        loginRedisService.deleteLoginInfo(token, username);
+        log.info("登出成功,username:{},token:{}", username, token);
     }
 
     @Override

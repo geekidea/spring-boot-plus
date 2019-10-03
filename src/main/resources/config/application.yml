@@ -94,8 +94,11 @@ spring-boot-plus:
       /templates/**=anon
     # 权限配置
     permission-config:
-        # 排除登陆相关
-      - urls: /login,/login.html,/welcome.html,/index.html
+        # 排除登陆登出相关
+      - urls: /login,/logout
+        permission: anon
+        # 排除静态资源
+      - urls: /static/**,/templates/**
         permission: anon
         # 排除Swagger
       - urls: /docs,/swagger-ui.html, /webjars/springfox-swagger-ui/**,/swagger-resources/**,/v2/api-docs
@@ -110,6 +113,7 @@ spring-boot-plus:
 
   ############################ JWT start #############################
   jwt:
+    token-name: token
     secret: 666666
     issuer: spring-boot-plus
     audience: web

@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus.config;
 
+import io.geekidea.springbootplus.shiro.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -113,10 +114,17 @@ public class Swagger2Config {
     private List<Parameter> setHeaderToken() {
         List<Parameter> pars = new ArrayList<>();
 
-        // TODO  测试token值,上线关闭
+        // token请求头
         String testTokenValue = "";
         ParameterBuilder tokenPar = new ParameterBuilder();
-        Parameter tokenParameter = tokenPar.name("token").description("token").modelRef(new ModelRef("string")).parameterType("header").required(false).defaultValue(testTokenValue).build();
+        Parameter tokenParameter = tokenPar
+                .name(JwtTokenUtil.getTokenName())
+                .description("Token Request Header")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .required(false)
+                .defaultValue(testTokenValue)
+                .build();
         pars.add(tokenParameter);
         return pars;
     }

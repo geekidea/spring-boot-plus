@@ -13,6 +13,7 @@
 
 package io.geekidea.springbootplus.shiro.jwt;
 
+import io.geekidea.springbootplus.common.constant.CommonConstant;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -29,9 +30,14 @@ import org.springframework.stereotype.Component;
 public class JwtProperties {
 
     /**
+     * token名称,默认名称为：token，可自定义
+     */
+    private String tokenName = CommonConstant.JWT_DEFAULT_TOKEN_NAME;
+
+    /**
      * 密码
      */
-    private String secret = "666666";
+    private String secret = CommonConstant.JWT_DEFAULT_SECRET;
 
     /**
      * 签发人
@@ -51,7 +57,7 @@ public class JwtProperties {
     /**
      * token失效时间,默认1小时，60*60=3600
      */
-    private Long expireSecond = 3600L;
+    private Long expireSecond = CommonConstant.JWT_DEFAULT_EXPIRE_SECOND;
 
     /**
      * 是否刷新token，默认为true
