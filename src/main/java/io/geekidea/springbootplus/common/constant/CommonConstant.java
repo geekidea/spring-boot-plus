@@ -41,13 +41,12 @@ public interface CommonConstant {
     /**
      * 登陆token
      */
-    String JWT_TOKEN_NAME = "token";
+    String JWT_DEFAULT_TOKEN_NAME = "token";
 
     /**
      * JWT用户名
      */
     String JWT_USERNAME = "username";
-
 
     /**
      * JWT刷新新token响应状态码
@@ -60,6 +59,15 @@ public interface CommonConstant {
      */
     int JWT_INVALID_TOKEN_CODE = 461;
 
+    /**
+     * JWT Token默认密钥
+     */
+    String JWT_DEFAULT_SECRET = "666666";
+
+    /**
+     * JWT 默认过期时间，3600L，单位秒
+     */
+    Long JWT_DEFAULT_EXPIRE_SECOND = 3600L;
 
     /**
      * 初始密码

@@ -52,11 +52,6 @@ public class SpringBootPlusProperties {
     private boolean responseLogFormat;
 
     /**
-     * 登录token失效时间，单位分钟，默认60分钟失效
-     */
-    private Integer tokenValidTime = 60;
-
-    /**
      * 拦截器配置
      */
     @NestedConfigurationProperty

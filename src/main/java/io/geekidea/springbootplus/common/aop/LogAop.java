@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
+import io.geekidea.springbootplus.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.util.AnsiUtil;
 import io.geekidea.springbootplus.util.DateUtil;
 import io.geekidea.springbootplus.util.IpUtil;
@@ -131,7 +132,7 @@ public class LogAop {
             map.put("time", DateUtil.getYYYYMMDDHHMMSS(new Date()));
 
             // 获取请求头token
-            map.put("x-auth-token",request.getHeader("x-auth-token"));
+            map.put("token",request.getHeader(JwtTokenUtil.getTokenName()));
 
             String requestInfo = null;
             try {

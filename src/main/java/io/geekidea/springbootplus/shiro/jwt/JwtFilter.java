@@ -15,10 +15,10 @@ package io.geekidea.springbootplus.shiro.jwt;
 
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.common.constant.CommonConstant;
 import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.service.LoginService;
 import io.geekidea.springbootplus.shiro.util.JwtUtil;
+import io.geekidea.springbootplus.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.util.HttpServletResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -56,11 +56,6 @@ public class JwtFilter extends AuthenticatingFilter {
     }
 
     /**
-     * JWT请求头：token，可自定义
-     */
-    private static final String AUTHORIZATION_HEADER = CommonConstant.JWT_TOKEN_NAME;
-
-    /**
      * 将JWT Token包装成AuthenticationToken
      *
      * @param servletRequest
@@ -70,7 +65,7 @@ public class JwtFilter extends AuthenticatingFilter {
      */
     @Override
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-        String token = WebUtils.toHttp(servletRequest).getHeader(AUTHORIZATION_HEADER);
+        String token = JwtTokenUtil.getToken();
         if (StringUtils.isBlank(token)) {
             throw new AuthenticationException("token不能为空");
         }
@@ -150,22 +145,6 @@ public class JwtFilter extends AuthenticatingFilter {
         loginService.refreshToken(jwtToken, httpServletResponse);
         return true;
     }
-
-    /**
-     * 如果(当前时间+倒计时) > 过期时间，则刷新token
-     * 并更新缓存
-     * 当前token失效，返回新token
-     * 当前请求有效，返回状态码：460
-     * 前端下次使用新token
-     * 如果token继续发往后台，则提示，此token已失效，请使用新token，不在返回新token，返回状态码：461
-     *
-     * @param authenticationToken
-     */
-    protected void refreshToken(AuthenticationToken authenticationToken, ServletResponse response) {
-
-
-    }
-
 
     /**
      * 登陆失败处理

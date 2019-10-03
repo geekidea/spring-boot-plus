@@ -37,7 +37,8 @@ import java.util.Date;
  * https://github.com/auth0/java-jwt
  *
  * @author geekidea
- * @date 2019-05-15
+ * @date 2019-09-30
+ * @since 1.3.0.RELEASE
  **/
 @Slf4j
 @Component
@@ -138,6 +139,9 @@ public class JwtUtil {
      * @return
      */
     public static String getUsername(String token) {
+        if (StringUtils.isBlank(token)){
+            return null;
+        }
         DecodedJWT decodedJWT = getJwtInfo(token);
         if (decodedJWT == null) {
             return null;

@@ -56,9 +56,10 @@ public interface LoginRedisService {
     /**
      * 删除对应用户的Redis缓存
      *
-     * @param jwtToken
+     * @param token
+     * @param username
      */
-    void deleteLoginInfo(JwtToken jwtToken);
+    void deleteLoginInfo(String token, String username);
 
     /**
      * 判断token在redis中是否存在
