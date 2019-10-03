@@ -87,14 +87,13 @@
         <appender-ref ref ="ERROR_FILE"/>
     </appender>
 
-
     <!-- 不同环境的日志级别配置 -->
     <springProfile name="local">
         <logger name="io.geekidea.springbootplus" level="DEBUG"/>
     </springProfile>
 
     <!-- 解决SpringBootAdmin错误日志问题 -->
-<!--    <logger name="org.apache.catalina.connector.CoyoteAdapter" level="OFF"/>-->
+    <logger name="org.apache.catalina.connector.CoyoteAdapter" level="OFF"/>
 
     <root level="INFO">
         <appender-ref ref="CONSOLE" />

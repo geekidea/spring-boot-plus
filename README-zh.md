@@ -38,7 +38,7 @@
 2. 集成mybatis plus快速dao操作
 3. 快速生成后台代码: entity/param/vo/controller/service/mapper/xml
 4. 集成swagger2，可自动生成api文档
-5. 集成jwt、spring security权限控制
+5. 集成jwt、shiro/spring security权限控制
 6. 集成redis、spring cache、ehcache缓存
 7. 集成rabbit/rocket/kafka mq消息队列
 8. 集成druid连接池，JDBC性能和慢查询检测
@@ -71,9 +71,11 @@ commons-codec | 1.13 | 加密解密等工具包 |
 commons-collections4 | 4.4 | 集合工具包 |
 reflections | 0.9.11 | 反射工具包 |
 hibernate-validator | 6.0.17.Final | 后台参数校验注解 |
-jwt | 0.9.1 | json web token |
+Shiro | 1.4.0 | 权限控制 |
+JWT | 3.8.3 | JSON WEB TOKEN |
 hutool-all | 4.6.4 | 常用工具集 |
 lombok | 1.18.8 | 注解生成Java Bean等工具 |
+mapstruct | 1.3.0.Final | 对象属性复制工具 |
 
 ## CHANGELOG
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
