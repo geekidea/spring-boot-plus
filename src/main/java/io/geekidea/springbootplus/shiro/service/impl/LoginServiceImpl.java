@@ -66,6 +66,45 @@ public class LoginServiceImpl implements LoginService {
     private JwtProperties jwtProperties;
 
     @Override
+    public ApiResult login(LoginParam loginParam, HttpServletResponse response) {
+        String username = loginParam.getUsername();
+        // TODO 从数据库中获取登陆用户信息
+        LoginSysUserVo loginSysUserVo = new LoginSysUserVo()
+                .setId(1L)
+                .setUsername(loginParam.getUsername())
+                .setSalt("666") // 可选
+                .setRoles(SetUtils.hashSet("admin"));
+
+        if (loginSysUserVo == null) {
+            log.error("登陆失败,loginParam:{}", loginParam);
+            return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
+        }
+        // 包装盐值
+        String newSalt = SaltUtil.getSalt(jwtProperties.getSecret(), loginSysUserVo.getSalt());
+        // 删除登陆用户盐值，盐值保存到后台Redis缓存中
+        loginSysUserVo.setSalt(null);
+
+        // 生成token字符串并返回
+        Duration expireDuration = Duration.ofSeconds(jwtProperties.getExpireSecond());
+        String token = JwtUtil.generateToken(username, newSalt, expireDuration);
+        log.debug("token:{}", token);
+
+        // 创建AuthenticationToken
+        JwtToken jwtToken = JwtToken.build(token, username, newSalt, jwtProperties.getExpireSecond());
+        // 从SecurityUtils里边创建一个 subject
+        Subject subject = SecurityUtils.getSubject();
+        // 执行认证登陆
+        subject.login(jwtToken);
+
+        // 缓存登陆信息到Redis
+        loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo, true);
+        // 设置响应头
+        response.setHeader(CommonConstant.JWT_TOKEN_NAME, token);
+        // 返回token
+        return ApiResult.ok(token, "登陆成功");
+    }
+
+    @Override
     public void refreshToken(JwtToken jwtToken, HttpServletResponse httpServletResponse) {
         if (jwtToken == null) {
             return;
@@ -112,45 +151,6 @@ public class LoginServiceImpl implements LoginService {
         // 刷新token
         httpServletResponse.setStatus(CommonConstant.JWT_REFRESH_TOKEN_CODE);
         httpServletResponse.setHeader(CommonConstant.JWT_TOKEN_NAME, newToken);
-    }
-
-    @Override
-    public ApiResult login(LoginParam loginParam, HttpServletResponse response) {
-        String username = loginParam.getUsername();
-        // TODO 从数据库中获取登陆用户信息
-        LoginSysUserVo loginSysUserVo = new LoginSysUserVo()
-                .setId(1L)
-                .setUsername(loginParam.getUsername())
-                .setSalt("666") // 可选
-                .setRoles(SetUtils.hashSet("admin"));
-
-        if (loginSysUserVo == null) {
-            log.error("登陆失败,loginParam:{}", loginParam);
-            return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
-        }
-        // 包装盐值
-        String newSalt = SaltUtil.getSalt(jwtProperties.getSecret(), loginSysUserVo.getSalt());
-        // 删除登陆用户盐值，盐值保存到后台Redis缓存中
-        loginSysUserVo.setSalt(null);
-
-        // 生成token字符串并返回
-        Duration expireDuration = Duration.ofSeconds(jwtProperties.getExpireSecond());
-        String token = JwtUtil.generateToken(username, newSalt, expireDuration);
-        log.debug("token:{}", token);
-
-        // 创建AuthenticationToken
-        JwtToken jwtToken = JwtToken.build(token, username, newSalt, jwtProperties.getExpireSecond());
-        // 从SecurityUtils里边创建一个 subject
-        Subject subject = SecurityUtils.getSubject();
-        // 执行认证登陆
-        subject.login(jwtToken);
-
-        // 缓存登陆信息到Redis
-        loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo, true);
-        // 设置响应头
-        response.setHeader(CommonConstant.JWT_TOKEN_NAME, token);
-        // 返回token
-        return ApiResult.ok(token, "登陆成功");
     }
 
     @Override
