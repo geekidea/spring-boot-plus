@@ -14,22 +14,20 @@
 package io.geekidea.springbootplus.shiro.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
-import io.geekidea.springbootplus.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
+import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
 import io.geekidea.springbootplus.shiro.param.LoginParam;
 import io.geekidea.springbootplus.shiro.service.LoginService;
 import io.geekidea.springbootplus.system.web.vo.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -61,14 +59,8 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public ApiResult logout() {
-        Subject subject = SecurityUtils.getSubject();
-        //注销
-        subject.logout();
-        // 删除Redis缓存信息
-        JwtToken jwtToken = (JwtToken) subject.getPrincipal();
-        System.out.println("jwtToken = " + jwtToken);
-        loginRedisService.deleteLoginInfo(jwtToken);
+    public ApiResult logout(HttpServletRequest request) {
+        loginService.logout(request);
         return ApiResult.ok("退出成功");
     }
 }

@@ -38,17 +38,6 @@ spring:
 
 ############################## spring-boot-plus start ##############################
 spring-boot-plus:
-  # jwt配置
-  jwt:
-    secret: 666666
-    issuer: spring-boot-plus
-    audience: web
-    # 默认过期时间1小时，单位：秒
-    expire-second: 3600
-    # 是否刷新token
-    refresh_token: true
-    # 刷新token的时间间隔，默认10分钟，单位：秒
-    refresh_token_countdown: 600
   # 拦截器配置
   interceptor-config:
     permission-config:
@@ -96,7 +85,7 @@ spring-boot-plus:
     swagger-ui.html=classpath:/META-INF/resources/
     /webjars/**=classpath:/META-INF/resources/webjars/
 
-  # Shiro配置
+  ######################## Spring Shiro start ########################
   shiro:
     # shiro ini 多行字符串配置
     filter-chain-definitions: |
@@ -105,8 +94,11 @@ spring-boot-plus:
       /templates/**=anon
     # 权限配置
     permission-config:
-      # 排除登陆相关
-      - urls: /login,/login.html,/welcome.html,/index.html
+        # 排除登陆登出相关
+      - urls: /login,/logout
+        permission: anon
+        # 排除静态资源
+      - urls: /static/**,/templates/**
         permission: anon
         # 排除Swagger
       - urls: /docs,/swagger-ui.html, /webjars/springfox-swagger-ui/**,/swagger-resources/**,/v2/api-docs
@@ -117,16 +109,23 @@ spring-boot-plus:
         # 测试
       - url: /sysUser/getPageList
         permission: anon
+  ######################## Spring Shiro end ##########################
 
-
+  ############################ JWT start #############################
+  jwt:
+    token-name: token
+    secret: 666666
+    issuer: spring-boot-plus
+    audience: web
+    # 默认过期时间1小时，单位：秒
+    expire-second: 3600
+    # 是否刷新token
+    refresh_token: true
+    # 刷新token的时间间隔，默认10分钟，单位：秒
+    refresh_token_countdown: 600
+  ############################ JWT end ###############################
 
 ############################### spring-boot-plus end ###############################
-
-
-############################## Spring Shiro start ##############################
-
-
-############################### Spring Shiro end ###############################
 
 
 ############################### mybatis-plus start #################################
@@ -204,7 +203,7 @@ spring:
 ############################### Redis 公共配置 end ##################################
 
 
-#################################### Swagger start ####################################
+#################################### Swagger start #################################
 # swagger配置
 swagger:
   base:
@@ -217,10 +216,10 @@ swagger:
   title: spring-boot-plus
   url: ''
   version: 1.0
-#################################### Swagger end #####################################
+#################################### Swagger end ###################################
 
 
-################################ Spring boot admin start ################################
+############################## Spring boot admin start ##############################
 ---
 spring:
   boot:
@@ -252,4 +251,4 @@ info:
   project-spring-boot-version: '@spring-boot.version@'
   project-mybatis-plus-version: '@mybatis-plus-boot-starter.version@'
   project-version: '@project.version@'
-################################ Spring boot admin end #################################
+############################## Spring boot admin end ###############################

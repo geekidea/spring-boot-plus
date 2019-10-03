@@ -23,16 +23,7 @@ package io.geekidea.springbootplus.util;
 public class TokenUtil {
 
     /**
-     * 生成token
-     * @return
-     */
-    public static String generatetoken(){
-        String token = "x-auth-token:" + UUIDUtil.getUUID();
-        return token;
-    }
-
-    /**
-     * 生成token
+     *
      * @return
      */
     public static String generateFirstLoginRestPwdToken(){

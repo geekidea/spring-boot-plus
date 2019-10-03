@@ -40,7 +40,7 @@
 - Integrated mybatis-plus fast dao operation
 - Quickly generate background code:entity/param/vo/controller/service/mapper/xml
 - Integrated swagger2, automatic generation of api documents
-- Integrated JWT, spring security permission control
+- Integrated JWT,Shiro/Spring security permission control
 - Integrated Redis、spring cache、ehcache,etc
 - Integrated Rabbit/Rocket/Kafka MQ
 - Integration alibaba druid connection pool, JDBC performance and slow query detection
@@ -73,9 +73,11 @@ commons-codec | 1.13 | Apache Toolkit such as encryption and decryption |
 commons-collections4 | 4.4 | Apache collections toolkit |
 reflections | 0.9.11 | Reflection Toolkit  |
 hibernate-validator | 6.0.17.Final | Validator toolkit |
-jwt | 0.9.1 | JSON WEB TOKEN |
+Shiro | 1.4.0 | Permission control |
+JWT | 3.8.3 | JSON WEB TOKEN |
 hutool-all | 4.6.4 | Common toolset |
 lombok | 1.18.8 | Automatically plugs |
+mapstruct | 1.3.0.Final | Object property replication tool |
 
 ## CHANGELOG
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)

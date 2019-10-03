@@ -32,6 +32,8 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 
 /**
+ * 登陆信息Redis缓存服务类
+ *
  * @author geekidea
  * @date 2019-09-30
  * @since 1.3.0.RELEASE
@@ -88,10 +90,6 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         redisTemplate.opsForValue().set(String.format(CommonRedisKey.LOGIN_USER, username), loginSysUserRedisVo, expireDuration);
         // 3. salt hash,方便获取盐值鉴权
         redisTemplate.opsForValue().set(String.format(CommonRedisKey.LOGIN_SALT, username), salt, expireDuration);
-        if (generate) {
-            // 4. username hash,统计用户登陆次数
-            redisTemplate.opsForHash().increment(CommonRedisKey.LOGIN_USER_HASH, username, 1);
-        }
 
     }
 
@@ -122,12 +120,13 @@ public class LoginRedisServiceImpl implements LoginRedisService {
     }
 
     @Override
-    public void deleteLoginInfo(JwtToken jwtToken) {
-        if (jwtToken == null) {
-            throw new IllegalArgumentException("jwtToken不能为空");
+    public void deleteLoginInfo(String token, String username) {
+        if (token == null) {
+            throw new IllegalArgumentException("token不能为空");
         }
-        String username = jwtToken.getUsername();
-        String token = jwtToken.getToken();
+        if (username == null) {
+            throw new IllegalArgumentException("username不能为空");
+        }
         String tokenMd5 = DigestUtils.md5Hex(token);
         // 1. delete tokenMd5
         redisTemplate.delete(String.format(CommonRedisKey.LOGIN_TOKEN, tokenMd5));
@@ -135,8 +134,6 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         redisTemplate.delete(String.format(CommonRedisKey.LOGIN_USER, username));
         // 3. delete salt
         redisTemplate.delete(String.format(CommonRedisKey.LOGIN_SALT, username));
-        // 4. delete username hash
-        redisTemplate.opsForHash().increment(CommonRedisKey.LOGIN_USER_HASH, username, -1);
     }
 
     @Override

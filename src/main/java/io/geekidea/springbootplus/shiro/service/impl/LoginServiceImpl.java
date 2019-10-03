@@ -20,11 +20,12 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.constant.CommonConstant;
+import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
 import io.geekidea.springbootplus.shiro.jwt.JwtToken;
-import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.param.LoginParam;
 import io.geekidea.springbootplus.shiro.service.LoginService;
+import io.geekidea.springbootplus.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.shiro.util.JwtUtil;
 import io.geekidea.springbootplus.shiro.util.SaltUtil;
 import io.geekidea.springbootplus.shiro.vo.LoginSysUserRedisVo;
@@ -40,6 +41,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.util.Arrays;
@@ -64,6 +66,46 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private JwtProperties jwtProperties;
+
+    @Override
+    public ApiResult login(LoginParam loginParam, HttpServletResponse response) {
+        String username = loginParam.getUsername();
+        // TODO 从数据库中获取登陆用户信息
+        LoginSysUserVo loginSysUserVo = new LoginSysUserVo()
+                .setId(1L)
+                .setUsername(loginParam.getUsername())
+                .setSalt("666") // 可选
+                .setRoles(SetUtils.hashSet("admin"));
+
+        if (loginSysUserVo == null) {
+            log.error("登陆失败,loginParam:{}", loginParam);
+            return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
+        }
+        // 包装盐值
+        String newSalt = SaltUtil.getSalt(jwtProperties.getSecret(), loginSysUserVo.getSalt());
+        // 删除登陆用户盐值，盐值保存到后台Redis缓存中
+        loginSysUserVo.setSalt(null);
+
+        // 生成token字符串并返回
+        Duration expireDuration = Duration.ofSeconds(jwtProperties.getExpireSecond());
+        String token = JwtUtil.generateToken(username, newSalt, expireDuration);
+        log.debug("token:{}", token);
+
+        // 创建AuthenticationToken
+        JwtToken jwtToken = JwtToken.build(token, username, newSalt, jwtProperties.getExpireSecond());
+        // 从SecurityUtils里边创建一个 subject
+        Subject subject = SecurityUtils.getSubject();
+        // 执行认证登陆
+        subject.login(jwtToken);
+
+        // 缓存登陆信息到Redis
+        loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo, true);
+        // 设置响应头
+        response.setHeader(JwtTokenUtil.getTokenName(), token);
+        log.debug("登陆成功,username:{}", username);
+        // 返回token
+        return ApiResult.ok(token, "登陆成功");
+    }
 
     @Override
     public void refreshToken(JwtToken jwtToken, HttpServletResponse httpServletResponse) {
@@ -111,58 +153,20 @@ public class LoginServiceImpl implements LoginService {
         // 设置响应头
         // 刷新token
         httpServletResponse.setStatus(CommonConstant.JWT_REFRESH_TOKEN_CODE);
-        httpServletResponse.setHeader(CommonConstant.JWT_TOKEN_NAME, newToken);
+        httpServletResponse.setHeader(JwtTokenUtil.getTokenName(), newToken);
     }
 
     @Override
-    public ApiResult login(LoginParam loginParam, HttpServletResponse response) {
-        String username = loginParam.getUsername();
-        // TODO 从数据库中获取登陆用户信息
-        LoginSysUserVo loginSysUserVo = new LoginSysUserVo()
-                .setId(1L)
-                .setUsername(loginParam.getUsername())
-                .setSalt("666") // 可选
-                .setRoles(SetUtils.hashSet("admin"));
-
-        if (loginSysUserVo == null) {
-            log.error("登陆失败,loginParam:{}", loginParam);
-            return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
-        }
-        // 包装盐值
-        String newSalt = SaltUtil.getSalt(jwtProperties.getSecret(), loginSysUserVo.getSalt());
-        // 删除登陆用户盐值，盐值保存到后台Redis缓存中
-        loginSysUserVo.setSalt(null);
-
-        // 生成token字符串并返回
-        Duration expireDuration = Duration.ofSeconds(jwtProperties.getExpireSecond());
-        String token = JwtUtil.generateToken(username, newSalt, expireDuration);
-        log.debug("token:{}", token);
-
-        // 创建AuthenticationToken
-        JwtToken jwtToken = JwtToken.build(token, username, newSalt, jwtProperties.getExpireSecond());
-        // 从SecurityUtils里边创建一个 subject
-        Subject subject = SecurityUtils.getSubject();
-        // 执行认证登陆
-        subject.login(jwtToken);
-
-        // 缓存登陆信息到Redis
-        loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo, true);
-        // 设置响应头
-        response.setHeader(CommonConstant.JWT_TOKEN_NAME, token);
-        // 返回token
-        return ApiResult.ok(token, "登陆成功");
-    }
-
-    @Override
-    public void logout(String username) {
-        log.info("logout,username:{}", username);
+    public void logout(HttpServletRequest request) {
         Subject subject = SecurityUtils.getSubject();
         //注销
         subject.logout();
+        // 获取token
+        String token = JwtTokenUtil.getToken(request);
+        String username = JwtUtil.getUsername(token);
         // 删除Redis缓存信息
-        JwtToken jwtToken = (JwtToken) subject.getPrincipal();
-        log.debug("jwtToken = " + jwtToken);
-        loginRedisService.deleteLoginInfo(jwtToken);
+        loginRedisService.deleteLoginInfo(token, username);
+        log.info("登出成功,username:{},token:{}", username, token);
     }
 
     @Override

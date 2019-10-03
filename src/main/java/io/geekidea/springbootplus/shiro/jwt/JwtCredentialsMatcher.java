@@ -13,13 +13,11 @@
 
 package io.geekidea.springbootplus.shiro.jwt;
 
-import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * JWT证书匹配
@@ -31,18 +29,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class JwtCredentialsMatcher implements CredentialsMatcher {
 
-    @Autowired
-    private LoginRedisService loginRedisService;
-
     @Override
     public boolean doCredentialsMatch(AuthenticationToken authenticationToken, AuthenticationInfo authenticationInfo) {
         String token = authenticationToken.getCredentials().toString();
         String salt = authenticationInfo.getCredentials().toString();
         try {
-            boolean success = JwtUtil.verifyToken(token, salt);
-            return success;
+            return JwtUtil.verifyToken(token, salt);
         } catch (Exception e) {
-            log.error("Token CredentialsMatch Exception:" + e.getMessage(), e);
+            log.error("JWT Token CredentialsMatch Exception:" + e.getMessage(), e);
         }
         return false;
     }
