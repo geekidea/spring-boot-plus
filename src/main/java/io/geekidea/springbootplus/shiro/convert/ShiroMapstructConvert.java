@@ -21,6 +21,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
+ * Shiro包下使用mapstruct对象属性复制转换器
+ *
  * @author geekidea
  * @date 2019-09-30
  * @since 1.3.0.RELEASE
@@ -30,7 +32,20 @@ public interface ShiroMapstructConvert {
 
     ShiroMapstructConvert INSTANCE = Mappers.getMapper(ShiroMapstructConvert.class);
 
+    /**
+     * LoginSysUserVo对象转换成LoginSysUserRedisVo
+     *
+     * @param loginSysUserVo
+     * @return
+     */
     LoginSysUserRedisVo loginSysUserVoToLoginSysUserRedisVo(LoginSysUserVo loginSysUserVo);
 
+    /**
+     * JwtToken对象转换成JwtTokenRedisVo
+     *
+     * @param jwtToken
+     * @return
+     */
     JwtTokenRedisVo jwtTokenToJwtTokenRedisVo(JwtToken jwtToken);
+
 }

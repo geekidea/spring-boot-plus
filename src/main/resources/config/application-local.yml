@@ -5,9 +5,6 @@ spring-boot-plus:
   request-log-format: true
   # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
   response-log-format: true
-  # 登录设置
-  login:
-    token-valid-time: 60  # 登录token失效时间，单位分钟
 
   # 拦截器配置
   interceptor-config:

@@ -15,10 +15,10 @@ package io.geekidea.springbootplus.shiro.jwt;
 
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.common.constant.CommonConstant;
 import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.service.LoginService;
 import io.geekidea.springbootplus.shiro.util.JwtUtil;
+import io.geekidea.springbootplus.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.util.HttpServletResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -56,11 +56,6 @@ public class JwtFilter extends AuthenticatingFilter {
     }
 
     /**
-     * JWT请求头：token，可自定义
-     */
-    private static final String AUTHORIZATION_HEADER = CommonConstant.JWT_TOKEN_NAME;
-
-    /**
      * 将JWT Token包装成AuthenticationToken
      *
      * @param servletRequest
@@ -70,7 +65,7 @@ public class JwtFilter extends AuthenticatingFilter {
      */
     @Override
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-        String token = WebUtils.toHttp(servletRequest).getHeader(AUTHORIZATION_HEADER);
+        String token = JwtTokenUtil.getToken();
         if (StringUtils.isBlank(token)) {
             throw new AuthenticationException("token不能为空");
         }

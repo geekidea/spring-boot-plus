@@ -46,7 +46,7 @@ public class CrossDomainFilter implements Filter {
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "*");
         httpServletResponse.setHeader("Access-Control-Allow-Headers", "*");
         httpServletResponse.setHeader("Access-Control-Request-Headers","*");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "content-type,x-auth-token");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "content-type,token");
         httpServletResponse.setHeader("Access-Control-Expose-Headers", "*");
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;

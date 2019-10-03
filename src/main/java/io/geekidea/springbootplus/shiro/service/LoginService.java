@@ -20,6 +20,7 @@ import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.shiro.param.LoginParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -57,9 +58,9 @@ public interface LoginService {
     /**
      * 退出
      *
-     * @param userName
+     * @param request
      */
-    void logout(String userName);
+    void logout(HttpServletRequest request);
 
     /**
      * 获取用户角色
