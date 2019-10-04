@@ -69,4 +69,14 @@ public class JwtProperties {
      */
     private Integer refreshTokenCountdown;
 
+    /**
+     * redis校验jwt token是否存在
+     */
+    private boolean redisCheck;
+
+    /**
+     * 单用户登陆，一个用户只能又一个有效的token
+     */
+    private boolean singleLogin;
+
 }

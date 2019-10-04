@@ -120,9 +120,13 @@ spring-boot-plus:
     # 默认过期时间1小时，单位：秒
     expire-second: 3600
     # 是否刷新token
-    refresh_token: true
+    refresh-token: true
     # 刷新token的时间间隔，默认10分钟，单位：秒
-    refresh_token_countdown: 600
+    refresh-token-countdown: 600
+    # redis校验jwt token是否存在,可选
+    redis-check: true
+    # true: 同一个账号只能是最后一次登陆token有效，false：同一个账号可多次登陆
+    single-login: false
   ############################ JWT end ###############################
 
 ############################### spring-boot-plus end ###############################

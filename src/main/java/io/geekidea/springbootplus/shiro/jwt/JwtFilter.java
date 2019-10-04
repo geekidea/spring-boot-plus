@@ -70,8 +70,17 @@ public class JwtFilter extends AuthenticatingFilter {
             throw new AuthenticationException("token不能为空");
         }
         if (JwtUtil.isExpired(token)) {
-            throw new AuthenticationException("token已过期,token:" + token);
+            throw new AuthenticationException("JWT Token已过期,token:" + token);
         }
+
+        // 如果开启redis二次校验，或者设置为单个用户token登陆，则先在redis中判断token是否存在
+        if (jwtProperties.isRedisCheck() || jwtProperties.isSingleLogin()) {
+            boolean redisExpired = loginRedisService.exists(token);
+            if (!redisExpired) {
+                throw new AuthenticationException("Redis Token不存在,token:" + token);
+            }
+        }
+
         String username = JwtUtil.getUsername(token);
         String salt = loginRedisService.getSalt(username);
         return JwtToken.build(token, username, salt, jwtProperties.getExpireSecond());

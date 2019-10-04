@@ -14,9 +14,10 @@
 package io.geekidea.springbootplus.shiro.cache.impl;
 
 import io.geekidea.springbootplus.common.constant.CommonRedisKey;
-import io.geekidea.springbootplus.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.convert.ShiroMapstructConvert;
+import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
+import io.geekidea.springbootplus.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.shiro.vo.ClientInfo;
 import io.geekidea.springbootplus.shiro.vo.JwtTokenRedisVo;
 import io.geekidea.springbootplus.shiro.vo.LoginSysUserRedisVo;
@@ -24,12 +25,15 @@ import io.geekidea.springbootplus.shiro.vo.LoginSysUserVo;
 import io.geekidea.springbootplus.util.ClientInfoUtil;
 import io.geekidea.springbootplus.util.HttpServletRequestUtil;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 登陆信息Redis缓存服务类
@@ -40,6 +44,9 @@ import java.time.Duration;
  **/
 @Service
 public class LoginRedisServiceImpl implements LoginRedisService {
+
+    @Autowired
+    private JwtProperties jwtProperties;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -84,13 +91,21 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         // Redis过期时间与JwtToken过期时间一致
         Duration expireDuration = Duration.ofSeconds(jwtToken.getExpireSecond());
 
+        // 判断是否启用单个用户登陆，如果是，这每个用户只有一个有效token
+        boolean singleLogin = jwtProperties.isSingleLogin();
+        if (singleLogin) {
+            deleteUserAllCache(username);
+        }
+
         // 1. tokenMd5:jwtTokenRedisVo
-        redisTemplate.opsForValue().set(String.format(CommonRedisKey.LOGIN_TOKEN, tokenMd5), jwtTokenRedisVo, expireDuration);
+        String loginTokenRedisKey = String.format(CommonRedisKey.LOGIN_TOKEN, tokenMd5);
+        redisTemplate.opsForValue().set(loginTokenRedisKey, jwtTokenRedisVo, expireDuration);
         // 2. username:loginSysUserRedisVo
         redisTemplate.opsForValue().set(String.format(CommonRedisKey.LOGIN_USER, username), loginSysUserRedisVo, expireDuration);
         // 3. salt hash,方便获取盐值鉴权
         redisTemplate.opsForValue().set(String.format(CommonRedisKey.LOGIN_SALT, username), salt, expireDuration);
-
+        // 4. login user token
+        redisTemplate.opsForValue().set(String.format(CommonRedisKey.LOGIN_USER_TOKEN, username, tokenMd5), loginTokenRedisKey, expireDuration);
     }
 
     @Override
@@ -134,6 +149,8 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         redisTemplate.delete(String.format(CommonRedisKey.LOGIN_USER, username));
         // 3. delete salt
         redisTemplate.delete(String.format(CommonRedisKey.LOGIN_SALT, username));
+        // 4. delete user token
+        redisTemplate.delete(String.format(CommonRedisKey.LOGIN_USER_TOKEN, username, tokenMd5));
     }
 
     @Override
@@ -145,4 +162,23 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         Object object = redisTemplate.opsForValue().get(String.format(CommonRedisKey.LOGIN_TOKEN, tokenMd5));
         return object != null;
     }
+
+    @Override
+    public void deleteUserAllCache(String username) {
+        Set<String> userTokenMd5Set = redisTemplate.keys(String.format(CommonRedisKey.LOGIN_USER_TOKEN, username, "*"));
+        if (CollectionUtils.isEmpty(userTokenMd5Set)) {
+            return;
+        }
+
+        // 1. 删除登陆用户的所有token信息
+        List<String> tokenMd5List = redisTemplate.opsForValue().multiGet(userTokenMd5Set);
+        redisTemplate.delete(tokenMd5List);
+        // 2. 删除登陆用户的所有user:token信息
+        redisTemplate.delete(userTokenMd5Set);
+        // 3. 删除登陆用户信息
+        redisTemplate.delete(String.format(CommonRedisKey.LOGIN_USER, username));
+        // 4. 删除登陆用户盐值信息
+        redisTemplate.delete(String.format(CommonRedisKey.LOGIN_SALT, username));
+    }
+
 }
