@@ -41,8 +41,8 @@ public interface CommonRedisKey {
     String LOGIN_SALT= "login:salt:%s";
 
     /**
-     * 登陆user hash key
+     * 登陆用户username token
      */
-    String LOGIN_USER_HASH = "login:user:hash";
+    String LOGIN_USER_TOKEN = "login:user:token:%s:%s";
 
 }
