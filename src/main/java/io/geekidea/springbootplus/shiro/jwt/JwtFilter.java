@@ -82,7 +82,12 @@ public class JwtFilter extends AuthenticatingFilter {
         }
 
         String username = JwtUtil.getUsername(token);
-        String salt = loginRedisService.getSalt(username);
+        String salt;
+        if (jwtProperties.isSaltCheck()){
+            salt = loginRedisService.getSalt(username);
+        }else{
+            salt = jwtProperties.getSecret();
+        }
         return JwtToken.build(token, username, salt, jwtProperties.getExpireSecond());
     }
 
