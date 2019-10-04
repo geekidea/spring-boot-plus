@@ -127,6 +127,8 @@ spring-boot-plus:
     redis-check: true
     # true: 同一个账号只能是最后一次登陆token有效，false：同一个账号可多次登陆
     single-login: false
+    # 盐值校验，如果不加自定义盐值，则使用secret校验
+    salt-check: true
   ############################ JWT end ###############################
 
 ############################### spring-boot-plus end ###############################

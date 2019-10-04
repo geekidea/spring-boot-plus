@@ -79,4 +79,9 @@ public class JwtProperties {
      */
     private boolean singleLogin;
 
+    /**
+     * 是否进行盐值校验
+     */
+    private boolean saltCheck;
+
 }
