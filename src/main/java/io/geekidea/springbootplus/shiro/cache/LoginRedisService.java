@@ -68,4 +68,11 @@ public interface LoginRedisService {
      * @return
      */
     boolean exists(String token);
+
+    /**
+     * 删除用户所有登陆缓存
+     * @param username
+     */
+    void deleteUserAllCache(String username);
+
 }
