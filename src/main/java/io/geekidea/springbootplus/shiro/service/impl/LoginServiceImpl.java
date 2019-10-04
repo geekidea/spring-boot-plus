@@ -81,8 +81,13 @@ public class LoginServiceImpl implements LoginService {
             log.error("登陆失败,loginParam:{}", loginParam);
             return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
         }
-        // 包装盐值
-        String newSalt = SaltUtil.getSalt(jwtProperties.getSecret(), loginSysUserVo.getSalt());
+        String newSalt;
+        if (jwtProperties.isSaltCheck()){
+            // 包装盐值
+            newSalt = SaltUtil.getSalt(jwtProperties.getSecret(), loginSysUserVo.getSalt());
+        }else{
+            newSalt = jwtProperties.getSecret();
+        }
         // 删除登陆用户盐值，盐值保存到后台Redis缓存中
         loginSysUserVo.setSalt(null);
 
