@@ -102,27 +102,35 @@ mvn clean package -Plocal
 
 ### 1. 创建数据库表
 ```sql
+
 -- ----------------------------
 -- Table structure for sys_user
 -- ----------------------------
 drop table if exists `sys_user`;
-create table sys_user(
-    id          bigint                              not null comment '主键',
-    name        varchar(20)                         null comment '用户名称',
-    account     varchar(20)                         not null comment '账号',
-    pwd         varchar(20)                         not null comment '密码',
-    remark      varchar(200)                        null comment '备注',
+create table sys_user
+(
+    id          bigint                              not null comment '主键'
+        primary key,
+    username    varchar(20)                         not null comment '用户名',
+    nickname    varchar(20)                         null comment '昵称',
+    password    varchar(64)                         not null comment '密码',
+    salt        varchar(32)                         null comment '盐值',
+    remark      varchar(200)                        null comment 'remark',
+    status      int       default 1                 not null comment '状态，0：禁用，1：启用',
     create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
     update_time timestamp                           null comment '修改时间',
-    primary key (`id`),
-    constraint sys_user_account_uindex
-        unique (account)
-) comment '系统用户';
+    constraint sys_user_username_uindex
+        unique (username)
+)
+    comment '系统用户';
+
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO sys_user (id, name, account, pwd, remark, create_time, update_time) VALUES (1, 'Administrator', 'admin', '123456', 'Administrator Account', '2019-08-26 00:52:01', null);
-
+INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, status, create_time, update_time) 
+    VALUES (1, 'admin', '管理员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', 'e4cc3292e3ebc483998adb2c0e4e640e', 'Administrator Account', 1, '2019-08-26 00:52:01', null);
+INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, status, create_time, update_time) 
+    VALUES (2, 'test', '测试人员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', '99952b31c18156169a26bec80fd211f6', 'Tester Account', 1, '2019-10-05 14:04:27', null);
 
 ```
 
