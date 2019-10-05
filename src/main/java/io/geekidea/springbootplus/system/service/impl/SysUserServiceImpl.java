@@ -24,7 +24,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author geekidea
- * @since 2019-08-26
+ * @since 2019-10-05
  */
 @Slf4j
 @Service
@@ -32,17 +32,17 @@ import java.io.Serializable;
 public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Autowired
-    private SysUserMapper sysUserMapper;
+    private SysUserMapper SysUserMapper;
 
     @Override
-    public SysUserQueryVo getSysUserById(Serializable id) throws Exception{
-        return sysUserMapper.getSysUserById(id);
+    public SysUserQueryVo getSysUserById(Serializable id) throws Exception {
+        return SysUserMapper.getSysUserById(id);
     }
 
     @Override
-    public Paging<SysUserQueryVo> getSysUserPageList(SysUserQueryParam sysUserQueryParam) throws Exception{
-        Page page = setPageParam(sysUserQueryParam,OrderItem.desc("create_time"));
-        IPage<SysUserQueryVo> iPage = sysUserMapper.getSysUserPageList(page,sysUserQueryParam);
+    public Paging<SysUserQueryVo> getSysUserPageList(SysUserQueryParam SysUserQueryParam) throws Exception {
+        Page page = setPageParam(SysUserQueryParam, OrderItem.desc("create_time"));
+        IPage<SysUserQueryVo> iPage = SysUserMapper.getSysUserPageList(page, SysUserQueryParam);
         return new Paging(iPage);
     }
 

@@ -1,8 +1,9 @@
-package io.geekidea.springbootplus.${package.ModuleName}.web.param;
+package ${cfg.queryParamPackage};
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 #if(${cfg.pageListOrder})
 import ${cfg.orderQueryParamPath};
@@ -19,8 +20,9 @@ import ${cfg.queryParamCommonPath};
  * @date ${date}
  */
 @Data
+@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="${entity}QueryParam对象", description="$!{table.comment}查询参数")
+@ApiModel(value = "${entity}QueryParam对象", description = "$!{table.comment}查询参数")
 #if(${cfg.pageListOrder})
 public class ${entity}QueryParam extends OrderQueryParam {
 #else

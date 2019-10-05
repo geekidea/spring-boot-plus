@@ -1,4 +1,4 @@
-package io.geekidea.springbootplus.${package.ModuleName}.web.vo;
+package ${cfg.queryVoPackage};
 
 #if(${swagger2})
 import io.swagger.annotations.ApiModel;
@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 #end
 #if(${entityLombokModel})
 import lombok.Data;
+import lombok.experimental.Accessors;
 #end
 import java.io.Serializable;
 
@@ -21,12 +22,13 @@ import java.util.Date;
  */
 #if(${entityLombokModel})
 @Data
+@Accessors(chain = true)
 #end
 #if(${table.convert})
 @TableName("${table.name}")
 #end
-@ApiModel(value="${entity}QueryVo对象", description="$!{table.comment}查询参数")
-public class ${entity}QueryVo implements Serializable{
+@ApiModel(value = "${entity}QueryVo对象", description = "$!{table.comment}查询参数")
+public class ${entity}QueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})

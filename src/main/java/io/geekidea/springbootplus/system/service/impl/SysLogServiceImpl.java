@@ -24,7 +24,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author geekidea
- * @since 2019-08-04
+ * @since 2019-10-05
  */
 @Slf4j
 @Service
@@ -32,17 +32,17 @@ import java.io.Serializable;
 public class SysLogServiceImpl extends BaseServiceImpl<SysLogMapper, SysLog> implements SysLogService {
 
     @Autowired
-    private SysLogMapper sysLogMapper;
+    private SysLogMapper SysLogMapper;
 
     @Override
-    public SysLogQueryVo getSysLogById(Serializable id) throws Exception{
-        return sysLogMapper.getSysLogById(id);
+    public SysLogQueryVo getSysLogById(Serializable id) throws Exception {
+        return SysLogMapper.getSysLogById(id);
     }
 
     @Override
-    public Paging<SysLogQueryVo> getSysLogPageList(SysLogQueryParam sysLogQueryParam) throws Exception{
-        Page page = setPageParam(sysLogQueryParam,OrderItem.desc("create_time"));
-        IPage<SysLogQueryVo> iPage = sysLogMapper.getSysLogPageList(page,sysLogQueryParam);
+    public Paging<SysLogQueryVo> getSysLogPageList(SysLogQueryParam SysLogQueryParam) throws Exception {
+        Page page = setPageParam(SysLogQueryParam, OrderItem.desc("create_time"));
+        IPage<SysLogQueryVo> iPage = SysLogMapper.getSysLogPageList(page, SysLogQueryParam);
         return new Paging(iPage);
     }
 
