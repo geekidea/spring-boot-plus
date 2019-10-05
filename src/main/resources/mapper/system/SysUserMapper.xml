@@ -4,15 +4,26 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, account, pwd, remark, create_time, update_time
+        id, username, nickname, password, salt, remark, status, create_time, update_time
     </sql>
 
     <select id="getSysUserById" resultType="io.geekidea.springbootplus.system.web.vo.SysUserQueryVo">
-        select <include refid="Base_Column_List"/> from sys_user where id = #{id}
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user where id = #{id}
     </select>
 
     <select id="getSysUserPageList" resultType="io.geekidea.springbootplus.system.web.vo.SysUserQueryVo">
-        select <include refid="Base_Column_List"/> from sys_user
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+    </select>
+
+    <select id="getSysUserByUsername" resultType="io.geekidea.springbootplus.system.entity.SysUser">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where username = #{username}
     </select>
 
 </mapper>

@@ -14,7 +14,9 @@
 package io.geekidea.springbootplus.shiro.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 
 /**
  * 盐值包装工具类
@@ -40,4 +42,15 @@ public class SaltUtil {
         String newSalt = DigestUtils.sha256Hex(secret + salt);
         return newSalt;
     }
+
+    /**
+     * 生成32位随机盐
+     *
+     * @return
+     */
+    public static String generateSalt() {
+        return new SecureRandomNumberGenerator().nextBytes(16).toHex();
+    }
+
 }
+

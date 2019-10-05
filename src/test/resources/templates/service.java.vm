@@ -24,6 +24,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
     /**
      * 根据ID获取查询对象
+     *
      * @param id
      * @return
      */
@@ -31,6 +32,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
     /**
      * 获取分页对象
+     *
      * @param ${cfg.entityObjectName}QueryParam
      * @return
      */

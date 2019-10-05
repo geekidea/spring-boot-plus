@@ -17,13 +17,14 @@ import java.io.Serializable;
  * </p>
  *
  * @author geekidea
- * @since 2019-08-04
+ * @since 2019-10-05
  */
 @Repository
 public interface SysLogMapper extends BaseMapper<SysLog> {
 
     /**
      * 根据ID获取查询对象
+     *
      * @param id
      * @return
      */
@@ -31,10 +32,11 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
 
     /**
      * 获取分页对象
+     *
      * @param page
-     * @param sysLogQueryParam
+     * @param SysLogQueryParam
      * @return
      */
-    IPage<SysLogQueryVo> getSysLogPageList(@Param("page") Page page, @Param("param") SysLogQueryParam sysLogQueryParam);
+    IPage<SysLogQueryVo> getSysLogPageList(@Param("page") Page page, @Param("param") SysLogQueryParam SysLogQueryParam);
 
 }
