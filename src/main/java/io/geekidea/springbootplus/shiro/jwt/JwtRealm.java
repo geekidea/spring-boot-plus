@@ -28,7 +28,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 /**
- * Shiro JST授权认证
+ * Shiro 授权认证
  *
  * @author geekidea
  * @date 2019-09-27

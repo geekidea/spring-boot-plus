@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiModel;
 import java.io.Serializable;
 
 /**
+ * 实体父类
  * @author geekidea
  * @date 2018-11-08
  */

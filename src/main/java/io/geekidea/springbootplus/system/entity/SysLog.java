@@ -1,14 +1,14 @@
 package io.geekidea.springbootplus.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.geekidea.springbootplus.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Date;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -16,11 +16,12 @@ import java.util.Date;
  * </p>
  *
  * @author geekidea
- * @since 2019-08-04
+ * @since 2019-10-05
  */
 @Data
+@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="SysLog对象", description="系统日志")
+@ApiModel(value = "SysLog对象", description = "系统日志")
 public class SysLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

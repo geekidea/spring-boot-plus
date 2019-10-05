@@ -28,6 +28,7 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
 
     /**
      * 根据ID获取查询对象
+     *
      * @param id
      * @return
      */
@@ -35,6 +36,7 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
 
     /**
      * 获取分页对象
+     *
      * @param page
      * @param ${cfg.entityObjectName}QueryParam
      * @return

@@ -41,14 +41,14 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
 #if(${cfg.generatorStrategy})
 
     @Override
-    public ${entity}QueryVo get${entity}ById(Serializable id) throws Exception{
+    public ${entity}QueryVo get${entity}ById(Serializable id) throws Exception {
         return ${cfg.mapperObjectName}.get${entity}ById(id);
     }
 
     @Override
-    public Paging<${entity}QueryVo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception{
-        Page page = setPageParam(${cfg.entityObjectName}QueryParam,OrderItem.desc("create_time"));
-        IPage<${entity}QueryVo> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page,${cfg.entityObjectName}QueryParam);
+    public Paging<${entity}QueryVo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        Page page = setPageParam(${cfg.entityObjectName}QueryParam, OrderItem.desc("create_time"));
+        IPage<${entity}QueryVo> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}QueryParam);
         return new Paging(iPage);
     }
 #end

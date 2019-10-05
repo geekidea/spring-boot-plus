@@ -14,12 +14,13 @@ import java.io.Serializable;
  * </p>
  *
  * @author geekidea
- * @since 2019-08-26
+ * @since 2019-10-05
  */
 public interface SysUserService extends BaseService<SysUser> {
 
     /**
      * 根据ID获取查询对象
+     *
      * @param id
      * @return
      */
@@ -27,9 +28,10 @@ public interface SysUserService extends BaseService<SysUser> {
 
     /**
      * 获取分页对象
-     * @param sysUserQueryParam
+     *
+     * @param SysUserQueryParam
      * @return
      */
-    Paging<SysUserQueryVo> getSysUserPageList(SysUserQueryParam sysUserQueryParam) throws Exception;
+    Paging<SysUserQueryVo> getSysUserPageList(SysUserQueryParam SysUserQueryParam) throws Exception;
 
 }
