@@ -1,12 +1,12 @@
 /**
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,6 +33,7 @@ import java.util.Map;
 
 /**
  * spring-boot-plus代码生成器入口类
+ *
  * @author geekidea
  * @date 2018-11-08
  */
@@ -59,9 +60,9 @@ public class CodeGenerator {
     // 作者
     private static final String AUTHOR = "geekidea";
     // 生成的表名称
-    private static final String TABLE_NAME = "sys_log";
+    private static final String TABLE_NAME = "sys_user";
     // 主键数据库列名称
-    private static final String PK_ID_COLUMN_NAME = "log_id";
+    private static final String PK_ID_COLUMN_NAME = "id";
     // 代码生成策略 true：All/false:SIMPLE
     private static final boolean GENERATOR_STRATEGY = true;
     // 分页列表查询是否排序 true：有排序参数/false：无
@@ -108,36 +109,48 @@ public class CodeGenerator {
         InjectionConfig cfg = new InjectionConfig() {
             @Override
             public void initMap() {
-                Map<String, Object> map = new HashMap<String, Object>();
+
+                String pascalTableName = underlineToPascal(TABLE_NAME);
+
+                Map<String, Object> map = new HashMap<>();
                 map.put("customField", "Hello " + this.getConfig().getGlobalConfig().getAuthor());
                 // 查询参数包路径
-                map.put("queryParamPath",PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".web.param." + underlineToPascal(TABLE_NAME) + "QueryParam");
+                String queryParamPackage = PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".web.param";
+                map.put("queryParamPackage", queryParamPackage);
+                // 查询参数类路径
+                map.put("queryParamPath", queryParamPackage + StringPool.DOT + pascalTableName + "QueryParam");
                 // 查询参数共公包路径
-                map.put("queryParamCommonPath",PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "QueryParam");
+                map.put("queryParamCommonPath", PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "QueryParam");
                 // 查询参数共公包路径
-                map.put("idParamPath",PARENT_PACKAGE + StringPool.DOT  + "common.web.param." + "IdParam");
+                map.put("idParamPath", PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "IdParam");
                 // 响应结果包路径
-                map.put("queryVoPath",PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".web.vo." + underlineToPascal(TABLE_NAME) + "QueryVo");
+                String queryVoPackage = PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".web.vo";
+                map.put("queryVoPackage", queryVoPackage);
+                // 响应结果类路径
+                map.put("queryVoPath", queryVoPackage + StringPool.DOT + pascalTableName + "QueryVo");
                 // 实体对象名称
-                map.put("entityObjectName",underlineToCamel(TABLE_NAME));
+                map.put("entityObjectName", pascalTableName);
                 // service对象名称
-                map.put("serviceObjectName",underlineToCamel(TABLE_NAME) + "Service");
+                map.put("serviceObjectName", pascalTableName + "Service");
                 // mapper对象名称
-                map.put("mapperObjectName",underlineToCamel(TABLE_NAME) + "Mapper");
+                map.put("mapperObjectName", pascalTableName + "Mapper");
                 // 主键ID列名
-                map.put("pkIdColumnName",PK_ID_COLUMN_NAME);
+                map.put("pkIdColumnName", PK_ID_COLUMN_NAME);
                 // 主键ID驼峰名称
-                map.put("pkIdCamelName",underlineToCamel(PK_ID_COLUMN_NAME));
+                map.put("pkIdCamelName", underlineToCamel(PK_ID_COLUMN_NAME));
                 // 导入分页类
-                map.put("paging",PARENT_PACKAGE + ".common.web.vo.Paging");
+                map.put("paging", PARENT_PACKAGE + ".common.web.vo.Paging");
                 // 导入排序枚举
-                map.put("orderEnum",PARENT_PACKAGE + ".common.enums.OrderEnum");
+                map.put("orderEnum", PARENT_PACKAGE + ".common.enums.OrderEnum");
+                // ApiResult
+                // io.geekidea.springbootplus.common.api.ApiResult;
+                map.put("apiResult", PARENT_PACKAGE + ".common.api.ApiResult");
                 // 分页列表查询是否排序
-                map.put("pageListOrder",PAGE_LIST_ORDER);
+                map.put("pageListOrder", PAGE_LIST_ORDER);
                 // 导入排序查询参数类
-                map.put("orderQueryParamPath",PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "OrderQueryParam");
+                map.put("orderQueryParamPath", PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "OrderQueryParam");
                 // 代码生成策略
-                map.put("generatorStrategy",GENERATOR_STRATEGY);
+                map.put("generatorStrategy", GENERATOR_STRATEGY);
                 this.setMap(map);
             }
         };
@@ -155,7 +168,7 @@ public class CodeGenerator {
         focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/src/main/java/"+ PROJECT_PACKAGE_PATH +"/" + pc.getModuleName() + "/web/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
+                return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/web/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
             }
         });
 
@@ -163,11 +176,11 @@ public class CodeGenerator {
         focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/src/main/java/"+ PROJECT_PACKAGE_PATH +"/" + pc.getModuleName() + "/web/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
+                return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/web/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
             }
         });
-        
-        
+
+
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
         mpg.setTemplate(new TemplateConfig().setXml(null));
@@ -195,15 +208,15 @@ public class CodeGenerator {
         mpg.execute();
     }
 
-    public static String underlineToCamel(String underline){
-        if (StringUtils.isNotBlank(underline)){
+    public static String underlineToCamel(String underline) {
+        if (StringUtils.isNotBlank(underline)) {
             return NamingStrategy.underlineToCamel(underline);
         }
         return null;
     }
 
-    public static String underlineToPascal(String underline){
-        if (StringUtils.isNotBlank(underline)){
+    public static String underlineToPascal(String underline) {
+        if (StringUtils.isNotBlank(underline)) {
             return NamingStrategy.capitalFirst(NamingStrategy.underlineToCamel(underline));
         }
         return null;

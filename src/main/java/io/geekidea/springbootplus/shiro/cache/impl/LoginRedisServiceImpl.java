@@ -22,6 +22,7 @@ import io.geekidea.springbootplus.shiro.vo.ClientInfo;
 import io.geekidea.springbootplus.shiro.vo.JwtTokenRedisVo;
 import io.geekidea.springbootplus.shiro.vo.LoginSysUserRedisVo;
 import io.geekidea.springbootplus.shiro.vo.LoginSysUserVo;
+import io.geekidea.springbootplus.system.convert.SysUserConvert;
 import io.geekidea.springbootplus.util.ClientInfoUtil;
 import io.geekidea.springbootplus.util.HttpServletRequestUtil;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -84,7 +85,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
 
         // Redis缓存登陆用户信息
         // 将LoginSysUserVo对象复制到LoginSysUserRedisVo，使用mapstruct进行对象属性复制
-        LoginSysUserRedisVo loginSysUserRedisVo = ShiroMapstructConvert.INSTANCE.loginSysUserVoToLoginSysUserRedisVo(loginSysUserVo);
+        LoginSysUserRedisVo loginSysUserRedisVo = SysUserConvert.INSTANCE.loginSysUserVoToLoginSysUserRedisVo(loginSysUserVo);
         loginSysUserRedisVo.setSalt(salt);
         loginSysUserRedisVo.setClientInfo(clientInfo);
 

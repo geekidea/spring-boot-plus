@@ -11,31 +11,18 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.shiro.convert;
+package io.geekidea.springbootplus.test;
 
-import io.geekidea.springbootplus.shiro.jwt.JwtToken;
-import io.geekidea.springbootplus.shiro.vo.JwtTokenRedisVo;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import io.geekidea.springbootplus.shiro.util.SaltUtil;
 
 /**
- * Shiro包下使用mapstruct对象属性复制转换器
- *
  * @author geekidea
- * @date 2019-09-30
- * @since 1.3.0.RELEASE
+ * @date 2019-10-05
  **/
-@Mapper
-public interface ShiroMapstructConvert {
-
-    ShiroMapstructConvert INSTANCE = Mappers.getMapper(ShiroMapstructConvert.class);
-
-    /**
-     * JwtToken对象转换成JwtTokenRedisVo
-     *
-     * @param jwtToken
-     * @return
-     */
-    JwtTokenRedisVo jwtTokenToJwtTokenRedisVo(JwtToken jwtToken);
-
+public class SaltUtilTest {
+    public static void main(String[] args) {
+        String salt = SaltUtil.generateSalt();
+        System.out.println(salt);
+        System.out.println(salt.length());
+    }
 }

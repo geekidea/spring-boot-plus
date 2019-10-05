@@ -3,6 +3,7 @@ package io.geekidea.springbootplus.system.web.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 import java.util.Date;
@@ -13,11 +14,12 @@ import java.util.Date;
  * </p>
  *
  * @author geekidea
- * @date 2019-08-04
+ * @date 2019-10-05
  */
 @Data
-@ApiModel(value="SysLogQueryVo对象", description="系统日志查询参数")
-public class SysLogQueryVo implements Serializable{
+@Accessors(chain = true)
+@ApiModel(value = "SysLogQueryVo对象", description = "系统日志查询参数")
+public class SysLogQueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")

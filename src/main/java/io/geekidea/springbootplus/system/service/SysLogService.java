@@ -14,12 +14,13 @@ import java.io.Serializable;
  * </p>
  *
  * @author geekidea
- * @since 2019-08-04
+ * @since 2019-10-05
  */
 public interface SysLogService extends BaseService<SysLog> {
 
     /**
      * 根据ID获取查询对象
+     *
      * @param id
      * @return
      */
@@ -27,9 +28,10 @@ public interface SysLogService extends BaseService<SysLog> {
 
     /**
      * 获取分页对象
-     * @param sysLogQueryParam
+     *
+     * @param SysLogQueryParam
      * @return
      */
-    Paging<SysLogQueryVo> getSysLogPageList(SysLogQueryParam sysLogQueryParam) throws Exception;
+    Paging<SysLogQueryVo> getSysLogPageList(SysLogQueryParam SysLogQueryParam) throws Exception;
 
 }

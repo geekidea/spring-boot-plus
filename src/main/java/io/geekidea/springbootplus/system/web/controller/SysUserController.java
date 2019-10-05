@@ -1,13 +1,11 @@
 package io.geekidea.springbootplus.system.web.controller;
 
-import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.common.web.controller.BaseController;
-import io.geekidea.springbootplus.common.web.param.IdParam;
-import io.geekidea.springbootplus.common.web.vo.Paging;
 import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.service.SysUserService;
 import io.geekidea.springbootplus.system.web.param.SysUserQueryParam;
 import io.geekidea.springbootplus.system.web.vo.SysUserQueryVo;
+import io.geekidea.springbootplus.common.api.ApiResult;
+import io.geekidea.springbootplus.common.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -19,70 +17,73 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import io.geekidea.springbootplus.common.web.vo.Paging;
+import io.geekidea.springbootplus.common.web.param.IdParam;
+
 /**
  * <p>
  * SystemUser 前端控制器
  * </p>
  *
  * @author geekidea
- * @since 2019-08-26
+ * @since 2019-10-05
  */
 @Slf4j
 @RestController
-@RequestMapping("/sysUser")
+@RequestMapping("/SysUser")
 @Api("SystemUser API")
 public class SysUserController extends BaseController {
 
     @Autowired
-    private SysUserService sysUserService;
+    private SysUserService SysUserService;
 
     /**
-    * Save SystemUser
-    */
+     * 添加SystemUser
+     */
     @PostMapping("/add")
-    @ApiOperation(value = "Save SysUser",notes = "Save SystemUser",response = ApiResult.class)
-    public ApiResult<Boolean> addSysUser(@Valid @RequestBody SysUser sysUser) throws Exception{
-        boolean flag = sysUserService.save(sysUser);
+    @ApiOperation(value = "添加SysUser对象", notes = "添加SystemUser", response = ApiResult.class)
+    public ApiResult<Boolean> addSysUser(@Valid @RequestBody SysUser SysUser) throws Exception {
+        boolean flag = SysUserService.save(SysUser);
         return ApiResult.result(flag);
     }
 
     /**
-    * Update SystemUser
-    */
+     * 修改SystemUser
+     */
     @PostMapping("/update")
-    @ApiOperation(value = "Update SysUser",notes = "Update SystemUser",response = ApiResult.class)
-    public ApiResult<Boolean> updateSysUser(@Valid @RequestBody SysUser sysUser) throws Exception{
-        boolean flag = sysUserService.updateById(sysUser);
+    @ApiOperation(value = "修改SysUser对象", notes = "修改SystemUser", response = ApiResult.class)
+    public ApiResult<Boolean> updateSysUser(@Valid @RequestBody SysUser SysUser) throws Exception {
+        boolean flag = SysUserService.updateById(SysUser);
         return ApiResult.result(flag);
     }
 
     /**
-    * Delete SystemUser
-    */
+     * 删除SystemUser
+     */
     @PostMapping("/delete")
-    @ApiOperation(value = "Delete SysUser",notes = "Delete SystemUser",response = ApiResult.class)
-    public ApiResult<Boolean> deleteSysUser(@Valid @RequestBody IdParam idParam) throws Exception{
-        boolean flag = sysUserService.removeById(idParam.getId());
+    @ApiOperation(value = "删除SysUser对象", notes = "删除SystemUser", response = ApiResult.class)
+    public ApiResult<Boolean> deleteSysUser(@Valid @RequestBody IdParam idParam) throws Exception {
+        boolean flag = SysUserService.removeById(idParam.getId());
         return ApiResult.result(flag);
     }
 
     /**
-    * Get SystemUser
-    */
+     * 获取SystemUser
+     */
     @PostMapping("/info")
-    @ApiOperation(value = "Get SysUser Detail",notes = "SystemUser Info",response = SysUserQueryVo.class)
-    public ApiResult<SysUserQueryVo> getSysUser(@Valid @RequestBody IdParam idParam) throws Exception{
-        SysUserQueryVo sysUserQueryVo = sysUserService.getSysUserById(idParam.getId());
-        return ApiResult.ok(sysUserQueryVo);
+    @ApiOperation(value = "获取SysUser对象详情", notes = "查看SystemUser", response = SysUserQueryVo.class)
+    public ApiResult<SysUserQueryVo> getSysUser(@Valid @RequestBody IdParam idParam) throws Exception {
+        SysUserQueryVo SysUserQueryVo = SysUserService.getSysUserById(idParam.getId());
+        return ApiResult.ok(SysUserQueryVo);
     }
 
     /**
-     * SystemUser Pagination
+     * SystemUser分页列表
      */
     @PostMapping("/getPageList")
-    @ApiOperation(value = "Get SysUserPagination",notes = "SystemUser Pagination",response = SysUserQueryVo.class)
-    public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Valid @RequestBody(required = false) SysUserQueryParam sysUserQueryParam) throws Exception{
-        Paging<SysUserQueryVo> paging = sysUserService.getSysUserPageList(sysUserQueryParam);
+    @ApiOperation(value = "获取SysUser分页列表", notes = "SystemUser分页列表", response = SysUserQueryVo.class)
+    public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Valid @RequestBody(required = false) SysUserQueryParam SysUserQueryParam) throws Exception {
+        Paging<SysUserQueryVo> paging = SysUserService.getSysUserPageList(SysUserQueryParam);
         return ApiResult.ok(paging);
     }
 

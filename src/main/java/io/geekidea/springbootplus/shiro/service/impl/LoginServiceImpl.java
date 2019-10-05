@@ -30,6 +30,10 @@ import io.geekidea.springbootplus.shiro.util.JwtUtil;
 import io.geekidea.springbootplus.shiro.util.SaltUtil;
 import io.geekidea.springbootplus.shiro.vo.LoginSysUserRedisVo;
 import io.geekidea.springbootplus.shiro.vo.LoginSysUserVo;
+import io.geekidea.springbootplus.system.convert.SysUserConvert;
+import io.geekidea.springbootplus.system.entity.SysUser;
+import io.geekidea.springbootplus.system.mapper.SysUserMapper;
+import io.geekidea.springbootplus.util.PasswordUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.SetUtils;
@@ -67,25 +71,36 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private JwtProperties jwtProperties;
 
+    @Autowired
+    private SysUserMapper sysUserMapper;
+
     @Override
     public ApiResult login(LoginParam loginParam, HttpServletResponse response) {
         String username = loginParam.getUsername();
-        // TODO 从数据库中获取登陆用户信息
-        LoginSysUserVo loginSysUserVo = new LoginSysUserVo()
-                .setId(1L)
-                .setUsername(loginParam.getUsername())
-                .setSalt("666") // 可选
-                .setRoles(SetUtils.hashSet("admin"));
-
-        if (loginSysUserVo == null) {
+        // 从数据库中获取登陆用户信息
+        SysUser sysUser = sysUserMapper.getSysUserByUsername(username);
+        if (sysUser == null) {
             log.error("登陆失败,loginParam:{}", loginParam);
             return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
         }
+        // 实际项目中，前端传过来的密码应先加密
+        // 原始密码：123456
+        // 加密规则：sha256(666666+123456) = 751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c
+        String encryptPassword = PasswordUtil.encrypt(loginParam.getPassword());
+        if (!encryptPassword.equals(sysUser.getPassword())) {
+            log.error("用户名或密码错误");
+            return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
+        }
+        // 将系统用户对象转换成登陆用户对象
+        LoginSysUserVo loginSysUserVo = SysUserConvert.INSTANCE.sysUserToLoginSysUserVo(sysUser);
+        // TODO 从数据库中获取登陆用户角色权限信息
+        loginSysUserVo.setRoles(SetUtils.hashSet("admin"));
+
         String newSalt;
-        if (jwtProperties.isSaltCheck()){
+        if (jwtProperties.isSaltCheck()) {
             // 包装盐值
             newSalt = SaltUtil.getSalt(jwtProperties.getSecret(), loginSysUserVo.getSalt());
-        }else{
+        } else {
             newSalt = jwtProperties.getSecret();
         }
         // 删除登陆用户盐值，盐值保存到后台Redis缓存中

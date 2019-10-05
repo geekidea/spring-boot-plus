@@ -10,10 +10,8 @@ import io.swagger.annotations.ApiModelProperty;
 #if(${entityLombokModel})
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-## import lombok.experimental.Accessors;
+import lombok.experimental.Accessors;
 #end
-
-import java.util.Date;
 
 /**
  * <p>
@@ -25,18 +23,18 @@ import java.util.Date;
  */
 #if(${entityLombokModel})
 @Data
+@Accessors(chain = true)
 #if(${superEntityClass})
 @EqualsAndHashCode(callSuper = true)
 #else
 @EqualsAndHashCode(callSuper = false)
 #end
-## @Accessors(chain = true)
 #end
 #if(${table.convert})
 @TableName("${table.name}")
 #end
 #if(${swagger2})
-@ApiModel(value="${entity}对象", description="$!{table.comment}")
+@ApiModel(value = "${entity}对象", description = "$!{table.comment}")
 #end
 #if(${superEntityClass})
 public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {

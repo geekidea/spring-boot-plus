@@ -183,7 +183,8 @@ spring:
       test-on-return: false
       test-while-idle: true
       time-between-eviction-runs-millis: 60000
-      validation-query: SELECT 1 FROM DUAL
+      validation-query: SELECT 1
+      validation-query-timeout: 60000
     type: com.alibaba.druid.pool.DruidDataSource
 ############################### DRUID数据源配置 end ################################
 
