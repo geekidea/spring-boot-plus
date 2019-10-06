@@ -73,7 +73,7 @@ commons-codec | 1.13 | Apache Toolkit such as encryption and decryption |
 commons-collections4 | 4.4 | Apache collections toolkit |
 reflections | 0.9.11 | Reflection Toolkit  |
 hibernate-validator | 6.0.17.Final | Validator toolkit |
-Shiro | 1.4.0 | Permission control |
+Shiro | 1.4.1 | Permission control |
 JWT | 3.8.3 | JSON WEB TOKEN |
 hutool-all | 4.6.4 | Common toolset |
 lombok | 1.18.8 | Automatically plugs |
