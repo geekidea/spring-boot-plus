@@ -34,7 +34,9 @@ IS_UPDATE=0
 # 如果没有，则clone
 if [ ! -d "spring-boot-plus" ]; then
   git clone https://github.com/geekidea/spring-boot-plus.git
+  cd spring-boot-plus
 else
+  cd spring-boot-plus
   # 拉取代码，并获取结果判断，是否有新的代码更新，如果有，则备份之前的server，否则替换
   PULL_RESULT=$(git pull)
   echo "${PULL_RESULT}"
@@ -46,7 +48,6 @@ else
   fi
 fi
 
-cd spring-boot-plus
 
 # 2. maven打包
 mvn clean
