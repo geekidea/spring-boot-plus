@@ -43,3 +43,7 @@ logging:
   config: classpath:config/logback.xml
   #  方便Spring Boot Admin页面上实时查看日志
   file: logs/spring-boot-plus.log
+
+# 打印SQL语句和查询结果
+mybatis-plus:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
