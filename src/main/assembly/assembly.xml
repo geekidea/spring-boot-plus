@@ -79,7 +79,6 @@
             <includes>
                 <include>NOTICE</include>
                 <include>LICENSE</include>
-                <include>*.md</include>
             </includes>
         </fileSet>
     </fileSets>

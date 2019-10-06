@@ -27,3 +27,7 @@ spring:
 # logback.xml中有详细的日志配置
 logging:
   file: logs/spring-boot-plus-log.log
+
+# 打印SQL语句和查询结果
+mybatis-plus:
+  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
