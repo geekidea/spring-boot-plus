@@ -71,7 +71,7 @@ commons-codec | 1.13 | 加密解密等工具包 |
 commons-collections4 | 4.4 | 集合工具包 |
 reflections | 0.9.11 | 反射工具包 |
 hibernate-validator | 6.0.17.Final | 后台参数校验注解 |
-Shiro | 1.4.0 | 权限控制 |
+Shiro | 1.4.1 | 权限控制 |
 JWT | 3.8.3 | JSON WEB TOKEN |
 hutool-all | 4.6.4 | 常用工具集 |
 lombok | 1.18.8 | 注解生成Java Bean等工具 |
