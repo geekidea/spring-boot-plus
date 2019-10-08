@@ -50,6 +50,10 @@ public class CrossDomainFilter implements Filter {
         httpServletResponse.setHeader("Access-Control-Expose-Headers", "*");
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        System.out.println("CrossDomainFilter...");
+        System.out.println(request.getRequestURL());
+        System.out.println();
+
         String method = request.getMethod();
         if ("OPTIONS".equals(method)){
             HttpServletResponse response = (HttpServletResponse) servletResponse;

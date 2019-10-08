@@ -16,8 +16,6 @@
 package io.geekidea.springbootplus.core;
 
 import io.geekidea.springbootplus.common.aop.LogAop;
-import io.geekidea.springbootplus.common.web.filter.CrossDomainFilter;
-import io.geekidea.springbootplus.common.web.filter.RequestPathFilter;
 import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.resource.web.interceptor.DownloadInterceptor;
 import io.geekidea.springbootplus.resource.web.interceptor.ResourceInterceptor;
@@ -27,9 +25,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.core.Ordered;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
-import javax.servlet.Filter;
+import java.util.Collections;
 
 /**
  * spring-boot-plus配置
@@ -42,36 +43,52 @@ import javax.servlet.Filter;
 @EnableConfigurationProperties({SpringBootPlusProperties.class})
 public class SpringBootPlusConfig {
 
-    @Bean
-    public Filter crossDomainFilter(){
-        return new CrossDomainFilter();
-    }
+//    @Bean
+//    public Filter crossDomainFilter(){
+//        return new CrossDomainFilter();
+//    }
+//
+//    @Bean
+//    public Filter requestPathFilter(){
+//        return new RequestPathFilter();
+//    }
+
+//    @Bean
+//    @Order(1)
+//    public FilterRegistrationBean requestPathFilterBean(SpringBootPlusProperties springBootPlusProperties) {
+//        SpringBootPlusFilterConfig.FilterConfig filterConfig = springBootPlusProperties.getFilterConfig().getRequestPathConfig();
+//        FilterRegistrationBean registration = new FilterRegistrationBean();
+//        registration.setFilter(requestPathFilter());
+//        registration.addUrlPatterns(filterConfig.getIncludePaths());
+//        registration.setEnabled(filterConfig.isEnabled());
+//        return registration;
+//    }
+//
+//    @Bean
+//    public FilterRegistrationBean crossDomainFilterBean(SpringBootPlusProperties springBootPlusProperties) {
+//        SpringBootPlusFilterConfig.FilterConfig filterConfig = springBootPlusProperties.getFilterConfig().getCrossDomainConfig();
+//        FilterRegistrationBean registration = new FilterRegistrationBean();
+//        registration.setFilter(crossDomainFilter());
+//        registration.addUrlPatterns(filterConfig.getIncludePaths());
+//        registration.setEnabled(filterConfig.isEnabled());
+//        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+//        return registration;
+//    }
+
 
     @Bean
-    public Filter requestPathFilter(){
-        return new RequestPathFilter();
-    }
-
-    @Bean
-    @Order(1)
-    public FilterRegistrationBean requestPathFilterBean(SpringBootPlusProperties springBootPlusProperties) {
-        SpringBootPlusFilterConfig.FilterConfig filterConfig = springBootPlusProperties.getFilterConfig().getRequestPathConfig();
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(requestPathFilter());
-        registration.addUrlPatterns(filterConfig.getIncludePaths());
-        registration.setEnabled(filterConfig.isEnabled());
-        return registration;
-    }
-
-    @Bean
-    @Order(2)
-    public FilterRegistrationBean crossDomainFilterBean(SpringBootPlusProperties springBootPlusProperties) {
-        SpringBootPlusFilterConfig.FilterConfig filterConfig = springBootPlusProperties.getFilterConfig().getCrossDomainConfig();
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(crossDomainFilter());
-        registration.addUrlPatterns(filterConfig.getIncludePaths());
-        registration.setEnabled(filterConfig.isEnabled());
-        return registration;
+    public FilterRegistrationBean corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setAllowedOrigins(Collections.singletonList(CorsConfiguration.ALL));
+        corsConfiguration.setAllowedHeaders(Collections.singletonList(CorsConfiguration.ALL));
+        corsConfiguration.setAllowedMethods(Collections.singletonList(CorsConfiguration.ALL));
+        corsConfiguration.addExposedHeader("Authorization");
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return bean;
     }
 
     /**
