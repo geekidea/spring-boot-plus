@@ -9,7 +9,7 @@
 
 <p align="center">  
   <a href="https://github.com/geekidea/spring-boot-plus/">
-    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.2.3--RELEASE-blue">
+    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.3.0--RELEASE-blue">
   </a>
   <a href="https://github.com/spring-projects/spring-boot">
     <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.8.RELEASE-brightgreen">
