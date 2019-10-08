@@ -24,9 +24,6 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 #end
-#if(${table.convert})
-@TableName("${table.name}")
-#end
 @ApiModel(value = "${entity}QueryVo对象", description = "$!{table.comment}查询参数")
 public class ${entity}QueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
