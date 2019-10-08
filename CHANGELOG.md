@@ -17,8 +17,8 @@
 - Add `SpringBootPlusFilterConfig` 过滤器配置类
 - Add `SpringBootPlusException`,`DaoException` 自定义异常类
 - Add `ShiroConfig`, `ShiroPermissionConfig`, `ShiroProperties` Shiro配置类
-- Add `JwtCredentialsMatcher`, 'JwtFilter', 'JwtProperties', 'JwtRealm', 'JwtToken' JWT配置
-- Add `LoginRedisService`, 'LoginRedisServiceImpl' Redis登陆缓存处理
+- Add `JwtCredentialsMatcher`, `JwtFilter`, `JwtProperties`, `JwtRealm`, `JwtToken` JWT配置
+- Add `LoginRedisService`, `LoginRedisServiceImpl` Redis登陆缓存处理
 
 ### 🐞  Bug Fixes
 - fix startup.sh启动jar指定logback.xml
@@ -32,7 +32,6 @@
 - Add `java-jwt` `3.8.3`
 - Add `mapstruct`, `mapstruct-processor` `1.3.0.Final` 对象属性复制
 - Add `ini4j` `0.5.4` ini格式文件处理
-
 
 ## [V1.2.3-RELEASE] 2019.09.09 :computer: 
 > spring-boot-plusV1.2.3发布，CentOS快速安装环境/构建/部署/启动项目
