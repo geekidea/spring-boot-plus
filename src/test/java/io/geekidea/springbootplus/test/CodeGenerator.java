@@ -60,13 +60,22 @@ public class CodeGenerator {
     // 作者
     private static final String AUTHOR = "geekidea";
     // 生成的表名称
-    private static final String TABLE_NAME = "sys_user";
+    private static final String TABLE_NAME = "sys_log";
     // 主键数据库列名称
-    private static final String PK_ID_COLUMN_NAME = "id";
+    private static final String PK_ID_COLUMN_NAME = "log_id";
     // 代码生成策略 true：All/false:SIMPLE
     private static final boolean GENERATOR_STRATEGY = true;
     // 分页列表查询是否排序 true：有排序参数/false：无
     private static final boolean PAGE_LIST_ORDER = false;
+    // 生成文件配置，是否生成entity/controller/service/serviceImpl/mapper/xml
+    private static final boolean GENERATOR_ENTITY = true;
+    private static final boolean GENERATOR_CONTROLLER = true;
+    private static final boolean GENERATOR_SERVICE = true;
+    private static final boolean GENERATOR_SERVICE_IMPL = true;
+    private static final boolean GENERATOR_MAPPER = true;
+    private static final boolean GENERATOR_MAPPER_XML = true;
+    private static final boolean GENERATOR_QUERY_PARAM = true;
+    private static final boolean GENERATOR_QUERY_VO = true;
     // ############################ 配置部分 end ############################
 
 
@@ -155,35 +164,67 @@ public class CodeGenerator {
             }
         };
         List<FileOutConfig> focList = new ArrayList<>();
-        focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                // 自定义输入文件名称
-                return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
-                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
-            }
-        });
+
+        // 生成mapper xml
+        if (GENERATOR_MAPPER_XML) {
+            focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    // 自定义输入文件名称
+                    return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
+                            + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                }
+            });
+        }
 
         // 自定义queryParam模板
-        focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/web/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
-            }
-        });
+        if (GENERATOR_QUERY_PARAM) {
+            focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/web/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
+                }
+            });
+        }
 
         // 自定义queryVo模板
-        focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/web/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
-            }
-        });
-
+        if (GENERATOR_QUERY_VO) {
+            focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/web/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
+                }
+            });
+        }
 
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
-        mpg.setTemplate(new TemplateConfig().setXml(null));
+
+        // 模版生成配置，设置为空，表示不生成
+        TemplateConfig templateConfig = new TemplateConfig();
+        // xml使用自定义输出
+        templateConfig.setXml(null);
+        // 是否生成entity
+        if (!GENERATOR_ENTITY) {
+            templateConfig.setEntity(null);
+        }
+        // 是否生成controller
+        if (!GENERATOR_CONTROLLER) {
+            templateConfig.setController(null);
+        }
+        // 是否生成service
+        if (!GENERATOR_SERVICE) {
+            templateConfig.setService(null);
+        }
+        // 是否生成serviceImpl
+        if (!GENERATOR_SERVICE_IMPL) {
+            templateConfig.setServiceImpl(null);
+        }
+        // 是否生成mapper
+        if (!GENERATOR_MAPPER) {
+            templateConfig.setMapper(null);
+        }
+        mpg.setTemplate(templateConfig);
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
