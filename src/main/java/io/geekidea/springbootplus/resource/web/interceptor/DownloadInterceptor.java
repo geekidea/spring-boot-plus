@@ -17,7 +17,7 @@
 package io.geekidea.springbootplus.resource.web.interceptor;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.core.SpringBootPlusProperties;
+import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.util.HttpServletResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class DownloadInterceptor extends HandlerInterceptorAdapter {
         String fullUrl = request.getRequestURL().toString();
 
         // 未启用资源访问时，返回错误消息
-        if (!springBootPlusProperties.getInterceptorConfig().getDownloadConfig().isEnabled()){
+        if (!springBootPlusProperties.getInterceptor().getDownload().isEnabled()){
             log.error("下载已关闭，非法下载：{}",fullUrl);
             HttpServletResponseUtil.printJSON(response, ApiResult.fail("非法下载"));
             return false;

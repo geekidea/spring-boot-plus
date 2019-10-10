@@ -39,7 +39,7 @@ public interface LoginRedisService {
     void cacheLoginInfo(JwtToken jwtToken, LoginSysUserVo loginSysUserVo, boolean generate);
 
     /**
-     * 通过token，从缓存中获取登陆用户LoginSysUserRedisVo
+     * 通过用户名，从缓存中获取登陆用户LoginSysUserRedisVo
      *
      * @param username
      * @return

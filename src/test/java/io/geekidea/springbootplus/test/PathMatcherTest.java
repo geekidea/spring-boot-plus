@@ -14,32 +14,23 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.shiro.config;
+package io.geekidea.springbootplus.test;
 
-import lombok.Data;
+import org.springframework.util.AntPathMatcher;
 
 /**
- * Shiro权限配置映射类
- *
  * @author geekidea
- * @date 2019-09-28
- * @since 1.3.0.RELEASE
+ * @date 2019-10-10
  **/
-@Data
-public class ShiroPermissionConfig {
+public class PathMatcherTest {
 
-    /**
-     * 路径
-     */
-    private String url;
-    /**
-     * 路径数组
-     */
-    private String[] urls;
+    public static void main(String[] args) {
+        AntPathMatcher pathMatcher = new AntPathMatcher();
+        String pattern = "/hello/**";
+        String path = "/hello/world";
+        boolean flag = pathMatcher.match(pattern, path);
+        System.out.println(flag);
 
-    /**
-     * 权限
-     */
-    private String permission;
+    }
 
 }

@@ -16,31 +16,35 @@
 
 package io.geekidea.springbootplus.common.web.filter;
 
+import io.geekidea.springbootplus.core.properties.SpringBootPlusFilterProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * 请求路径过滤器
+ *
  * @author geekidea
  * @date 2018-11-08
  */
 @Slf4j
 public class RequestPathFilter implements Filter {
 
-    private static List<String> excludes = new ArrayList<>();
+    private static String[] excludePaths;
 
-    static {
-        // 控制台日志忽略spring boot admin访问路径
-        excludes.add("/actuator");
-        excludes.add("/instances");
-        excludes.add("/logfile");
-        excludes.add("/sba-settings.js");
-        excludes.add("/assets/img/favicon.png");
+    private boolean isEnabled;
+
+    public RequestPathFilter(SpringBootPlusFilterProperties.FilterConfig filterConfig) {
+        isEnabled = filterConfig.isEnabled();
+        excludePaths = filterConfig.getExcludePaths();
+        log.debug("isEnabled:" + isEnabled);
+        log.debug("excludePaths:" + Arrays.toString(excludePaths));
     }
 
     @Override
@@ -50,21 +54,27 @@ public class RequestPathFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        if (!isEnabled) {
+            chain.doFilter(request, response);
+            return;
+        }
         HttpServletRequest req = (HttpServletRequest) request;
         String path = req.getServletPath();
         String url = req.getRequestURL().toString();
-
+        PathMatcher pathMatcher = new AntPathMatcher();
         boolean isOut = true;
-        for (String p : excludes){
-            if (path.startsWith(p)){
-                isOut = false;
-                break;
+        if (ArrayUtils.isNotEmpty(excludePaths)) {
+            for (String pattern : excludePaths) {
+                if (pathMatcher.match(pattern, path)) {
+                    isOut = false;
+                    break;
+                }
             }
         }
-        if (isOut){
-            log.debug("requestURL:"+url);
+        if (isOut) {
+            log.debug(url);
         }
-        chain.doFilter(req,response);
+        chain.doFilter(req, response);
     }
 
     @Override

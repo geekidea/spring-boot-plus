@@ -17,12 +17,13 @@
 package io.geekidea.springbootplus.resource.web.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.core.SpringBootPlusProperties;
+import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.util.DownloadUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -46,7 +47,7 @@ public class DownloadController {
     /**
      * 下载文件
      */
-    @RequestMapping("/{downloadFileName}")
+    @GetMapping("/{downloadFileName}")
     @ApiOperation(value = "下载文件",notes = "下载文件",response = ApiResult.class)
     public void download(@PathVariable(required = true) String downloadFileName, HttpServletResponse response) throws Exception{
         // 下载目录，既是上传目录
