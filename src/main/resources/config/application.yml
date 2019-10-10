@@ -1,15 +1,15 @@
 # spring-boot-plus Common Config
 
-############################# 访问路径、端口tomcat start ############################
+############################# 访问路径、端口tomcat start #############################
 server:
   port: 8888
   servlet:
-    context-path: /api
+    context-path: /
   tomcat:
     max-threads: 1000
     min-spare-threads: 30
     uri-encoding: UTF-8
-############################# 访问路径、端口tomcat end ##############################
+############################# 访问路径、端口tomcat end ###############################
 
 
 ################################ spring config start ###############################
@@ -39,31 +39,31 @@ spring:
 ############################## spring-boot-plus start ##############################
 spring-boot-plus:
   # 拦截器配置
-  interceptor-config:
-    permission-config:
+  interceptor:
+    permission:
       enabled: false
       include-paths: /**
       exclude-paths: /swagger-resources/**,/api-docs/**,/v2/api-docs/**,/adminLogin,/sysLogin,/login.html,/verificationCode,/doc/**,/error/**,/docs,/resource/**
-    resource-config:
+    resource:
       enabled: true
       include-paths: ${spring-boot-plus.resource-access-patterns}
-    upload-config:
+    upload:
       enabled: true
       include-paths: /upload/**
-    download-config:
+    download:
       enabled: true
       include-paths: /download/**
 
   # 过滤器配置
-  filter-config:
+  filter:
     # 请求路径Filter配置
-    request-path-config:
+    request-path:
       enabled: true
       include-paths: /**
-    # 跨域Filter配置
-    cross-domain-config:
-      enabled: true
-      include-paths: /**
+      # 排除路径，多行字符串配置
+      exclude-paths: |
+        /actuator/**,/instances,/logfile,/sba-settings.js,/assets/img/favicon.png,
+        /swagger-ui.html,/swagger-resources/**,/webjars/springfox-swagger-ui/**,/v2/api-docs
 
   # 文件上传下载配置
   # 上传路径配置
@@ -78,12 +78,33 @@ spring-boot-plus:
   allow-upload-file-extensions: jpg,png,docx,xlsx,pptx,pdf
   allow-download-file-extensions: jpg,png,docx,xlsx,pptx,pdf
 
+  ############################ CORS start ############################
+  # CORS跨域配置，默认允许跨域
+  cors:
+    # 是否启用跨域，默认启用
+    enable: true
+    # CORS过滤的路径，默认：/**
+    path: /**
+    # 允许访问的源
+    allowed-origins: '*'
+    # 允许访问的请求头
+    allowed-headers: content-type,token
+    # 是否允许发送cookie
+    allow-credentials: true
+    # 允许访问的请求方式
+    allowed-methods: OPTION,GET,POST
+    # 允许响应的头
+    exposed-headers: content-type,token
+  ############################ CORS end ##############################
+
+  ########################## Resource start ##########################
   # 静态资源访问配置
   resource-handlers: |
     /static/**=classpath:/static/
     /templates/**=classpath:/templates/
     swagger-ui.html=classpath:/META-INF/resources/
     /webjars/**=classpath:/META-INF/resources/webjars/
+  ########################## Resource end ############################
 
   ######################## Spring Shiro start ########################
   shiro:
@@ -92,8 +113,10 @@ spring-boot-plus:
       /=anon
       /static/**=anon
       /templates/**=anon
+      /druid/**=anon
+      /hello/world=anon
     # 权限配置
-    permission-config:
+    permission:
         # 排除登陆登出相关
       - urls: /login,/logout
         permission: anon
@@ -101,7 +124,7 @@ spring-boot-plus:
       - urls: /static/**,/templates/**
         permission: anon
         # 排除Swagger
-      - urls: /docs,/swagger-ui.html, /webjars/springfox-swagger-ui/**,/swagger-resources/**,/v2/api-docs
+      - urls: /docs,/swagger-ui.html,/webjars/springfox-swagger-ui/**,/swagger-resources/**,/v2/api-docs
         permission: anon
         # 排除SpringBootAdmin
       - urls: /,/favicon.ico,/actuator/**,/instances/**,/assets/**,/sba-settings.js,/applications/**
@@ -113,9 +136,13 @@ spring-boot-plus:
 
   ############################ JWT start #############################
   jwt:
+    # token请求头名称
     token-name: token
+    # jwt密钥
     secret: 666666
+    # 发行人
     issuer: spring-boot-plus
+    # 观众
     audience: web
     # 默认过期时间1小时，单位：秒
     expire-second: 3600
@@ -145,10 +172,10 @@ mybatis-plus:
       logic-delete-value: 0
       logic-not-delete-value: 1
   mapper-locations: classpath*:mapper/**/*Mapper.xml
-################################ mybatis-plus end #################################
+################################ mybatis-plus end ##################################
 
 
-############################### DRUID数据源配置 start ##############################
+############################### DRUID数据源配置 start ################################
 ---
 spring:
   datasource:

@@ -17,28 +17,29 @@
 package io.geekidea.springbootplus.shiro.config;
 
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
-
-import java.util.List;
 
 /**
- * Shiro配置映射类
+ * Shiro权限配置映射类
  *
  * @author geekidea
  * @date 2019-09-28
  * @since 1.3.0.RELEASE
  **/
 @Data
-@ConfigurationProperties(prefix = "spring-boot-plus.shiro")
-public class ShiroProperties {
-
-    private String filterChainDefinitions;
+public class ShiroPermissionProperties {
 
     /**
-     * 权限配置集合
+     * 路径
      */
-    @NestedConfigurationProperty
-    private List<ShiroPermissionProperties> permission;
+    private String url;
+    /**
+     * 路径数组
+     */
+    private String[] urls;
+
+    /**
+     * 权限
+     */
+    private String permission;
 
 }

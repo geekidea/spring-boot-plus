@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.core;
+package io.geekidea.springbootplus.core.config;
 
 import com.alibaba.fastjson.JSON;
 import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
+import io.geekidea.springbootplus.core.properties.SpringBootPlusInterceptorProperties;
+import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.resource.web.interceptor.DownloadInterceptor;
 import io.geekidea.springbootplus.resource.web.interceptor.ResourceInterceptor;
 import io.geekidea.springbootplus.resource.web.interceptor.UploadInterceptor;
@@ -65,31 +67,31 @@ public class SpringBootPlusWebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        SpringBootPlusInterceptorConfig interceptorConfig = springBootPlusProperties.getInterceptorConfig();
+        SpringBootPlusInterceptorProperties interceptorConfig = springBootPlusProperties.getInterceptor();
 
         // 上传拦截器
-        if (interceptorConfig.getUploadConfig().isEnabled()){
+        if (interceptorConfig.getUpload().isEnabled()){
             registry.addInterceptor(uploadInterceptor)
-                    .addPathPatterns(interceptorConfig.getUploadConfig().getIncludePaths());
+                    .addPathPatterns(interceptorConfig.getUpload().getIncludePaths());
         }
 
         // 资源拦截器注册
-        if (interceptorConfig.getResourceConfig().isEnabled()){
+        if (interceptorConfig.getResource().isEnabled()){
             registry.addInterceptor(resourceInterceptor)
-                    .addPathPatterns(interceptorConfig.getResourceConfig().getIncludePaths());
+                    .addPathPatterns(interceptorConfig.getResource().getIncludePaths());
         }
 
         // 下载拦截器注册
-        if (interceptorConfig.getDownloadConfig().isEnabled()){
+        if (interceptorConfig.getDownload().isEnabled()){
             registry.addInterceptor(downloadInterceptor)
-                    .addPathPatterns(interceptorConfig.getDownloadConfig().getIncludePaths());
+                    .addPathPatterns(interceptorConfig.getDownload().getIncludePaths());
         }
 
-        if (interceptorConfig.getPermissionConfig().isEnabled()){
+        if (interceptorConfig.getPermission().isEnabled()){
             // 权限拦截器注册
             registry.addInterceptor(permissionInterceptor)
-                    .addPathPatterns(interceptorConfig.getPermissionConfig().getIncludePaths())
-                    .excludePathPatterns(interceptorConfig.getPermissionConfig().getExcludePaths());
+                    .addPathPatterns(interceptorConfig.getPermission().getIncludePaths())
+                    .excludePathPatterns(interceptorConfig.getPermission().getExcludePaths());
         }
     }
 

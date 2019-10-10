@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.core;
+package io.geekidea.springbootplus.core.properties;
 
-import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
+import io.geekidea.springbootplus.core.config.SpringBootPlusWebMvcConfig;
 import io.geekidea.springbootplus.shiro.config.ShiroProperties;
+import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
@@ -32,7 +32,6 @@ import java.util.List;
  * @since 1.2.0-RELEASE
  */
 @Data
-@Accessors(chain = true)
 @ConfigurationProperties(prefix = "spring-boot-plus")
 public class SpringBootPlusProperties {
 
@@ -55,13 +54,13 @@ public class SpringBootPlusProperties {
      * 拦截器配置
      */
     @NestedConfigurationProperty
-    private SpringBootPlusInterceptorConfig interceptorConfig;
+    private SpringBootPlusInterceptorProperties interceptor;
 
     /**
      * 过滤器配置
      */
     @NestedConfigurationProperty
-    private SpringBootPlusFilterConfig filterConfig;
+    private SpringBootPlusFilterProperties filter;
 
     /**
      * 上传目录
@@ -106,5 +105,11 @@ public class SpringBootPlusProperties {
      * @see SpringBootPlusWebMvcConfig addResourceHandlers
      */
     private String resourceHandlers;
+
+    /**
+     * 跨域配置
+     */
+    @NestedConfigurationProperty
+    private SpringBootPlusCorsProperties cors = new SpringBootPlusCorsProperties();
 
 }

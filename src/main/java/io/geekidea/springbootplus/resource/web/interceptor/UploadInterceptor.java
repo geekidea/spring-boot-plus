@@ -17,7 +17,7 @@
 package io.geekidea.springbootplus.resource.web.interceptor;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.core.SpringBootPlusProperties;
+import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.util.HttpServletResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class UploadInterceptor extends HandlerInterceptorAdapter {
         String url = request.getRequestURI();
         // 访问全路径
         String fullUrl = request.getRequestURL().toString();
-        if (!springBootPlusProperties.getInterceptorConfig().getUploadConfig().isEnabled()){
+        if (!springBootPlusProperties.getInterceptor().getUpload().isEnabled()){
             log.error("上传功能已关闭，非法上传：{}",fullUrl);
             HttpServletResponseUtil.printJSON(response, ApiResult.fail("非法上传"));
             return false;

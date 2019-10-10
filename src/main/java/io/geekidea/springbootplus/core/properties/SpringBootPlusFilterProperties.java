@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.core;
+package io.geekidea.springbootplus.core.properties;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 /**
@@ -26,20 +26,14 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
  * @since 1.3.0.RELEASE
  **/
 @Data
-@Accessors(chain = true)
-public class SpringBootPlusFilterConfig {
+@ConfigurationProperties(prefix = "spring-boot-plus.filter")
+public class SpringBootPlusFilterProperties {
 
     /**
      * 请求路径Filter配置
      */
     @NestedConfigurationProperty
-    private FilterConfig requestPathConfig = new FilterConfig();
-
-    /**
-     * 跨域Filter配置
-     */
-    @NestedConfigurationProperty
-    private FilterConfig crossDomainConfig = new FilterConfig();
+    private FilterConfig requestPath = new FilterConfig();
 
     @Data
     public static class FilterConfig {

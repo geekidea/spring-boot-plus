@@ -14,46 +14,43 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.core;
+package io.geekidea.springbootplus.core.properties;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
-
-import java.io.Serializable;
 
 /**
  * @author geekidea
  * @date 2019/8/5
  */
 @Data
-@Accessors(chain = true)
-public class SpringBootPlusInterceptorConfig implements Serializable {
-    private static final long serialVersionUID = -2738042100246082469L;
+@ConfigurationProperties(prefix = "spring-boot-plus.interceptor")
+public class SpringBootPlusInterceptorProperties {
 
     /**
      * 权限拦截器排除路径
      */
     @NestedConfigurationProperty
-    private InterceptorConfig permissionConfig = new InterceptorConfig();
+    private InterceptorConfig permission = new InterceptorConfig();
 
     /**
      * 资源拦截器
      */
     @NestedConfigurationProperty
-    private InterceptorConfig resourceConfig = new InterceptorConfig();
+    private InterceptorConfig resource = new InterceptorConfig();
 
     /**
      * 上传拦截器
      */
     @NestedConfigurationProperty
-    private InterceptorConfig uploadConfig = new InterceptorConfig();
+    private InterceptorConfig upload = new InterceptorConfig();
 
     /**
      * 下载拦截器
      */
     @NestedConfigurationProperty
-    private InterceptorConfig downloadConfig = new InterceptorConfig();
+    private InterceptorConfig download = new InterceptorConfig();
 
     @Data
     public static class InterceptorConfig {

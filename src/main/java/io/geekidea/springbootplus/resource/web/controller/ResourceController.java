@@ -17,7 +17,7 @@
 package io.geekidea.springbootplus.resource.web.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.core.SpringBootPlusProperties;
+import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

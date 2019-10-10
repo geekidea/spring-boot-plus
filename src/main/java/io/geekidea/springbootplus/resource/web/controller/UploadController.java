@@ -18,7 +18,7 @@ package io.geekidea.springbootplus.resource.web.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.web.param.IdParam;
-import io.geekidea.springbootplus.core.SpringBootPlusProperties;
+import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.system.web.vo.SysLogQueryVo;
 import io.geekidea.springbootplus.util.UploadUtil;
 import io.swagger.annotations.ApiOperation;
