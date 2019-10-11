@@ -16,8 +16,8 @@
 
 package io.geekidea.springbootplus.core.properties;
 
-import com.oracle.tools.packager.Log;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +30,7 @@ import javax.annotation.PostConstruct;
  * @date 2019-10-11
  * @since 1.3.1.RELEASE
  **/
+@Slf4j
 @Data
 @Configuration
 public class SpringBootPlusStaticProperties {
@@ -42,7 +43,7 @@ public class SpringBootPlusStaticProperties {
     @PostConstruct
     public void init() {
         INFO_PROJECT_VERSION = this.infoProjectVersion;
-        Log.debug("INFO_PROJECT_VERSION:" + INFO_PROJECT_VERSION);
+        log.debug("INFO_PROJECT_VERSION:" + INFO_PROJECT_VERSION);
     }
 
 }
