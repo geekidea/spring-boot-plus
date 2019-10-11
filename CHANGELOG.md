@@ -60,7 +60,7 @@
 - [spring-boot-plus java docs](http://geekidea.io/spring-boot-plus-apidocs/)
 
 ### 🔨 Dependency Upgrades
-- Upgrade to `springboot` 2.1.8.RELEASE
+- Upgrade to `springboot` 2.1.9.RELEASE
 - Upgrade to `Mybatis` 3.5.2
 - Upgrade to `Mybatis Plus` 3.2.0
 - Upgrade to `Alibaba Druid` 1.1.20

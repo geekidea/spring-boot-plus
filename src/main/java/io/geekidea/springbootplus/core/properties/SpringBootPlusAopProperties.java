@@ -21,24 +21,24 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 /**
- * Filter配置属性
+ * AOP配置属性
  *
  * @author geekidea
  * @date 2019-09-29
  * @since 1.3.0.RELEASE
  **/
 @Data
-@ConfigurationProperties(prefix = "spring-boot-plus.filter")
-public class SpringBootPlusFilterProperties {
+@ConfigurationProperties(prefix = "spring-boot-plus.aop")
+public class SpringBootPlusAopProperties {
 
     /**
      * 请求路径Filter配置
      */
     @NestedConfigurationProperty
-    private FilterConfig requestPath = new FilterConfig();
+    private AopConfig log = new LogAopConfig();
 
     @Data
-    public static class FilterConfig {
+    public static class AopConfig {
 
         /**
          * 是否启用
@@ -46,14 +46,26 @@ public class SpringBootPlusFilterProperties {
         private boolean enabled;
 
         /**
-         * 包含的路径
+         * 切点表达式
          */
-        private String[] includePaths;
-
-        /**
-         * 排除路径
-         */
-        private String[] excludePaths;
+        private String pointcut;
 
     }
+
+
+    @Data
+    public static class LogAopConfig extends AopConfig{
+
+        /**
+         * 请求日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
+         */
+        private boolean requestLogFormat;
+
+        /**
+         * 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
+         */
+        private boolean responseLogFormat;
+
+    }
+
 }

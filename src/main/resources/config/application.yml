@@ -38,6 +38,22 @@ spring:
 
 ############################## spring-boot-plus start ##############################
 spring-boot-plus:
+  # 是否启用ansi控制台输出有颜色的字体
+  enable-ansi: true
+  # 请求日志在控制台是否格式化输出
+  request-log-format: true
+  # 响应日志在控制台是否格式化输出
+  response-log-format: true
+  # 过滤器配置
+  filter:
+    # 请求路径Filter配置
+    request-path:
+      enabled: true
+      include-paths: /**
+      # 排除路径，多行字符串配置
+      exclude-paths: |
+        /actuator/**,/instances,/logfile,/sba-settings.js,/assets/img/favicon.png,
+        /swagger-ui.html,/swagger-resources/**,/webjars/springfox-swagger-ui/**,/v2/api-docs
   # 拦截器配置
   interceptor:
     permission:
@@ -53,17 +69,6 @@ spring-boot-plus:
     download:
       enabled: true
       include-paths: /download/**
-
-  # 过滤器配置
-  filter:
-    # 请求路径Filter配置
-    request-path:
-      enabled: true
-      include-paths: /**
-      # 排除路径，多行字符串配置
-      exclude-paths: |
-        /actuator/**,/instances,/logfile,/sba-settings.js,/assets/img/favicon.png,
-        /swagger-ui.html,/swagger-resources/**,/webjars/springfox-swagger-ui/**,/v2/api-docs
 
   # 文件上传下载配置
   # 上传路径配置
@@ -115,6 +120,7 @@ spring-boot-plus:
       /templates/**=anon
       /druid/**=anon
       /hello/world=anon
+      /xss/**=anon
     # 权限配置
     permission:
         # 排除登陆登出相关
@@ -220,12 +226,6 @@ spring:
 ---
 spring:
   redis:
-    jedis:
-      pool:
-        max-active: 2000
-        max-wait: -1ms
-        min-idle: 8
-        max-idle: 200
     timeout: 10s
     lettuce:
       pool:
