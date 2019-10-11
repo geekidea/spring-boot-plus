@@ -16,11 +16,11 @@
 package io.geekidea.springbootplus.core.config;
 
 import io.geekidea.springbootplus.common.aop.LogAop;
-import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
+import io.geekidea.springbootplus.common.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.core.properties.*;
-import io.geekidea.springbootplus.resource.web.interceptor.DownloadInterceptor;
-import io.geekidea.springbootplus.resource.web.interceptor.ResourceInterceptor;
-import io.geekidea.springbootplus.resource.web.interceptor.UploadInterceptor;
+import io.geekidea.springbootplus.resource.interceptor.DownloadInterceptor;
+import io.geekidea.springbootplus.resource.interceptor.ResourceInterceptor;
+import io.geekidea.springbootplus.resource.interceptor.UploadInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

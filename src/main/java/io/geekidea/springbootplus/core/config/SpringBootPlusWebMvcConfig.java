@@ -17,12 +17,12 @@
 package io.geekidea.springbootplus.core.config;
 
 import com.alibaba.fastjson.JSON;
-import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
+import io.geekidea.springbootplus.common.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.core.properties.SpringBootPlusInterceptorProperties;
 import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
-import io.geekidea.springbootplus.resource.web.interceptor.DownloadInterceptor;
-import io.geekidea.springbootplus.resource.web.interceptor.ResourceInterceptor;
-import io.geekidea.springbootplus.resource.web.interceptor.UploadInterceptor;
+import io.geekidea.springbootplus.resource.interceptor.DownloadInterceptor;
+import io.geekidea.springbootplus.resource.interceptor.ResourceInterceptor;
+import io.geekidea.springbootplus.resource.interceptor.UploadInterceptor;
 import io.geekidea.springbootplus.util.IniUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

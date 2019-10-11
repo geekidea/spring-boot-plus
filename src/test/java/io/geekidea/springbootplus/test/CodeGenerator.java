@@ -54,18 +54,18 @@ public class CodeGenerator {
 
     // 父类包路径
     private static final String SUPER_ENTITY = COMMON_PARENT_PACKAGE + ".entity.BaseEntity";
-    private static final String SUPER_CONTROLLER = COMMON_PARENT_PACKAGE + ".web.controller.BaseController";
+    private static final String SUPER_CONTROLLER = COMMON_PARENT_PACKAGE + ".controller.BaseController";
     private static final String SUPER_SERVICE = COMMON_PARENT_PACKAGE + ".service.BaseService";
     private static final String SUPER_SERVICE_IMPL = COMMON_PARENT_PACKAGE + ".service.impl.BaseServiceImpl";
-    private static final String SUPER_QUERY_PARAM = COMMON_PARENT_PACKAGE + ".web.param.QueryParam";
+    private static final String SUPER_QUERY_PARAM = COMMON_PARENT_PACKAGE + ".param.QueryParam";
     private static final String[] SUPER_ENTITY_COMMON_COLUMNS = new String[]{};
 
     // 公共类包路径
-    private static final String COMMON_ID_PARAM = COMMON_PARENT_PACKAGE + ".web.param.IdParam";
+    private static final String COMMON_ID_PARAM = COMMON_PARENT_PACKAGE + ".param.IdParam";
     private static final String COMMON_API_RESULT = COMMON_PARENT_PACKAGE + ".api.ApiResult";
     private static final String COMMON_ORDER_ENUM = COMMON_PARENT_PACKAGE + ".enums.OrderEnum";
-    private static final String COMMON_ORDER_QUERY_PARAM = COMMON_PARENT_PACKAGE + ".web.param.OrderQueryParam";
-    private static final String COMMON_PAGING = COMMON_PARENT_PACKAGE + ".web.vo.Paging";
+    private static final String COMMON_ORDER_QUERY_PARAM = COMMON_PARENT_PACKAGE + ".param.OrderQueryParam";
+    private static final String COMMON_PAGING = COMMON_PARENT_PACKAGE + ".vo.Paging";
 
 
     // ############################ 配置部分 start ############################
@@ -74,7 +74,7 @@ public class CodeGenerator {
     // 作者
     private static final String AUTHOR = "geekidea";
     // 生成的表名称
-    private static final String TABLE_NAME = "sys_role";
+    private static final String TABLE_NAME = "hello";
     // 主键数据库列名称
     private static final String PK_ID_COLUMN_NAME = "id";
     // 代码生成策略 true：All/false:SIMPLE
@@ -82,7 +82,7 @@ public class CodeGenerator {
     // 分页列表查询是否排序 true：有排序参数/false：无
     private static final boolean PAGE_LIST_ORDER = false;
     // 是否生成validation校验，true：生成/false：不生成
-    private static final boolean PARAM_VALIDATION = true;
+    private static final boolean PARAM_VALIDATION = false;
 
     // 生成文件配置，是否生成entity/controller/service/serviceImpl/mapper/xml
     private static final boolean GENERATOR_ENTITY = true;

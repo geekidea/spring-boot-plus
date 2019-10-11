@@ -17,7 +17,7 @@
 package io.geekidea.springbootplus.shiro.config;
 
 import com.alibaba.fastjson.JSON;
-import io.geekidea.springbootplus.common.web.filter.RequestPathFilter;
+import io.geekidea.springbootplus.common.filter.RequestPathFilter;
 import io.geekidea.springbootplus.core.properties.SpringBootPlusFilterProperties;
 import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.exception.ShiroConfigException;
