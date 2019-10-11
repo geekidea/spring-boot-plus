@@ -45,14 +45,27 @@ public class CodeGenerator {
     private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
     private static final String DRIVER_URL = "jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false";
 
-    private static final String PARENT_PACKAGE = "io.geekidea.springbootplus";
-    private static final String SUPER_ENTITY = PARENT_PACKAGE + ".common.entity.BaseEntity";
-    private static final String[] SUPER_ENTITY_COMMON_COLUMNS = new String[]{};
-    private static final String SUPER_CONTROLLER = PARENT_PACKAGE + ".common.web.controller.BaseController";
-    private static final String SUPER_SERVICE = PARENT_PACKAGE + ".common.service.BaseService";
-    private static final String SUPER_SERVICE_IMPL = PARENT_PACKAGE + ".common.service.impl.BaseServiceImpl";
-
+    // 生成的类路径
     private static final String PROJECT_PACKAGE_PATH = "io/geekidea/springbootplus";
+
+    // 项目主包路径
+    private static final String PARENT_PACKAGE = "io.geekidea.springbootplus";
+    private static final String COMMON_PARENT_PACKAGE = PARENT_PACKAGE + ".common";
+
+    // 父类包路径
+    private static final String SUPER_ENTITY = COMMON_PARENT_PACKAGE + ".entity.BaseEntity";
+    private static final String SUPER_CONTROLLER = COMMON_PARENT_PACKAGE + ".web.controller.BaseController";
+    private static final String SUPER_SERVICE = COMMON_PARENT_PACKAGE + ".service.BaseService";
+    private static final String SUPER_SERVICE_IMPL = COMMON_PARENT_PACKAGE + ".service.impl.BaseServiceImpl";
+    private static final String SUPER_QUERY_PARAM = COMMON_PARENT_PACKAGE + ".web.param.QueryParam";
+    private static final String[] SUPER_ENTITY_COMMON_COLUMNS = new String[]{};
+
+    // 公共类包路径
+    private static final String COMMON_ID_PARAM = COMMON_PARENT_PACKAGE + ".web.param.IdParam";
+    private static final String COMMON_API_RESULT = COMMON_PARENT_PACKAGE + ".api.ApiResult";
+    private static final String COMMON_ORDER_ENUM = COMMON_PARENT_PACKAGE + ".enums.OrderEnum";
+    private static final String COMMON_ORDER_QUERY_PARAM = COMMON_PARENT_PACKAGE + ".web.param.OrderQueryParam";
+    private static final String COMMON_PAGING = COMMON_PARENT_PACKAGE + ".web.vo.Paging";
 
 
     // ############################ 配置部分 start ############################
@@ -117,7 +130,7 @@ public class CodeGenerator {
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(MODULE_NAME);
         pc.setParent(PARENT_PACKAGE);
-        pc.setController("web.controller");
+        pc.setController("controller");
 
         mpg.setPackageInfo(pc);
 
@@ -132,16 +145,16 @@ public class CodeGenerator {
                 Map<String, Object> map = new HashMap<>();
                 map.put("customField", "Hello " + this.getConfig().getGlobalConfig().getAuthor());
                 // 查询参数包路径
-                String queryParamPackage = PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".web.param";
+                String queryParamPackage = PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".param";
                 map.put("queryParamPackage", queryParamPackage);
                 // 查询参数类路径
                 map.put("queryParamPath", queryParamPackage + StringPool.DOT + pascalTableName + "QueryParam");
                 // 查询参数共公包路径
-                map.put("queryParamCommonPath", PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "QueryParam");
+                map.put("queryParamCommonPath", SUPER_QUERY_PARAM);
                 // 查询参数共公包路径
-                map.put("idParamPath", PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "IdParam");
+                map.put("idParamPath", COMMON_ID_PARAM);
                 // 响应结果包路径
-                String queryVoPackage = PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".web.vo";
+                String queryVoPackage = PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".vo";
                 map.put("queryVoPackage", queryVoPackage);
                 // 响应结果类路径
                 map.put("queryVoPath", queryVoPackage + StringPool.DOT + pascalTableName + "QueryVo");
@@ -156,16 +169,15 @@ public class CodeGenerator {
                 // 主键ID驼峰名称
                 map.put("pkIdCamelName", underlineToCamel(PK_ID_COLUMN_NAME));
                 // 导入分页类
-                map.put("paging", PARENT_PACKAGE + ".common.web.vo.Paging");
+                map.put("paging", COMMON_PAGING);
                 // 导入排序枚举
-                map.put("orderEnum", PARENT_PACKAGE + ".common.enums.OrderEnum");
+                map.put("orderEnum", COMMON_ORDER_ENUM);
                 // ApiResult
-                // io.geekidea.springbootplus.common.api.ApiResult;
-                map.put("apiResult", PARENT_PACKAGE + ".common.api.ApiResult");
+                map.put("apiResult", COMMON_API_RESULT);
                 // 分页列表查询是否排序
                 map.put("pageListOrder", PAGE_LIST_ORDER);
                 // 导入排序查询参数类
-                map.put("orderQueryParamPath", PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "OrderQueryParam");
+                map.put("orderQueryParamPath", COMMON_ORDER_QUERY_PARAM);
                 // 代码生成策略
                 map.put("generatorStrategy", GENERATOR_STRATEGY);
                 // 代码Validation校验
@@ -192,7 +204,7 @@ public class CodeGenerator {
             focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/web/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
                 }
             });
         }
@@ -202,7 +214,7 @@ public class CodeGenerator {
             focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/web/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
                 }
             });
         }
@@ -272,7 +284,6 @@ public class CodeGenerator {
         }
         return null;
     }
-
 
 
 }
