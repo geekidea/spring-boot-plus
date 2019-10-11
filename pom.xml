@@ -70,6 +70,7 @@
         <mapstruct.version>1.3.0.Final</mapstruct.version>
         <shiro.version>1.4.1</shiro.version>
         <jwt.version>3.8.3</jwt.version>
+        <commons-text.version>1.8</commons-text.version>
 
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -306,7 +307,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
-            <version>1.8</version>
+            <version>${commons-text.version}</version>
         </dependency>
 
 

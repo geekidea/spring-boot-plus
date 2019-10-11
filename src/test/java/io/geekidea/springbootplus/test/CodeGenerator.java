@@ -24,6 +24,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import io.geekidea.springbootplus.generator.config.SpringBootPlusMySqlQuery;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -104,6 +105,9 @@ public class CodeGenerator {
         dsc.setDriverName(DRIVER_NAME);
         dsc.setUsername(USER_NAME);
         dsc.setPassword(PASSWORD);
+        // 设置自定义查询
+        dsc.setDbQuery(new SpringBootPlusMySqlQuery());
+
         mpg.setDataSource(dsc);
 
         // 包配置
