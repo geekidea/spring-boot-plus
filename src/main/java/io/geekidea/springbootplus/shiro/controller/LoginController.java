@@ -17,8 +17,6 @@
 package io.geekidea.springbootplus.shiro.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
-import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
 import io.geekidea.springbootplus.shiro.param.LoginParam;
 import io.geekidea.springbootplus.shiro.service.LoginService;
 import io.geekidea.springbootplus.system.web.vo.SysUserQueryVo;
@@ -48,12 +46,6 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
-
-    @Autowired
-    private LoginRedisService loginRedisService;
-
-    @Autowired
-    private JwtProperties jwtProperties;
 
     @PostMapping("/login")
     @ApiOperation(value = "登陆", notes = "系统用户登陆", response = SysUserQueryVo.class)

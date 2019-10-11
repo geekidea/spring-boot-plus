@@ -17,10 +17,7 @@ package io.geekidea.springbootplus.core.config;
 
 import io.geekidea.springbootplus.common.aop.LogAop;
 import io.geekidea.springbootplus.common.web.interceptor.PermissionInterceptor;
-import io.geekidea.springbootplus.core.properties.SpringBootPlusCorsProperties;
-import io.geekidea.springbootplus.core.properties.SpringBootPlusFilterProperties;
-import io.geekidea.springbootplus.core.properties.SpringBootPlusInterceptorProperties;
-import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.core.properties.*;
 import io.geekidea.springbootplus.resource.web.interceptor.DownloadInterceptor;
 import io.geekidea.springbootplus.resource.web.interceptor.ResourceInterceptor;
 import io.geekidea.springbootplus.resource.web.interceptor.UploadInterceptor;
@@ -47,7 +44,8 @@ import org.springframework.web.filter.CorsFilter;
         SpringBootPlusProperties.class,
         SpringBootPlusCorsProperties.class,
         SpringBootPlusFilterProperties.class,
-        SpringBootPlusInterceptorProperties.class
+        SpringBootPlusInterceptorProperties.class,
+        SpringBootPlusAopProperties.class
 })
 public class SpringBootPlusConfig {
 

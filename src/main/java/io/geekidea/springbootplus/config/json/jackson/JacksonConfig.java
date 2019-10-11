@@ -34,6 +34,8 @@ import io.geekidea.springbootplus.config.json.jackson.deserializer.JacksonDateDe
 import io.geekidea.springbootplus.config.json.jackson.deserializer.JacksonDoubleDeserializer;
 import io.geekidea.springbootplus.config.json.jackson.serializer.JacksonDateSerializer;
 import io.geekidea.springbootplus.config.json.jackson.serializer.JacksonIntegerDeserializer;
+import io.geekidea.springbootplus.xss.XssJacksonDeserializer;
+import io.geekidea.springbootplus.xss.XssJacksonSerializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -47,7 +49,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
  * @author geekidea
  * @author 2018-11-08
  */
@@ -67,29 +68,33 @@ public class JacksonConfig implements WebMvcConfigurer {
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
         simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
 
-        // Date
-        simpleModule.addSerializer(Date.class,new JacksonDateSerializer());
-        simpleModule.addDeserializer(Date.class,new JacksonDateDeserializer());
+        // XSS序列化
+        simpleModule.addSerializer(String.class, new XssJacksonSerializer());
+        simpleModule.addDeserializer(String.class, new XssJacksonDeserializer());
 
-        simpleModule.addDeserializer(Integer.class,new JacksonIntegerDeserializer());
-        simpleModule.addDeserializer(Double.class,new JacksonDoubleDeserializer());
+        // Date
+        simpleModule.addSerializer(Date.class, new JacksonDateSerializer());
+        simpleModule.addDeserializer(Date.class, new JacksonDateDeserializer());
+
+        simpleModule.addDeserializer(Integer.class, new JacksonIntegerDeserializer());
+        simpleModule.addDeserializer(Double.class, new JacksonDoubleDeserializer());
 
         // jdk8日期序列化和反序列化设置
         JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(LocalDateTime.class,new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DatePattern.yyyy_MM_dd_HH_mm_ss)));
-        javaTimeModule.addDeserializer(LocalDateTime.class,new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DatePattern.yyyy_MM_dd_HH_mm_ss)));
-        
-        javaTimeModule.addSerializer(LocalDate.class,new LocalDateSerializer(DateTimeFormatter.ofPattern(DatePattern.yyyy_MM_dd)));
-        javaTimeModule.addDeserializer(LocalDate.class,new LocalDateDeserializer(DateTimeFormatter.ofPattern(DatePattern.yyyy_MM_dd)));
-        
-        javaTimeModule.addSerializer(LocalTime.class,new LocalTimeSerializer(DateTimeFormatter.ofPattern(DatePattern.HH_mm_ss)));
-        javaTimeModule.addDeserializer(LocalTime.class,new LocalTimeDeserializer(DateTimeFormatter.ofPattern(DatePattern.HH_mm_ss)));
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DatePattern.yyyy_MM_dd_HH_mm_ss)));
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DatePattern.yyyy_MM_dd_HH_mm_ss)));
+
+        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DatePattern.yyyy_MM_dd)));
+        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(DatePattern.yyyy_MM_dd)));
+
+        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(DatePattern.HH_mm_ss)));
+        javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(DatePattern.HH_mm_ss)));
 
         objectMapper.registerModule(simpleModule).registerModule(javaTimeModule).registerModule(new ParameterNamesModule());
 
         jackson2HttpMessageConverter.setObjectMapper(objectMapper);
 
         //放到第一个
-        converters.add(0,jackson2HttpMessageConverter);
+        converters.add(0, jackson2HttpMessageConverter);
     }
 }
