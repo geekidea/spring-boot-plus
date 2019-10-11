@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.stereotype.Controller;
 #end
 
+#if(${cfg.paramValidation})
 import javax.validation.Valid;
+#end
 
 import ${cfg.paging};
 import ${cfg.idParamPath};

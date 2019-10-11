@@ -61,13 +61,16 @@ public class CodeGenerator {
     // 作者
     private static final String AUTHOR = "geekidea";
     // 生成的表名称
-    private static final String TABLE_NAME = "sys_log";
+    private static final String TABLE_NAME = "sys_role";
     // 主键数据库列名称
-    private static final String PK_ID_COLUMN_NAME = "log_id";
+    private static final String PK_ID_COLUMN_NAME = "id";
     // 代码生成策略 true：All/false:SIMPLE
     private static final boolean GENERATOR_STRATEGY = true;
     // 分页列表查询是否排序 true：有排序参数/false：无
     private static final boolean PAGE_LIST_ORDER = false;
+    // 是否生成validation校验，true：生成/false：不生成
+    private static final boolean PARAM_VALIDATION = true;
+
     // 生成文件配置，是否生成entity/controller/service/serviceImpl/mapper/xml
     private static final boolean GENERATOR_ENTITY = true;
     private static final boolean GENERATOR_CONTROLLER = true;
@@ -123,6 +126,7 @@ public class CodeGenerator {
             @Override
             public void initMap() {
 
+                String camelTableName = underlineToCamel(TABLE_NAME);
                 String pascalTableName = underlineToPascal(TABLE_NAME);
 
                 Map<String, Object> map = new HashMap<>();
@@ -142,11 +146,11 @@ public class CodeGenerator {
                 // 响应结果类路径
                 map.put("queryVoPath", queryVoPackage + StringPool.DOT + pascalTableName + "QueryVo");
                 // 实体对象名称
-                map.put("entityObjectName", pascalTableName);
+                map.put("entityObjectName", camelTableName);
                 // service对象名称
-                map.put("serviceObjectName", pascalTableName + "Service");
+                map.put("serviceObjectName", camelTableName + "Service");
                 // mapper对象名称
-                map.put("mapperObjectName", pascalTableName + "Mapper");
+                map.put("mapperObjectName", camelTableName + "Mapper");
                 // 主键ID列名
                 map.put("pkIdColumnName", PK_ID_COLUMN_NAME);
                 // 主键ID驼峰名称
@@ -164,6 +168,8 @@ public class CodeGenerator {
                 map.put("orderQueryParamPath", PARENT_PACKAGE + StringPool.DOT + "common.web.param." + "OrderQueryParam");
                 // 代码生成策略
                 map.put("generatorStrategy", GENERATOR_STRATEGY);
+                // 代码Validation校验
+                map.put("paramValidation", PARAM_VALIDATION);
                 this.setMap(map);
             }
         };
@@ -266,5 +272,7 @@ public class CodeGenerator {
         }
         return null;
     }
+
+
 
 }
