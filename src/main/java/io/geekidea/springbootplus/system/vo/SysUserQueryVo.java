@@ -1,47 +1,37 @@
-package io.geekidea.springbootplus.system.entity;
+package io.geekidea.springbootplus.system.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import io.geekidea.springbootplus.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import java.io.Serializable;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * <p>
- * SystemUser
+ * SystemUser 查询结果对象
  * </p>
  *
  * @author geekidea
- * @since 2019-10-11
+ * @date 2019-10-11
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysUser对象", description = "SystemUser")
-public class SysUser extends BaseEntity {
-
+@ApiModel(value = "SysUserQueryVo对象", description = "SystemUser查询参数")
+public class SysUserQueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;
 
     @ApiModelProperty(value = "用户名")
-    @NotBlank(message = "用户名不能为空")
     private String username;
 
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
     @ApiModelProperty(value = "密码")
-    @NotBlank(message = "密码不能为空")
     private String password;
 
     @ApiModelProperty(value = "盐值")
