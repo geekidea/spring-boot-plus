@@ -57,7 +57,7 @@ public class CodeGenerator {
 
     // ############################ 配置部分 start ############################
     // 模块名称
-    private static final String MODULE_NAME = "system";
+    private static final String MODULE_NAME = "hello";
     // 作者
     private static final String AUTHOR = "geekidea";
     // 生成的表名称
