@@ -120,6 +120,8 @@ spring-boot-plus:
       /templates/**=anon
       /druid/**=anon
       /hello/world=anon
+      /ip/**=anon
+      /sysLog/**=anon
       /xss/**=anon
     # 权限配置
     permission:
