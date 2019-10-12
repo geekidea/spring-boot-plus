@@ -67,6 +67,8 @@ public class CodeGenerator {
     private static final String COMMON_ORDER_QUERY_PARAM = COMMON_PARENT_PACKAGE + ".param.OrderQueryParam";
     private static final String COMMON_PAGING = COMMON_PARENT_PACKAGE + ".vo.Paging";
 
+    // 包名称
+    private static final String PACKAGE_CONTROLLER= "controller";
 
     // ############################ 配置部分 start ############################
     // 模块名称
@@ -82,7 +84,7 @@ public class CodeGenerator {
     // 分页列表查询是否排序 true：有排序参数/false：无
     private static final boolean PAGE_LIST_ORDER = false;
     // 是否生成validation校验，true：生成/false：不生成
-    private static final boolean PARAM_VALIDATION = false;
+    private static final boolean PARAM_VALIDATION = true;
 
     // 生成文件配置，是否生成entity/controller/service/serviceImpl/mapper/xml
     private static final boolean GENERATOR_ENTITY = true;
@@ -130,7 +132,7 @@ public class CodeGenerator {
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(MODULE_NAME);
         pc.setParent(PARENT_PACKAGE);
-        pc.setController("controller");
+        pc.setController(PACKAGE_CONTROLLER);
 
         mpg.setPackageInfo(pc);
 
