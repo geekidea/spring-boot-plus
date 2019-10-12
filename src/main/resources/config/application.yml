@@ -122,7 +122,6 @@ spring-boot-plus:
       /hello/world=anon
       /ip/**=anon
       /sysLog/**=anon
-      /xss/**=anon
     # 权限配置
     permission:
         # 排除登陆登出相关
