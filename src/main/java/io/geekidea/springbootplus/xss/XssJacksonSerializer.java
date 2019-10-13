@@ -19,7 +19,7 @@ package io.geekidea.springbootplus.xss;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import org.apache.commons.lang3.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.IOException;
@@ -31,14 +31,12 @@ import java.io.IOException;
  * @date 2019-10-10
  * @since 1.3.1.RELEASE
  **/
+@Slf4j
 public class XssJacksonSerializer extends JsonSerializer<String> {
 
     @Override
     public void serialize(String s, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        if (StringUtils.isNotBlank(s)) {
-            String escapeValue = StringEscapeUtils.escapeHtml4(s);
-            jsonGenerator.writeString(escapeValue);
-        }
+        jsonGenerator.writeString(StringEscapeUtils.escapeHtml4(s));
     }
 
 }

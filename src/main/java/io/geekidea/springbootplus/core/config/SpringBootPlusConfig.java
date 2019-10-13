@@ -15,8 +15,8 @@
  */
 package io.geekidea.springbootplus.core.config;
 
-import io.geekidea.springbootplus.common.aop.LogAop;
-import io.geekidea.springbootplus.common.interceptor.PermissionInterceptor;
+import io.geekidea.springbootplus.aop.LogAop;
+import io.geekidea.springbootplus.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.core.properties.*;
 import io.geekidea.springbootplus.resource.interceptor.DownloadInterceptor;
 import io.geekidea.springbootplus.resource.interceptor.ResourceInterceptor;

@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus;
 
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import io.geekidea.springbootplus.util.PrintApplicationInfo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -37,7 +38,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 @EnableTransactionManagement
 @EnableConfigurationProperties
-//@EnableAdminServer
+@EnableAdminServer
 @MapperScan({"io.geekidea.springbootplus.**.mapper"})
 @ServletComponentScan
 @SpringBootApplication

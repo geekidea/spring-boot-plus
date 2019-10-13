@@ -17,7 +17,7 @@
 package io.geekidea.springbootplus.core.config;
 
 import com.alibaba.fastjson.JSON;
-import io.geekidea.springbootplus.common.interceptor.PermissionInterceptor;
+import io.geekidea.springbootplus.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.core.properties.SpringBootPlusInterceptorProperties;
 import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.resource.interceptor.DownloadInterceptor;

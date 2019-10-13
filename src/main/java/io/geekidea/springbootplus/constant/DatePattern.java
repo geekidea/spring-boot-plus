@@ -14,35 +14,44 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.constant;
+package io.geekidea.springbootplus.constant;
 
 /**
  * <p>
- *  redis key 常量
+ *     日期格式常量
  * </p>
  * @author geekidea
- * @date 2019-05-23
- **/
-public interface CommonRedisKey {
+ * @date 2018-11-08
+ */
+public interface DatePattern {
 
     /**
-     * 登陆用户token信息key
+     * 年-月-日
      */
-    String LOGIN_TOKEN = "login:token:%s";
+    String yyyy_MM_dd = "yyyy-MM-dd";
+    /**
+     * 年-月-日 时:分
+     */
+    String yyyy_MM_dd_HH_mm = "yyyy-MM-dd HH:mm";
+    /**
+     * 年-月-日 时:分:秒
+     */
+    String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
+    /**
+     * 年-月-日 时:分:秒:毫秒
+     */
+    String yyyy_MM_dd_HH_mm_ss_S = "yyyy-MM-dd HH:mm:ss.S";
 
     /**
-     * 登陆用户信息key
+     * 时:分
      */
-    String LOGIN_USER = "login:user:%s";
-
+    String HH_mm = "HH:mm";
     /**
-     * 登陆用户盐值信息key
+     * 时:分:秒
      */
-    String LOGIN_SALT= "login:salt:%s";
-
+    String HH_mm_ss = "HH:mm:ss";
     /**
-     * 登陆用户username token
+     * 时:分:秒:毫秒
      */
-    String LOGIN_USER_TOKEN = "login:user:token:%s:%s";
-
+    String HH_mm_ss_S = "HH:mm:ss:S";
 }

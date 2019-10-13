@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.aop;
+package io.geekidea.springbootplus.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

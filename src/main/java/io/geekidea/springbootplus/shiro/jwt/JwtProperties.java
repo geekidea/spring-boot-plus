@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.shiro.jwt;
 
-import io.geekidea.springbootplus.common.constant.CommonConstant;
+import io.geekidea.springbootplus.constant.CommonConstant;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

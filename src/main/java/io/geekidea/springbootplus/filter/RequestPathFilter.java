@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.filter;
+package io.geekidea.springbootplus.filter;
 
 import io.geekidea.springbootplus.core.properties.SpringBootPlusFilterProperties;
 import lombok.extern.slf4j.Slf4j;
