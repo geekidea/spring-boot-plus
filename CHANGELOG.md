@@ -1,5 +1,28 @@
 # 更新日志 CHANGELOG
 
+
+## [V1.3.1-RELEASE] 2019.10.15
+
+###  ⭐️  New Features
+
+
+### ⚡️ Optimization
+
+
+### 📝 Added/Modified
+
+
+### 🐞  Bug Fixes
+
+
+### 📔  Documentation
+
+
+### 🔨 Dependency Upgrades
+- Upgrade to `spring-boot` 2.1.9.RELEASE
+- Upgrade to `Fastjson` 1.2.62
+
+
 ## [V1.3.0-RELEASE] 2019.10.06
 
 ###  ⭐️  New Features
