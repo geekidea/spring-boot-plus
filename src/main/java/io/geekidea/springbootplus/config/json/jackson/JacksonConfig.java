@@ -29,12 +29,11 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
-import io.geekidea.springbootplus.common.constant.DatePattern;
+import io.geekidea.springbootplus.constant.DatePattern;
 import io.geekidea.springbootplus.config.json.jackson.deserializer.JacksonDateDeserializer;
 import io.geekidea.springbootplus.config.json.jackson.deserializer.JacksonDoubleDeserializer;
 import io.geekidea.springbootplus.config.json.jackson.serializer.JacksonDateSerializer;
 import io.geekidea.springbootplus.config.json.jackson.serializer.JacksonIntegerDeserializer;
-import io.geekidea.springbootplus.xss.XssJacksonDeserializer;
 import io.geekidea.springbootplus.xss.XssJacksonSerializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -70,7 +69,7 @@ public class JacksonConfig implements WebMvcConfigurer {
 
         // XSS序列化
         simpleModule.addSerializer(String.class, new XssJacksonSerializer());
-        simpleModule.addDeserializer(String.class, new XssJacksonDeserializer());
+//        simpleModule.addDeserializer(String.class, new XssJacksonDeserializer());
 
         // Date
         simpleModule.addSerializer(Date.class, new JacksonDateSerializer());

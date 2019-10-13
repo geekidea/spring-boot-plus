@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.constant;
+package io.geekidea.springbootplus.constant;
 
 /**
  * 常量

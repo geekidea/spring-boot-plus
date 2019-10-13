@@ -52,8 +52,9 @@ spring-boot-plus:
       include-paths: /**
       # 排除路径，多行字符串配置
       exclude-paths: |
-        /actuator/**,/instances,/logfile,/sba-settings.js,/assets/img/favicon.png,
-        /swagger-ui.html,/swagger-resources/**,/webjars/springfox-swagger-ui/**,/v2/api-docs
+        /applications/**,/actuator/**,/instances/**,/logfile,/sba-settings.js,/assets/img/favicon.png,
+        /swagger-ui.html,/swagger-resources/**,/webjars/springfox-swagger-ui/**,/v2/api-docs,
+        /druid/**,/favicon.ico
   # 拦截器配置
   interceptor:
     permission:

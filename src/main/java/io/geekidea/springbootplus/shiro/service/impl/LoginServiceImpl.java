@@ -19,7 +19,7 @@ package io.geekidea.springbootplus.shiro.service.impl;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.common.constant.CommonConstant;
+import io.geekidea.springbootplus.constant.CommonConstant;
 import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
 import io.geekidea.springbootplus.shiro.jwt.JwtToken;

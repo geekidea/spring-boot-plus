@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.common.param;
 
-import io.geekidea.springbootplus.common.constant.CommonConstant;
+import io.geekidea.springbootplus.constant.CommonConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
