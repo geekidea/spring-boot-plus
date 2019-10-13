@@ -19,6 +19,7 @@ package io.geekidea.springbootplus.xss;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ import java.io.IOException;
  * @since 1.3.1.RELEASE
  **/
 @Slf4j
-//@WebFilter(filterName = "xssFilter", urlPatterns = "/*", asyncSupported = true)
+@WebFilter(filterName = "xssFilter", urlPatterns = "/*", asyncSupported = true)
 public class XssFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

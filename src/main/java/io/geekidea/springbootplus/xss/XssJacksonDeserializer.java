@@ -35,8 +35,7 @@ public class XssJacksonDeserializer extends JsonDeserializer<String> {
 
     @Override
     public String deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        String string = jsonParser.getText();
-        return StringEscapeUtils.escapeHtml4(string);
+        return StringEscapeUtils.escapeHtml4(jsonParser.getText());
     }
 
 }
