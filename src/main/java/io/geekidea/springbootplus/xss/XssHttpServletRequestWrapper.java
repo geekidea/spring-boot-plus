@@ -37,14 +37,12 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public String getQueryString() {
-        String value = super.getQueryString();
-        return StringEscapeUtils.escapeHtml4(value);
+        return StringEscapeUtils.escapeHtml4(super.getQueryString());
     }
 
     @Override
     public String getParameter(String name) {
-        String value = super.getParameter(name);
-        return StringEscapeUtils.escapeHtml4(value);
+        return StringEscapeUtils.escapeHtml4(super.getParameter(name));
     }
 
     @Override
@@ -56,8 +54,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         int length = values.length;
         String[] escapeValues = new String[length];
         for (int i = 0; i < length; i++) {
-            String value = values[i];
-            escapeValues[i] = StringEscapeUtils.escapeHtml4(value);
+            escapeValues[i] = StringEscapeUtils.escapeHtml4(values[i]);
         }
         return escapeValues;
     }
