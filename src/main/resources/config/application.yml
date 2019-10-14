@@ -94,7 +94,7 @@ spring-boot-plus:
     # 允许访问的源
     allowed-origins: '*'
     # 允许访问的请求头
-    allowed-headers: content-type,token
+    allowed-headers: x-requested-with,content-type,token
     # 是否允许发送cookie
     allow-credentials: true
     # 允许访问的请求方式
