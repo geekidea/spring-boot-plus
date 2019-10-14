@@ -35,6 +35,8 @@ import org.fusesource.jansi.Ansi;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -259,6 +261,12 @@ public class LogAop {
                 continue;
             }
             if (arg instanceof HttpServletResponse) {
+                continue;
+            }
+            if (arg instanceof MultipartFile) {
+                continue;
+            }
+            if (arg instanceof ModelAndView) {
                 continue;
             }
             realArgs.add(arg);
