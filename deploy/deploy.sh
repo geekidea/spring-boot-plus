@@ -78,12 +78,12 @@ fi
 
 if [[ $IS_UPDATE == 1 ]]
 then
-	echo "Back spring-boot-plus-server..."
+	echo "back spring-boot-plus-server..."
   mv spring-boot-plus-server spring-boot-plus-server-back/spring-boot-plus-server-back-"${NOW}"
   echo "back success"
 fi
 
-echo "Copy spring-boot-plus-server-assembly.tar.gz..."
+echo "copy spring-boot-plus-server-assembly.tar.gz..."
 # 复制到项目同级目录，如果有，则覆盖
 cp -r -f spring-boot-plus/target/spring-boot-plus-server-assembly.tar.gz spring-boot-plus-server-assembly.tar.gz
 echo "copy success"
@@ -93,5 +93,7 @@ pwd
 tar -zxvf spring-boot-plus-server-assembly.tar.gz
 echo "tar.gz decompression success"
 
-sh spring-boot-plus-server/bin/restart.sh
+pwd
+sh spring-boot-plus-server/bin/shutdown.sh
+sh spring-boot-plus-server/bin/startup.sh
 
