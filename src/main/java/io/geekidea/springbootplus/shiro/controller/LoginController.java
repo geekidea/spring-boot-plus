@@ -17,11 +17,8 @@
 package io.geekidea.springbootplus.shiro.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
-import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
 import io.geekidea.springbootplus.shiro.param.LoginParam;
 import io.geekidea.springbootplus.shiro.service.LoginService;
-import io.geekidea.springbootplus.system.web.vo.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -49,14 +46,8 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @Autowired
-    private LoginRedisService loginRedisService;
-
-    @Autowired
-    private JwtProperties jwtProperties;
-
     @PostMapping("/login")
-    @ApiOperation(value = "登陆", notes = "系统用户登陆", response = SysUserQueryVo.class)
+    @ApiOperation(value = "登陆", notes = "系统用户登陆", response = ApiResult.class)
     public ApiResult login(@Valid @RequestBody LoginParam loginParam, HttpServletResponse response) {
         return loginService.login(loginParam, response);
     }

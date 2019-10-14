@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.shiro.cache.impl;
 
-import io.geekidea.springbootplus.common.constant.CommonRedisKey;
+import io.geekidea.springbootplus.constant.CommonRedisKey;
 import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.convert.ShiroMapstructConvert;
 import io.geekidea.springbootplus.shiro.jwt.JwtProperties;

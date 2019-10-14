@@ -13,6 +13,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 #end
 
+#if(${cfg.paramValidation})
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+#end
+
 /**
  * <p>
  * $!{table.comment}
@@ -96,7 +101,21 @@ public class ${entity} implements Serializable {
 #if(${custom_is_pk})
     private ${field.propertyType} ${field.propertyName};
 #else
+## 如果没有默认值，且不为空，则设置非空校验
+#if(${cfg.paramValidation})
+#if(${field.customMap.null} == 'NO' && !${field.customMap.default})
+#if(${field.propertyType} == 'String')
+@NotBlank(message = "${field.comment}不能为空")
+#else
+@NotNull(message = "${field.comment}不能为空")
+#end
+    private ${field.propertyType} ${field.propertyName};
+#else
 private ${field.propertyType} ${field.propertyName};
+#end
+#else
+private ${field.propertyType} ${field.propertyName};
+#end
 #end
 #end
 ## ----------  END 字段循环遍历  ----------

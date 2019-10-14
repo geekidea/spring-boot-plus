@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.shiro.util;
 
-import io.geekidea.springbootplus.common.constant.CommonRedisKey;
+import io.geekidea.springbootplus.constant.CommonRedisKey;
 import io.geekidea.springbootplus.shiro.vo.LoginSysUserRedisVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

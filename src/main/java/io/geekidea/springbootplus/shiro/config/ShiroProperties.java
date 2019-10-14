@@ -19,7 +19,6 @@ package io.geekidea.springbootplus.shiro.config;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -31,7 +30,6 @@ import java.util.List;
  * @since 1.3.0.RELEASE
  **/
 @Data
-@Component
 @ConfigurationProperties(prefix = "spring-boot-plus.shiro")
 public class ShiroProperties {
 
@@ -41,6 +39,6 @@ public class ShiroProperties {
      * 权限配置集合
      */
     @NestedConfigurationProperty
-    private List<ShiroPermissionConfig> permissionConfig;
+    private List<ShiroPermissionProperties> permission;
 
 }

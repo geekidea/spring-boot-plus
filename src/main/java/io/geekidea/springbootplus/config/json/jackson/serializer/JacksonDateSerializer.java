@@ -27,17 +27,19 @@ import java.util.Date;
 
 /**
  * <p>
- *     Jackson Date反序列化器
+ * Jackson Date反序列化器
  * </p>
+ *
  * @author geekidea
  * @date 2018-11-08
  */
 public class JacksonDateSerializer extends JsonSerializer<Date> {
     @Override
     public void serialize(Date date, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
-        if (date != null){
-            String dateString = DateUtil.getYYYYMMDDHHMMSS(date);
-            jsonGenerator.writeString(dateString);
+        String string = null;
+        if (date != null) {
+            string = DateUtil.getYYYYMMDDHHMMSS(date);
         }
+        jsonGenerator.writeString(string);
     }
 }
