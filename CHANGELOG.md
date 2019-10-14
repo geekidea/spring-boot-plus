@@ -32,6 +32,7 @@
 ### 🔨 Dependency Upgrades
 - Upgrade to `spring-boot` 2.1.9.RELEASE
 - Upgrade to `Fastjson` 1.2.62
+- Upgrade to `hutool` 4.6.10
 - Add `commons-text` 1.8
 
 ## [V1.3.0-RELEASE] 2019.10.06

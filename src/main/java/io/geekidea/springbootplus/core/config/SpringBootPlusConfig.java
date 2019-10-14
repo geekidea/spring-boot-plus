@@ -16,20 +16,15 @@
 package io.geekidea.springbootplus.core.config;
 
 import io.geekidea.springbootplus.aop.LogAop;
-import io.geekidea.springbootplus.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.core.properties.*;
+import io.geekidea.springbootplus.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.resource.interceptor.DownloadInterceptor;
 import io.geekidea.springbootplus.resource.interceptor.ResourceInterceptor;
 import io.geekidea.springbootplus.resource.interceptor.UploadInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 /**
  * spring-boot-plus配置
@@ -48,29 +43,6 @@ import org.springframework.web.filter.CorsFilter;
         SpringBootPlusAopProperties.class
 })
 public class SpringBootPlusConfig {
-
-    /**
-     * CORS跨域设置
-     *
-     * @return
-     */
-    @Bean
-    public FilterRegistrationBean corsFilter(SpringBootPlusCorsProperties corsProperties) {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        // 跨域配置
-        corsConfiguration.setAllowedOrigins(corsProperties.getAllowedOrigins());
-        corsConfiguration.setAllowedHeaders(corsProperties.getAllowedHeaders());
-        corsConfiguration.setAllowedMethods(corsProperties.getAllowedMethods());
-        corsConfiguration.setAllowCredentials(corsProperties.isAllowCredentials());
-        corsConfiguration.setExposedHeaders(corsProperties.getExposedHeaders());
-        source.registerCorsConfiguration(corsProperties.getPath(), corsConfiguration);
-
-        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        bean.setEnabled(corsProperties.isEnable());
-        return bean;
-    }
 
     /**
      * 配置日志AOP

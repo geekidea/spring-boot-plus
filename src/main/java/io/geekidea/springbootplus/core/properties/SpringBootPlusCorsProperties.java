@@ -67,6 +67,11 @@ public class SpringBootPlusCorsProperties {
     /**
      * 允许响应的头
      */
-    private List<String> exposedHeaders = Arrays.asList("content-type", "token");
+    private List<String> exposedHeaders = Arrays.asList("token");
+
+    /**
+     * 该响应的有效时间默认为30分钟，在有效时间内，浏览器无须为同一请求再次发起预检请求
+     */
+    private Long maxAge = 1800L;
 
 }
