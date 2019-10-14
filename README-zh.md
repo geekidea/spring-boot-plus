@@ -73,7 +73,7 @@ reflections | 0.9.11 | 反射工具包 |
 hibernate-validator | 6.0.17.Final | 后台参数校验注解 |
 Shiro | 1.4.1 | 权限控制 |
 JWT | 3.8.3 | JSON WEB TOKEN |
-hutool-all | 4.6.4 | 常用工具集 |
+hutool-all | 4.6.10 | 常用工具集 |
 lombok | 1.18.8 | 注解生成Java Bean等工具 |
 mapstruct | 1.3.0.Final | 对象属性复制工具 |
 
