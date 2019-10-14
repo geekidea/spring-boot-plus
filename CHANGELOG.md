@@ -1,5 +1,40 @@
 # 更新日志 CHANGELOG
 
+
+## [V1.3.1-RELEASE] 2019.10.15
+
+###  ⭐️  New Features
+- Xss跨站脚本工具处理
+- CORS跨域配置
+
+### ⚡️ Optimization
+- 代码生成器可自定义配置生成哪些文件
+- 请求路径filter配置，配置文件属性名称调整
+- Aop切点优化，`Aop` JSON参数输出优化
+- 可配置是否生成`Validation`验证代码
+- 优化`controller`,`entity`模版生成
+- 优化代码生成器 CodeGenerator
+- 调整 `aop`, `filter`,`interceptor`,`controller`,`param`,`vo`代码目录结构
+
+### 📝 Added/Modified
+- Add `XssFilter`,`XssHttpServletRequestWrapper`,`XssJacksonDeserializer`,`XssJacksonSerializer`
+- Add `SpringBootPlusCorsProperties`
+- Update `JacksonConfig`
+- Update `LogAop`,`RequestPathFilter`,`ShiroConfig`
+
+### 🐞  Bug Fixes
+- fix druid控制面板无法访问问题
+
+### 📔  Documentation
+- [https://springboot.plus/guide/xss.html](https://springboot.plus/guide/xss.html)
+- [https://springboot.plus/guide/cors.html](https://springboot.plus/guide/cors.html)
+
+### 🔨 Dependency Upgrades
+- Upgrade to `spring-boot` 2.1.9.RELEASE
+- Upgrade to `Fastjson` 1.2.62
+- Upgrade to `hutool` 4.6.10
+- Add `commons-text` 1.8
+
 ## [V1.3.0-RELEASE] 2019.10.06
 
 ###  ⭐️  New Features
@@ -60,7 +95,7 @@
 - [spring-boot-plus java docs](http://geekidea.io/spring-boot-plus-apidocs/)
 
 ### 🔨 Dependency Upgrades
-- Upgrade to `springboot` 2.1.8.RELEASE
+- Upgrade to `springboot` 2.1.9.RELEASE
 - Upgrade to `Mybatis` 3.5.2
 - Upgrade to `Mybatis Plus` 3.2.0
 - Upgrade to `Alibaba Druid` 1.1.20

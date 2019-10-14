@@ -17,7 +17,6 @@
 package io.geekidea.springbootplus.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.geekidea.springbootplus.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -26,13 +25,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
  * <p>
  * 系统日志
  * </p>
  *
  * @author geekidea
- * @since 2019-10-05
+ * @since 2019-10-11
  */
 @Data
 @Accessors(chain = true)

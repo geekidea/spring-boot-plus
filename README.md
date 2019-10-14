@@ -9,10 +9,10 @@
 
 <p align="center">  
   <a href="https://github.com/geekidea/spring-boot-plus/">
-    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.3.0--RELEASE-blue">
+    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.3.1.RELEASE-blue">
   </a>
   <a href="https://github.com/spring-projects/spring-boot">
-    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.8.RELEASE-brightgreen">
+    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.9.RELEASE-brightgreen">
   </a>
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
@@ -60,8 +60,8 @@ Redis | 3.2+ |  |
 ### Technology stack 
 Component| Version |  Remark
 -|-|-
-Spring Boot | 2.1.8.RELEASE | Latest release stable version |
-Spring Framework | 5.1.9.RELEASE | Latest release stable version |
+Spring Boot | 2.1.9.RELEASE | Latest release stable version |
+Spring Framework | 5.1.10.RELEASE | Latest release stable version |
 Mybatis | 3.5.2 | DAO Framework |
 Mybatis Plus | 3.2.0 | mybatis Enhanced framework |
 Alibaba Druid | 1.1.20 | Data source |
@@ -75,7 +75,7 @@ reflections | 0.9.11 | Reflection Toolkit  |
 hibernate-validator | 6.0.17.Final | Validator toolkit |
 Shiro | 1.4.1 | Permission control |
 JWT | 3.8.3 | JSON WEB TOKEN |
-hutool-all | 4.6.4 | Common toolset |
+hutool-all | 4.6.10 | Common toolset |
 lombok | 1.18.8 | Automatically plugs |
 mapstruct | 1.3.0.Final | Object property replication tool |
 

@@ -9,10 +9,10 @@
 
 <p align="center">  
   <a href="https://github.com/geekidea/spring-boot-plus/">
-    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.3.0--RELEASE-blue">
+    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.3.1.RELEASE-blue">
   </a>
   <a href="https://github.com/spring-projects/spring-boot">
-    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.8.RELEASE-brightgreen">
+    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.9.RELEASE-brightgreen">
   </a>
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
@@ -58,8 +58,8 @@ Redis | 3.2+ |  |
 ### 技术选型 
 技术 | 版本 |  备注
 -|-|-
-Spring Boot | 2.1.8.RELEASE | 最新发布稳定版 |
-Spring Framework | 5.1.9.RELEASE | 最新发布稳定版 |
+Spring Boot | 2.1.9.RELEASE | 最新发布稳定版 |
+Spring Framework | 5.1.10.RELEASE | 最新发布稳定版 |
 Mybatis | 3.5.2 | 持久层框架 |
 Mybatis Plus | 3.2.0 | mybatis增强框架 |
 Alibaba Druid | 1.1.20 | 数据源 |
@@ -73,7 +73,7 @@ reflections | 0.9.11 | 反射工具包 |
 hibernate-validator | 6.0.17.Final | 后台参数校验注解 |
 Shiro | 1.4.1 | 权限控制 |
 JWT | 3.8.3 | JSON WEB TOKEN |
-hutool-all | 4.6.4 | 常用工具集 |
+hutool-all | 4.6.10 | 常用工具集 |
 lombok | 1.18.8 | 注解生成Java Bean等工具 |
 mapstruct | 1.3.0.Final | 对象属性复制工具 |
 

@@ -21,7 +21,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.geekidea.springbootplus.common.constant.CommonConstant;
+import io.geekidea.springbootplus.constant.CommonConstant;
 import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
 import io.geekidea.springbootplus.util.UUIDUtil;
 import lombok.extern.slf4j.Slf4j;

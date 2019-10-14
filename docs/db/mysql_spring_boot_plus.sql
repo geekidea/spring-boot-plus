@@ -32,7 +32,7 @@ CREATE TABLE `ip`  (
   `ip_start_num` bigint(20) NOT NULL,
   `ip_end_num` bigint(20) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 526718 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 526718 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'IP地址'  ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_log

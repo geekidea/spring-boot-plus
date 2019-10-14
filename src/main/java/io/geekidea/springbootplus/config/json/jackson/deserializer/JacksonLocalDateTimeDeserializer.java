@@ -19,7 +19,7 @@ package io.geekidea.springbootplus.config.json.jackson.deserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import io.geekidea.springbootplus.common.constant.DatePattern;
+import io.geekidea.springbootplus.constant.DatePattern;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
