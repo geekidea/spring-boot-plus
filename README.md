@@ -75,7 +75,7 @@ reflections | 0.9.11 | Reflection Toolkit  |
 hibernate-validator | 6.0.17.Final | Validator toolkit |
 Shiro | 1.4.1 | Permission control |
 JWT | 3.8.3 | JSON WEB TOKEN |
-hutool-all | 4.6.4 | Common toolset |
+hutool-all | 4.6.10 | Common toolset |
 lombok | 1.18.8 | Automatically plugs |
 mapstruct | 1.3.0.Final | Object property replication tool |
 
