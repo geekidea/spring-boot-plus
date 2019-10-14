@@ -64,7 +64,7 @@
         <reflections.version>0.9.11</reflections.version>
         <jansi.version>1.18</jansi.version>
         <lombok.version>1.18.8</lombok.version>
-        <hutool.version>4.6.4</hutool.version>
+        <hutool.version>4.6.10</hutool.version>
         <junit.version>4.12</junit.version>
         <ini4j.version>0.5.4</ini4j.version>
         <mapstruct.version>1.3.0.Final</mapstruct.version>

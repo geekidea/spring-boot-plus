@@ -100,7 +100,10 @@ spring-boot-plus:
     # 允许访问的请求方式
     allowed-methods: OPTION,GET,POST
     # 允许响应的头
-    exposed-headers: content-type,token
+    exposed-headers: token
+    # 该响应的有效时间默认为30分钟，在有效时间内，浏览器无须为同一请求再次发起预检请求
+    max-age: 1800
+
   ############################ CORS end ##############################
 
   ########################## Resource start ##########################
