@@ -64,7 +64,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
      * username:num
      */
     @Override
-    public void cacheLoginInfo(JwtToken jwtToken, LoginSysUserVo loginSysUserVo, boolean generate) {
+    public void cacheLoginInfo(JwtToken jwtToken, LoginSysUserVo loginSysUserVo) {
         if (jwtToken == null) {
             throw new IllegalArgumentException("jwtToken不能为空");
         }
@@ -110,6 +110,15 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         redisTemplate.opsForValue().set(String.format(CommonRedisKey.LOGIN_SALT, username), salt, expireDuration);
         // 4. login user token
         redisTemplate.opsForValue().set(String.format(CommonRedisKey.LOGIN_USER_TOKEN, username, tokenMd5), loginTokenRedisKey, expireDuration);
+    }
+
+    @Override
+    public void refreshLoginInfo(String oldToken, String username, JwtToken newJwtToken) {
+        // 删除之前的token信息
+        deleteLoginInfo(oldToken, username);
+        // 缓存登陆信息
+        LoginSysUserRedisVo loginSysUserRedisVo = getLoginSysUserRedisVo(username);
+        cacheLoginInfo(newJwtToken, loginSysUserRedisVo);
     }
 
     @Override
@@ -184,5 +193,6 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         // 4. 删除登陆用户盐值信息
         redisTemplate.delete(String.format(CommonRedisKey.LOGIN_SALT, username));
     }
+
 
 }
