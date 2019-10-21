@@ -119,7 +119,7 @@ public class LoginServiceImpl implements LoginService {
         subject.login(jwtToken);
 
         // 缓存登陆信息到Redis
-        loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo, true);
+        loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo);
         // 设置响应头
         response.setHeader(JwtTokenUtil.getTokenName(), token);
         log.debug("登陆成功,username:{}", username);
@@ -160,16 +160,15 @@ public class LoginServiceImpl implements LoginService {
             throw new AuthenticationException("token已无效，请使用已刷新的token");
         }
         String username = jwtToken.getUsername();
-        // 生成新token
-        String newToken = JwtUtil.generateToken(username, jwtToken.getSalt(), Duration.ofSeconds(jwtProperties.getExpireSecond()));
-        DecodedJWT decodedJWT = JwtUtil.getJwtInfo(token);
-        jwtToken.setToken(newToken)
-                .setCreateDate(decodedJWT.getIssuedAt())
-                .setExpireDate(decodedJWT.getExpiresAt());
+        String salt = jwtToken.getSalt();
+        Long expireSecond = jwtProperties.getExpireSecond();
+        // 生成新token字符串
+        String newToken = JwtUtil.generateToken(username, salt, Duration.ofSeconds(expireSecond));
+        // 生成新JwtToken对象
+        JwtToken newJwtToken = JwtToken.build(newToken, username, salt, expireSecond);
         // 更新redis缓存
-        LoginSysUserRedisVo loginSysUserRedisVo = loginRedisService.getLoginSysUserRedisVo(username);
-        loginRedisService.cacheLoginInfo(jwtToken, loginSysUserRedisVo, false);
-        log.debug("刷新token成功，原token:{}，新token:{}", jwtToken.getToken(), newToken);
+        loginRedisService.refreshLoginInfo(token, username, newJwtToken);
+        log.debug("刷新token成功，原token:{}，新token:{}", token, newToken);
         // 设置响应头
         // 刷新token
         httpServletResponse.setStatus(CommonConstant.JWT_REFRESH_TOKEN_CODE);
