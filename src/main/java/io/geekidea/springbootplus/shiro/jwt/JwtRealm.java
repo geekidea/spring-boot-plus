@@ -61,9 +61,9 @@ public class JwtRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         log.debug("doGetAuthorizationInfo principalCollection...");
         // 设置角色/权限信息
-        String token = principalCollection.toString();
+        JwtToken jwtToken = (JwtToken) principalCollection.getPrimaryPrincipal();
         // 获取username
-        String username = JwtUtil.getUsername(token);
+        String username = jwtToken.getUsername();
         // 获取登陆用户角色权限信息
         LoginSysUserRedisVo loginSysUserRedisVo = loginRedisService.getLoginSysUserRedisVo(username);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
