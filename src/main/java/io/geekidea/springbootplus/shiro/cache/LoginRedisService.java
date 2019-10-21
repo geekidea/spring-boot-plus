@@ -34,9 +34,17 @@ public interface LoginRedisService {
      *
      * @param jwtToken
      * @param loginSysUserVo
-     * @param generate       true:生成，false:刷新
      */
-    void cacheLoginInfo(JwtToken jwtToken, LoginSysUserVo loginSysUserVo, boolean generate);
+    void cacheLoginInfo(JwtToken jwtToken, LoginSysUserVo loginSysUserVo);
+
+
+    /**
+     * 刷新登陆信息
+     * @param oldToken
+     * @param username
+     * @param newJwtToken
+     */
+    void refreshLoginInfo(String oldToken,String username,JwtToken newJwtToken);
 
     /**
      * 通过用户名，从缓存中获取登陆用户LoginSysUserRedisVo
