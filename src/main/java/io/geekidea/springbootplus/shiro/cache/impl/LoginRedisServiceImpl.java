@@ -114,10 +114,11 @@ public class LoginRedisServiceImpl implements LoginRedisService {
 
     @Override
     public void refreshLoginInfo(String oldToken, String username, JwtToken newJwtToken) {
+        // 获取缓存的登陆用户信息
+        LoginSysUserRedisVo loginSysUserRedisVo = getLoginSysUserRedisVo(username);
         // 删除之前的token信息
         deleteLoginInfo(oldToken, username);
         // 缓存登陆信息
-        LoginSysUserRedisVo loginSysUserRedisVo = getLoginSysUserRedisVo(username);
         cacheLoginInfo(newJwtToken, loginSysUserRedisVo);
     }
 
