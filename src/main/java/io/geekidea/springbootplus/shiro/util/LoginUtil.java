@@ -64,6 +64,7 @@ public class LoginUtil {
     public static Long getUserId() {
         LoginSysUserRedisVo loginSysUserRedisVo = getLoginSysUserRedisVo();
         if (loginSysUserRedisVo == null) {
+            return null;
         }
         return loginSysUserRedisVo.getId();
     }
@@ -76,6 +77,7 @@ public class LoginUtil {
     public static String getUsername() {
         LoginSysUserRedisVo loginSysUserRedisVo = getLoginSysUserRedisVo();
         if (loginSysUserRedisVo == null) {
+            return null;
         }
         return loginSysUserRedisVo.getUsername();
     }
