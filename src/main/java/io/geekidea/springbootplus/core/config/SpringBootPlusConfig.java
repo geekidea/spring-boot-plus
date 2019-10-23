@@ -47,14 +47,13 @@ public class SpringBootPlusConfig {
     /**
      * 配置日志AOP
      *
-     * @param springBootPlusProperties
+     * @param aopProperties
      * @return
      */
     @Bean
-    public LogAop logAop(SpringBootPlusProperties springBootPlusProperties) {
+    public LogAop logAop(SpringBootPlusAopProperties aopProperties) {
         LogAop logAop = new LogAop();
-        logAop.setRequestLogFormat(springBootPlusProperties.isRequestLogFormat());
-        logAop.setResponseLogFormat(springBootPlusProperties.isResponseLogFormat());
+        logAop.setLogAopConfig(aopProperties.getLog());
         log.debug("init LogAop success");
         return logAop;
     }
