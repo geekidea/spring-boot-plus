@@ -41,16 +41,6 @@ public class SpringBootPlusProperties {
     private boolean enableAnsi;
 
     /**
-     * 请求日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
-     */
-    private boolean requestLogFormat;
-
-    /**
-     * 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
-     */
-    private boolean responseLogFormat;
-
-    /**
      * 拦截器配置
      */
     @NestedConfigurationProperty
