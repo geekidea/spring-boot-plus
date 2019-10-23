@@ -58,12 +58,12 @@ Redis | 3.2+ |  |
 ### 技术选型 
 技术 | 版本 |  备注
 -|-|-
-Spring Boot | 2.1.9.RELEASE | 最新发布稳定版 |
-Spring Framework | 5.1.10.RELEASE | 最新发布稳定版 |
+Spring Boot | 2.2.0.RELEASE | 最新发布稳定版 |
+Spring Framework | 5.2.0.RELEASE | 最新发布稳定版 |
 Mybatis | 3.5.2 | 持久层框架 |
 Mybatis Plus | 3.2.0 | mybatis增强框架 |
 Alibaba Druid | 1.1.20 | 数据源 |
-Fastjson | 1.2.60 | JSON处理工具集 |
+Fastjson | 1.2.62 | JSON处理工具集 |
 swagger2 | 2.6.1 | api文档生成工具 |
 commons-lang3 | 3.9 | 常用工具包 |
 commons-io | 2.6 | IO工具包 |
@@ -73,9 +73,9 @@ reflections | 0.9.11 | 反射工具包 |
 hibernate-validator | 6.0.17.Final | 后台参数校验注解 |
 Shiro | 1.4.1 | 权限控制 |
 JWT | 3.8.3 | JSON WEB TOKEN |
-hutool-all | 4.6.10 | 常用工具集 |
-lombok | 1.18.8 | 注解生成Java Bean等工具 |
-mapstruct | 1.3.0.Final | 对象属性复制工具 |
+hutool-all | 5.0.3 | 常用工具集 |
+lombok | 1.18.10 | 注解生成Java Bean等工具 |
+mapstruct | 1.3.1.Final | 对象属性复制工具 |
 
 ## CHANGELOG
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)

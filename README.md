@@ -60,12 +60,12 @@ Redis | 3.2+ |  |
 ### Technology stack 
 Component| Version |  Remark
 -|-|-
-Spring Boot | 2.1.9.RELEASE | Latest release stable version |
-Spring Framework | 5.1.10.RELEASE | Latest release stable version |
+Spring Boot | 2.2.0.RELEASE | Latest release stable version |
+Spring Framework | 5.2.0.RELEASE | Latest release stable version |
 Mybatis | 3.5.2 | DAO Framework |
 Mybatis Plus | 3.2.0 | mybatis Enhanced framework |
 Alibaba Druid | 1.1.20 | Data source |
-Fastjson | 1.2.60 | JSON processing toolset |
+Fastjson | 1.2.62 | JSON processing toolset |
 swagger2 | 2.6.1 | Api document generation tool |
 commons-lang3 | 3.9 | Apache language toolkit |
 commons-io | 2.6 | Apache IO Toolkit |
@@ -75,9 +75,9 @@ reflections | 0.9.11 | Reflection Toolkit  |
 hibernate-validator | 6.0.17.Final | Validator toolkit |
 Shiro | 1.4.1 | Permission control |
 JWT | 3.8.3 | JSON WEB TOKEN |
-hutool-all | 4.6.10 | Common toolset |
-lombok | 1.18.8 | Automatically plugs |
-mapstruct | 1.3.0.Final | Object property replication tool |
+hutool-all | 5.0.3 | Common toolset |
+lombok | 1.18.10 | Automatically plugs |
+mapstruct | 1.3.1.Final | Object property replication tool |
 
 ## CHANGELOG
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
