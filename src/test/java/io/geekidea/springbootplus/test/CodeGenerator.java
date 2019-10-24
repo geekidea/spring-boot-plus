@@ -44,63 +44,169 @@ import java.util.Map;
 @Accessors(chain = true)
 public class CodeGenerator {
 
+    /**
+     * 用户名
+     */
     private String userName;
+    /**
+     * 密码
+     */
     private String password;
+    /**
+     * 驱动名称
+     */
     private String driverName;
+    /**
+     * 驱动URL
+     */
     private String driverUrl;
 
-    // 生成的类路径
+    /**
+     * 生成的类路径
+     */
     private String projectPackagePath;
 
-    // 项目主包路径
+    /**
+     * 项目主包路径
+     */
     private String parentPackage;
 
-    // 包名称
+    /**
+     * 包名称
+     */
     private String packageController = "controller";
 
-    // ############################ 配置部分 start ############################
-    // 模块名称
+    // ############################ 自定义配置部分 start ############################
+    /**
+     * 模块名称
+     */
     private String moduleName;
-    // 作者
+    /**
+     * 作者
+     */
     private String author;
-    // 生成的表名称
+    /**
+     * 生成的表名称
+     */
     private String tableName;
-    // 主键数据库列名称
+    /**
+     * 主键数据库列名称
+     */
     private String pkIdColumnName = "id";
-    // 代码生成策略 true：All/false:SIMPLE
-    private boolean generatorStrategy = true;
-    // 分页列表查询是否排序 true：有排序参数/false：无
+    /**
+     * 代码生成策略 true：All/false:SIMPLE
+     * 0. SIMPLE 生成最基本的代码
+     * 1. NORMAL 生成普通代码
+     * 2. ALL 生成所有的代码
+     */
+    private GeneratorStrategy generatorStrategy = GeneratorStrategy.ALL;
+
+    /**
+     * 生成策略
+     */
+    public enum GeneratorStrategy {
+        SIMPLE, NORMAL, ALL
+    }
+
+    /**
+     * 分页列表查询是否排序 true：有排序参数/false：无
+     */
     private boolean pageListOrder = false;
-    // 是否生成validation校验，true：生成/false：不生成
+    /**
+     * 是否生成validation校验，true：生成/false：不生成
+     */
     private boolean paramValidation = true;
 
-    // 生成文件配置，是否生成entity/controller/service/serviceImpl/mapper/xml
+    /**
+     * 是否生成实体类
+     */
     private boolean generatorEntity = true;
+    /**
+     * 是否生成控制器
+     */
     private boolean generatorController = true;
+    /**
+     * 是否生成service接口
+     */
     private boolean generatorService = true;
+    /**
+     * 是否生成service实现类
+     */
     private boolean generatorServiceImpl = true;
+    /**
+     * 是否生成Mapper
+     */
     private boolean generatorMapper = true;
+    /**
+     * 是否生成Mapper XML
+     */
     private boolean generatorMapperXml = true;
+    /**
+     * 是否生成查询参数
+     */
     private boolean generatorQueryParam = true;
+    /**
+     * 是否生成查询VO
+     */
     private boolean generatorQueryVo = true;
-    // ############################ 配置部分 end ############################
+    // ############################ 自定义配置部分 end ############################
 
+    /**
+     * 公共父包
+     */
     private String commonParentPackage;
 
-    // 父类包路径
+    /**
+     * 实体父类
+     */
     private String superEntity;
+    /**
+     * 控制器父类
+     */
     private String superController;
+    /**
+     * service父接口
+     */
     private String superService;
+    /**
+     * service实现父类
+     */
     private String superServiceImpl;
+    /**
+     * 查询参数父类
+     */
     private String superQueryParam;
+    /**
+     * 实体父类实体列表
+     */
     private String[] superEntityCommonColumns;
 
     // 公共类包路径
+    /**
+     * 公共id参数路径
+     */
     private String commonIdParam;
+    /**
+     * 公共结果集路径
+     */
     private String commonApiResult;
+    /**
+     * 公共排序枚举
+     */
     private String commonOrderEnum;
+    /**
+     * 公共排序查询参数
+     */
     private String commonOrderQueryParam;
+    /**
+     * 公共分页对象
+     */
     private String commonPaging;
+
+    /**
+     * 是否文件覆盖
+     */
+    private boolean fileOverride;
 
     /**
      * 初始化变量
@@ -139,7 +245,7 @@ public class CodeGenerator {
         gc.setSwagger2(true);               // 启用swagger注解
         gc.setIdType(IdType.ID_WORKER);     // 主键类型:ID_WORKER
         gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
-        gc.setFileOverride(true);           // 是否覆盖已有文件
+        gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
         gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date
 
         mpg.setGlobalConfig(gc);

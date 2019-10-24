@@ -29,12 +29,41 @@ public class SpringBootPlusGenerator {
                 .setAuthor("geekidea")
                 .setPkIdColumnName("id");
 
+        // 生成策略
+        codeGenerator
+                .setGeneratorStrategy(CodeGenerator.GeneratorStrategy.ALL)
+                .setPageListOrder(true)
+                .setParamValidation(true);
+
+        // 生成文件
+        codeGenerator
+                .setGeneratorEntity(true)
+                .setGeneratorController(true)
+                .setGeneratorService(true)
+                .setGeneratorServiceImpl(true)
+                .setGeneratorMapper(true)
+                .setGeneratorMapperXml(true)
+                .setGeneratorQueryParam(true)
+                .setGeneratorQueryVo(true);
+
+        // 是否覆盖已有文件
+        codeGenerator.setFileOverride(true);
+
         // 初始化公共变量
         codeGenerator.init();
 
-        // 表配置
-        String[] tables = {"sys_role", "sys_user_role", "sys_permission", "sys_role_permission"};
+        // 需要生成的表数组
+        String[] tables = {
+                "sys_user",
+                "sys_role",
+                "sys_permission",
+                "sys_role_permission",
+                "sys_department"
+        };
+
+        // 循环生成
         for (String table : tables) {
+            // 设置需要生成的表名称
             codeGenerator.setTableName(table);
             // 生成代码
             codeGenerator.generator();
