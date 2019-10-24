@@ -12,9 +12,9 @@ import ${cfg.queryParamCommonPath};
 #end
 
 /**
- * <p>
+ * <pre>
  * $!{table.comment} 查询参数对象
- * </p>
+ * </pre>
  *
  * @author ${author}
  * @date ${date}
