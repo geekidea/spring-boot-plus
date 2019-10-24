@@ -1,19 +1,20 @@
 package io.geekidea.springbootplus.system.service.impl;
 
+import io.geekidea.springbootplus.system.entity.SysUser;
+import io.geekidea.springbootplus.system.mapper.SysUserMapper;
+import io.geekidea.springbootplus.system.service.SysUserService;
+import io.geekidea.springbootplus.system.param.SysUserQueryParam;
+import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
+import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
+import io.geekidea.springbootplus.common.vo.Paging;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.common.vo.Paging;
-import io.geekidea.springbootplus.system.entity.SysUser;
-import io.geekidea.springbootplus.system.mapper.SysUserMapper;
-import io.geekidea.springbootplus.system.param.SysUserQueryParam;
-import io.geekidea.springbootplus.system.service.SysUserService;
-import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 
@@ -28,6 +29,7 @@ import java.io.Serializable;
  */
 @Slf4j
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Autowired

@@ -2,7 +2,6 @@ package io.geekidea.springbootplus.system.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.controller.BaseController;
-import io.geekidea.springbootplus.common.param.IdParam;
 import io.geekidea.springbootplus.common.vo.Paging;
 import io.geekidea.springbootplus.system.entity.SysDepartment;
 import io.geekidea.springbootplus.system.param.SysDepartmentQueryParam;
@@ -12,10 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -42,8 +38,8 @@ public class SysDepartmentController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加SysDepartment对象", notes = "添加部门", response = ApiResult.class)
     public ApiResult<Boolean> addSysDepartment(@Valid @RequestBody SysDepartment sysDepartment) throws Exception {
-        boolean flag = sysDepartmentService.save(sysDepartment);
-        return ApiResult.result(flag);
+            boolean flag = sysDepartmentService.saveSysDepartment(sysDepartment);
+            return ApiResult.result(flag);
     }
 
     /**
@@ -52,27 +48,27 @@ public class SysDepartmentController extends BaseController {
     @PostMapping("/update")
     @ApiOperation(value = "修改SysDepartment对象", notes = "修改部门", response = ApiResult.class)
     public ApiResult<Boolean> updateSysDepartment(@Valid @RequestBody SysDepartment sysDepartment) throws Exception {
-        boolean flag = sysDepartmentService.updateById(sysDepartment);
-        return ApiResult.result(flag);
+            boolean flag = sysDepartmentService.updateSysDepartment(sysDepartment);
+            return ApiResult.result(flag);
     }
 
     /**
      * 删除部门
      */
-    @PostMapping("/delete")
+    @PostMapping("/delete/{id}")
     @ApiOperation(value = "删除SysDepartment对象", notes = "删除部门", response = ApiResult.class)
-    public ApiResult<Boolean> deleteSysDepartment(@Valid @RequestBody IdParam idParam) throws Exception {
-        boolean flag = sysDepartmentService.removeById(idParam.getId());
-        return ApiResult.result(flag);
+    public ApiResult<Boolean> deleteSysDepartment(@PathVariable("id") Long id) throws Exception {
+            boolean flag = sysDepartmentService.deleteSysDepartment(id);
+            return ApiResult.result(flag);
     }
 
     /**
      * 获取部门
      */
-    @PostMapping("/info")
+    @GetMapping("/info/{id}")
     @ApiOperation(value = "获取SysDepartment对象详情", notes = "查看部门", response = SysDepartmentQueryVo.class)
-    public ApiResult<SysDepartmentQueryVo> getSysDepartment(@Valid @RequestBody IdParam idParam) throws Exception {
-        SysDepartmentQueryVo sysDepartmentQueryVo = sysDepartmentService.getSysDepartmentById(idParam.getId());
+    public ApiResult<SysDepartmentQueryVo> getSysDepartment(@PathVariable("id") Long id) throws Exception {
+        SysDepartmentQueryVo sysDepartmentQueryVo = sysDepartmentService.getSysDepartmentById(id);
         return ApiResult.ok(sysDepartmentQueryVo);
     }
 

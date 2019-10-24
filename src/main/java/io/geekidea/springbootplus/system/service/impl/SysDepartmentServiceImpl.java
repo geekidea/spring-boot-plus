@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import java.io.Serializable;
 
 
@@ -33,6 +34,24 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
 
     @Autowired
     private SysDepartmentMapper sysDepartmentMapper;
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean saveSysDepartment(SysDepartment sysDepartment) throws Exception {
+        return super.save(sysDepartment);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateSysDepartment(SysDepartment sysDepartment) throws Exception {
+        return super.updateById(sysDepartment);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean deleteSysDepartment(Long id) throws Exception {
+        return super.removeById(id);
+    }
 
     @Override
     public SysDepartmentQueryVo getSysDepartmentById(Serializable id) throws Exception {

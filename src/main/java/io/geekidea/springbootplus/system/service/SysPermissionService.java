@@ -18,6 +18,32 @@ import java.io.Serializable;
  */
 public interface SysPermissionService extends BaseService<SysPermission> {
 
+    /**
+     * 保存
+     *
+     * @param sysPermission
+     * @return
+     * @throws Exception
+     */
+    boolean saveSysPermission(SysPermission sysPermission) throws Exception;
+
+    /**
+     * 修改
+     *
+     * @param sysPermission
+     * @return
+     * @throws Exception
+     */
+    boolean updateSysPermission(SysPermission sysPermission) throws Exception;
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    boolean deleteSysPermission(Long id) throws Exception;
 
     /**
      * 根据ID获取查询对象
