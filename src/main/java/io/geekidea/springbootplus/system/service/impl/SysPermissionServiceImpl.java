@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import java.io.Serializable;
 
 
@@ -33,6 +34,24 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
 
     @Autowired
     private SysPermissionMapper sysPermissionMapper;
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean saveSysPermission(SysPermission sysPermission) throws Exception {
+        return super.save(sysPermission);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateSysPermission(SysPermission sysPermission) throws Exception {
+        return super.updateById(sysPermission);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean deleteSysPermission(Long id) throws Exception {
+        return super.removeById(id);
+    }
 
     @Override
     public SysPermissionQueryVo getSysPermissionById(Serializable id) throws Exception {

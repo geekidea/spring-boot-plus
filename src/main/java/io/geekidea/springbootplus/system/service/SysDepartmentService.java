@@ -18,6 +18,32 @@ import java.io.Serializable;
  */
 public interface SysDepartmentService extends BaseService<SysDepartment> {
 
+    /**
+     * 保存
+     *
+     * @param sysDepartment
+     * @return
+     * @throws Exception
+     */
+    boolean saveSysDepartment(SysDepartment sysDepartment) throws Exception;
+
+    /**
+     * 修改
+     *
+     * @param sysDepartment
+     * @return
+     * @throws Exception
+     */
+    boolean updateSysDepartment(SysDepartment sysDepartment) throws Exception;
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    boolean deleteSysDepartment(Long id) throws Exception;
 
     /**
      * 根据ID获取查询对象

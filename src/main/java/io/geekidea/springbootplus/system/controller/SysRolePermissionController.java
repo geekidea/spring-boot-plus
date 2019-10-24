@@ -10,10 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 import javax.validation.Valid;
 
@@ -43,8 +41,8 @@ public class SysRolePermissionController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加SysRolePermission对象", notes = "添加角色权限关系", response = ApiResult.class)
     public ApiResult<Boolean> addSysRolePermission(@Valid @RequestBody SysRolePermission sysRolePermission) throws Exception {
-        boolean flag = sysRolePermissionService.save(sysRolePermission);
-        return ApiResult.result(flag);
+            boolean flag = sysRolePermissionService.saveSysRolePermission(sysRolePermission);
+            return ApiResult.result(flag);
     }
 
     /**
@@ -53,27 +51,27 @@ public class SysRolePermissionController extends BaseController {
     @PostMapping("/update")
     @ApiOperation(value = "修改SysRolePermission对象", notes = "修改角色权限关系", response = ApiResult.class)
     public ApiResult<Boolean> updateSysRolePermission(@Valid @RequestBody SysRolePermission sysRolePermission) throws Exception {
-        boolean flag = sysRolePermissionService.updateById(sysRolePermission);
-        return ApiResult.result(flag);
+            boolean flag = sysRolePermissionService.updateSysRolePermission(sysRolePermission);
+            return ApiResult.result(flag);
     }
 
     /**
      * 删除角色权限关系
      */
-    @PostMapping("/delete")
+    @PostMapping("/delete/{id}")
     @ApiOperation(value = "删除SysRolePermission对象", notes = "删除角色权限关系", response = ApiResult.class)
-    public ApiResult<Boolean> deleteSysRolePermission(@Valid @RequestBody IdParam idParam) throws Exception {
-        boolean flag = sysRolePermissionService.removeById(idParam.getId());
-        return ApiResult.result(flag);
+    public ApiResult<Boolean> deleteSysRolePermission(@PathVariable("id") Long id) throws Exception {
+            boolean flag = sysRolePermissionService.deleteSysRolePermission(id);
+            return ApiResult.result(flag);
     }
 
     /**
      * 获取角色权限关系
      */
-    @PostMapping("/info")
+    @GetMapping("/info/{id}")
     @ApiOperation(value = "获取SysRolePermission对象详情", notes = "查看角色权限关系", response = SysRolePermissionQueryVo.class)
-    public ApiResult<SysRolePermissionQueryVo> getSysRolePermission(@Valid @RequestBody IdParam idParam) throws Exception {
-        SysRolePermissionQueryVo sysRolePermissionQueryVo = sysRolePermissionService.getSysRolePermissionById(idParam.getId());
+    public ApiResult<SysRolePermissionQueryVo> getSysRolePermission(@PathVariable("id") Long id) throws Exception {
+        SysRolePermissionQueryVo sysRolePermissionQueryVo = sysRolePermissionService.getSysRolePermissionById(id);
         return ApiResult.ok(sysRolePermissionQueryVo);
     }
 

@@ -19,7 +19,7 @@ import java.io.Serializable;
 public interface SysUserService extends BaseService<SysUser> {
 
     /**
-     * 保存系统用户
+     * 保存
      *
      * @param sysUser
      * @return
@@ -28,7 +28,7 @@ public interface SysUserService extends BaseService<SysUser> {
     boolean saveSysUser(SysUser sysUser) throws Exception;
 
     /**
-     * 修改系统用户
+     * 修改
      *
      * @param sysUser
      * @return
@@ -37,7 +37,7 @@ public interface SysUserService extends BaseService<SysUser> {
     boolean updateSysUser(SysUser sysUser) throws Exception;
 
     /**
-     * 删除系统用户
+     * 删除
      *
      * @param id
      * @return

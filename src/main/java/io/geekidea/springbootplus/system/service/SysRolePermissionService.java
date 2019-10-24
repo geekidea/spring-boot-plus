@@ -18,6 +18,32 @@ import java.io.Serializable;
  */
 public interface SysRolePermissionService extends BaseService<SysRolePermission> {
 
+    /**
+     * 保存
+     *
+     * @param sysRolePermission
+     * @return
+     * @throws Exception
+     */
+    boolean saveSysRolePermission(SysRolePermission sysRolePermission) throws Exception;
+
+    /**
+     * 修改
+     *
+     * @param sysRolePermission
+     * @return
+     * @throws Exception
+     */
+    boolean updateSysRolePermission(SysRolePermission sysRolePermission) throws Exception;
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    boolean deleteSysRolePermission(Long id) throws Exception;
 
     /**
      * 根据ID获取查询对象

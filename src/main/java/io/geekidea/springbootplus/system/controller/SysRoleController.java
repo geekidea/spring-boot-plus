@@ -1,19 +1,22 @@
 package io.geekidea.springbootplus.system.controller;
 
+import io.geekidea.springbootplus.system.entity.SysRole;
+import io.geekidea.springbootplus.system.service.SysRoleService;
+import io.geekidea.springbootplus.system.param.SysRoleQueryParam;
+import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.controller.BaseController;
-import io.geekidea.springbootplus.common.vo.Paging;
-import io.geekidea.springbootplus.system.entity.SysRole;
-import io.geekidea.springbootplus.system.param.SysRoleQueryParam;
-import io.geekidea.springbootplus.system.service.SysRoleService;
-import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.validation.Valid;
+
+import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.param.IdParam;
 
 /**
  * <pre>
