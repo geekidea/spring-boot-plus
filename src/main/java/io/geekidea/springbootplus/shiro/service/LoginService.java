@@ -19,6 +19,7 @@ package io.geekidea.springbootplus.shiro.service;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.shiro.param.LoginParam;
+import io.geekidea.springbootplus.system.entity.SysUser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,5 +70,13 @@ public interface LoginService {
      * @return
      */
     List<String> getUserRoles(Long id);
+
+    /**
+     * 根据用户名获取系统用户对象
+     *
+     * @param username
+     * @return
+     */
+    SysUser getSysUserByUsername(String username);
 
 }

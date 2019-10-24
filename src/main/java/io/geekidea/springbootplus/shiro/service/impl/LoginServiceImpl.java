@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.shiro.service.impl;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.constant.CommonConstant;
@@ -28,7 +28,6 @@ import io.geekidea.springbootplus.shiro.service.LoginService;
 import io.geekidea.springbootplus.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.shiro.util.JwtUtil;
 import io.geekidea.springbootplus.shiro.util.SaltUtil;
-import io.geekidea.springbootplus.shiro.vo.LoginSysUserRedisVo;
 import io.geekidea.springbootplus.shiro.vo.LoginSysUserVo;
 import io.geekidea.springbootplus.system.convert.SysUserConvert;
 import io.geekidea.springbootplus.system.entity.SysUser;
@@ -78,7 +77,7 @@ public class LoginServiceImpl implements LoginService {
     public ApiResult login(LoginParam loginParam, HttpServletResponse response) {
         String username = loginParam.getUsername();
         // 从数据库中获取登陆用户信息
-        SysUser sysUser = sysUserMapper.getSysUserByUsername(username);
+        SysUser sysUser = getSysUserByUsername(username);
         if (sysUser == null) {
             log.error("登陆失败,loginParam:{}", loginParam);
             return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
@@ -193,5 +192,11 @@ public class LoginServiceImpl implements LoginService {
         return Arrays.asList("admin");
     }
 
+    @Override
+    public SysUser getSysUserByUsername(String username) {
+        SysUser sysUser = new SysUser();
+        sysUser.setUsername(username);
+        return sysUserMapper.selectOne(new QueryWrapper(sysUser));
+    }
 
 }
