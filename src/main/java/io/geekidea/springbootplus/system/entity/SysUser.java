@@ -14,17 +14,17 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * <p>
- * SystemUser
- * </p>
+ * <pre>
+ * 系统用户
+ * </pre>
  *
  * @author geekidea
- * @since 2019-10-11
+ * @since 2019-10-24
  */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysUser对象", description = "SystemUser")
+@ApiModel(value = "SysUser对象", description = "系统用户")
 public class SysUser extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -47,11 +47,26 @@ public class SysUser extends BaseEntity {
     @ApiModelProperty(value = "盐值")
     private String salt;
 
+    @ApiModelProperty(value = "手机号码")
+    @NotBlank(message = "手机号码不能为空")
+    private String phone;
+
+    @ApiModelProperty(value = "性别，0：女，1：男，默认1")
+    private Integer gender;
+
     @ApiModelProperty(value = "remark")
     private String remark;
 
-    @ApiModelProperty(value = "状态，0：禁用，1：启用")
+    @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
     private Integer status;
+
+    @ApiModelProperty(value = "部门id")
+    @NotNull(message = "部门id不能为空")
+    private Long departmentId;
+
+    @ApiModelProperty(value = "角色id")
+    @NotNull(message = "角色id不能为空")
+    private Long roleId;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

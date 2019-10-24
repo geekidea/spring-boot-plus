@@ -4,7 +4,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, nickname, password, salt, remark, status, create_time, update_time
+        id, username, nickname, password, salt, phone, gender, remark, status, department_id, role_id, create_time, update_time
     </sql>
 
     <select id="getSysUserById" resultType="io.geekidea.springbootplus.system.vo.SysUserQueryVo">
@@ -17,13 +17,6 @@
         select
         <include refid="Base_Column_List"/>
         from sys_user
-    </select>
-
-    <select id="getSysUserByUsername" resultType="io.geekidea.springbootplus.system.entity.SysUser">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_user
-        where username = #{username}
     </select>
 
 </mapper>

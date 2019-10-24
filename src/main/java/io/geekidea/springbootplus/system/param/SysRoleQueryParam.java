@@ -9,7 +9,7 @@ import io.geekidea.springbootplus.common.param.OrderQueryParam;
 
 /**
  * <pre>
- * 系统用户 查询参数对象
+ * 系统角色 查询参数对象
  * </pre>
  *
  * @author geekidea
@@ -18,7 +18,7 @@ import io.geekidea.springbootplus.common.param.OrderQueryParam;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysUserQueryParam对象", description = "系统用户查询参数")
-public class SysUserQueryParam extends OrderQueryParam {
+@ApiModel(value = "SysRoleQueryParam对象", description = "系统角色查询参数")
+public class SysRoleQueryParam extends OrderQueryParam {
     private static final long serialVersionUID = 1L;
 }
