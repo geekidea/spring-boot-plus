@@ -9,9 +9,9 @@ import ${cfg.paging};
 import java.io.Serializable;
 
 /**
- * <p>
+ * <pre>
  * $!{table.comment} 服务类
- * </p>
+ * </pre>
  *
  * @author ${author}
  * @since ${date}
@@ -20,13 +20,43 @@ import java.io.Serializable;
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 #else
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
-#if(${cfg.generatorStrategy})
+#if(${cfg.generatorStrategy} != 'SIMPLE')
+#if(${cfg.generatorStrategy} == 'ALL')
+
+    /**
+     * 保存
+     *
+     * @param ${cfg.entityObjectName}
+     * @return
+     * @throws Exception
+     */
+    boolean save${entity}(${entity} ${cfg.entityObjectName}) throws Exception;
+
+    /**
+     * 修改
+     *
+     * @param ${cfg.entityObjectName}
+     * @return
+     * @throws Exception
+     */
+    boolean update${entity}(${entity} ${cfg.entityObjectName}) throws Exception;
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    boolean delete${entity}(Long id) throws Exception;
+#end
 
     /**
      * 根据ID获取查询对象
      *
      * @param id
      * @return
+     * @throws Exception
      */
     ${entity}QueryVo get${entity}ById(Serializable id) throws Exception;
 
@@ -35,6 +65,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      *
      * @param ${cfg.entityObjectName}QueryParam
      * @return
+     * @throws Exception
      */
     Paging<${entity}QueryVo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
 #end
