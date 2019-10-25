@@ -55,32 +55,87 @@ INSERT INTO `sys_log` VALUES (1060438788502732802, 0, 'B', 100000, '2018-11-08 1
 INSERT INTO `sys_log` VALUES (1060438799600861185, 0, 'C', 100000, '2018-11-08 15:42:10');
 INSERT INTO `sys_log` VALUES (1060438809495224322, 0, 'D', 100000, '2018-11-08 15:42:13');
 
--- ----------------------------
--- Table structure for sys_user
--- ----------------------------
-drop table if exists `sys_user`;
-create table sys_user
-(
-    id          bigint                              not null comment '主键'
-        primary key,
-    username    varchar(20)                         not null comment '用户名',
-    nickname    varchar(20)                         null comment '昵称',
-    password    varchar(64)                         not null comment '密码',
-    salt        varchar(32)                         null comment '盐值',
-    remark      varchar(200)                        null comment 'remark',
-    status      int       default 1                 not null comment '状态，0：禁用，1：启用',
-    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
-    update_time timestamp                           null comment '修改时间',
-    constraint sys_user_username_uindex
-        unique (username)
-)
-    comment 'SystemUser';
+CREATE TABLE `sys_department` (
+    `id` bigint(20) NOT NULL COMMENT '主键',
+    `name` varchar(32) NOT NULL COMMENT '部门名称',
+    `parent_id` bigint(20) DEFAULT NULL COMMENT '父id',
+    `state` int(11) NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
+    `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+    `remark` varchar(200) DEFAULT NULL COMMENT '备注',
+    `deleted` int(11) NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
+    `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本',
+    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `sys_department_name_uindex` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='部门'
 
 
--- ----------------------------
--- Records of sys_user
--- ----------------------------
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, status, create_time, update_time)
-    VALUES (1, 'admin', '管理员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', 'e4cc3292e3ebc483998adb2c0e4e640e', 'Administrator Account', 1, '2019-08-26 00:52:01', null);
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, status, create_time, update_time)
-    VALUES (2, 'test', '测试人员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', '99952b31c18156169a26bec80fd211f6', 'Tester Account', 1, '2019-10-05 14:04:27', null);
+CREATE TABLE `sys_permission` (
+    `id` bigint(20) NOT NULL COMMENT '主键',
+    `name` varchar(32) DEFAULT NULL COMMENT '权限名称',
+    `parent_id` bigint(20) DEFAULT NULL COMMENT '父id',
+    `url` varchar(200) DEFAULT NULL COMMENT '路径',
+    `code` varchar(100) NOT NULL COMMENT '唯一编码',
+    `icon` varchar(100) DEFAULT NULL COMMENT '图标',
+    `type` int(11) NOT NULL COMMENT '类型，1：菜单，2：按钮',
+    `level` int(11) NOT NULL COMMENT '层级，1：第一级，2：第二级，N：第N级',
+    `state` int(11) NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
+    `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+    `remark` varchar(200) DEFAULT NULL COMMENT '备注',
+    `deleted` int(11) NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
+    `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `sys_permission_code_uindex` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='系统权限'
+
+CREATE TABLE `sys_role` (
+    `id` bigint(20) NOT NULL COMMENT '主键',
+    `name` varchar(32) NOT NULL COMMENT '角色名称',
+    `code` varchar(100) DEFAULT NULL COMMENT '角色唯一编码',
+    `type` int(11) DEFAULT NULL COMMENT '角色类型',
+    `state` int(11) NOT NULL DEFAULT '1' COMMENT '角色状态，0：禁用，1：启用',
+    `remark` varchar(200) DEFAULT NULL COMMENT '备注',
+    `deleted` int(11) NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
+    `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `sys_role_name_uindex` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='系统角色'
+
+CREATE TABLE `sys_role_permission` (
+    `id` bigint(20) NOT NULL COMMENT '主键',
+    `role_id` bigint(20) NOT NULL COMMENT '角色id',
+    `permission_id` bigint(20) NOT NULL COMMENT '权限id',
+    `state` int(11) NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
+    `remark` varchar(200) DEFAULT NULL COMMENT '备注',
+    `deleted` int(11) NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
+    `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色权限关系'
+
+CREATE TABLE `sys_user` (
+    `id` bigint(20) NOT NULL COMMENT '主键',
+    `username` varchar(20) NOT NULL COMMENT '用户名',
+    `nickname` varchar(20) DEFAULT NULL COMMENT '昵称',
+    `password` varchar(64) NOT NULL COMMENT '密码',
+    `salt` varchar(32) DEFAULT NULL COMMENT '盐值',
+    `phone` varchar(20) NOT NULL COMMENT '手机号码',
+    `gender` int(11) NOT NULL DEFAULT '1' COMMENT '性别，0：女，1：男，默认1',
+    `remark` varchar(200) DEFAULT NULL COMMENT 'remark',
+    `state` int(11) NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用，2：锁定',
+    `department_id` bigint(20) NOT NULL COMMENT '部门id',
+    `role_id` bigint(20) NOT NULL COMMENT '角色id',
+    `deleted` int(11) NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
+    `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本',
+    `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `sys_user_username_uindex` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='系统用户'
+
