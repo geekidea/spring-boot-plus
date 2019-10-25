@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.param;
+package io.geekidea.springbootplus.enums;
 
-import io.swagger.annotations.ApiModel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
-
-import io.geekidea.springbootplus.common.param.OrderQueryParam;
+import io.geekidea.springbootplus.common.enums.BaseTypeStateEnum;
 
 /**
- * <pre>
- * 系统权限 查询参数对象
- * </pre>
- *
  * @author geekidea
  * @date 2019-10-24
- */
-@Data
-@Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysPermissionQueryParam对象", description = "系统权限查询参数")
-public class SysPermissionQueryParam extends OrderQueryParam {
-    private static final long serialVersionUID = 1L;
+ **/
+public enum StateEnum implements BaseTypeStateEnum {
+    DISABLE,ENABLE;
+
+    @Override
+    public Integer getKey() {
+        return this.ordinal();
+    }
+
+    @Override
+    public String getValue() {
+        return this.name();
+    }
 }

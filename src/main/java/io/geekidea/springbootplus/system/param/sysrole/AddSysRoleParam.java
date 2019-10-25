@@ -14,34 +14,31 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.vo;
+package io.geekidea.springbootplus.system.param.sysrole;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import java.io.Serializable;
 
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
- * <pre>
- * 系统角色 查询结果对象
- * </pre>
+ * 添加角色
  *
  * @author geekidea
- * @date 2019-10-24
- */
+ * @date 2019-10-25
+ **/
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SysRoleQueryVo对象", description = "系统角色查询参数")
-public class SysRoleQueryVo implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "主键")
-    private Long id;
+@ApiModel(value = "添加角色", description = "添加系统角色参数对象")
+public class AddSysRoleParam {
 
     @ApiModelProperty(value = "角色名称")
+    @NotBlank(message = "角色名称不能为空")
     private String name;
 
     @ApiModelProperty(value = "角色唯一编码")
@@ -56,16 +53,9 @@ public class SysRoleQueryVo implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 
-    @ApiModelProperty(value = "逻辑删除，0：未删除，1：已删除")
-    private Integer deleted;
-
-    @ApiModelProperty(value = "版本")
-    private Integer version;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date updateTime;
+    @ApiModelProperty(value = "权限id列表")
+    @NotEmpty(message = "权限集合不能为空")
+    @Size(max = 1000, message = "权限集合超过上限")
+    private List<Long> permissionIds;
 
 }

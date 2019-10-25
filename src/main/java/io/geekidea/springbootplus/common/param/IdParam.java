@@ -30,7 +30,7 @@ import java.io.Serializable;
 @ApiModel("ID参数")
 public class IdParam implements Serializable {
     private static final long serialVersionUID = -5353973980674510450L;
-    
-    @NotBlank(message="ID不能为空")
+
+    @NotBlank(message = "ID不能为空")
     private String id;
 }

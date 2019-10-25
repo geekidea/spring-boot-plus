@@ -34,9 +34,19 @@ import java.io.IOException;
 @WebFilter(filterName = "xssFilter", urlPatterns = "/*", asyncSupported = true)
 public class XssFilter implements Filter {
     @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         XssHttpServletRequestWrapper xssHttpServletRequestWrapper = new XssHttpServletRequestWrapper(request);
         filterChain.doFilter(xssHttpServletRequestWrapper, servletResponse);
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }

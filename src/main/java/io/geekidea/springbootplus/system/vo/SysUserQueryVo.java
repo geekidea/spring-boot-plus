@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.geekidea.springbootplus.system.vo;
 
 import io.swagger.annotations.ApiModel;
@@ -31,12 +47,6 @@ public class SysUserQueryVo implements Serializable {
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
-    @ApiModelProperty(value = "密码")
-    private String password;
-
-    @ApiModelProperty(value = "盐值")
-    private String salt;
-
     @ApiModelProperty(value = "手机号码")
     private String phone;
 
@@ -47,13 +57,19 @@ public class SysUserQueryVo implements Serializable {
     private String remark;
 
     @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
-    private Integer status;
+    private Integer state;
 
     @ApiModelProperty(value = "部门id")
     private Long departmentId;
 
     @ApiModelProperty(value = "角色id")
     private Long roleId;
+
+    @ApiModelProperty(value = "逻辑删除，0：未删除，1：已删除")
+    private Integer deleted;
+
+    @ApiModelProperty(value = "版本")
+    private Integer version;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

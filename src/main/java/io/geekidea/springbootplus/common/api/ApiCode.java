@@ -48,6 +48,10 @@ public enum ApiCode {
 
     HTTP_MEDIA_TYPE_EXCEPTION(5003,"HTTP Media 类型异常"),
 
+    BUSINESS_EXCEPTION(5004,"业务处理异常"),
+
+    DAO_EXCEPTION(5005,"数据库处理异常"),
+
 
     ;
 

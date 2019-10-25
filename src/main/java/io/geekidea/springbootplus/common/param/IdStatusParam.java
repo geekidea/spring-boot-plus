@@ -35,27 +35,4 @@ public class IdStatusParam implements Serializable {
     @ApiModelProperty("状态,1:启用 0:禁用")
     private Integer status;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "IdStatusVo{" +
-                "id='" + id + '\'' +
-                ", status=" + status +
-                '}';
-    }
 }

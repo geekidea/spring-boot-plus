@@ -120,35 +120,35 @@ public class CodeGenerator {
     /**
      * 是否生成实体类
      */
-    private boolean generatorEntity = true;
+    private boolean generatorEntity;
     /**
      * 是否生成控制器
      */
-    private boolean generatorController = true;
+    private boolean generatorController;
     /**
      * 是否生成service接口
      */
-    private boolean generatorService = true;
+    private boolean generatorService;
     /**
      * 是否生成service实现类
      */
-    private boolean generatorServiceImpl = true;
+    private boolean generatorServiceImpl;
     /**
      * 是否生成Mapper
      */
-    private boolean generatorMapper = true;
+    private boolean generatorMapper;
     /**
      * 是否生成Mapper XML
      */
-    private boolean generatorMapperXml = true;
+    private boolean generatorMapperXml;
     /**
      * 是否生成查询参数
      */
-    private boolean generatorQueryParam = true;
+    private boolean generatorQueryParam;
     /**
      * 是否生成查询VO
      */
-    private boolean generatorQueryVo = true;
+    private boolean generatorQueryVo;
     // ############################ 自定义配置部分 end ############################
 
     /**

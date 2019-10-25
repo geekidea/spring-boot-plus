@@ -46,6 +46,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 非法参数验证异常
+     *
      * @param ex
      * @return
      */
@@ -59,12 +60,13 @@ public class GlobalExceptionHandler {
             list.add(fieldError.getDefaultMessage());
         }
         Collections.sort(list);
-        log.error("fieldErrors"+ JSON.toJSONString(list));
-        return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION,list);
+        log.error("fieldErrors" + JSON.toJSONString(list));
+        return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, list);
     }
 
     /**
      * 系统登录异常处理
+     *
      * @param exception
      * @return
      */
@@ -78,37 +80,55 @@ public class GlobalExceptionHandler {
 
     /**
      * HTTP解析请求参数异常
+     *
      * @param exception
      * @return
      */
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult httpMessageNotReadableException(HttpMessageNotReadableException exception) {
-        log.error("httpMessageNotReadableException:",exception);
+        log.error("httpMessageNotReadableException:", exception);
         return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, ApiCode.PARAMETER_PARSE_EXCEPTION);
     }
 
     /**
      * HTTP
+     *
      * @param exception
      * @return
      */
     @ExceptionHandler(value = HttpMediaTypeException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult httpMediaTypeException(HttpMediaTypeException exception) {
-        log.error("httpMediaTypeException:",exception);
+        log.error("httpMediaTypeException:", exception);
         return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, ApiCode.HTTP_MEDIA_TYPE_EXCEPTION);
     }
 
     /**
+     * 自定义业务/数据异常处理
+     *
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = {BusinessException.class, DaoException.class,SpringBootPlusException.class})
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult springBootPlusExceptionHandler(SpringBootPlusException exception) {
+        log.error("springBootPlusException:", exception);
+        return new ApiResult()
+                .setCode(ApiCode.BUSINESS_EXCEPTION.getCode())
+                .setMsg(exception.getMessage());
+    }
+
+    /**
      * 默认的异常处理
+     *
      * @param exception
      * @return
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult exceptionHandler(Exception exception) {
-        log.error("exception:",exception);
+        log.error("exception:", exception);
         return ApiResult.fail(ApiCode.SYSTEM_EXCEPTION);
     }
 
