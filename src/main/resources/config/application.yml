@@ -188,14 +188,21 @@ spring-boot-plus:
 
 ############################### mybatis-plus start #################################
 mybatis-plus:
+  # 启动时是否检查MyBatis XML文件是否存在
   check-config-location: true
+  # MyBatis原生配置
   configuration:
+    # 字段名称下划线转驼峰命名
     map-underscore-to-camel-case: true
   global-config:
     db-config:
+      # 全局默认主键类型
       id-type: id_worker
-      logic-delete-value: 0
-      logic-not-delete-value: 1
+      # 逻辑已删除值(默认为 1)
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0
+  # mapper xml映射路径
   mapper-locations: classpath*:mapper/**/*Mapper.xml
 ################################ mybatis-plus end ##################################
 

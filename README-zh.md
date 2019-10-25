@@ -127,9 +127,9 @@ create table sys_user
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, status, create_time, update_time) 
+INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
     VALUES (1, 'admin', '管理员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', 'e4cc3292e3ebc483998adb2c0e4e640e', 'Administrator Account', 1, '2019-08-26 00:52:01', null);
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, status, create_time, update_time) 
+INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
     VALUES (2, 'test', '测试人员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', '99952b31c18156169a26bec80fd211f6', 'Tester Account', 1, '2019-10-05 14:04:27', null);
 
 ```

@@ -219,7 +219,9 @@ public class ShiroConfig {
             }
         }
         // 最后一个设置为JWTFilter
-        filterChainDefinitionMap.put("/**", JWT_FILTER_NAME);
+        // TODO 是否启用shiro token校验
+//        filterChainDefinitionMap.put("/**", JWT_FILTER_NAME);
+        filterChainDefinitionMap.put("/**", "anon");
         log.debug("filterChainMap:{}", JSON.toJSONString(filterChainDefinitionMap));
 
         // 添加默认的filter

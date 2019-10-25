@@ -100,7 +100,8 @@ public class Swagger2Config {
                 .apis(RequestHandlerSelectors.basePackage(basePackage))
                 .paths(PathSelectors.any())
                 .build()
-                .globalOperationParameters(setHeaderToken());
+                .globalOperationParameters(setHeaderToken())
+                ;
     }
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()

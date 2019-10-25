@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.geekidea.springbootplus.test;
 
 /**
@@ -35,16 +51,20 @@ public class SpringBootPlusGenerator {
                 .setPageListOrder(true)
                 .setParamValidation(true);
 
-        // 生成文件
+        // 生成实体映射相关代码,可用于数据库字段更新
+        // 当数据库字段更新时，可自定义自动生成哪些那文件
         codeGenerator
                 .setGeneratorEntity(true)
+                .setGeneratorQueryParam(true)
+                .setGeneratorQueryVo(true);
+
+        // 生成业务相关代码
+        codeGenerator
                 .setGeneratorController(true)
                 .setGeneratorService(true)
                 .setGeneratorServiceImpl(true)
                 .setGeneratorMapper(true)
-                .setGeneratorMapperXml(true)
-                .setGeneratorQueryParam(true)
-                .setGeneratorQueryVo(true);
+                .setGeneratorMapperXml(true);
 
         // 是否覆盖已有文件
         codeGenerator.setFileOverride(true);
@@ -53,12 +73,11 @@ public class SpringBootPlusGenerator {
         codeGenerator.init();
 
         // 需要生成的表数组
+        // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
-                "sys_user",
-                "sys_role",
-                "sys_permission",
-                "sys_role_permission",
-                "sys_department"
+                "xxx",
+                "yyy",
+                "zzz",
         };
 
         // 循环生成
