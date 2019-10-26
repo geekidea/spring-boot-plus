@@ -25,6 +25,7 @@ import org.apache.commons.collections4.SetUtils;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <pre>
@@ -109,5 +110,14 @@ public interface SysRolePermissionService extends BaseService<SysRolePermission>
      * @throws Exception
      */
     boolean deleteSysRolePermissionByRoleId(Long id) throws Exception;
+
+    /**
+     * 根据角色id获取可用的权限编码
+     *
+     * @param roleId
+     * @return
+     * @throws Exception
+     */
+    Set<String> getPermissionCodesByRoleId(Long roleId) throws Exception;
 
 }

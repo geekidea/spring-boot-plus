@@ -16,14 +16,13 @@
 
 package io.geekidea.springbootplus.shiro.service;
 
-import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.shiro.param.LoginParam;
 import io.geekidea.springbootplus.system.entity.SysUser;
+import io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * <p>
@@ -40,8 +39,9 @@ public interface LoginService {
      *
      * @param loginParam
      * @return
+     * @throws Exception
      */
-    ApiResult login(LoginParam loginParam, HttpServletResponse response);
+    LoginSysUserTokenVo login(LoginParam loginParam) throws Exception;
 
     /**
      * 如果(当前时间+倒计时) > 过期时间，则刷新token
@@ -54,22 +54,14 @@ public interface LoginService {
      * @param jwtToken
      * @param httpServletResponse
      */
-    void refreshToken(JwtToken jwtToken, HttpServletResponse httpServletResponse);
+    void refreshToken(JwtToken jwtToken, HttpServletResponse httpServletResponse) throws Exception;
 
     /**
      * 退出
      *
      * @param request
      */
-    void logout(HttpServletRequest request);
-
-    /**
-     * 获取用户角色
-     *
-     * @param id
-     * @return
-     */
-    List<String> getUserRoles(Long id);
+    void logout(HttpServletRequest request) throws Exception;
 
     /**
      * 根据用户名获取系统用户对象
@@ -77,6 +69,6 @@ public interface LoginService {
      * @param username
      * @return
      */
-    SysUser getSysUserByUsername(String username);
+    SysUser getSysUserByUsername(String username) throws Exception;
 
 }

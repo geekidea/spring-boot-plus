@@ -29,10 +29,24 @@
         from sys_role_permission where id = #{id}
     </select>
 
-    <select id="getSysRolePermissionPageList" resultType="io.geekidea.springbootplus.system.vo.SysRolePermissionQueryVo">
+    <select id="getSysRolePermissionPageList"
+            resultType="io.geekidea.springbootplus.system.vo.SysRolePermissionQueryVo">
         select
         <include refid="Base_Column_List"/>
         from sys_role_permission
+    </select>
+
+    <select id="getPermissionCodesByRoleId" resultType="java.lang.String">
+        select p.code
+        from sys_role r
+                 inner join sys_role_permission rp
+                            on r.id = rp.role_id
+                 inner join sys_permission p
+                            on rp.permission_id = p.id
+        where r.state = 1
+          and rp.state = 1
+          and p.state = 1
+          and r.id = #{roleId};
     </select>
 
 </mapper>
