@@ -58,7 +58,6 @@ import java.util.Set;
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
 
     @Autowired

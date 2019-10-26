@@ -21,6 +21,7 @@ import io.geekidea.springbootplus.common.service.BaseService;
 import io.geekidea.springbootplus.system.param.SysPermissionQueryParam;
 import io.geekidea.springbootplus.system.vo.SysPermissionQueryVo;
 import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.system.vo.SysPermissionTreeVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -85,6 +86,32 @@ public interface SysPermissionService extends BaseService<SysPermission> {
      *
      * @param permissionIds
      * @return
+     * @throws Exception
      */
-    boolean isExistsByPermissionIds(List<Long> permissionIds);
+    boolean isExistsByPermissionIds(List<Long> permissionIds) throws Exception;
+
+    /**
+     * 获取所有菜单列表
+     *
+     * @return
+     * @throws Exception
+     */
+    List<SysPermission> getAllMenuList() throws Exception;
+
+    /**
+     * 转换权限列表为树形菜单
+     *
+     * @param sysPermissions
+     * @return
+     * @throws Exception
+     */
+    List<SysPermissionTreeVo> convertSysPermissionTreeVoList(List<SysPermission> sysPermissions) throws Exception;
+
+    /**
+     * 获取获取菜单树形列表
+     *
+     * @return
+     * @throws Exception
+     */
+    List<SysPermissionTreeVo> getAllMenuTree() throws Exception;
 }
