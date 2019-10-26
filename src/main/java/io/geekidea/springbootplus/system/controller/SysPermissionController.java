@@ -16,23 +16,22 @@
 
 package io.geekidea.springbootplus.system.controller;
 
-import io.geekidea.springbootplus.system.entity.SysPermission;
-import io.geekidea.springbootplus.system.service.SysPermissionService;
-import io.geekidea.springbootplus.system.param.SysPermissionQueryParam;
-import io.geekidea.springbootplus.system.vo.SysPermissionQueryVo;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.controller.BaseController;
+import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.system.entity.SysPermission;
+import io.geekidea.springbootplus.system.param.SysPermissionQueryParam;
+import io.geekidea.springbootplus.system.service.SysPermissionService;
+import io.geekidea.springbootplus.system.vo.SysPermissionQueryVo;
+import io.geekidea.springbootplus.system.vo.SysPermissionTreeVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.validation.Valid;
-
-import io.geekidea.springbootplus.common.vo.Paging;
-import io.geekidea.springbootplus.common.param.IdParam;
+import java.util.List;
 
 /**
  * <pre>
@@ -57,8 +56,8 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/add")
     @ApiOperation(value = "添加SysPermission对象", notes = "添加系统权限", response = ApiResult.class)
     public ApiResult<Boolean> addSysPermission(@Valid @RequestBody SysPermission sysPermission) throws Exception {
-            boolean flag = sysPermissionService.saveSysPermission(sysPermission);
-            return ApiResult.result(flag);
+        boolean flag = sysPermissionService.saveSysPermission(sysPermission);
+        return ApiResult.result(flag);
     }
 
     /**
@@ -67,8 +66,8 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/update")
     @ApiOperation(value = "修改SysPermission对象", notes = "修改系统权限", response = ApiResult.class)
     public ApiResult<Boolean> updateSysPermission(@Valid @RequestBody SysPermission sysPermission) throws Exception {
-            boolean flag = sysPermissionService.updateSysPermission(sysPermission);
-            return ApiResult.result(flag);
+        boolean flag = sysPermissionService.updateSysPermission(sysPermission);
+        return ApiResult.result(flag);
     }
 
     /**
@@ -77,8 +76,8 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/delete/{id}")
     @ApiOperation(value = "删除SysPermission对象", notes = "删除系统权限", response = ApiResult.class)
     public ApiResult<Boolean> deleteSysPermission(@PathVariable("id") Long id) throws Exception {
-            boolean flag = sysPermissionService.deleteSysPermission(id);
-            return ApiResult.result(flag);
+        boolean flag = sysPermissionService.deleteSysPermission(id);
+        return ApiResult.result(flag);
     }
 
     /**
@@ -99,6 +98,26 @@ public class SysPermissionController extends BaseController {
     public ApiResult<Paging<SysPermissionQueryVo>> getSysPermissionPageList(@Valid @RequestBody SysPermissionQueryParam sysPermissionQueryParam) throws Exception {
         Paging<SysPermissionQueryVo> paging = sysPermissionService.getSysPermissionPageList(sysPermissionQueryParam);
         return ApiResult.ok(paging);
+    }
+
+    /**
+     * 获取所有菜单列表
+     */
+    @PostMapping("/getAllMenuList")
+    @ApiOperation(value = "获取所有菜单列表", notes = "获取所有菜单列表", response = SysPermissionTreeVo.class)
+    public ApiResult<SysPermissionTreeVo> getAllMenuList() throws Exception {
+        List<SysPermission> list = sysPermissionService.getAllMenuList();
+        return ApiResult.ok(list);
+    }
+
+    /**
+     * 获取获取菜单树形列表
+     */
+    @PostMapping("/getAllMenuTree")
+    @ApiOperation(value = "获取所有菜单列表", notes = "获取所有菜单列表", response = SysPermissionTreeVo.class)
+    public ApiResult<SysPermissionTreeVo> getAllMenuTree() throws Exception {
+        List<SysPermissionTreeVo> list = sysPermissionService.getAllMenuTree();
+        return ApiResult.ok(list);
     }
 
 }

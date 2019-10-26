@@ -46,7 +46,6 @@ import java.io.Serializable;
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMapper, SysDepartment> implements SysDepartmentService {
 
     @Autowired
