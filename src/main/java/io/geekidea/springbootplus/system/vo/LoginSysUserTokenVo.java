@@ -14,28 +14,31 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.controller;
+package io.geekidea.springbootplus.system.vo;
 
-import io.geekidea.springbootplus.common.controller.BaseController;
-import io.swagger.annotations.Api;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.geekidea.springbootplus.shiro.vo.LoginSysUserVo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
- * <pre>
- * 角色权限关系 前端控制器
- * </pre>
- *
  * @author geekidea
- * @since 2019-10-24
- */
-@Slf4j
-@RestController
-@RequestMapping("/sysRolePermission")
-@Api("角色权限关系 API")
-public class SysRolePermissionController extends BaseController {
+ * @date 2019-10-26
+ **/
+@Data
+@Accessors(chain = true)
+@ApiModel("登陆用户信息TokenVO")
+public class LoginSysUserTokenVo implements Serializable {
+    private static final long serialVersionUID = -4650803752566647697L;
 
+    @ApiModelProperty("token")
+    private String token;
 
+    /**
+     * 登陆用户对象
+     */
+    private LoginSysUserVo loginSysUserVo;
 }
-

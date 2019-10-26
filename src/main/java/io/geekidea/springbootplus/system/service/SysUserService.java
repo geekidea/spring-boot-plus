@@ -16,11 +16,11 @@
 
 package io.geekidea.springbootplus.system.service;
 
-import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.common.service.BaseService;
+import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.param.SysUserQueryParam;
 import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
-import io.geekidea.springbootplus.common.vo.Paging;
 
 import java.io.Serializable;
 

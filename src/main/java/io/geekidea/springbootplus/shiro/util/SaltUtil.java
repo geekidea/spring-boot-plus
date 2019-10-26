@@ -16,8 +16,8 @@
 
 package io.geekidea.springbootplus.shiro.util;
 
+import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 
@@ -53,6 +53,24 @@ public class SaltUtil {
      */
     public static String generateSalt() {
         return new SecureRandomNumberGenerator().nextBytes(16).toHex();
+    }
+
+    /**
+     * 加工盐值
+     *
+     * @param salt
+     * @param jwtProperties
+     * @return
+     */
+    public static String getSalt(String salt, JwtProperties jwtProperties) {
+        String newSalt;
+        if (jwtProperties.isSaltCheck()) {
+            // 包装盐值
+            newSalt = SaltUtil.getSalt(jwtProperties.getSecret(), salt);
+        } else {
+            newSalt = jwtProperties.getSecret();
+        }
+        return newSalt;
     }
 
 }

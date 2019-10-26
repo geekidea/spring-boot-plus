@@ -17,9 +17,8 @@
 package io.geekidea.springbootplus.shiro.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.geekidea.springbootplus.common.api.ApiCode;
-import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.constant.CommonConstant;
+import io.geekidea.springbootplus.enums.StateEnum;
 import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
 import io.geekidea.springbootplus.shiro.jwt.JwtToken;
@@ -30,12 +29,18 @@ import io.geekidea.springbootplus.shiro.util.JwtUtil;
 import io.geekidea.springbootplus.shiro.util.SaltUtil;
 import io.geekidea.springbootplus.shiro.vo.LoginSysUserVo;
 import io.geekidea.springbootplus.system.convert.SysUserConvert;
+import io.geekidea.springbootplus.system.entity.SysDepartment;
+import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.mapper.SysUserMapper;
+import io.geekidea.springbootplus.system.service.SysDepartmentService;
+import io.geekidea.springbootplus.system.service.SysRolePermissionService;
+import io.geekidea.springbootplus.system.service.SysRoleService;
+import io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo;
 import io.geekidea.springbootplus.util.PasswordUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.SetUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.shiro.SecurityUtils;
@@ -43,13 +48,13 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -73,45 +78,82 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private SysUserMapper sysUserMapper;
 
+    @Autowired
+    private SysDepartmentService sysDepartmentService;
+
+    @Autowired
+    private SysRoleService sysRoleService;
+
+    @Autowired
+    private SysRolePermissionService sysRolePermissionService;
+
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public ApiResult login(LoginParam loginParam, HttpServletResponse response) {
+    public LoginSysUserTokenVo login(LoginParam loginParam) throws Exception {
         String username = loginParam.getUsername();
         // 从数据库中获取登陆用户信息
         SysUser sysUser = getSysUserByUsername(username);
         if (sysUser == null) {
             log.error("登陆失败,loginParam:{}", loginParam);
-            return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
+            throw new AuthenticationException("用户名或密码错误");
         }
+        if (StateEnum.DISABLE.getKey().equals(sysUser.getState())) {
+            throw new AuthenticationException("账号已禁用");
+        }
+
         // 实际项目中，前端传过来的密码应先加密
         // 原始密码：123456
         // 加密规则：sha256(666666+123456) = 751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c
         String encryptPassword = PasswordUtil.encrypt(loginParam.getPassword());
         if (!encryptPassword.equals(sysUser.getPassword())) {
             log.error("用户名或密码错误");
-            return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
+            throw new AuthenticationException("用户名或密码错误");
         }
+
         // 将系统用户对象转换成登陆用户对象
         LoginSysUserVo loginSysUserVo = SysUserConvert.INSTANCE.sysUserToLoginSysUserVo(sysUser);
-        // TODO 从数据库中获取登陆用户角色权限信息
-        loginSysUserVo.setRoles(SetUtils.hashSet("admin"));
 
-        String newSalt;
-        if (jwtProperties.isSaltCheck()) {
-            // 包装盐值
-            newSalt = SaltUtil.getSalt(jwtProperties.getSecret(), loginSysUserVo.getSalt());
-        } else {
-            newSalt = jwtProperties.getSecret();
+        // 获取部门
+        SysDepartment sysDepartment = sysDepartmentService.getById(sysUser.getDepartmentId());
+        if (sysDepartment == null) {
+            throw new AuthenticationException("部门不存在");
         }
-        // 删除登陆用户盐值，盐值保存到后台Redis缓存中
-        loginSysUserVo.setSalt(null);
+        if (!StateEnum.ENABLE.getKey().equals(sysDepartment.getState())) {
+            throw new AuthenticationException("部门已禁用");
+        }
+        loginSysUserVo.setDepartmentId(sysDepartment.getId())
+                .setDepartmentName(sysDepartment.getName());
+
+        // 获取当前用户角色
+        Long roleId = sysUser.getRoleId();
+        SysRole sysRole = sysRoleService.getById(roleId);
+        if (sysRole == null) {
+            throw new AuthenticationException("角色不存在");
+        }
+        if (StateEnum.DISABLE.getKey().equals(sysRole.getState())) {
+            throw new AuthenticationException("角色已禁用");
+        }
+        loginSysUserVo.setRoleId(sysRole.getId())
+                .setRoleName(sysRole.getName())
+                .setRoleCode(sysRole.getCode());
+
+        // 获取当前用户权限
+        Set<String> permissionCodes = sysRolePermissionService.getPermissionCodesByRoleId(roleId);
+        if (CollectionUtils.isEmpty(permissionCodes)) {
+            throw new AuthenticationException("权限列表不能为空");
+        }
+        loginSysUserVo.setPermissionCodes(permissionCodes);
+
+        // 获取数据库中保存的盐值
+        String newSalt = SaltUtil.getSalt(sysUser.getSalt(), jwtProperties);
 
         // 生成token字符串并返回
-        Duration expireDuration = Duration.ofSeconds(jwtProperties.getExpireSecond());
-        String token = JwtUtil.generateToken(username, newSalt, expireDuration);
+        Long expireSecond = jwtProperties.getExpireSecond();
+        String token = JwtUtil.generateToken(username, newSalt, Duration.ofSeconds(expireSecond));
         log.debug("token:{}", token);
 
         // 创建AuthenticationToken
-        JwtToken jwtToken = JwtToken.build(token, username, newSalt, jwtProperties.getExpireSecond());
+        JwtToken jwtToken = JwtToken.build(token, username, newSalt, expireSecond);
         // 从SecurityUtils里边创建一个 subject
         Subject subject = SecurityUtils.getSubject();
         // 执行认证登陆
@@ -119,15 +161,17 @@ public class LoginServiceImpl implements LoginService {
 
         // 缓存登陆信息到Redis
         loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo);
-        // 设置响应头
-        response.setHeader(JwtTokenUtil.getTokenName(), token);
         log.debug("登陆成功,username:{}", username);
-        // 返回token
-        return ApiResult.ok(token, "登陆成功");
+
+        // 返回token和登陆用户信息对象
+        LoginSysUserTokenVo loginSysUserTokenVo = new LoginSysUserTokenVo();
+        loginSysUserTokenVo.setToken(token);
+        loginSysUserTokenVo.setLoginSysUserVo(loginSysUserVo);
+        return loginSysUserTokenVo;
     }
 
     @Override
-    public void refreshToken(JwtToken jwtToken, HttpServletResponse httpServletResponse) {
+    public void refreshToken(JwtToken jwtToken, HttpServletResponse httpServletResponse) throws Exception {
         if (jwtToken == null) {
             return;
         }
@@ -175,7 +219,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void logout(HttpServletRequest request) {
+    public void logout(HttpServletRequest request) throws Exception {
         Subject subject = SecurityUtils.getSubject();
         //注销
         subject.logout();
@@ -188,14 +232,8 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public List<String> getUserRoles(Long id) {
-        return Arrays.asList("admin");
-    }
-
-    @Override
-    public SysUser getSysUserByUsername(String username) {
-        SysUser sysUser = new SysUser();
-        sysUser.setUsername(username);
+    public SysUser getSysUserByUsername(String username) throws Exception {
+        SysUser sysUser = new SysUser().setUsername(username);
         return sysUserMapper.selectOne(new QueryWrapper(sysUser));
     }
 

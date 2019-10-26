@@ -38,6 +38,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -121,6 +122,11 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("role_id", id);
         return remove(queryWrapper);
+    }
+
+    @Override
+    public Set<String> getPermissionCodesByRoleId(Long roleId) throws Exception {
+        return sysRolePermissionMapper.getPermissionCodesByRoleId(roleId);
     }
 
 }

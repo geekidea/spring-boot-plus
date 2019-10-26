@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus.shiro.vo;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -36,16 +37,37 @@ public class LoginSysUserVo implements Serializable {
 
     private static final long serialVersionUID = -1758338570596088158L;
 
+    @ApiModelProperty(value = "主键")
     private Long id;
 
+    @ApiModelProperty(value = "用户名")
     private String username;
 
-    private String salt;
+    @ApiModelProperty(value = "昵称")
+    private String nickname;
 
-    private Set<String> roles;
+    @ApiModelProperty(value = "性别，0：女，1：男，默认1")
+    private Integer gender;
 
-    private Set<String> permissions;
+    @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
+    private Integer state;
 
-    private ClientInfo clientInfo;
+    @ApiModelProperty("部门id")
+    private Long departmentId;
+
+    @ApiModelProperty("部门名称")
+    private String departmentName;
+
+    @ApiModelProperty("角色id")
+    private Long roleId;
+
+    @ApiModelProperty("角色名称")
+    private String roleName;
+
+    @ApiModelProperty("角色编码")
+    private String roleCode;
+
+    @ApiModelProperty("权限编码列表")
+    private Set<String> permissionCodes;
 
 }
