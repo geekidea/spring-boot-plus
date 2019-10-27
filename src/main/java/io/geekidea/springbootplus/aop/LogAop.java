@@ -47,19 +47,16 @@ public class LogAop extends AbstractLogAop {
     @Around(POINTCUT)
     @Override
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.debug("LogAop doAround...");
         return super.handle(joinPoint);
     }
 
     @Override
     protected void handleRequestInfo(Map<String, Object> map) {
-        log.debug("处理请求参数信息");
         super.handleRequestInfo(map);
     }
 
     @Override
     protected void handleResponseInfo(Object result) {
-        log.debug("处理响应结果信息");
         super.handleResponseInfo(result);
     }
 
