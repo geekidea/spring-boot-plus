@@ -18,6 +18,8 @@ package io.geekidea.springbootplus.shiro.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.geekidea.springbootplus.constant.CommonConstant;
+import io.geekidea.springbootplus.constant.CommonRedisKey;
+import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.enums.StateEnum;
 import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.jwt.JwtProperties;
@@ -32,6 +34,7 @@ import io.geekidea.springbootplus.system.convert.SysUserConvert;
 import io.geekidea.springbootplus.system.entity.SysDepartment;
 import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.entity.SysUser;
+import io.geekidea.springbootplus.system.exception.VerificationCodeException;
 import io.geekidea.springbootplus.system.mapper.SysUserMapper;
 import io.geekidea.springbootplus.system.service.SysDepartmentService;
 import io.geekidea.springbootplus.system.service.SysRolePermissionService;
@@ -47,6 +50,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,9 +91,18 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private SysRolePermissionService sysRolePermissionService;
 
+    @Autowired
+    private SpringBootPlusProperties springBootPlusProperties;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public LoginSysUserTokenVo login(LoginParam loginParam) throws Exception {
+        // 校验验证码
+        checkVerifyCode(loginParam.getVerifyToken(), loginParam.getCode());
+
         String username = loginParam.getUsername();
         // 从数据库中获取登陆用户信息
         SysUser sysUser = getSysUserByUsername(username);
@@ -168,6 +181,30 @@ public class LoginServiceImpl implements LoginService {
         loginSysUserTokenVo.setToken(token);
         loginSysUserTokenVo.setLoginSysUserVo(loginSysUserVo);
         return loginSysUserTokenVo;
+    }
+
+    @Override
+    public void checkVerifyCode(String verifyToken, String code) throws Exception {
+        // 如果没有启用验证码，则返回
+        if (!springBootPlusProperties.isEnableVerifyCode()) {
+            return;
+        }
+        // 校验验证码
+        if (StringUtils.isBlank(code)) {
+            throw new VerificationCodeException("请输入验证码");
+        }
+        // 从redis中获取
+        String redisKey = String.format(CommonRedisKey.VERIFY_CODE, verifyToken);
+        String generateCode = (String) redisTemplate.opsForValue().get(redisKey);
+        if (StringUtils.isBlank(generateCode)) {
+            throw new VerificationCodeException("验证码已过期或不正确");
+        }
+        // 不区分大小写
+        if (!generateCode.equalsIgnoreCase(code)) {
+            throw new VerificationCodeException("验证码错误");
+        }
+        // 验证码校验成功，删除Redis缓存
+        redisTemplate.delete(redisKey);
     }
 
     @Override

@@ -40,10 +40,8 @@ spring:
 spring-boot-plus:
   # 是否启用ansi控制台输出有颜色的字体
   enable-ansi: true
-  # 请求日志在控制台是否格式化输出
-  request-log-format: true
-  # 响应日志在控制台是否格式化输出
-  response-log-format: true
+  # 是否启用验证码
+  enable-verify-code: true
   # 过滤器配置
   filter:
     # 请求路径Filter配置

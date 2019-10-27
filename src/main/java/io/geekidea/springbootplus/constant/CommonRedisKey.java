@@ -45,4 +45,8 @@ public interface CommonRedisKey {
      */
     String LOGIN_USER_TOKEN = "login:user:token:%s:%s";
 
+    /**
+     * 验证码
+     */
+    String VERIFY_CODE = "verify.code:%s";
 }

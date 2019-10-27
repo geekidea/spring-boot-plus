@@ -14,36 +14,24 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.shiro.param;
+package io.geekidea.springbootplus.system.exception;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-
-import javax.validation.constraints.NotBlank;
+import io.geekidea.springbootplus.common.exception.SpringBootPlusException;
 
 /**
- * 登录参数
+ * 验证码校验异常
  *
  * @author geekidea
- * @date 2019-05-15
- **/
-@Data
-@ApiModel("登录参数")
-public class LoginParam {
+ * @date 2018-11-08
+ */
+public class VerificationCodeException extends SpringBootPlusException {
 
-    @NotBlank(message = "请输入账号")
-    @ApiModelProperty("账号")
-    private String username;
+    public VerificationCodeException(String message) {
+        super(message);
+    }
 
-    @NotBlank(message = "请输入密码")
-    @ApiModelProperty("密码")
-    private String password;
-
-    @ApiModelProperty("验证码Token")
-    private String verifyToken;
-
-    @ApiModelProperty("验证码")
-    private String code;
+    public VerificationCodeException(Integer errorCode, String message) {
+        super(errorCode, message);
+    }
 
 }

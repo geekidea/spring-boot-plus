@@ -67,7 +67,6 @@ public class ApiResult<T> implements Serializable {
      */
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Builder.Default
     private Date time  = new Date();
 
     public ApiResult() {

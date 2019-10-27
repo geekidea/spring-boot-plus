@@ -68,7 +68,17 @@ public interface LoginService {
      *
      * @param username
      * @return
+     * @throws Exception
      */
     SysUser getSysUserByUsername(String username) throws Exception;
+
+    /**
+     * 检查验证码是否正确
+     *
+     * @param verifyToken
+     * @param code
+     * @throws Exception
+     */
+    void checkVerifyCode(String verifyToken, String code) throws Exception;
 
 }

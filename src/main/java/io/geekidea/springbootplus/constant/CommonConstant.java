@@ -85,4 +85,24 @@ public interface CommonConstant {
     String ADMIN_ROLE_NAME = "管理员";
 
     String ADMIN_LOGIN = "adminLogin";
+
+    /**
+     * 验证码token
+     */
+    String VERIFY_TOKEN = "verifyToken";
+
+    /**
+     * 图片
+     */
+    String IMAGE = "image";
+
+    /**
+     * JPEG
+     */
+    String JPEG = "JPEG";
+
+    /**
+     * base64前缀
+     */
+    String BASE64_PREFIX = "data:image/png;base64,";
 }
