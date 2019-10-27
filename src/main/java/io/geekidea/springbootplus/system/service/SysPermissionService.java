@@ -114,4 +114,13 @@ public interface SysPermissionService extends BaseService<SysPermission> {
      * @throws Exception
      */
     List<SysPermissionTreeVo> getAllMenuTree() throws Exception;
+
+    /**
+     * 根据用户id获取该用户所有权限编码
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    List<String> getPermissionCodeByUserId(Long userId) throws Exception;
 }

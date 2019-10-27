@@ -26,6 +26,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -55,4 +56,12 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      */
     IPage<SysPermissionQueryVo> getSysPermissionPageList(@Param("page") Page page, @Param("param") SysPermissionQueryParam sysPermissionQueryParam);
 
+    /**
+     * 根据用户id获取该用户所有权限编码
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    List<String> getPermissionCodeByUserId(@Param("userId") Long userId) throws Exception;
 }
