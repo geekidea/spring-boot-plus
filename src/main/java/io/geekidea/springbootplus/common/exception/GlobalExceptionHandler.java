@@ -19,6 +19,7 @@ package io.geekidea.springbootplus.common.exception;
 import com.alibaba.fastjson.JSON;
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
+import io.geekidea.springbootplus.system.exception.VerificationCodeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -110,12 +111,22 @@ public class GlobalExceptionHandler {
      * @param exception
      * @return
      */
-    @ExceptionHandler(value = {BusinessException.class, DaoException.class,SpringBootPlusException.class})
+    @ExceptionHandler(value = {SpringBootPlusException.class})
     @ResponseStatus(HttpStatus.OK)
     public ApiResult springBootPlusExceptionHandler(SpringBootPlusException exception) {
         log.error("springBootPlusException:", exception);
+        int errorCode;
+        if (exception instanceof BusinessException) {
+            errorCode = ApiCode.BUSINESS_EXCEPTION.getCode();
+        } else if (exception instanceof DaoException) {
+            errorCode = ApiCode.DAO_EXCEPTION.getCode();
+        } else if (exception instanceof VerificationCodeException) {
+            errorCode = ApiCode.VERIFICATION_CODE_EXCEPTION.getCode();
+        } else {
+            errorCode = ApiCode.SPRING_BOOT_PLUS_EXCEPTION.getCode();
+        }
         return new ApiResult()
-                .setCode(ApiCode.BUSINESS_EXCEPTION.getCode())
+                .setCode(errorCode)
                 .setMsg(exception.getMessage());
     }
 

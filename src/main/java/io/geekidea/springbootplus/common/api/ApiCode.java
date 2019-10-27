@@ -37,20 +37,24 @@ public enum ApiCode {
     FAIL(500, "操作失败"),
 
 
-    LOGIN_EXCEPTION(4000,"登陆失败"),
+    LOGIN_EXCEPTION(4000, "登陆失败"),
 
 
-    SYSTEM_EXCEPTION(5000,"系统异常!"),
+    SYSTEM_EXCEPTION(5000, "系统异常!"),
 
-    PARAMETER_EXCEPTION(5001,"请求参数校验异常"),
+    PARAMETER_EXCEPTION(5001, "请求参数校验异常"),
 
-    PARAMETER_PARSE_EXCEPTION(5002,"请求参数解析异常"),
+    PARAMETER_PARSE_EXCEPTION(5002, "请求参数解析异常"),
 
-    HTTP_MEDIA_TYPE_EXCEPTION(5003,"HTTP Media 类型异常"),
+    HTTP_MEDIA_TYPE_EXCEPTION(5003, "HTTP Media 类型异常"),
 
-    BUSINESS_EXCEPTION(5004,"业务处理异常"),
+    SPRING_BOOT_PLUS_EXCEPTION(5100, "系统处理异常"),
 
-    DAO_EXCEPTION(5005,"数据库处理异常"),
+    BUSINESS_EXCEPTION(5101, "业务处理异常"),
+
+    DAO_EXCEPTION(5102, "数据库处理异常"),
+
+    VERIFICATION_CODE_EXCEPTION(5103, "验证码校验异常"),
 
 
     ;

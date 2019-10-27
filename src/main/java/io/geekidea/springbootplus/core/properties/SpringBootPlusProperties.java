@@ -41,6 +41,11 @@ public class SpringBootPlusProperties {
     private boolean enableAnsi;
 
     /**
+     * 是否启用验证码
+     */
+    private boolean enableVerifyCode;
+
+    /**
      * 拦截器配置
      */
     @NestedConfigurationProperty
