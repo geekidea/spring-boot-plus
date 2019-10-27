@@ -139,3 +139,33 @@ CREATE TABLE `sys_user` (
     UNIQUE KEY `sys_user_username_uindex` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='系统用户'
 
+
+INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, remark, state, department_id, role_id, deleted, version, create_time, update_time) VALUES (1, 'admin', '管理员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', 'e4cc3292e3ebc483998adb2c0e4e640e', '', 1, 'Administrator Account', 1, 1, 1, 0, 0, '2019-08-26 00:52:01', null);
+INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, remark, state, department_id, role_id, deleted, version, create_time, update_time) VALUES (2, 'test', '测试人员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', '99952b31c18156169a26bec80fd211f6', '', 1, 'Tester Account', 1, 1, 2, 0, 0, '2019-10-05 14:04:27', null);
+
+INSERT INTO sys_role (id, name, code, type, state, remark, deleted, version, create_time, update_time) VALUES (1, '管理员', 'admin', null, 1, null, 0, 0, '2019-10-25 09:47:21', null);
+INSERT INTO sys_role (id, name, code, type, state, remark, deleted, version, create_time, update_time) VALUES (2, 'test', 'test', null, 1, null, 0, 0, '2019-10-25 09:48:02', null);
+
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (1, '系统管理', null, null, 'xtgl', null, 1, 1, 1, 0, null, 0, 0, '2019-10-26 11:12:40', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (2, '微信管理', null, null, 'wxgl', null, 1, 1, 1, 0, null, 0, 0, '2019-10-26 11:13:57', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (11, '用户管理', 1, null, 'yhgl', null, 1, 2, 1, 0, null, 0, 0, '2019-10-26 11:15:48', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (12, '角色管理', 1, null, 'jsgl', null, 1, 2, 1, 0, null, 0, 0, '2019-10-26 11:15:48', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (13, '权限管理', 1, null, 'qxgl', null, 1, 2, 1, 0, null, 0, 0, '2019-10-26 11:15:48', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (21, '粉丝管理', 2, null, 'fsgl', null, 1, 2, 1, 0, null, 0, 0, '2019-10-26 11:15:48', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (22, '账号管理', 2, null, 'zhgl', null, 1, 2, 1, 0, null, 0, 0, '2019-10-26 11:15:48', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (101, '用户新增', 11, null, 'yhxz', null, 2, 3, 1, 0, null, 0, 0, '2019-10-26 11:18:40', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (102, '用户修改', 11, null, 'yhxg', null, 2, 3, 1, 0, null, 0, 0, '2019-10-26 11:18:40', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (103, '用户删除', 11, null, 'yhsc', null, 2, 3, 1, 0, null, 0, 0, '2019-10-26 11:18:40', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (104, '用户详情', 11, null, 'yhxq', null, 2, 3, 1, 0, null, 0, 0, '2019-10-26 11:18:40', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (105, '用户分页列表', 11, null, 'yhfylb', null, 2, 3, 1, 0, null, 0, 0, '2019-10-26 11:18:40', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (201, '粉丝新增', 21, null, 'fsxz', null, 2, 3, 1, 0, null, 0, 0, '2019-10-26 11:19:31', null);
+INSERT INTO sys_permission (id, name, parent_id, url, code, icon, type, level, state, sort, remark, deleted, version, create_time, update_time) VALUES (202, '粉丝修改', 22, null, 'fsxg', null, 2, 3, 1, 0, null, 0, 0, '2019-10-26 11:19:31', null);
+
+INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, deleted, version, create_time, update_time) VALUES (1, 1, 1, 1, null, 0, 0, '2019-10-26 22:16:40', null);
+INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, deleted, version, create_time, update_time) VALUES (2, 1, 2, 1, null, 0, 0, '2019-10-26 22:16:40', null);
+INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, deleted, version, create_time, update_time) VALUES (3, 1, 11, 1, null, 0, 0, '2019-10-26 22:16:40', null);
+
+INSERT INTO sys_department (id, name, parent_id, state, sort, remark, deleted, version, create_time, update_time) VALUES (1, '管理部', null, 1, 0, null, 0, 0, '2019-10-25 09:46:49', null);
+INSERT INTO sys_department (id, name, parent_id, state, sort, remark, deleted, version, create_time, update_time) VALUES (2, '测试部', null, 1, 0, null, 0, 0, '2019-10-25 09:47:06', null);
+
+
