@@ -137,4 +137,8 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
         return treeVos;
     }
 
+    @Override
+    public List<String> getPermissionCodeByUserId(Long userId) throws Exception {
+        return sysPermissionMapper.getPermissionCodeByUserId(userId);
+    }
 }

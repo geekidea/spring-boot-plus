@@ -120,5 +120,15 @@ public class SysPermissionController extends BaseController {
         return ApiResult.ok(list);
     }
 
+    /**
+     * 根据用户id获取该用户所有权限编码
+     */
+    @GetMapping("/getPermissionCodeByUserId/{userId}")
+    @ApiOperation(value = "根据用户id获取该用户所有权限编码", notes = "根据用户id获取该用户所有权限编码", response = ApiResult.class)
+    public ApiResult<String> getPermissionCodeByUserId(@PathVariable("userId") Long userId) throws Exception {
+        List<String> list = sysPermissionService.getPermissionCodeByUserId(userId);
+        return ApiResult.ok(list);
+    }
+
 }
 
