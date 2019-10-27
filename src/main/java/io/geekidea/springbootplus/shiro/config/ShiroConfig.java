@@ -218,10 +218,14 @@ public class ShiroConfig {
                 }
             }
         }
-        // 最后一个设置为JWTFilter
-        // TODO 是否启用shiro token校验
-//        filterChainDefinitionMap.put("/**", JWT_FILTER_NAME);
-        filterChainDefinitionMap.put("/**", "anon");
+
+        // 如果启用shiro，则设置最后一个设置为JWTFilter，否则全部路径放行
+        if (shiroProperties.isEnable()) {
+            filterChainDefinitionMap.put("/**", JWT_FILTER_NAME);
+        } else {
+            filterChainDefinitionMap.put("/**", "anon");
+        }
+
         log.debug("filterChainMap:{}", JSON.toJSONString(filterChainDefinitionMap));
 
         // 添加默认的filter

@@ -129,6 +129,8 @@ spring-boot-plus:
 
   ######################## Spring Shiro start ########################
   shiro:
+    # 是否启用
+    enable: true
     # shiro ini 多行字符串配置
     filter-chain-definitions: |
       /=anon
@@ -138,6 +140,7 @@ spring-boot-plus:
       /hello/world=anon
       /ip/**=anon
       /sysLog/**=anon
+      /verificationCode/**=anon
     # 权限配置
     permission:
         # 排除登陆登出相关
