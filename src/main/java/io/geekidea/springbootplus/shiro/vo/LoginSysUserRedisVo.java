@@ -31,7 +31,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 public class LoginSysUserRedisVo extends LoginSysUserVo {
 
-    private static final long serialVersionUID = 2783720332894188358L;
+    private static final long serialVersionUID = -3858850188055605806L;
 
     /**
      * 包装后的盐值

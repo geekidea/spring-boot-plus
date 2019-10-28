@@ -1,10 +1,6 @@
 spring-boot-plus:
   # 是否启用ansi控制台输出有颜色的字体，local环境建议开启，服务器环境设置为false
   enable-ansi: false
-  # 请求日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
-  request-log-format: true
-  # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
-  response-log-format: true
 
 server:
   port: 8888

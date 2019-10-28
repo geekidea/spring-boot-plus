@@ -25,6 +25,8 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import io.geekidea.springbootplus.generator.config.SpringBootPlusMySqlQuery;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -33,72 +35,204 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * spring-boot-plus代码生成器入口类
+ * spring-boot-plus代码生成器
  *
  * @author geekidea
  * @date 2018-11-08
  */
+@Data
+@Accessors(chain = true)
 public class CodeGenerator {
 
-    private static final String USER_NAME = "root";
-    private static final String PASSWORD = "root";
-    private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-    private static final String DRIVER_URL = "jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false";
+    /**
+     * 用户名
+     */
+    private String userName;
+    /**
+     * 密码
+     */
+    private String password;
+    /**
+     * 驱动名称
+     */
+    private String driverName;
+    /**
+     * 驱动URL
+     */
+    private String driverUrl;
 
-    // 生成的类路径
-    private static final String PROJECT_PACKAGE_PATH = "io/geekidea/springbootplus";
+    /**
+     * 生成的类路径
+     */
+    private String projectPackagePath;
 
-    // 项目主包路径
-    private static final String PARENT_PACKAGE = "io.geekidea.springbootplus";
-    private static final String COMMON_PARENT_PACKAGE = PARENT_PACKAGE + ".common";
+    /**
+     * 项目主包路径
+     */
+    private String parentPackage;
 
-    // 父类包路径
-    private static final String SUPER_ENTITY = COMMON_PARENT_PACKAGE + ".entity.BaseEntity";
-    private static final String SUPER_CONTROLLER = COMMON_PARENT_PACKAGE + ".controller.BaseController";
-    private static final String SUPER_SERVICE = COMMON_PARENT_PACKAGE + ".service.BaseService";
-    private static final String SUPER_SERVICE_IMPL = COMMON_PARENT_PACKAGE + ".service.impl.BaseServiceImpl";
-    private static final String SUPER_QUERY_PARAM = COMMON_PARENT_PACKAGE + ".param.QueryParam";
-    private static final String[] SUPER_ENTITY_COMMON_COLUMNS = new String[]{};
+    /**
+     * 包名称
+     */
+    private String packageController = "controller";
+
+    // ############################ 自定义配置部分 start ############################
+    /**
+     * 模块名称
+     */
+    private String moduleName;
+    /**
+     * 作者
+     */
+    private String author;
+    /**
+     * 生成的表名称
+     */
+    private String tableName;
+    /**
+     * 主键数据库列名称
+     */
+    private String pkIdColumnName = "id";
+    /**
+     * 代码生成策略 true：All/false:SIMPLE
+     * 0. SIMPLE 生成最基本的代码
+     * 1. NORMAL 生成普通代码
+     * 2. ALL 生成所有的代码
+     */
+    private GeneratorStrategy generatorStrategy = GeneratorStrategy.ALL;
+
+    /**
+     * 生成策略
+     */
+    public enum GeneratorStrategy {
+        SIMPLE, NORMAL, ALL
+    }
+
+    /**
+     * 分页列表查询是否排序 true：有排序参数/false：无
+     */
+    private boolean pageListOrder = false;
+    /**
+     * 是否生成validation校验，true：生成/false：不生成
+     */
+    private boolean paramValidation = true;
+
+    /**
+     * 是否生成实体类
+     */
+    private boolean generatorEntity;
+    /**
+     * 是否生成控制器
+     */
+    private boolean generatorController;
+    /**
+     * 是否生成service接口
+     */
+    private boolean generatorService;
+    /**
+     * 是否生成service实现类
+     */
+    private boolean generatorServiceImpl;
+    /**
+     * 是否生成Mapper
+     */
+    private boolean generatorMapper;
+    /**
+     * 是否生成Mapper XML
+     */
+    private boolean generatorMapperXml;
+    /**
+     * 是否生成查询参数
+     */
+    private boolean generatorQueryParam;
+    /**
+     * 是否生成查询VO
+     */
+    private boolean generatorQueryVo;
+    // ############################ 自定义配置部分 end ############################
+
+    /**
+     * 公共父包
+     */
+    private String commonParentPackage;
+
+    /**
+     * 实体父类
+     */
+    private String superEntity;
+    /**
+     * 控制器父类
+     */
+    private String superController;
+    /**
+     * service父接口
+     */
+    private String superService;
+    /**
+     * service实现父类
+     */
+    private String superServiceImpl;
+    /**
+     * 查询参数父类
+     */
+    private String superQueryParam;
+    /**
+     * 实体父类实体列表
+     */
+    private String[] superEntityCommonColumns;
 
     // 公共类包路径
-    private static final String COMMON_ID_PARAM = COMMON_PARENT_PACKAGE + ".param.IdParam";
-    private static final String COMMON_API_RESULT = COMMON_PARENT_PACKAGE + ".api.ApiResult";
-    private static final String COMMON_ORDER_ENUM = COMMON_PARENT_PACKAGE + ".enums.OrderEnum";
-    private static final String COMMON_ORDER_QUERY_PARAM = COMMON_PARENT_PACKAGE + ".param.OrderQueryParam";
-    private static final String COMMON_PAGING = COMMON_PARENT_PACKAGE + ".vo.Paging";
+    /**
+     * 公共id参数路径
+     */
+    private String commonIdParam;
+    /**
+     * 公共结果集路径
+     */
+    private String commonApiResult;
+    /**
+     * 公共排序枚举
+     */
+    private String commonOrderEnum;
+    /**
+     * 公共排序查询参数
+     */
+    private String commonOrderQueryParam;
+    /**
+     * 公共分页对象
+     */
+    private String commonPaging;
 
-    // 包名称
-    private static final String PACKAGE_CONTROLLER= "controller";
+    /**
+     * 是否文件覆盖
+     */
+    private boolean fileOverride;
 
-    // ############################ 配置部分 start ############################
-    // 模块名称
-    private static final String MODULE_NAME = "hello";
-    // 作者
-    private static final String AUTHOR = "geekidea";
-    // 生成的表名称
-    private static final String TABLE_NAME = "hello";
-    // 主键数据库列名称
-    private static final String PK_ID_COLUMN_NAME = "id";
-    // 代码生成策略 true：All/false:SIMPLE
-    private static final boolean GENERATOR_STRATEGY = true;
-    // 分页列表查询是否排序 true：有排序参数/false：无
-    private static final boolean PAGE_LIST_ORDER = false;
-    // 是否生成validation校验，true：生成/false：不生成
-    private static final boolean PARAM_VALIDATION = true;
+    /**
+     * 初始化变量
+     */
+    public void init() {
+        this.commonParentPackage = this.parentPackage + ".common";
+        // 父类包路径
+        this.superEntity = this.commonParentPackage + ".entity.BaseEntity";
+        this.superController = this.commonParentPackage + ".controller.BaseController";
+        this.superService = this.commonParentPackage + ".service.BaseService";
+        this.superServiceImpl = this.commonParentPackage + ".service.impl.BaseServiceImpl";
+        this.superQueryParam = this.commonParentPackage + ".param.QueryParam";
+        this.superEntityCommonColumns = new String[]{};
 
-    // 生成文件配置，是否生成entity/controller/service/serviceImpl/mapper/xml
-    private static final boolean GENERATOR_ENTITY = true;
-    private static final boolean GENERATOR_CONTROLLER = true;
-    private static final boolean GENERATOR_SERVICE = true;
-    private static final boolean GENERATOR_SERVICE_IMPL = true;
-    private static final boolean GENERATOR_MAPPER = true;
-    private static final boolean GENERATOR_MAPPER_XML = true;
-    private static final boolean GENERATOR_QUERY_PARAM = true;
-    private static final boolean GENERATOR_QUERY_VO = true;
-    // ############################ 配置部分 end ############################
+        // 公共类包路径
+        this.commonIdParam = this.commonParentPackage + ".param.IdParam";
+        this.commonApiResult = this.commonParentPackage + ".api.ApiResult";
+        this.commonOrderEnum = this.commonParentPackage + ".enums.OrderEnum";
+        this.commonOrderQueryParam = this.commonParentPackage + ".param.OrderQueryParam";
+        this.commonPaging = this.commonParentPackage + ".vo.Paging";
+    }
 
-
-    public static void main(String[] args) {
+    /**
+     * 生成代码
+     */
+    public void generator() {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -106,23 +240,23 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor(AUTHOR);
+        gc.setAuthor(author);
         gc.setOpen(false);                  // 是否打开输出目录
         gc.setSwagger2(true);               // 启用swagger注解
         gc.setIdType(IdType.ID_WORKER);     // 主键类型:ID_WORKER
         gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
-        gc.setFileOverride(true);           // 是否覆盖已有文件
+        gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
         gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date
 
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl(DRIVER_URL);
+        dsc.setUrl(driverUrl);
         // dsc.setSchemaName("public");
-        dsc.setDriverName(DRIVER_NAME);
-        dsc.setUsername(USER_NAME);
-        dsc.setPassword(PASSWORD);
+        dsc.setDriverName(driverName);
+        dsc.setUsername(userName);
+        dsc.setPassword(password);
         // 设置自定义查询
         dsc.setDbQuery(new SpringBootPlusMySqlQuery());
 
@@ -130,9 +264,9 @@ public class CodeGenerator {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName(MODULE_NAME);
-        pc.setParent(PARENT_PACKAGE);
-        pc.setController(PACKAGE_CONTROLLER);
+        pc.setModuleName(moduleName);
+        pc.setParent(parentPackage);
+        pc.setController(packageController);
 
         mpg.setPackageInfo(pc);
 
@@ -141,22 +275,22 @@ public class CodeGenerator {
             @Override
             public void initMap() {
 
-                String camelTableName = underlineToCamel(TABLE_NAME);
-                String pascalTableName = underlineToPascal(TABLE_NAME);
+                String camelTableName = underlineToCamel(tableName);
+                String pascalTableName = underlineToPascal(tableName);
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("customField", "Hello " + this.getConfig().getGlobalConfig().getAuthor());
                 // 查询参数包路径
-                String queryParamPackage = PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".param";
+                String queryParamPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".param";
                 map.put("queryParamPackage", queryParamPackage);
                 // 查询参数类路径
                 map.put("queryParamPath", queryParamPackage + StringPool.DOT + pascalTableName + "QueryParam");
                 // 查询参数共公包路径
-                map.put("queryParamCommonPath", SUPER_QUERY_PARAM);
+                map.put("queryParamCommonPath", superQueryParam);
                 // 查询参数共公包路径
-                map.put("idParamPath", COMMON_ID_PARAM);
+                map.put("idParamPath", commonIdParam);
                 // 响应结果包路径
-                String queryVoPackage = PARENT_PACKAGE + StringPool.DOT + pc.getModuleName() + ".vo";
+                String queryVoPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".vo";
                 map.put("queryVoPackage", queryVoPackage);
                 // 响应结果类路径
                 map.put("queryVoPath", queryVoPackage + StringPool.DOT + pascalTableName + "QueryVo");
@@ -167,30 +301,30 @@ public class CodeGenerator {
                 // mapper对象名称
                 map.put("mapperObjectName", camelTableName + "Mapper");
                 // 主键ID列名
-                map.put("pkIdColumnName", PK_ID_COLUMN_NAME);
+                map.put("pkIdColumnName", pkIdColumnName);
                 // 主键ID驼峰名称
-                map.put("pkIdCamelName", underlineToCamel(PK_ID_COLUMN_NAME));
+                map.put("pkIdCamelName", underlineToCamel(pkIdColumnName));
                 // 导入分页类
-                map.put("paging", COMMON_PAGING);
+                map.put("paging", commonPaging);
                 // 导入排序枚举
-                map.put("orderEnum", COMMON_ORDER_ENUM);
+                map.put("orderEnum", commonOrderEnum);
                 // ApiResult
-                map.put("apiResult", COMMON_API_RESULT);
+                map.put("apiResult", commonApiResult);
                 // 分页列表查询是否排序
-                map.put("pageListOrder", PAGE_LIST_ORDER);
+                map.put("pageListOrder", pageListOrder);
                 // 导入排序查询参数类
-                map.put("orderQueryParamPath", COMMON_ORDER_QUERY_PARAM);
+                map.put("orderQueryParamPath", commonOrderQueryParam);
                 // 代码生成策略
-                map.put("generatorStrategy", GENERATOR_STRATEGY);
+                map.put("generatorStrategy", generatorStrategy);
                 // 代码Validation校验
-                map.put("paramValidation", PARAM_VALIDATION);
+                map.put("paramValidation", paramValidation);
                 this.setMap(map);
             }
         };
         List<FileOutConfig> focList = new ArrayList<>();
 
         // 生成mapper xml
-        if (GENERATOR_MAPPER_XML) {
+        if (generatorMapperXml) {
             focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
@@ -202,21 +336,21 @@ public class CodeGenerator {
         }
 
         // 自定义queryParam模板
-        if (GENERATOR_QUERY_PARAM) {
+        if (generatorQueryParam) {
             focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
                 }
             });
         }
 
         // 自定义queryVo模板
-        if (GENERATOR_QUERY_VO) {
+        if (generatorQueryVo) {
             focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + PROJECT_PACKAGE_PATH + "/" + pc.getModuleName() + "/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
                 }
             });
         }
@@ -229,23 +363,23 @@ public class CodeGenerator {
         // xml使用自定义输出
         templateConfig.setXml(null);
         // 是否生成entity
-        if (!GENERATOR_ENTITY) {
+        if (!generatorEntity) {
             templateConfig.setEntity(null);
         }
         // 是否生成controller
-        if (!GENERATOR_CONTROLLER) {
+        if (!generatorController) {
             templateConfig.setController(null);
         }
         // 是否生成service
-        if (!GENERATOR_SERVICE) {
+        if (!generatorService) {
             templateConfig.setService(null);
         }
         // 是否生成serviceImpl
-        if (!GENERATOR_SERVICE_IMPL) {
+        if (!generatorServiceImpl) {
             templateConfig.setServiceImpl(null);
         }
         // 是否生成mapper
-        if (!GENERATOR_MAPPER) {
+        if (!generatorMapper) {
             templateConfig.setMapper(null);
         }
         mpg.setTemplate(templateConfig);
@@ -254,14 +388,14 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setSuperEntityClass(SUPER_ENTITY);
+        strategy.setSuperEntityClass(superEntity);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        strategy.setSuperControllerClass(SUPER_CONTROLLER);
-        strategy.setSuperServiceClass(SUPER_SERVICE);
-        strategy.setSuperServiceImplClass(SUPER_SERVICE_IMPL);
-        strategy.setInclude(TABLE_NAME);
-        strategy.setSuperEntityColumns(SUPER_ENTITY_COMMON_COLUMNS);
+        strategy.setSuperControllerClass(superController);
+        strategy.setSuperServiceClass(superService);
+        strategy.setSuperServiceImplClass(superServiceImpl);
+        strategy.setInclude(tableName);
+        strategy.setSuperEntityColumns(superEntityCommonColumns);
         strategy.setControllerMappingHyphenStyle(true);
         /**
          * 注意，根据实际情况，进行设置

@@ -19,6 +19,8 @@ package io.geekidea.springbootplus.shiro.controller;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.shiro.param.LoginParam;
 import io.geekidea.springbootplus.shiro.service.LoginService;
+import io.geekidea.springbootplus.shiro.util.JwtTokenUtil;
+import io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -48,12 +50,15 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperation(value = "登陆", notes = "系统用户登陆", response = ApiResult.class)
-    public ApiResult login(@Valid @RequestBody LoginParam loginParam, HttpServletResponse response) {
-        return loginService.login(loginParam, response);
+    public ApiResult login(@Valid @RequestBody LoginParam loginParam, HttpServletResponse response) throws Exception {
+        LoginSysUserTokenVo loginSysUserTokenVo = loginService.login(loginParam);
+        // 设置token响应头
+        response.setHeader(JwtTokenUtil.getTokenName(), loginSysUserTokenVo.getToken());
+        return ApiResult.ok(loginSysUserTokenVo, "登陆成功");
     }
 
     @PostMapping("/logout")
-    public ApiResult logout(HttpServletRequest request) {
+    public ApiResult logout(HttpServletRequest request) throws Exception {
         loginService.logout(request);
         return ApiResult.ok("退出成功");
     }

@@ -13,9 +13,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * <p>
+ * <pre>
  * $!{table.comment} 查询结果对象
- * </p>
+ * </pre>
  *
  * @author ${author}
  * @date ${date}

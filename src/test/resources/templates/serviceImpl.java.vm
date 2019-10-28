@@ -15,20 +15,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import java.io.Serializable;
 
 
 /**
- * <p>
+ * <pre>
  * $!{table.comment} 服务实现类
- * </p>
+ * </pre>
  *
  * @author ${author}
  * @since ${date}
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
 #if(${kotlin})
 open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
 
@@ -38,7 +38,27 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
 
     @Autowired
     private ${table.mapperName} ${cfg.mapperObjectName};
-#if(${cfg.generatorStrategy})
+#if(${cfg.generatorStrategy} != 'SIMPLE')
+#if(${cfg.generatorStrategy} == 'ALL')
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean save${entity}(${entity} ${cfg.entityObjectName}) throws Exception {
+        return super.save(${cfg.entityObjectName});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean update${entity}(${entity} ${cfg.entityObjectName}) throws Exception {
+        return super.updateById(${cfg.entityObjectName});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean delete${entity}(Long id) throws Exception {
+        return super.removeById(id);
+    }
+#end
 
     @Override
     public ${entity}QueryVo get${entity}ById(Serializable id) throws Exception {

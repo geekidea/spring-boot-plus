@@ -19,7 +19,9 @@ package io.geekidea.springbootplus.common.exception;
 import com.alibaba.fastjson.JSON;
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
+import io.geekidea.springbootplus.system.exception.VerificationCodeException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
@@ -46,6 +48,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 非法参数验证异常
+     *
      * @param ex
      * @return
      */
@@ -59,12 +62,13 @@ public class GlobalExceptionHandler {
             list.add(fieldError.getDefaultMessage());
         }
         Collections.sort(list);
-        log.error("fieldErrors"+ JSON.toJSONString(list));
-        return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION,list);
+        log.error("fieldErrors" + JSON.toJSONString(list));
+        return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, list);
     }
 
     /**
      * 系统登录异常处理
+     *
      * @param exception
      * @return
      */
@@ -78,37 +82,81 @@ public class GlobalExceptionHandler {
 
     /**
      * HTTP解析请求参数异常
+     *
      * @param exception
      * @return
      */
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult httpMessageNotReadableException(HttpMessageNotReadableException exception) {
-        log.error("httpMessageNotReadableException:",exception);
+        log.error("httpMessageNotReadableException:", exception);
         return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, ApiCode.PARAMETER_PARSE_EXCEPTION);
     }
 
     /**
      * HTTP
+     *
      * @param exception
      * @return
      */
     @ExceptionHandler(value = HttpMediaTypeException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult httpMediaTypeException(HttpMediaTypeException exception) {
-        log.error("httpMediaTypeException:",exception);
+        log.error("httpMediaTypeException:", exception);
         return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, ApiCode.HTTP_MEDIA_TYPE_EXCEPTION);
     }
 
     /**
+     * 自定义业务/数据异常处理
+     *
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = {SpringBootPlusException.class})
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult springBootPlusExceptionHandler(SpringBootPlusException exception) {
+        log.error("springBootPlusException:", exception);
+        int errorCode;
+        if (exception instanceof BusinessException) {
+            errorCode = ApiCode.BUSINESS_EXCEPTION.getCode();
+        } else if (exception instanceof DaoException) {
+            errorCode = ApiCode.DAO_EXCEPTION.getCode();
+        } else if (exception instanceof VerificationCodeException) {
+            errorCode = ApiCode.VERIFICATION_CODE_EXCEPTION.getCode();
+        } else {
+            errorCode = ApiCode.SPRING_BOOT_PLUS_EXCEPTION.getCode();
+        }
+        return new ApiResult()
+                .setCode(errorCode)
+                .setMsg(exception.getMessage());
+    }
+
+
+    /**
+     * 登陆授权异常处理
+     *
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = AuthenticationException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult authenticationExceptionHandler(AuthenticationException exception) {
+        log.error("authenticationException:", exception);
+        return new ApiResult()
+                .setCode(ApiCode.AUTHENTICATION_EXCEPTION.getCode())
+                .setMsg(exception.getMessage());
+    }
+
+    /**
      * 默认的异常处理
+     *
      * @param exception
      * @return
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult exceptionHandler(Exception exception) {
-        log.error("exception:",exception);
+        log.error("exception:", exception);
         return ApiResult.fail(ApiCode.SYSTEM_EXCEPTION);
     }
 

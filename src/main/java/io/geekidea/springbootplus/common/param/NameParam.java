@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 /**
  * 名称参数
+ *
  * @author geekidea
  * @date 2018-11-08
  */

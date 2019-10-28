@@ -1,15 +1,12 @@
 spring-boot-plus:
   # 是否启用ansi控制台输出有颜色的字体，local环境建议开启，服务器环境设置为false
   enable-ansi: true
-  # 请求日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
-  request-log-format: true
-  # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
-  response-log-format: true
 
   # 拦截器配置
   interceptor-config:
     resource-config:
       include-path: ${spring-boot-plus.resource-access-patterns}
+
   # 文件上传下载配置
   upload-path: /opt/upload/
   # 资源访问路径
@@ -18,7 +15,6 @@ spring-boot-plus:
   resource-access-patterns: ${spring-boot-plus.resource-access-path}**
   # 资源访问全路径前缀：http://localhost:8888/resource/
   resource-access-url: http://localhost:${server.port}${server.servlet.context-path}${spring-boot-plus.resource-access-path}
-
 
 server:
   port: 8888

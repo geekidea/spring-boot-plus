@@ -14,14 +14,8 @@ import io.swagger.annotations.ApiOperation;
 #end
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-#if(${restControllerStyle})
-import org.springframework.web.bind.annotation.RestController;
-#else
-import org.springframework.stereotype.Controller;
-#end
+import org.springframework.web.bind.annotation.*;
+
 
 #if(${cfg.paramValidation})
 import javax.validation.Valid;
@@ -31,9 +25,9 @@ import ${cfg.paging};
 import ${cfg.idParamPath};
 
 /**
- * <p>
+ * <pre>
  * $!{table.comment} 前端控制器
- * </p>
+ * </pre>
  *
  * @author ${author}
  * @since ${date}
@@ -59,14 +53,18 @@ public class ${table.controllerName} {
     @Autowired
     private ${table.serviceName} ${cfg.serviceObjectName};
 
-#if(${cfg.generatorStrategy})
+#if(${cfg.generatorStrategy} != 'SIMPLE')
     /**
      * 添加$!{table.comment}
      */
     @PostMapping("/add")
     @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ApiResult.class)
     public ApiResult<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
+    #if(${cfg.generatorStrategy} == 'ALL')
+        boolean flag = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName});
+    #else
         boolean flag = ${cfg.serviceObjectName}.save(${cfg.entityObjectName});
+    #end
         return ApiResult.result(flag);
     }
 
@@ -76,27 +74,35 @@ public class ${table.controllerName} {
     @PostMapping("/update")
     @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ApiResult.class)
     public ApiResult<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
+    #if(${cfg.generatorStrategy} == 'ALL')
+        boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});
+    #else
         boolean flag = ${cfg.serviceObjectName}.updateById(${cfg.entityObjectName});
+    #end
         return ApiResult.result(flag);
     }
 
     /**
      * 删除$!{table.comment}
      */
-    @PostMapping("/delete")
+    @PostMapping("/delete/{id}")
     @ApiOperation(value = "删除${entity}对象", notes = "删除$!{table.comment}", response = ApiResult.class)
-    public ApiResult<Boolean> delete${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody IdParam idParam) throws Exception {
-        boolean flag = ${cfg.serviceObjectName}.removeById(idParam.getId());
+    public ApiResult<Boolean> delete${entity}(@PathVariable("id") Long id) throws Exception {
+    #if(${cfg.generatorStrategy} == 'ALL')
+        boolean flag = ${cfg.serviceObjectName}.delete${entity}(id);
+    #else
+        boolean flag = ${cfg.serviceObjectName}.removeById(id);
+    #end
         return ApiResult.result(flag);
     }
 
     /**
      * 获取$!{table.comment}
      */
-    @PostMapping("/info")
+    @GetMapping("/info/{id}")
     @ApiOperation(value = "获取${entity}对象详情", notes = "查看$!{table.comment}", response = ${entity}QueryVo.class)
-    public ApiResult<${entity}QueryVo> get${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody IdParam idParam) throws Exception {
-        ${entity}QueryVo ${cfg.entityObjectName}QueryVo = ${cfg.serviceObjectName}.get${entity}ById(idParam.getId());
+    public ApiResult<${entity}QueryVo> get${entity}(@PathVariable("id") Long id) throws Exception {
+        ${entity}QueryVo ${cfg.entityObjectName}QueryVo = ${cfg.serviceObjectName}.get${entity}ById(id);
         return ApiResult.ok(${cfg.entityObjectName}QueryVo);
     }
 
