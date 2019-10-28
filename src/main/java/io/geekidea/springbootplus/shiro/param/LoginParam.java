@@ -40,6 +40,9 @@ public class LoginParam {
     @ApiModelProperty("密码")
     private String password;
 
+    @ApiModelProperty("验证码Token")
+    private String verifyToken;
+
     @ApiModelProperty("验证码")
     private String code;
 

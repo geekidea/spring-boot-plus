@@ -17,17 +17,21 @@
 package io.geekidea.springbootplus.test;
 
 import io.geekidea.springbootplus.util.PasswordUtil;
+import org.junit.Assert;
 
 /**
  * 密码工具测试类
+ *
  * @author geekidea
  * @date 2019-10-05
  **/
 public class PasswordUtilTest {
     public static void main(String[] args) {
         String password = "123456";
-        String encryptPassword = PasswordUtil.encrypt(password);
+        String salt = "666";
+        String encryptPassword = PasswordUtil.encrypt(password, salt);
         System.out.println(encryptPassword);
         System.out.println(encryptPassword.length());
+        Assert.assertEquals(encryptPassword, "3108d080e3d39b4b8ad567405fa878c7dc9a31768b37a8a2c7ec72f511bb66cb");
     }
 }

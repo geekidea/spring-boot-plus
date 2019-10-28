@@ -9,10 +9,10 @@
 
 <p align="center">  
   <a href="https://github.com/geekidea/spring-boot-plus/">
-    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.3.1.RELEASE-blue">
+    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.4.0-blue">
   </a>
   <a href="https://github.com/spring-projects/spring-boot">
-    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.9.RELEASE-brightgreen">
+    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.2.0.RELEASE-brightgreen">
   </a>
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
@@ -58,12 +58,12 @@ Redis | 3.2+ |  |
 ### 技术选型 
 技术 | 版本 |  备注
 -|-|-
-Spring Boot | 2.1.9.RELEASE | 最新发布稳定版 |
-Spring Framework | 5.1.10.RELEASE | 最新发布稳定版 |
+Spring Boot | 2.2.0.RELEASE | 最新发布稳定版 |
+Spring Framework | 5.2.0.RELEASE | 最新发布稳定版 |
 Mybatis | 3.5.2 | 持久层框架 |
 Mybatis Plus | 3.2.0 | mybatis增强框架 |
 Alibaba Druid | 1.1.20 | 数据源 |
-Fastjson | 1.2.60 | JSON处理工具集 |
+Fastjson | 1.2.62 | JSON处理工具集 |
 swagger2 | 2.6.1 | api文档生成工具 |
 commons-lang3 | 3.9 | 常用工具包 |
 commons-io | 2.6 | IO工具包 |
@@ -73,9 +73,9 @@ reflections | 0.9.11 | 反射工具包 |
 hibernate-validator | 6.0.17.Final | 后台参数校验注解 |
 Shiro | 1.4.1 | 权限控制 |
 JWT | 3.8.3 | JSON WEB TOKEN |
-hutool-all | 4.6.10 | 常用工具集 |
-lombok | 1.18.8 | 注解生成Java Bean等工具 |
-mapstruct | 1.3.0.Final | 对象属性复制工具 |
+hutool-all | 5.0.3 | 常用工具集 |
+lombok | 1.18.10 | 注解生成Java Bean等工具 |
+mapstruct | 1.3.1.Final | 对象属性复制工具 |
 
 ## CHANGELOG
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
@@ -127,9 +127,9 @@ create table sys_user
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, status, create_time, update_time) 
+INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
     VALUES (1, 'admin', '管理员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', 'e4cc3292e3ebc483998adb2c0e4e640e', 'Administrator Account', 1, '2019-08-26 00:52:01', null);
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, status, create_time, update_time) 
+INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
     VALUES (2, 'test', '测试人员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', '99952b31c18156169a26bec80fd211f6', 'Tester Account', 1, '2019-10-05 14:04:27', null);
 
 ```
@@ -146,33 +146,78 @@ INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, r
 ```java
 /**
  * spring-boot-plus代码生成器入口类
+ *
  * @author geekidea
- * @date 2018-11-08
- */
-public class CodeGenerator {
-    private static final String USER_NAME = "root";
-    private static final String PASSWORD = "root";
-    private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-    private static final String DRIVER_URL = "jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false";   
-    // CODE... 
-    // ############################ 配置部分 start ############################
-    // 模块名称
-    private static final String MODULE_NAME = "system";
-    // 作者
-    private static final String AUTHOR = "geekidea";
-    // 生成的表名称
-    private static final String TABLE_NAME = "sys_user";
-    // 主键数据库列名称
-    private static final String PK_ID_COLUMN_NAME = "id";
-    // 代码生成策略 true：All/false:SIMPLE
-    private static final boolean GENERATOR_STRATEGY = true;
-    // 分页列表查询是否排序 true：有排序参数/false：无
-    private static final boolean PAGE_LIST_ORDER = false;
-    // ############################ 配置部分 end ############################
-    
+ * @date 2019-10-22
+ **/
+public class SpringBootPlusGenerator {
+
     public static void main(String[] args) {
-        // Run...
+        CodeGenerator codeGenerator = new CodeGenerator();
+        // 公共配置
+        // 数据库配置
+        codeGenerator
+                .setUserName("root")
+                .setPassword("root")
+                .setDriverName("com.mysql.jdbc.Driver")
+                .setDriverUrl("jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+
+        // 包信息
+        codeGenerator
+                .setProjectPackagePath("io/geekidea/springbootplus")
+                .setParentPackage("io.geekidea.springbootplus");
+
+        // 组件作者等配置
+        codeGenerator
+                .setModuleName("system")
+                .setAuthor("geekidea")
+                .setPkIdColumnName("id");
+
+        // 生成策略
+        codeGenerator
+                .setGeneratorStrategy(CodeGenerator.GeneratorStrategy.ALL)
+                .setPageListOrder(true)
+                .setParamValidation(true);
+
+        // 生成实体映射相关代码,可用于数据库字段更新
+        // 当数据库字段更新时，可自定义自动生成哪些那文件
+        codeGenerator
+                .setGeneratorEntity(true)
+                .setGeneratorQueryParam(true)
+                .setGeneratorQueryVo(true);
+
+        // 生成业务相关代码
+        codeGenerator
+                .setGeneratorController(true)
+                .setGeneratorService(true)
+                .setGeneratorServiceImpl(true)
+                .setGeneratorMapper(true)
+                .setGeneratorMapperXml(true);
+
+        // 是否覆盖已有文件
+        codeGenerator.setFileOverride(true);
+
+        // 初始化公共变量
+        codeGenerator.init();
+
+        // 需要生成的表数组
+        // xxx,yyy,zzz为需要生成代码的表名称
+        String[] tables = {
+                "xxx",
+                "yyy",
+                "zzz",
+        };
+
+        // 循环生成
+        for (String table : tables) {
+            // 设置需要生成的表名称
+            codeGenerator.setTableName(table);
+            // 生成代码
+            codeGenerator.generator();
+        }
+
     }
+
 }
 ```
 

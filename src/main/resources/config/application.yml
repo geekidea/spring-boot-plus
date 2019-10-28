@@ -40,10 +40,8 @@ spring:
 spring-boot-plus:
   # 是否启用ansi控制台输出有颜色的字体
   enable-ansi: true
-  # 请求日志在控制台是否格式化输出
-  request-log-format: true
-  # 响应日志在控制台是否格式化输出
-  response-log-format: true
+  # 是否启用验证码
+  enable-verify-code: false
   # 过滤器配置
   filter:
     # 请求路径Filter配置
@@ -70,6 +68,20 @@ spring-boot-plus:
     download:
       enabled: true
       include-paths: /download/**
+
+  # AOP配置
+  aop:
+    log:
+      # 是否启用
+      enabled: true
+      # 1.请求和响应分开，按照执行顺序打印
+      # 2.ThreadLocal线程绑定，方法执行结束时，连续打印请求和响应日志
+      # 3.ThreadLocal线程绑定，方法执行结束时，同时打印请求和响应日志
+      print-type: 1
+      # 请求日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
+      request-log-format: true
+      # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
+      response-log-format: true
 
   # 文件上传下载配置
   # 上传路径配置
@@ -117,6 +129,8 @@ spring-boot-plus:
 
   ######################## Spring Shiro start ########################
   shiro:
+    # 是否启用
+    enable: true
     # shiro ini 多行字符串配置
     filter-chain-definitions: |
       /=anon
@@ -126,6 +140,8 @@ spring-boot-plus:
       /hello/world=anon
       /ip/**=anon
       /sysLog/**=anon
+      /verificationCode/**=anon
+      /resource/**=anon
     # 权限配置
     permission:
         # 排除登陆登出相关
@@ -174,14 +190,21 @@ spring-boot-plus:
 
 ############################### mybatis-plus start #################################
 mybatis-plus:
+  # 启动时是否检查MyBatis XML文件是否存在
   check-config-location: true
+  # MyBatis原生配置
   configuration:
+    # 字段名称下划线转驼峰命名
     map-underscore-to-camel-case: true
   global-config:
     db-config:
+      # 全局默认主键类型
       id-type: id_worker
-      logic-delete-value: 0
-      logic-not-delete-value: 1
+      # 逻辑已删除值(默认为 1)
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0
+  # mapper xml映射路径
   mapper-locations: classpath*:mapper/**/*Mapper.xml
 ################################ mybatis-plus end ##################################
 
