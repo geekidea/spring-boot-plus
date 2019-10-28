@@ -115,11 +115,11 @@ public class LoginServiceImpl implements LoginService {
         }
 
         // 实际项目中，前端传过来的密码应先加密
-        // 原始密码：123456
-        // 加密规则：sha256(666666+123456) = 751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c
-        String encryptPassword = PasswordUtil.encrypt(loginParam.getPassword());
+        // 原始密码明文：123456
+        // 原始密码前端加密：sha256(123456)
+        // 后台加密规则：sha256(sha256(123456) + salt)
+        String encryptPassword = PasswordUtil.encrypt(loginParam.getPassword(), sysUser.getSalt());
         if (!encryptPassword.equals(sysUser.getPassword())) {
-            log.error("用户名或密码错误");
             throw new AuthenticationException("用户名或密码错误");
         }
 

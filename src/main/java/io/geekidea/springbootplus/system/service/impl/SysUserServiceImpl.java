@@ -77,11 +77,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         // 校验部门和角色
         checkDepartmentAndRole(sysUser.getDepartmentId(), sysUser.getRoleId());
         // 生成盐值
-        sysUser.setSalt(SaltUtil.generateSalt());
+        String salt = SaltUtil.generateSalt();
+        sysUser.setSalt(salt);
         sysUser.setId(null);
 
         // 密码加密
-        String newPassword = PasswordUtil.encrypt(sysUser.getPassword());
+        String newPassword = PasswordUtil.encrypt(sysUser.getPassword(), salt);
         sysUser.setPassword(newPassword);
 
         // 保存系统用户
@@ -178,12 +179,13 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
             throw new BusinessException("用户已禁用");
         }
         // 密码加密处理
-        String encryptOldPassword = PasswordUtil.encrypt(oldPassword);
+        String salt = sysUser.getSalt();
+        String encryptOldPassword = PasswordUtil.encrypt(oldPassword, salt);
         if (!sysUser.getPassword().equals(encryptOldPassword)) {
             throw new BusinessException("原密码错误");
         }
         // 新密码加密
-        String encryptNewPassword = PasswordUtil.encrypt(newPassword);
+        String encryptNewPassword = PasswordUtil.encrypt(newPassword, salt);
 
         // 修改密码
         sysUser.setPassword(encryptNewPassword)
@@ -196,6 +198,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         SysUser sysUser = new SysUser()
                 .setId(id)
                 .setHead(headPath);
-         return updateById(sysUser);
+        return updateById(sysUser);
     }
 }

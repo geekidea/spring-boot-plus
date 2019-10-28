@@ -104,8 +104,8 @@ public class SysPermissionController extends BaseController {
      * 获取所有菜单列表
      */
     @PostMapping("/getAllMenuList")
-    @ApiOperation(value = "获取所有菜单列表", notes = "获取所有菜单列表", response = SysPermissionTreeVo.class)
-    public ApiResult<SysPermissionTreeVo> getAllMenuList() throws Exception {
+    @ApiOperation(value = "获取所有菜单列表", notes = "获取所有菜单列表", response = SysPermission.class)
+    public ApiResult<SysPermission> getAllMenuList() throws Exception {
         List<SysPermission> list = sysPermissionService.getAllMenuList();
         return ApiResult.ok(list);
     }
@@ -125,8 +125,8 @@ public class SysPermissionController extends BaseController {
      * 根据用户id获取菜单列表
      */
     @PostMapping("/getMenuListByUserId/{userId}")
-    @ApiOperation(value = "根据用户id获取菜单列表", notes = "根据用户id获取菜单列表", response = SysPermissionTreeVo.class)
-    public ApiResult<SysPermissionTreeVo> getMenuListByUserId(@PathVariable("userId") Long userId) throws Exception {
+    @ApiOperation(value = "根据用户id获取菜单列表", notes = "根据用户id获取菜单列表", response = SysPermission.class)
+    public ApiResult<SysPermission> getMenuListByUserId(@PathVariable("userId") Long userId) throws Exception {
         List<SysPermission> list = sysPermissionService.getMenuListByUserId(userId);
         return ApiResult.ok(list);
     }
