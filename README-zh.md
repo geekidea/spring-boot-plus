@@ -146,33 +146,78 @@ INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, r
 ```java
 /**
  * spring-boot-plus代码生成器入口类
+ *
  * @author geekidea
- * @date 2018-11-08
- */
-public class CodeGenerator {
-    private static final String USER_NAME = "root";
-    private static final String PASSWORD = "root";
-    private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-    private static final String DRIVER_URL = "jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false";   
-    // CODE... 
-    // ############################ 配置部分 start ############################
-    // 模块名称
-    private static final String MODULE_NAME = "system";
-    // 作者
-    private static final String AUTHOR = "geekidea";
-    // 生成的表名称
-    private static final String TABLE_NAME = "sys_user";
-    // 主键数据库列名称
-    private static final String PK_ID_COLUMN_NAME = "id";
-    // 代码生成策略 true：All/false:SIMPLE
-    private static final boolean GENERATOR_STRATEGY = true;
-    // 分页列表查询是否排序 true：有排序参数/false：无
-    private static final boolean PAGE_LIST_ORDER = false;
-    // ############################ 配置部分 end ############################
-    
+ * @date 2019-10-22
+ **/
+public class SpringBootPlusGenerator {
+
     public static void main(String[] args) {
-        // Run...
+        CodeGenerator codeGenerator = new CodeGenerator();
+        // 公共配置
+        // 数据库配置
+        codeGenerator
+                .setUserName("root")
+                .setPassword("root")
+                .setDriverName("com.mysql.jdbc.Driver")
+                .setDriverUrl("jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+
+        // 包信息
+        codeGenerator
+                .setProjectPackagePath("io/geekidea/springbootplus")
+                .setParentPackage("io.geekidea.springbootplus");
+
+        // 组件作者等配置
+        codeGenerator
+                .setModuleName("system")
+                .setAuthor("geekidea")
+                .setPkIdColumnName("id");
+
+        // 生成策略
+        codeGenerator
+                .setGeneratorStrategy(CodeGenerator.GeneratorStrategy.ALL)
+                .setPageListOrder(true)
+                .setParamValidation(true);
+
+        // 生成实体映射相关代码,可用于数据库字段更新
+        // 当数据库字段更新时，可自定义自动生成哪些那文件
+        codeGenerator
+                .setGeneratorEntity(true)
+                .setGeneratorQueryParam(true)
+                .setGeneratorQueryVo(true);
+
+        // 生成业务相关代码
+        codeGenerator
+                .setGeneratorController(true)
+                .setGeneratorService(true)
+                .setGeneratorServiceImpl(true)
+                .setGeneratorMapper(true)
+                .setGeneratorMapperXml(true);
+
+        // 是否覆盖已有文件
+        codeGenerator.setFileOverride(true);
+
+        // 初始化公共变量
+        codeGenerator.init();
+
+        // 需要生成的表数组
+        // xxx,yyy,zzz为需要生成代码的表名称
+        String[] tables = {
+                "xxx",
+                "yyy",
+                "zzz",
+        };
+
+        // 循环生成
+        for (String table : tables) {
+            // 设置需要生成的表名称
+            codeGenerator.setTableName(table);
+            // 生成代码
+            codeGenerator.generator();
+        }
+
     }
+
 }
 ```
 
