@@ -149,33 +149,76 @@ INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, r
 ```java
 /**
  * spring-boot-plus Code Generator
+ *
  * @author geekidea
- * @date 2018-11-08
- */
-public class CodeGenerator {
-    private static final String USER_NAME = "root";
-    private static final String PASSWORD = "root";
-    private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-    private static final String DRIVER_URL = "jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false";   
-    // CODE... 
-    // ############################ Config start ############################
-    // Module name
-    private static final String MODULE_NAME = "system";
-    // Author
-    private static final String AUTHOR = "geekidea";
-    // Table name
-    private static final String TABLE_NAME = "sys_user";
-    // Primary key id
-    private static final String PK_ID_COLUMN_NAME = "id";
-    // Generator strategy.  true：All / false:SIMPLE
-    private static final boolean GENERATOR_STRATEGY = true;
-    // Pagination list query Whether to sort. true：sort/false：non
-    private static final boolean PAGE_LIST_ORDER = false;
-    // ############################ Config end ############################
+ * @date 2019-10-22
+ **/
+public class SpringBootPlusGenerator {
 
     public static void main(String[] args) {
-        // Run...
+        CodeGenerator codeGenerator = new CodeGenerator();
+        // Common configuration
+        // Database configuration
+        codeGenerator
+                .setUserName("root")
+                .setPassword("root")
+                .setDriverName("com.mysql.jdbc.Driver")
+                .setDriverUrl("jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+
+        // Configuration package information
+        codeGenerator
+                .setProjectPackagePath("io/geekidea/springbootplus")
+                .setParentPackage("io.geekidea.springbootplus");
+
+        // Configuration of component author, etc.
+        codeGenerator
+                .setModuleName("system")
+                .setAuthor("geekidea")
+                .setPkIdColumnName("id");
+
+        // Generation strategy
+        codeGenerator
+                .setGeneratorStrategy(CodeGenerator.GeneratorStrategy.ALL)
+                .setPageListOrder(true)
+                .setParamValidation(true);
+
+        // Customize which files are generated automatically
+        codeGenerator
+                .setGeneratorEntity(true)
+                .setGeneratorQueryParam(true)
+                .setGeneratorQueryVo(true);
+
+        // Generate business related codes
+        codeGenerator
+                .setGeneratorController(true)
+                .setGeneratorService(true)
+                .setGeneratorServiceImpl(true)
+                .setGeneratorMapper(true)
+                .setGeneratorMapperXml(true);
+
+        // Overwrite existing file or not
+        codeGenerator.setFileOverride(true);
+
+        // Initialize common variables
+        codeGenerator.init();
+
+        // Table array to be generated
+        String[] tables = {
+                "xxx",
+                "yyy",
+                "zzz",
+        };
+
+        // Cycle generation
+        for (String table : tables) {
+            // Set the name of the table to be generated
+            codeGenerator.setTableName(table);
+            // Generate code
+            codeGenerator.generator();
+        }
+
     }
+
 }
 ```
 
