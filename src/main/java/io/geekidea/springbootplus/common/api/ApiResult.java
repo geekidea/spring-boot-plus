@@ -42,16 +42,32 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 public class ApiResult<T> implements Serializable {
-
+    /**
+     * 响应码
+     */
     private int code;
 
-    private T data;
-
+    /**
+     * 响应消息
+     */
     private String msg;
 
+    /**
+     * 是否成功
+     */
+    private boolean success;
+
+    /**
+     * 响应数据
+     */
+    private T data;
+
+    /**
+     * 响应时间
+     */
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date time;
+    private Date time  = new Date();
 
     public ApiResult() {
 
@@ -61,7 +77,7 @@ public class ApiResult<T> implements Serializable {
         if (flag){
             return ok();
         }
-        return fail("");
+        return fail();
     }
 
     public static ApiResult result(ApiCode apiCode){
@@ -73,6 +89,10 @@ public class ApiResult<T> implements Serializable {
     }
 
     public static ApiResult result(ApiCode apiCode,String msg,Object data){
+        boolean success = false;
+        if (apiCode.getCode() == ApiCode.SUCCESS.getCode()){
+            success = true;
+        }
         String message = apiCode.getMsg();
         if (StringUtils.isNotBlank(msg)){
             message = msg;
@@ -81,6 +101,7 @@ public class ApiResult<T> implements Serializable {
                 .code(apiCode.getCode())
                 .msg(message)
                 .data(data)
+                .success(success)
                 .time(new Date())
                 .build();
     }

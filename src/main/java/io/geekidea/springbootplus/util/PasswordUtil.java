@@ -28,13 +28,22 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Slf4j
 public class PasswordUtil {
-    private static final String KEY = "666666";
 
-    public static String encrypt(String pwd) {
+    /**
+     * 密码加盐，再加密
+     *
+     * @param pwd
+     * @param salt
+     * @return
+     */
+    public static String encrypt(String pwd, String salt) {
         if (StringUtils.isBlank(pwd)) {
-            return null;
+            throw new IllegalArgumentException("密码不能为空");
         }
-        return DigestUtils.sha256Hex(KEY + pwd);
+        if (StringUtils.isBlank(salt)) {
+            throw new IllegalArgumentException("盐值不能为空");
+        }
+        return DigestUtils.sha256Hex(pwd + salt);
     }
 
 }

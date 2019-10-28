@@ -21,7 +21,7 @@
 
     <groupId>io.geekidea</groupId>
     <artifactId>spring-boot-plus</artifactId>
-    <version>1.3.1.RELEASE</version>
+    <version>1.4.0</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-plus</name>
@@ -46,8 +46,8 @@
         <project.build.sourceEncoding>${utf8}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${utf8}</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <spring-boot.version>2.1.9.RELEASE</spring-boot.version>
-        <spring-boot-admin.version>2.1.6</spring-boot-admin.version>
+        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
+        <spring-boot-admin.version>2.2.0-SNAPSHOT</spring-boot-admin.version>
         <mybatis-plus-boot-starter.version>3.2.0</mybatis-plus-boot-starter.version>
         <swagger2.version>2.6.1</swagger2.version>
         <commons-lang3.version>3.9</commons-lang3.version>
@@ -63,11 +63,11 @@
         <druid.version>1.1.20</druid.version>
         <reflections.version>0.9.11</reflections.version>
         <jansi.version>1.18</jansi.version>
-        <lombok.version>1.18.8</lombok.version>
-        <hutool.version>4.6.10</hutool.version>
+        <lombok.version>1.18.10</lombok.version>
+        <hutool.version>5.0.3</hutool.version>
         <junit.version>4.12</junit.version>
         <ini4j.version>0.5.4</ini4j.version>
-        <mapstruct.version>1.3.0.Final</mapstruct.version>
+        <mapstruct.version>1.3.1.Final</mapstruct.version>
         <shiro.version>1.4.1</shiro.version>
         <jwt.version>3.8.3</jwt.version>
 
@@ -234,7 +234,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -274,17 +274,11 @@
             <version>${ini4j.version}</version>
         </dependency>
 
-        <!-- 对象属性复制 -->
+        <!-- 对象属性复制 https://mapstruct.org/ -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${mapstruct.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Shiro+JWT start -->
@@ -307,7 +301,6 @@
             <artifactId>commons-text</artifactId>
             <version>${commons-text.version}</version>
         </dependency>
-
 
     </dependencies>
 
@@ -334,7 +327,7 @@
                     <include>application.yml</include>
                     <include>application-${profileActive}.yml</include>
                     <include>banner.txt</include>
-                    <include>logback.xml</include>
+                    <include>*.xml</include>
                     <include>*.properties</include>
                 </includes>
             </resource>
@@ -372,6 +365,18 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 
@@ -489,6 +494,7 @@
             <name>aliyun-maven</name>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
+        <!-- 阿里云spring仓库 -->
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
@@ -499,6 +505,18 @@
             <id>central</id>
             <name>maven-central</name>
             <url>http://central.maven.org/maven2/</url>
+        </repository>
+        <!-- 快照仓库 -->
+        <repository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </repository>
     </repositories>
 

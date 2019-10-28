@@ -28,24 +28,25 @@ import java.util.List;
 
 /**
  * 可排序查询参数对象
+ *
  * @author geekidea
  * @since 2019-08-04
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("可排序查询参数对象")
-public abstract class OrderQueryParam extends QueryParam{
+public abstract class OrderQueryParam extends QueryParam {
     private static final long serialVersionUID = 57714391204790143L;
 
     @ApiModelProperty(value = "排序")
     private List<OrderItem> orders;
 
-    public void defaultOrder(OrderItem orderItem){
+    public void defaultOrder(OrderItem orderItem) {
         this.defaultOrders(Arrays.asList(orderItem));
     }
 
-    public void defaultOrders(List<OrderItem> orderItems){
-        if (CollectionUtils.isEmpty(orderItems)){
+    public void defaultOrders(List<OrderItem> orderItems) {
+        if (CollectionUtils.isEmpty(orderItems)) {
             return;
         }
         this.orders = orderItems;

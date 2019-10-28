@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 
 /**
- * <p>
+ * <pre>
  * $!{table.comment} Mapper 接口
- * </p>
+ * </pre>
  *
  * @author ${author}
  * @since ${date}

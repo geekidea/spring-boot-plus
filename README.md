@@ -9,10 +9,10 @@
 
 <p align="center">  
   <a href="https://github.com/geekidea/spring-boot-plus/">
-    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.3.1.RELEASE-blue">
+    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-1.4.0-blue">
   </a>
   <a href="https://github.com/spring-projects/spring-boot">
-    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.1.9.RELEASE-brightgreen">
+    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.2.0.RELEASE-brightgreen">
   </a>
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
@@ -60,12 +60,12 @@ Redis | 3.2+ |  |
 ### Technology stack 
 Component| Version |  Remark
 -|-|-
-Spring Boot | 2.1.9.RELEASE | Latest release stable version |
-Spring Framework | 5.1.10.RELEASE | Latest release stable version |
+Spring Boot | 2.2.0.RELEASE | Latest release stable version |
+Spring Framework | 5.2.0.RELEASE | Latest release stable version |
 Mybatis | 3.5.2 | DAO Framework |
 Mybatis Plus | 3.2.0 | mybatis Enhanced framework |
 Alibaba Druid | 1.1.20 | Data source |
-Fastjson | 1.2.60 | JSON processing toolset |
+Fastjson | 1.2.62 | JSON processing toolset |
 swagger2 | 2.6.1 | Api document generation tool |
 commons-lang3 | 3.9 | Apache language toolkit |
 commons-io | 2.6 | Apache IO Toolkit |
@@ -75,9 +75,9 @@ reflections | 0.9.11 | Reflection Toolkit  |
 hibernate-validator | 6.0.17.Final | Validator toolkit |
 Shiro | 1.4.1 | Permission control |
 JWT | 3.8.3 | JSON WEB TOKEN |
-hutool-all | 4.6.10 | Common toolset |
-lombok | 1.18.8 | Automatically plugs |
-mapstruct | 1.3.0.Final | Object property replication tool |
+hutool-all | 5.0.3 | Common toolset |
+lombok | 1.18.10 | Automatically plugs |
+mapstruct | 1.3.1.Final | Object property replication tool |
 
 ## CHANGELOG
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
@@ -129,10 +129,10 @@ create table sys_user
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, status, create_time, update_time) 
+INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
     VALUES (1, 'admin', 'Administrators', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', 'e4cc3292e3ebc483998adb2c0e4e640e', 'Administrator Account', 1, '2019-08-26 00:52:01', null);
 
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, status, create_time, update_time) 
+INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
     VALUES (2, 'test', 'Testers', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', '99952b31c18156169a26bec80fd211f6', 'Tester Account', 1, '2019-10-05 14:04:27', null);
 
 ```
@@ -149,33 +149,76 @@ INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, r
 ```java
 /**
  * spring-boot-plus Code Generator
+ *
  * @author geekidea
- * @date 2018-11-08
- */
-public class CodeGenerator {
-    private static final String USER_NAME = "root";
-    private static final String PASSWORD = "root";
-    private static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
-    private static final String DRIVER_URL = "jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false";   
-    // CODE... 
-    // ############################ Config start ############################
-    // Module name
-    private static final String MODULE_NAME = "system";
-    // Author
-    private static final String AUTHOR = "geekidea";
-    // Table name
-    private static final String TABLE_NAME = "sys_user";
-    // Primary key id
-    private static final String PK_ID_COLUMN_NAME = "id";
-    // Generator strategy.  true：All / false:SIMPLE
-    private static final boolean GENERATOR_STRATEGY = true;
-    // Pagination list query Whether to sort. true：sort/false：non
-    private static final boolean PAGE_LIST_ORDER = false;
-    // ############################ Config end ############################
+ * @date 2019-10-22
+ **/
+public class SpringBootPlusGenerator {
 
     public static void main(String[] args) {
-        // Run...
+        CodeGenerator codeGenerator = new CodeGenerator();
+        // Common configuration
+        // Database configuration
+        codeGenerator
+                .setUserName("root")
+                .setPassword("root")
+                .setDriverName("com.mysql.jdbc.Driver")
+                .setDriverUrl("jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+
+        // Configuration package information
+        codeGenerator
+                .setProjectPackagePath("io/geekidea/springbootplus")
+                .setParentPackage("io.geekidea.springbootplus");
+
+        // Configuration of component author, etc.
+        codeGenerator
+                .setModuleName("system")
+                .setAuthor("geekidea")
+                .setPkIdColumnName("id");
+
+        // Generation strategy
+        codeGenerator
+                .setGeneratorStrategy(CodeGenerator.GeneratorStrategy.ALL)
+                .setPageListOrder(true)
+                .setParamValidation(true);
+
+        // Customize which files are generated automatically
+        codeGenerator
+                .setGeneratorEntity(true)
+                .setGeneratorQueryParam(true)
+                .setGeneratorQueryVo(true);
+
+        // Generate business related codes
+        codeGenerator
+                .setGeneratorController(true)
+                .setGeneratorService(true)
+                .setGeneratorServiceImpl(true)
+                .setGeneratorMapper(true)
+                .setGeneratorMapperXml(true);
+
+        // Overwrite existing file or not
+        codeGenerator.setFileOverride(true);
+
+        // Initialize common variables
+        codeGenerator.init();
+
+        // Table array to be generated
+        String[] tables = {
+                "xxx",
+                "yyy",
+                "zzz",
+        };
+
+        // Cycle generation
+        for (String table : tables) {
+            // Set the name of the table to be generated
+            codeGenerator.setTableName(table);
+            // Generate code
+            codeGenerator.generator();
+        }
+
     }
+
 }
 ```
 

@@ -23,6 +23,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
+ * 系统用户对象转换器
+ *
  * @author geekidea
  * @date 2019-10-05
  **/
@@ -33,6 +35,7 @@ public interface SysUserConvert {
 
     /**
      * 系统用户实体对象转换成登陆用户VO对象
+     *
      * @param sysUser
      * @return
      */
@@ -45,5 +48,6 @@ public interface SysUserConvert {
      * @return
      */
     LoginSysUserRedisVo loginSysUserVoToLoginSysUserRedisVo(LoginSysUserVo loginSysUserVo);
+
 
 }
