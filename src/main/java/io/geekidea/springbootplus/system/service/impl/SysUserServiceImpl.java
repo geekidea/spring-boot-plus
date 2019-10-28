@@ -28,10 +28,12 @@ import io.geekidea.springbootplus.shiro.util.SaltUtil;
 import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.mapper.SysUserMapper;
 import io.geekidea.springbootplus.system.param.SysUserQueryParam;
+import io.geekidea.springbootplus.system.param.UpdatePasswordParam;
 import io.geekidea.springbootplus.system.service.SysDepartmentService;
 import io.geekidea.springbootplus.system.service.SysRoleService;
 import io.geekidea.springbootplus.system.service.SysUserService;
 import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
+import io.geekidea.springbootplus.util.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -76,6 +78,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         checkDepartmentAndRole(sysUser.getDepartmentId(), sysUser.getRoleId());
         // 生成盐值
         sysUser.setSalt(SaltUtil.generateSalt());
+        sysUser.setId(null);
+
+        // 密码加密
+        String newPassword = PasswordUtil.encrypt(sysUser.getPassword());
+        sysUser.setPassword(newPassword);
+
         // 保存系统用户
         return super.save(sysUser);
     }
@@ -90,10 +98,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         if (updateSysUser == null) {
             throw new BusinessException("修改的用户不存在");
         }
-        Integer state = updateSysUser.getState();
-        if (state != StateEnum.ENABLE.ordinal()) {
-            throw new BusinessException("该用户已禁用");
-        }
+
         // 修改系统用户
         updateSysUser.setNickname(sysUser.getNickname())
                 .setPhone(sysUser.getPhone())
@@ -146,10 +151,51 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
 
     @Override
     public boolean isExistsSysUserByRoleId(Long roleId) throws Exception {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("role_id", roleId);
-        queryWrapper.eq("state", StateEnum.ENABLE.ordinal());
-        return sysUserMapper.selectCount(queryWrapper) > 0;
+        SysUser sysUser = new SysUser()
+                .setState(StateEnum.ENABLE.ordinal())
+                .setRoleId(roleId);
+        return sysUserMapper.selectCount(new QueryWrapper(sysUser)) > 0;
     }
 
+    @Override
+    public boolean updatePassword(UpdatePasswordParam updatePasswordParam) throws Exception {
+        String oldPassword = updatePasswordParam.getOldPassword();
+        String newPassword = updatePasswordParam.getNewPassword();
+        String confirmPassword = updatePasswordParam.getConfirmPassword();
+        if (!newPassword.equals(confirmPassword)) {
+            throw new BusinessException("两次输入的密码不一致");
+        }
+        if (newPassword.equals(oldPassword)) {
+            throw new BusinessException("新密码和旧密码不能一致");
+        }
+
+        // 判断原密码是否正确
+        SysUser sysUser = getById(updatePasswordParam.getUserId());
+        if (sysUser == null) {
+            throw new BusinessException("用户不存在");
+        }
+        if (StateEnum.DISABLE.getKey().equals(sysUser.getState())) {
+            throw new BusinessException("用户已禁用");
+        }
+        // 密码加密处理
+        String encryptOldPassword = PasswordUtil.encrypt(oldPassword);
+        if (!sysUser.getPassword().equals(encryptOldPassword)) {
+            throw new BusinessException("原密码错误");
+        }
+        // 新密码加密
+        String encryptNewPassword = PasswordUtil.encrypt(newPassword);
+
+        // 修改密码
+        sysUser.setPassword(encryptNewPassword)
+                .setUpdateTime(new Date());
+        return updateById(sysUser);
+    }
+
+    @Override
+    public boolean updateSysUserHead(Long id, String headPath) throws Exception {
+        SysUser sysUser = new SysUser()
+                .setId(id)
+                .setHead(headPath);
+         return updateById(sysUser);
+    }
 }

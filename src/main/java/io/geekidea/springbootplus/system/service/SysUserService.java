@@ -20,6 +20,7 @@ import io.geekidea.springbootplus.common.service.BaseService;
 import io.geekidea.springbootplus.common.vo.Paging;
 import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.param.SysUserQueryParam;
+import io.geekidea.springbootplus.system.param.UpdatePasswordParam;
 import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
 
 import java.io.Serializable;
@@ -81,6 +82,7 @@ public interface SysUserService extends BaseService<SysUser> {
 
     /**
      * 判断用户名是否存在
+     *
      * @param username
      * @return
      * @throws Exception
@@ -98,10 +100,29 @@ public interface SysUserService extends BaseService<SysUser> {
 
     /**
      * 通过角色id判断是否存在可用用户id
+     *
      * @param roleId
      * @return
      * @throws Exception
      */
     boolean isExistsSysUserByRoleId(Long roleId) throws Exception;
 
+    /**
+     * 修改密码
+     *
+     * @param updatePasswordParam
+     * @return
+     * @throws Exception
+     */
+    boolean updatePassword(UpdatePasswordParam updatePasswordParam) throws Exception;
+
+    /**
+     * 修改系统用户头像
+     *
+     * @param id
+     * @param headPath
+     * @return
+     * @throws Exception
+     */
+    boolean updateSysUserHead(Long id, String headPath) throws Exception;
 }

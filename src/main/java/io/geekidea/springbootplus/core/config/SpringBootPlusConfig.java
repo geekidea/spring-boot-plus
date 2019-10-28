@@ -15,7 +15,6 @@
  */
 package io.geekidea.springbootplus.core.config;
 
-import io.geekidea.springbootplus.aop.LogAop;
 import io.geekidea.springbootplus.core.properties.*;
 import io.geekidea.springbootplus.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.resource.interceptor.DownloadInterceptor;
@@ -43,20 +42,6 @@ import org.springframework.context.annotation.Configuration;
         SpringBootPlusAopProperties.class
 })
 public class SpringBootPlusConfig {
-
-    /**
-     * 配置日志AOP
-     *
-     * @param aopProperties
-     * @return
-     */
-    @Bean
-    public LogAop logAop(SpringBootPlusAopProperties aopProperties) {
-        LogAop logAop = new LogAop();
-        logAop.setLogAopConfig(aopProperties.getLog());
-        log.debug("init LogAop success");
-        return logAop;
-    }
 
     /**
      * 权限拦截器

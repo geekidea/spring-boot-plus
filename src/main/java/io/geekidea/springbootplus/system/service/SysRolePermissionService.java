@@ -16,14 +16,10 @@
 
 package io.geekidea.springbootplus.system.service;
 
-import io.geekidea.springbootplus.system.entity.SysRolePermission;
 import io.geekidea.springbootplus.common.service.BaseService;
-import io.geekidea.springbootplus.system.param.SysRolePermissionQueryParam;
-import io.geekidea.springbootplus.system.vo.SysRolePermissionQueryVo;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.system.entity.SysRolePermission;
 import org.apache.commons.collections4.SetUtils;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -48,42 +44,6 @@ public interface SysRolePermissionService extends BaseService<SysRolePermission>
     boolean saveSysRolePermission(Long roleId, List<Long> permissionIds) throws Exception;
 
     /**
-     * 修改
-     *
-     * @param sysRolePermission
-     * @return
-     * @throws Exception
-     */
-    boolean updateSysRolePermission(SysRolePermission sysRolePermission) throws Exception;
-
-    /**
-     * 删除
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    boolean deleteSysRolePermission(Long id) throws Exception;
-
-    /**
-     * 根据ID获取查询对象
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    SysRolePermissionQueryVo getSysRolePermissionById(Serializable id) throws Exception;
-
-    /**
-     * 获取分页对象
-     *
-     * @param sysRolePermissionQueryParam
-     * @return
-     * @throws Exception
-     */
-    Paging<SysRolePermissionQueryVo> getSysRolePermissionPageList(SysRolePermissionQueryParam sysRolePermissionQueryParam) throws Exception;
-
-    /**
      * 根据角色id获取权限id列表
      *
      * @param roleId
@@ -105,11 +65,11 @@ public interface SysRolePermissionService extends BaseService<SysRolePermission>
     /**
      * 根据角色id删除关联的权限关系
      *
-     * @param id
+     * @param roleId
      * @return
      * @throws Exception
      */
-    boolean deleteSysRolePermissionByRoleId(Long id) throws Exception;
+    boolean deleteSysRolePermissionByRoleId(Long roleId) throws Exception;
 
     /**
      * 根据角色id获取可用的权限编码
@@ -119,5 +79,14 @@ public interface SysRolePermissionService extends BaseService<SysRolePermission>
      * @throws Exception
      */
     Set<String> getPermissionCodesByRoleId(Long roleId) throws Exception;
+
+    /**
+     * 通过角色id判断在角色权限表中是否有数据存在
+     *
+     * @param permissionId
+     * @return
+     * @throws Exception
+     */
+    boolean isExistsByPermissionId(Long permissionId) throws Exception;
 
 }

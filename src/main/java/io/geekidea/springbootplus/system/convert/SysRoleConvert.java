@@ -16,38 +16,27 @@
 
 package io.geekidea.springbootplus.system.convert;
 
-import io.geekidea.springbootplus.shiro.vo.LoginSysUserRedisVo;
-import io.geekidea.springbootplus.shiro.vo.LoginSysUserVo;
-import io.geekidea.springbootplus.system.entity.SysUser;
+import io.geekidea.springbootplus.system.entity.SysRole;
+import io.geekidea.springbootplus.system.param.sysrole.AddSysRoleParam;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
- * 系统用户对象转换器
+ * 系统角色转换器
  *
  * @author geekidea
  * @date 2019-10-05
  **/
 @Mapper
-public interface SysUserConvert {
+public interface SysRoleConvert {
 
-    SysUserConvert INSTANCE = Mappers.getMapper(SysUserConvert.class);
-
-    /**
-     * 系统用户实体对象转换成登陆用户VO对象
-     *
-     * @param sysUser
-     * @return
-     */
-    LoginSysUserVo sysUserToLoginSysUserVo(SysUser sysUser);
+    SysRoleConvert INSTANCE = Mappers.getMapper(SysRoleConvert.class);
 
     /**
-     * LoginSysUserVo对象转换成LoginSysUserRedisVo
+     * AddSysRoleParam转SysRole
      *
-     * @param loginSysUserVo
+     * @param addSysRoleParam
      * @return
      */
-    LoginSysUserRedisVo loginSysUserVoToLoginSysUserRedisVo(LoginSysUserVo loginSysUserVo);
-
-
+    SysRole addSysRoleParamToSysRole(AddSysRoleParam addSysRoleParam);
 }

@@ -21,6 +21,7 @@ import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.system.exception.VerificationCodeException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
@@ -127,6 +128,22 @@ public class GlobalExceptionHandler {
         }
         return new ApiResult()
                 .setCode(errorCode)
+                .setMsg(exception.getMessage());
+    }
+
+
+    /**
+     * 登陆授权异常处理
+     *
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = AuthenticationException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult authenticationExceptionHandler(AuthenticationException exception) {
+        log.error("authenticationException:", exception);
+        return new ApiResult()
+                .setCode(ApiCode.AUTHENTICATION_EXCEPTION.getCode())
                 .setMsg(exception.getMessage());
     }
 

@@ -31,6 +31,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.fusesource.jansi.Ansi;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -86,8 +87,12 @@ public abstract class AbstractLogAop {
     /**
      * AOP配置
      */
-    protected SpringBootPlusAopProperties.LogAopConfig logAopConfig = new SpringBootPlusAopProperties.LogAopConfig();
+    protected SpringBootPlusAopProperties.LogAopConfig logAopConfig;
 
+    @Autowired
+    public void setSpringBootPlusAopProperties(SpringBootPlusAopProperties springBootPlusAopProperties) {
+        logAopConfig = springBootPlusAopProperties.getLog();
+    }
 
     /**
      * 环绕通知
@@ -422,7 +427,6 @@ public abstract class AbstractLogAop {
         }
         return jsonObject;
     }
-
 
 
 }

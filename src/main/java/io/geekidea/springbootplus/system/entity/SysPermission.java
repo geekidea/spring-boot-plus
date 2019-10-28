@@ -18,7 +18,6 @@ package io.geekidea.springbootplus.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
 import io.geekidea.springbootplus.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -85,11 +84,8 @@ public class SysPermission extends BaseEntity {
     @ApiModelProperty(value = "备注")
     private String remark;
 
-    @ApiModelProperty(value = "逻辑删除，0：未删除，1：已删除")
-    @TableLogic
-    private Integer deleted;
-
     @ApiModelProperty(value = "版本")
+    @Null(message = "版本不用传")
     @Version
     private Integer version;
 
