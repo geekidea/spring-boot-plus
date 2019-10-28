@@ -17,13 +17,11 @@
 package io.geekidea.springbootplus.aop;
 
 import io.geekidea.springbootplus.core.aop.AbstractLogAop;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-
-import java.util.Map;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -34,9 +32,9 @@ import java.util.Map;
  * @author geekidea
  * @date 2019-10-23
  */
-@Data
 @Slf4j
 @Aspect
+@Component
 public class LogAop extends AbstractLogAop {
 
     /**
@@ -48,16 +46,6 @@ public class LogAop extends AbstractLogAop {
     @Override
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         return super.handle(joinPoint);
-    }
-
-    @Override
-    protected void handleRequestInfo(Map<String, Object> map) {
-        super.handleRequestInfo(map);
-    }
-
-    @Override
-    protected void handleResponseInfo(Object result) {
-        super.handleResponseInfo(result);
     }
 
 }

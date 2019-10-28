@@ -63,5 +63,13 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @return
      * @throws Exception
      */
-    List<String> getPermissionCodeByUserId(@Param("userId") Long userId) throws Exception;
+    List<String> getPermissionCodesByUserId(@Param("userId") Long userId);
+
+    /**
+     * 根据用户id获取菜单列表
+     *
+     * @param userId
+     * @return
+     */
+    List<SysPermission> getMenuListByUserId(@Param("userId") Long userId);
 }

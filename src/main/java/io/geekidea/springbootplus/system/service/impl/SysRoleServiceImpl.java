@@ -17,6 +17,7 @@
 package io.geekidea.springbootplus.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -25,6 +26,7 @@ import io.geekidea.springbootplus.common.exception.DaoException;
 import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
 import io.geekidea.springbootplus.common.vo.Paging;
 import io.geekidea.springbootplus.enums.StateEnum;
+import io.geekidea.springbootplus.system.convert.SysRoleConvert;
 import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.mapper.SysRoleMapper;
 import io.geekidea.springbootplus.system.param.SysRoleQueryParam;
@@ -87,7 +89,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         }
 
         // 保存角色
-        SysRole sysRole = new SysRole();
+        SysRole sysRole = SysRoleConvert.INSTANCE.addSysRoleParamToSysRole(addSysRoleParam);
         boolean saveRoleResult = super.save(sysRole);
         if (!saveRoleResult) {
             throw new DaoException("保存角色失败");
@@ -114,7 +116,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         }
         // 校验权限列表是否存在
         if (!sysPermissionService.isExistsByPermissionIds(permissionIds)) {
-            throw new BusinessException("权限id不存在");
+            throw new BusinessException("权限列表id匹配失败");
         }
 
         // 修改角色
@@ -138,12 +140,15 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         Set<Long> beforeSet = new HashSet<>(beforeList);
         Set<Long> afterSet = new HashSet<>(permissionIds);
         SetUtils.SetView deleteSet = SetUtils.difference(beforeSet, afterSet);
-        System.out.println("deleteSet = " + deleteSet);
-        SetUtils.SetView addSet = SetUtils.difference(beforeSet, afterSet);
-        System.out.println("addSet = " + addSet);
+        SetUtils.SetView addSet = SetUtils.difference(afterSet, beforeSet);
+        log.debug("deleteSet = " + deleteSet);
+        log.debug("addSet = " + addSet);
 
         // 删除权限关联
-        boolean deleteResult = sysRolePermissionService.removeByIds(deleteSet);
+        UpdateWrapper updateWrapper = new UpdateWrapper();
+        updateWrapper.eq("role_id",roleId);
+        updateWrapper.in("permission_id",deleteSet);
+        boolean deleteResult = sysRolePermissionService.remove(updateWrapper);
         if (!deleteResult) {
             throw new DaoException("删除角色权限关系失败");
         }

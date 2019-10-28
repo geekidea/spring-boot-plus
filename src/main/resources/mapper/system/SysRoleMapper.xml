@@ -20,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, code, type, state, remark, deleted, version, create_time, update_time
+        id, name, code, type, state, remark, version, create_time, update_time
     </sql>
 
     <select id="getSysRoleById" resultType="io.geekidea.springbootplus.system.vo.SysRoleQueryVo">

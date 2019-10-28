@@ -54,6 +54,7 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean saveSysDepartment(SysDepartment sysDepartment) throws Exception {
+        sysDepartment.setId(null);
         return super.save(sysDepartment);
     }
 

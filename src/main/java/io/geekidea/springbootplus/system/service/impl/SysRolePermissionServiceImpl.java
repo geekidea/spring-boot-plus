@@ -17,25 +17,17 @@
 package io.geekidea.springbootplus.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
 import io.geekidea.springbootplus.enums.StateEnum;
 import io.geekidea.springbootplus.system.entity.SysRolePermission;
 import io.geekidea.springbootplus.system.mapper.SysRolePermissionMapper;
 import io.geekidea.springbootplus.system.service.SysRolePermissionService;
-import io.geekidea.springbootplus.system.param.SysRolePermissionQueryParam;
-import io.geekidea.springbootplus.system.vo.SysRolePermissionQueryVo;
-import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.common.vo.Paging;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.SetUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -71,34 +63,12 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
         return saveBatch(list, 20);
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public boolean updateSysRolePermission(SysRolePermission sysRolePermission) throws Exception {
-        return super.updateById(sysRolePermission);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public boolean deleteSysRolePermission(Long id) throws Exception {
-        return super.removeById(id);
-    }
-
-    @Override
-    public SysRolePermissionQueryVo getSysRolePermissionById(Serializable id) throws Exception {
-        return sysRolePermissionMapper.getSysRolePermissionById(id);
-    }
-
-    @Override
-    public Paging<SysRolePermissionQueryVo> getSysRolePermissionPageList(SysRolePermissionQueryParam sysRolePermissionQueryParam) throws Exception {
-        Page page = setPageParam(sysRolePermissionQueryParam, OrderItem.desc("create_time"));
-        IPage<SysRolePermissionQueryVo> iPage = sysRolePermissionMapper.getSysRolePermissionPageList(page, sysRolePermissionQueryParam);
-        return new Paging(iPage);
-    }
-
     @Override
     public List<Long> getPermissionIdsByRoleId(Long roleId) throws Exception {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("role_id", roleId);
+        SysRolePermission sysRolePermission = new SysRolePermission()
+                .setRoleId(roleId)
+                .setState(StateEnum.ENABLE.ordinal());
+        QueryWrapper queryWrapper = new QueryWrapper(sysRolePermission, "permission_id");
         return sysRolePermissionMapper.selectObjs(queryWrapper);
     }
 
@@ -118,10 +88,10 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
     }
 
     @Override
-    public boolean deleteSysRolePermissionByRoleId(Long id) throws Exception {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("role_id", id);
-        return remove(queryWrapper);
+    public boolean deleteSysRolePermissionByRoleId(Long roleId) throws Exception {
+        SysRolePermission sysRolePermission = new SysRolePermission()
+                .setRoleId(roleId);
+        return remove(new QueryWrapper<>(sysRolePermission));
     }
 
     @Override
@@ -129,4 +99,11 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
         return sysRolePermissionMapper.getPermissionCodesByRoleId(roleId);
     }
 
+    @Override
+    public boolean isExistsByPermissionId(Long permissionId) throws Exception {
+        // 判断角色权限表是否有关联存在，如果存在，则不能删除
+        SysRolePermission sysRolePermission = new SysRolePermission()
+                .setPermissionId(permissionId);
+        return count(new QueryWrapper(sysRolePermission)) > 0;
+    }
 }

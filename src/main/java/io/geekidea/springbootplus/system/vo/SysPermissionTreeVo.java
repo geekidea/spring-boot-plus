@@ -71,9 +71,6 @@ public class SysPermissionTreeVo implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 
-    @ApiModelProperty(value = "逻辑删除，0：未删除，1：已删除")
-    private Integer deleted;
-
     @ApiModelProperty(value = "版本")
     private Integer version;
 

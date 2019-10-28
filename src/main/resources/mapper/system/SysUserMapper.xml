@@ -20,19 +20,21 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, nickname, phone, gender, remark, state, department_id, role_id, deleted, version, create_time, update_time
+        id, username, nickname, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time
     </sql>
 
     <select id="getSysUserById" resultType="io.geekidea.springbootplus.system.vo.SysUserQueryVo">
         select
         <include refid="Base_Column_List"/>
-        from sys_user where id = #{id}
+        from sys_user
+        where deleted = 0 and id = #{id}
     </select>
 
     <select id="getSysUserPageList" resultType="io.geekidea.springbootplus.system.vo.SysUserQueryVo">
         select
         <include refid="Base_Column_List"/>
         from sys_user
+        where deleted = 0
     </select>
 
 </mapper>

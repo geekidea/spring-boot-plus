@@ -122,5 +122,23 @@ public interface SysPermissionService extends BaseService<SysPermission> {
      * @return
      * @throws Exception
      */
-    List<String> getPermissionCodeByUserId(Long userId) throws Exception;
+    List<String> getPermissionCodesByUserId(Long userId) throws Exception;
+
+    /**
+     * 根据用户id获取菜单列表
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    List<SysPermission> getMenuListByUserId(Long userId) throws Exception;
+
+    /**
+     * 根据用户id获取菜单树形列表
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    List<SysPermissionTreeVo> getMenuTreeByUserId(Long userId) throws Exception;
 }

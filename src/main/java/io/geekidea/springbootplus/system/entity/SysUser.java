@@ -73,7 +73,10 @@ public class SysUser extends BaseEntity {
     @ApiModelProperty(value = "性别，0：女，1：男，默认1")
     private Integer gender;
 
-    @ApiModelProperty(value = "remark")
+    @ApiModelProperty(value = "头像")
+    private String head;
+
+    @ApiModelProperty(value = "备注")
     private String remark;
 
     @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
@@ -88,10 +91,12 @@ public class SysUser extends BaseEntity {
     private Long roleId;
 
     @ApiModelProperty(value = "逻辑删除，0：未删除，1：已删除")
+    @Null(message = "逻辑删除不用传")
     @TableLogic
     private Integer deleted;
 
     @ApiModelProperty(value = "版本")
+    @Null(message = "版本不用传")
     @Version
     private Integer version;
 

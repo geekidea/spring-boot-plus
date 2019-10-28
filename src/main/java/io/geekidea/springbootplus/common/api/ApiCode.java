@@ -56,6 +56,8 @@ public enum ApiCode {
 
     VERIFICATION_CODE_EXCEPTION(5103, "验证码校验异常"),
 
+    AUTHENTICATION_EXCEPTION(5104, "登陆授权异常"),
+
 
     ;
 

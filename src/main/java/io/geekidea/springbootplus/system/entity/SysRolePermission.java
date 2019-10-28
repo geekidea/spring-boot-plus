@@ -64,10 +64,8 @@ public class SysRolePermission extends BaseEntity {
     @ApiModelProperty(value = "备注")
     private String remark;
 
-    @ApiModelProperty(value = "逻辑删除，0：未删除，1：已删除")
-    private Integer deleted;
-
     @ApiModelProperty(value = "版本")
+    @Null(message = "版本不用传")
     @Version
     private Integer version;
 

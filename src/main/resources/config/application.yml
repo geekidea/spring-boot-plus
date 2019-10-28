@@ -41,7 +41,7 @@ spring-boot-plus:
   # 是否启用ansi控制台输出有颜色的字体
   enable-ansi: true
   # 是否启用验证码
-  enable-verify-code: true
+  enable-verify-code: false
   # 过滤器配置
   filter:
     # 请求路径Filter配置
@@ -141,6 +141,7 @@ spring-boot-plus:
       /ip/**=anon
       /sysLog/**=anon
       /verificationCode/**=anon
+      /resource/**=anon
     # 权限配置
     permission:
         # 排除登陆登出相关
