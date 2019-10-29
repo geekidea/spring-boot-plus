@@ -1,4 +1,4 @@
-## [Vx.x.x-RELEASE] xxxx.xx.xx 	💻 
+## [Vx.x.x] xxxx.xx.xx 	
 > 
 
 ###  ⭐️  New Features
