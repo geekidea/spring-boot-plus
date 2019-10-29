@@ -33,6 +33,13 @@ spring:
 spring:
   profiles:
     active: '@profileActive@'
+
+# logback.xml中有详细的日志配置
+logging:
+  config: classpath:config/logback.xml
+  #  方便Spring Boot Admin页面上实时查看日志
+  file:
+    name: logs/spring-boot-plus.log
 ################################ spring config end #################################
 
 
@@ -314,3 +321,4 @@ info:
   project-mybatis-plus-version: '@mybatis-plus-boot-starter.version@'
   project-version: '@project.version@'
 ############################## Spring boot admin end ###############################
+
