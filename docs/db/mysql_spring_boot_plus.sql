@@ -77,7 +77,6 @@ CREATE TABLE `sys_department`
     `state`       int(11)     NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
     `sort`        int(11)     NOT NULL DEFAULT '0' COMMENT '排序',
     `remark`      varchar(200)         DEFAULT NULL COMMENT '备注',
-    `deleted`     int(11)     NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
     `version`     int(11)     NOT NULL DEFAULT '0' COMMENT '版本',
     `create_time` timestamp   NULL     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp   NULL     DEFAULT NULL COMMENT '修改时间',
@@ -90,9 +89,8 @@ CREATE TABLE `sys_department`
 -- ----------------------------
 -- Records of sys_department
 -- ----------------------------
-INSERT INTO sys_department (id, name, parent_id, state, sort, remark, deleted, version, create_time, update_time) VALUES (1, '管理部', null, 1, 0, null, 0, 0, '2019-10-25 09:46:49', null);
-INSERT INTO sys_department (id, name, parent_id, state, sort, remark, deleted, version, create_time, update_time) VALUES (2, '测试部', null, 1, 0, null, 0, 0, '2019-10-25 09:47:06', null);
-
+INSERT INTO sys_department (id, name, parent_id, state, sort, remark, version, create_time, update_time) VALUES (1, '管理部', null, 1, 0, null, 0, '2019-10-25 09:46:49', null);
+INSERT INTO sys_department (id, name, parent_id, state, sort, remark, version, create_time, update_time) VALUES (2, '测试部', null, 1, 0, null, 0, '2019-10-25 09:47:06', null);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -107,6 +105,7 @@ CREATE TABLE `sys_user`
     `salt`          varchar(32)          DEFAULT NULL COMMENT '盐值',
     `phone`         varchar(20) NOT NULL COMMENT '手机号码',
     `gender`        int(11)     NOT NULL DEFAULT '1' COMMENT '性别，0：女，1：男，默认1',
+    `head`          varchar(200) null comment '头像',
     `remark`        varchar(200)         DEFAULT NULL COMMENT 'remark',
     `state`         int(11)     NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用，2：锁定',
     `department_id` bigint(20)  NOT NULL COMMENT '部门id',
@@ -141,7 +140,6 @@ CREATE TABLE `sys_role`
     `type`        int(11)              DEFAULT NULL COMMENT '角色类型',
     `state`       int(11)     NOT NULL DEFAULT '1' COMMENT '角色状态，0：禁用，1：启用',
     `remark`      varchar(200)         DEFAULT NULL COMMENT '备注',
-    `deleted`     int(11)     NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
     `version`     int(11)     NOT NULL DEFAULT '0' COMMENT '版本',
     `create_time` timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp   NULL     DEFAULT NULL COMMENT '修改时间',
@@ -176,7 +174,6 @@ CREATE TABLE `sys_permission`
     `state`       int(11)      NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
     `sort`        int(11)      NOT NULL DEFAULT '0' COMMENT '排序',
     `remark`      varchar(200)          DEFAULT NULL COMMENT '备注',
-    `deleted`     int(11)      NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
     `version`     int(11)      NOT NULL DEFAULT '0' COMMENT '版本',
     `create_time` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp    NULL     DEFAULT NULL COMMENT '修改时间',
@@ -215,7 +212,6 @@ CREATE TABLE `sys_role_permission`
     `permission_id` bigint(20) NOT NULL COMMENT '权限id',
     `state`         int(11)    NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
     `remark`        varchar(200)        DEFAULT NULL COMMENT '备注',
-    `deleted`       int(11)    NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
     `version`       int(11)    NOT NULL DEFAULT '0' COMMENT '版本',
     `create_time`   timestamp  NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time`   timestamp  NULL     DEFAULT NULL COMMENT '修改时间',
