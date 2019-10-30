@@ -24,6 +24,7 @@ import io.geekidea.springbootplus.util.VerificationCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
@@ -59,6 +60,7 @@ public class VerificationCodeController {
      * 获取验证码
      */
     @GetMapping("/getImage")
+    @RequiresPermissions("verification:code")
     @ApiOperation(value = "获取验证码", notes = "获取验证码", response = ApiResult.class)
     public void getImage(HttpServletResponse response) throws Exception {
         VerificationCode verificationCode = new VerificationCode();
@@ -80,6 +82,7 @@ public class VerificationCodeController {
      * 获取图片Base64验证码
      */
     @GetMapping("/getBase64Image")
+    @RequiresPermissions("verification:code")
     @ResponseBody
     @ApiOperation(value = "获取图片Base64验证码", notes = "获取图片Base64验证码", response = ApiResult.class)
     public ApiResult getCode(HttpServletResponse response) throws Exception {

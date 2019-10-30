@@ -29,6 +29,7 @@ import io.geekidea.springbootplus.util.UploadUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,6 +60,7 @@ public class SysUserController extends BaseController {
      * 添加系统用户
      */
     @PostMapping("/add")
+    @RequiresPermissions("sys:user:add")
     @ApiOperation(value = "添加SysUser对象", notes = "添加系统用户", response = ApiResult.class)
     public ApiResult<Boolean> addSysUser(@Valid @RequestBody SysUser sysUser) throws Exception {
         boolean flag = sysUserService.saveSysUser(sysUser);
@@ -69,6 +71,7 @@ public class SysUserController extends BaseController {
      * 修改系统用户
      */
     @PostMapping("/update")
+    @RequiresPermissions("sys:user:update")
     @ApiOperation(value = "修改SysUser对象", notes = "修改系统用户", response = ApiResult.class)
     public ApiResult<Boolean> updateSysUser(@Valid @RequestBody SysUser sysUser) throws Exception {
         boolean flag = sysUserService.updateSysUser(sysUser);
@@ -79,6 +82,7 @@ public class SysUserController extends BaseController {
      * 删除系统用户
      */
     @PostMapping("/delete/{id}")
+    @RequiresPermissions("sys:user:delete")
     @ApiOperation(value = "删除SysUser对象", notes = "删除系统用户", response = ApiResult.class)
     public ApiResult<Boolean> deleteSysUser(@PathVariable("id") Long id) throws Exception {
         boolean flag = sysUserService.deleteSysUser(id);
@@ -89,6 +93,7 @@ public class SysUserController extends BaseController {
      * 获取系统用户
      */
     @GetMapping("/info/{id}")
+    @RequiresPermissions("sys:user:info")
     @ApiOperation(value = "获取SysUser对象详情", notes = "查看系统用户", response = SysUserQueryVo.class)
     public ApiResult<SysUserQueryVo> getSysUser(@PathVariable("id") Long id) throws Exception {
         SysUserQueryVo sysUserQueryVo = sysUserService.getSysUserById(id);
@@ -99,6 +104,7 @@ public class SysUserController extends BaseController {
      * 系统用户分页列表
      */
     @PostMapping("/getPageList")
+    @RequiresPermissions("sys:user:page")
     @ApiOperation(value = "获取SysUser分页列表", notes = "系统用户分页列表", response = SysUserQueryVo.class)
     public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Valid @RequestBody SysUserQueryParam sysUserQueryParam) throws Exception {
         Paging<SysUserQueryVo> paging = sysUserService.getSysUserPageList(sysUserQueryParam);
@@ -109,6 +115,7 @@ public class SysUserController extends BaseController {
      * 修改密码
      */
     @PostMapping("/updatePassword")
+    @RequiresPermissions("sys:user:update:password")
     @ApiOperation(value = "修改密码", notes = "修改密码", response = ApiResult.class)
     public ApiResult<Boolean> updatePassword(@Valid @RequestBody UpdatePasswordParam updatePasswordParam) throws Exception {
         boolean flag = sysUserService.updatePassword(updatePasswordParam);
@@ -119,6 +126,7 @@ public class SysUserController extends BaseController {
      * 修改头像
      */
     @PostMapping("/uploadHead/{id}")
+    @RequiresPermissions("sys:user:update:head")
     @ApiOperation(value = "修改头像",notes = "修改头像",response = ApiResult.class)
     public ApiResult<Boolean> uploadHead(@PathVariable("id") Long id,
                                          @RequestParam("head") MultipartFile multipartFile) throws Exception{
