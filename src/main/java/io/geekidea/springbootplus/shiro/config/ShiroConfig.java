@@ -17,8 +17,8 @@
 package io.geekidea.springbootplus.shiro.config;
 
 import com.alibaba.fastjson.JSON;
-import io.geekidea.springbootplus.filter.RequestPathFilter;
 import io.geekidea.springbootplus.core.properties.SpringBootPlusFilterProperties;
+import io.geekidea.springbootplus.filter.RequestPathFilter;
 import io.geekidea.springbootplus.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.shiro.exception.ShiroConfigException;
 import io.geekidea.springbootplus.shiro.jwt.JwtCredentialsMatcher;
@@ -126,7 +126,7 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public DefaultWebSecurityManager securityManager(LoginRedisService loginRedisService) {
+    public SecurityManager securityManager(LoginRedisService loginRedisService) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(jwtRealm(loginRedisService));
         securityManager.setSubjectDAO(subjectDAO());

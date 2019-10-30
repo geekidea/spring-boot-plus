@@ -32,7 +32,3 @@ spring:
     password:
     port: 6379
 
-#  方便Spring Boot Admin页面上实时查看日志
-# logback.xml中有详细的日志配置
-logging:
-  file: logs/spring-boot-plus-log.log

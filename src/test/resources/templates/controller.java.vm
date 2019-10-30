@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 #end
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,13 +59,16 @@ public class ${table.controllerName} {
      * 添加$!{table.comment}
      */
     @PostMapping("/add")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:add")
+#end
     @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ApiResult.class)
     public ApiResult<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
-    #if(${cfg.generatorStrategy} == 'ALL')
+#if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName});
-    #else
+#else
         boolean flag = ${cfg.serviceObjectName}.save(${cfg.entityObjectName});
-    #end
+#end
         return ApiResult.result(flag);
     }
 
@@ -72,13 +76,16 @@ public class ${table.controllerName} {
      * 修改$!{table.comment}
      */
     @PostMapping("/update")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:update")
+#end
     @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ApiResult.class)
     public ApiResult<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
-    #if(${cfg.generatorStrategy} == 'ALL')
+#if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});
-    #else
+#else
         boolean flag = ${cfg.serviceObjectName}.updateById(${cfg.entityObjectName});
-    #end
+#end
         return ApiResult.result(flag);
     }
 
@@ -86,13 +93,16 @@ public class ${table.controllerName} {
      * 删除$!{table.comment}
      */
     @PostMapping("/delete/{id}")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:delete")
+#end
     @ApiOperation(value = "删除${entity}对象", notes = "删除$!{table.comment}", response = ApiResult.class)
     public ApiResult<Boolean> delete${entity}(@PathVariable("id") Long id) throws Exception {
-    #if(${cfg.generatorStrategy} == 'ALL')
+#if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.delete${entity}(id);
-    #else
+#else
         boolean flag = ${cfg.serviceObjectName}.removeById(id);
-    #end
+#end
         return ApiResult.result(flag);
     }
 
@@ -100,6 +110,9 @@ public class ${table.controllerName} {
      * 获取$!{table.comment}
      */
     @GetMapping("/info/{id}")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:info")
+#end
     @ApiOperation(value = "获取${entity}对象详情", notes = "查看$!{table.comment}", response = ${entity}QueryVo.class)
     public ApiResult<${entity}QueryVo> get${entity}(@PathVariable("id") Long id) throws Exception {
         ${entity}QueryVo ${cfg.entityObjectName}QueryVo = ${cfg.serviceObjectName}.get${entity}ById(id);
@@ -110,6 +123,9 @@ public class ${table.controllerName} {
      * $!{table.comment}分页列表
      */
     @PostMapping("/getPageList")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:page")
+#end
     @ApiOperation(value = "获取${entity}分页列表", notes = "$!{table.comment}分页列表", response = ${entity}QueryVo.class)
     public ApiResult<Paging<${entity}QueryVo>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
         Paging<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);

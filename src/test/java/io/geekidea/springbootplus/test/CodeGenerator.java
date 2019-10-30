@@ -149,6 +149,10 @@ public class CodeGenerator {
      * 是否生成查询VO
      */
     private boolean generatorQueryVo;
+    /**
+     * 是否生成Shiro RequiresPermissions 注解
+     */
+    private boolean requiresPermissions;
     // ############################ 自定义配置部分 end ############################
 
     /**
@@ -277,6 +281,7 @@ public class CodeGenerator {
 
                 String camelTableName = underlineToCamel(tableName);
                 String pascalTableName = underlineToPascal(tableName);
+                String colonTableName = underlineToColon(tableName);
 
                 Map<String, Object> map = new HashMap<>();
                 map.put("customField", "Hello " + this.getConfig().getGlobalConfig().getAuthor());
@@ -318,6 +323,10 @@ public class CodeGenerator {
                 map.put("generatorStrategy", generatorStrategy);
                 // 代码Validation校验
                 map.put("paramValidation", paramValidation);
+                // 冒号连接的表名称
+                map.put("colonTableName", colonTableName);
+                // 是否生成Shiro RequiresPermissions注解
+                map.put("requiresPermissions", requiresPermissions);
                 this.setMap(map);
             }
         };
@@ -407,6 +416,13 @@ public class CodeGenerator {
         mpg.execute();
     }
 
+    /**
+     * 下划线专程驼峰命名
+     * sys_user --> sysUser
+     *
+     * @param underline
+     * @return
+     */
     public static String underlineToCamel(String underline) {
         if (StringUtils.isNotBlank(underline)) {
             return NamingStrategy.underlineToCamel(underline);
@@ -414,11 +430,37 @@ public class CodeGenerator {
         return null;
     }
 
+    /**
+     * 下划线转换成帕斯卡命名
+     * sys_user --> SysUser
+     *
+     * @param underline
+     * @return
+     */
     public static String underlineToPascal(String underline) {
         if (StringUtils.isNotBlank(underline)) {
             return NamingStrategy.capitalFirst(NamingStrategy.underlineToCamel(underline));
         }
         return null;
+    }
+
+    /**
+     * 下划线转换成冒号连接命名
+     * sys_user --> sys:user
+     *
+     * @param underline
+     * @return
+     */
+    public static String underlineToColon(String underline) {
+        if (StringUtils.isNotBlank(underline)) {
+            String string = underline.toLowerCase();
+            return string.replaceAll("_", ":");
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(underlineToColon("sys_user"));
     }
 
 
