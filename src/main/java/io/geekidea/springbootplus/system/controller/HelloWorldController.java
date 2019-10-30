@@ -19,7 +19,6 @@ package io.geekidea.springbootplus.system.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,7 +37,6 @@ import java.io.IOException;
 @RequestMapping("/hello")
 public class HelloWorldController {
 
-    @RequiresPermissions("yhgl")
     @RequestMapping(value = "/world", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "Hello World", notes = "Hello World", response = String.class)
     public void print(HttpServletResponse response) throws IOException {
