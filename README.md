@@ -148,7 +148,7 @@ INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, hea
 > Modify module name / author / table name / primary key id
 
 ```text
-/src/test/java/io/geekidea/springbootplus/test/CodeGenerator.java
+/src/test/java/io/geekidea/springbootplus/test/SpringBootPlusGenerator.java
 ```
 
 ```java

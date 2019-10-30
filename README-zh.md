@@ -146,7 +146,7 @@ INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, hea
 >修改组件名称/作者/数据库表名称/主键id
 
 ```text
-/src/test/java/io/geekidea/springbootplus/test/CodeGenerator.java
+/src/test/java/io/geekidea/springbootplus/test/SpringBootPlusGenerator.java
 ```
 
 ```java
