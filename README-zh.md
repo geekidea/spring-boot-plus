@@ -102,35 +102,41 @@ mvn clean package -Plocal
 
 ### 1. 创建数据库表
 ```sql
-
 -- ----------------------------
 -- Table structure for sys_user
 -- ----------------------------
-drop table if exists `sys_user`;
-create table sys_user
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user`
 (
-    id          bigint                              not null comment '主键'
-        primary key,
-    username    varchar(20)                         not null comment '用户名',
-    nickname    varchar(20)                         null comment '昵称',
-    password    varchar(64)                         not null comment '密码',
-    salt        varchar(32)                         null comment '盐值',
-    remark      varchar(200)                        null comment 'remark',
-    status      int       default 1                 not null comment '状态，0：禁用，1：启用',
-    create_time timestamp default CURRENT_TIMESTAMP null comment '创建时间',
-    update_time timestamp                           null comment '修改时间',
-    constraint sys_user_username_uindex
-        unique (username)
-)
-    comment '系统用户';
+    `id`            bigint(20)  NOT NULL COMMENT '主键',
+    `username`      varchar(20) NOT NULL COMMENT '用户名',
+    `nickname`      varchar(20)          DEFAULT NULL COMMENT '昵称',
+    `password`      varchar(64) NOT NULL COMMENT '密码',
+    `salt`          varchar(32)          DEFAULT NULL COMMENT '盐值',
+    `phone`         varchar(20) NOT NULL COMMENT '手机号码',
+    `gender`        int(11)     NOT NULL DEFAULT '1' COMMENT '性别，0：女，1：男，默认1',
+    `head`          varchar(200) null comment '头像',
+    `remark`        varchar(200)         DEFAULT NULL COMMENT 'remark',
+    `state`         int(11)     NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用，2：锁定',
+    `department_id` bigint(20)  NOT NULL COMMENT '部门id',
+    `role_id`       bigint(20)  NOT NULL COMMENT '角色id',
+    `deleted`       int(11)     NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
+    `version`       int(11)     NOT NULL DEFAULT '0' COMMENT '版本',
+    `create_time`   timestamp   NULL     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time`   timestamp   NULL     DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `sys_user_username_uindex` (`username`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT ='系统用户';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
-    VALUES (1, 'admin', '管理员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', 'e4cc3292e3ebc483998adb2c0e4e640e', 'Administrator Account', 1, '2019-08-26 00:52:01', null);
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
-    VALUES (2, 'test', '测试人员', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', '99952b31c18156169a26bec80fd211f6', 'Tester Account', 1, '2019-10-05 14:04:27', null);
+INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) 
+    VALUES (1, 'admin', '管理员', '11a254dab80d52bc4a347e030e54d861a9d2cdb2af2185a9ca4a7318e830d04d', '666', '', 1, 'http://localhost:8888//resource/201910281559227.jpg', 'Administrator Account', 1, 1, 1, 0, 1, '2019-08-26 00:52:01', '2019-10-27 23:32:29');
+INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) 
+    VALUES (2, 'test', '测试人员', '34783fb724b259beb71a1279f7cd93bdcfd92a273d566f926419a37825c500df', '087c2e9857f35f1e243367f3b89b81c1', '', 1, null, 'Tester Account', 1, 1, 2, 0, 0, '2019-10-05 14:04:27', null);
 
 ```
 
