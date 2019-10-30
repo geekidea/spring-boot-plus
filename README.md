@@ -104,36 +104,41 @@ mvn clean package -Plocal
 
 ### 1. Create Table
 ```sql
-
 -- ----------------------------
 -- Table structure for sys_user
 -- ----------------------------
-drop table if exists `sys_user`;
-create table sys_user
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user`
 (
-    id          bigint                              not null comment ''
-        primary key,
-    username    varchar(20)                         not null comment '',
-    nickname    varchar(20)                         null comment '',
-    password    varchar(64)                         not null comment '',
-    salt        varchar(32)                         null comment '',
-    remark      varchar(200)                        null comment '',
-    status      int       default 1                 not null comment '',
-    create_time timestamp default CURRENT_TIMESTAMP null comment '',
-    update_time timestamp                           null comment '',
-    constraint sys_user_username_uindex
-        unique (username)
-)
-    comment 'SysUser';
+    `id`            bigint(20)  NOT NULL COMMENT 'id',
+    `username`      varchar(20) NOT NULL COMMENT 'username',
+    `nickname`      varchar(20)          DEFAULT NULL COMMENT 'nickname',
+    `password`      varchar(64) NOT NULL COMMENT 'password',
+    `salt`          varchar(32)          DEFAULT NULL COMMENT 'salt',
+    `phone`         varchar(20) NOT NULL COMMENT 'phone',
+    `gender`        int(11)     NOT NULL DEFAULT '1' COMMENT 'gender，0：female，1：male，default:1',
+    `head`          varchar(200) null comment 'head',
+    `remark`        varchar(200)         DEFAULT NULL COMMENT 'remark',
+    `state`         int(11)     NOT NULL DEFAULT '1' COMMENT 'state，0：disable，1：enable，2：lock',
+    `department_id` bigint(20)  NOT NULL COMMENT 'department id',
+    `role_id`       bigint(20)  NOT NULL COMMENT 'role id',
+    `deleted`       int(11)     NOT NULL DEFAULT '0' COMMENT 'logic delete，0：not-delete，1：delete',
+    `version`       int(11)     NOT NULL DEFAULT '0' COMMENT 'version',
+    `create_time`   timestamp   NULL     DEFAULT CURRENT_TIMESTAMP COMMENT 'create time',
+    `update_time`   timestamp   NULL     DEFAULT NULL COMMENT 'update time',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `sys_user_username_uindex` (`username`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT ='SysUser';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
-    VALUES (1, 'admin', 'Administrators', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', 'e4cc3292e3ebc483998adb2c0e4e640e', 'Administrator Account', 1, '2019-08-26 00:52:01', null);
-
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
-    VALUES (2, 'test', 'Testers', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', '99952b31c18156169a26bec80fd211f6', 'Tester Account', 1, '2019-10-05 14:04:27', null);
+INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) 
+    VALUES (1, 'admin', 'Administrator', '11a254dab80d52bc4a347e030e54d861a9d2cdb2af2185a9ca4a7318e830d04d', '666', '', 1, 'http://localhost:8888//resource/201910281559227.jpg', 'Administrator Account', 1, 1, 1, 0, 1, '2019-08-26 00:52:01', '2019-10-27 23:32:29');
+INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) 
+    VALUES (2, 'test', 'Tester', '34783fb724b259beb71a1279f7cd93bdcfd92a273d566f926419a37825c500df', '087c2e9857f35f1e243367f3b89b81c1', '', 1, null, 'Tester Account', 1, 1, 2, 0, 0, '2019-10-05 14:04:27', null);
 
 ```
 
