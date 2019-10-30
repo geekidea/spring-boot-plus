@@ -196,6 +196,9 @@ public class SpringBootPlusGenerator {
                 .setGeneratorMapper(true)
                 .setGeneratorMapperXml(true);
 
+        // Generated RequiresPermissions Annotation
+        codeGenerator.setRequiresPermissions(true);
+
         // Overwrite existing file or not
         codeGenerator.setFileOverride(true);
 
