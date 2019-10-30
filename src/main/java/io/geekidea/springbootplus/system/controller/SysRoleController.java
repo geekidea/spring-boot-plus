@@ -27,6 +27,7 @@ import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +54,7 @@ public class SysRoleController extends BaseController {
      * 添加系统角色
      */
     @PostMapping("/add")
+    @RequiresPermissions("sys:role:add")
     @ApiOperation(value = "添加SysRole对象", notes = "添加系统角色", response = ApiResult.class)
     public ApiResult<Boolean> addSysRole(@Valid @RequestBody AddSysRoleParam addSysRoleParam) throws Exception {
             boolean flag = sysRoleService.saveSysRole(addSysRoleParam);
@@ -63,6 +65,7 @@ public class SysRoleController extends BaseController {
      * 修改系统角色
      */
     @PostMapping("/update")
+    @RequiresPermissions("sys:role:update")
     @ApiOperation(value = "修改SysRole对象", notes = "修改系统角色", response = ApiResult.class)
     public ApiResult<Boolean> updateSysRole(@Valid @RequestBody UpdateSysRoleParam updateSysRoleParam) throws Exception {
             boolean flag = sysRoleService.updateSysRole(updateSysRoleParam);
@@ -73,6 +76,7 @@ public class SysRoleController extends BaseController {
      * 删除系统角色
      */
     @PostMapping("/delete/{id}")
+    @RequiresPermissions("sys:role:delete")
     @ApiOperation(value = "删除SysRole对象", notes = "删除系统角色", response = ApiResult.class)
     public ApiResult<Boolean> deleteSysRole(@PathVariable("id") Long id) throws Exception {
             boolean flag = sysRoleService.deleteSysRole(id);
@@ -83,6 +87,7 @@ public class SysRoleController extends BaseController {
      * 获取系统角色
      */
     @GetMapping("/info/{id}")
+    @RequiresPermissions("sys:role:info")
     @ApiOperation(value = "获取SysRole对象详情", notes = "查看系统角色", response = SysRoleQueryVo.class)
     public ApiResult<SysRoleQueryVo> getSysRole(@PathVariable("id") Long id) throws Exception {
         SysRoleQueryVo sysRoleQueryVo = sysRoleService.getSysRoleById(id);
@@ -93,6 +98,7 @@ public class SysRoleController extends BaseController {
      * 系统角色分页列表
      */
     @PostMapping("/getPageList")
+    @RequiresPermissions("sys:role:page")
     @ApiOperation(value = "获取SysRole分页列表", notes = "系统角色分页列表", response = SysRoleQueryVo.class)
     public ApiResult<Paging<SysRoleQueryVo>> getSysRolePageList(@Valid @RequestBody SysRoleQueryParam sysRoleQueryParam) throws Exception {
         Paging<SysRoleQueryVo> paging = sysRoleService.getSysRolePageList(sysRoleQueryParam);

@@ -58,6 +58,10 @@ public enum ApiCode {
 
     AUTHENTICATION_EXCEPTION(5104, "登陆授权异常"),
 
+    UNAUTHENTICATED_EXCEPTION(5105, "没有访问权限"),
+
+    UNAUTHORIZED_EXCEPTION(5106, "没有访问权限"),
+
 
     ;
 
