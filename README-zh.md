@@ -194,6 +194,9 @@ public class SpringBootPlusGenerator {
                 .setGeneratorMapper(true)
                 .setGeneratorMapperXml(true);
 
+        // 是否生成Shiro RequiresPermissions注解
+        codeGenerator.setRequiresPermissions(true);
+
         // 是否覆盖已有文件
         codeGenerator.setFileOverride(true);
 
