@@ -27,6 +27,7 @@ import io.geekidea.springbootplus.system.vo.SysPermissionTreeVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,6 +55,7 @@ public class SysPermissionController extends BaseController {
      * 添加系统权限
      */
     @PostMapping("/add")
+    @RequiresPermissions("sys:permission:add")
     @ApiOperation(value = "添加SysPermission对象", notes = "添加系统权限", response = ApiResult.class)
     public ApiResult<Boolean> addSysPermission(@Valid @RequestBody SysPermission sysPermission) throws Exception {
         boolean flag = sysPermissionService.saveSysPermission(sysPermission);
@@ -64,6 +66,7 @@ public class SysPermissionController extends BaseController {
      * 修改系统权限
      */
     @PostMapping("/update")
+    @RequiresPermissions("sys:permission:update")
     @ApiOperation(value = "修改SysPermission对象", notes = "修改系统权限", response = ApiResult.class)
     public ApiResult<Boolean> updateSysPermission(@Valid @RequestBody SysPermission sysPermission) throws Exception {
         boolean flag = sysPermissionService.updateSysPermission(sysPermission);
@@ -74,6 +77,7 @@ public class SysPermissionController extends BaseController {
      * 删除系统权限
      */
     @PostMapping("/delete/{id}")
+    @RequiresPermissions("sys:permission:delete")
     @ApiOperation(value = "删除SysPermission对象", notes = "删除系统权限", response = ApiResult.class)
     public ApiResult<Boolean> deleteSysPermission(@PathVariable("id") Long id) throws Exception {
         boolean flag = sysPermissionService.deleteSysPermission(id);
@@ -84,6 +88,7 @@ public class SysPermissionController extends BaseController {
      * 获取系统权限
      */
     @GetMapping("/info/{id}")
+    @RequiresPermissions("sys:permission:info")
     @ApiOperation(value = "获取SysPermission对象详情", notes = "查看系统权限", response = SysPermissionQueryVo.class)
     public ApiResult<SysPermissionQueryVo> getSysPermission(@PathVariable("id") Long id) throws Exception {
         SysPermissionQueryVo sysPermissionQueryVo = sysPermissionService.getSysPermissionById(id);
@@ -94,6 +99,7 @@ public class SysPermissionController extends BaseController {
      * 系统权限分页列表
      */
     @PostMapping("/getPageList")
+    @RequiresPermissions("sys:permission:page")
     @ApiOperation(value = "获取SysPermission分页列表", notes = "系统权限分页列表", response = SysPermissionQueryVo.class)
     public ApiResult<Paging<SysPermissionQueryVo>> getSysPermissionPageList(@Valid @RequestBody SysPermissionQueryParam sysPermissionQueryParam) throws Exception {
         Paging<SysPermissionQueryVo> paging = sysPermissionService.getSysPermissionPageList(sysPermissionQueryParam);
@@ -104,6 +110,7 @@ public class SysPermissionController extends BaseController {
      * 获取所有菜单列表
      */
     @PostMapping("/getAllMenuList")
+    @RequiresPermissions("sys:permission:all:menu:list")
     @ApiOperation(value = "获取所有菜单列表", notes = "获取所有菜单列表", response = SysPermission.class)
     public ApiResult<SysPermission> getAllMenuList() throws Exception {
         List<SysPermission> list = sysPermissionService.getAllMenuList();
@@ -114,6 +121,7 @@ public class SysPermissionController extends BaseController {
      * 获取获取菜单树形列表
      */
     @PostMapping("/getAllMenuTree")
+    @RequiresPermissions("sys:permission:all:menu:tree")
     @ApiOperation(value = "获取所有菜单列表", notes = "获取所有菜单列表", response = SysPermissionTreeVo.class)
     public ApiResult<SysPermissionTreeVo> getAllMenuTree() throws Exception {
         List<SysPermissionTreeVo> list = sysPermissionService.getAllMenuTree();
@@ -125,6 +133,7 @@ public class SysPermissionController extends BaseController {
      * 根据用户id获取菜单列表
      */
     @PostMapping("/getMenuListByUserId/{userId}")
+    @RequiresPermissions("sys:permission:menu:list")
     @ApiOperation(value = "根据用户id获取菜单列表", notes = "根据用户id获取菜单列表", response = SysPermission.class)
     public ApiResult<SysPermission> getMenuListByUserId(@PathVariable("userId") Long userId) throws Exception {
         List<SysPermission> list = sysPermissionService.getMenuListByUserId(userId);
@@ -135,6 +144,7 @@ public class SysPermissionController extends BaseController {
      * 根据用户id获取菜单树形列表
      */
     @PostMapping("/getMenuTreeByUserId/{userId}")
+    @RequiresPermissions("sys:permission:menu:tree")
     @ApiOperation(value = "根据用户id获取菜单树形列表", notes = "根据用户id获取菜单树形列表", response = SysPermissionTreeVo.class)
     public ApiResult<SysPermissionTreeVo> getMenuTreeByUserId(@PathVariable("userId") Long userId) throws Exception {
         List<SysPermissionTreeVo> list = sysPermissionService.getMenuTreeByUserId(userId);
@@ -145,6 +155,7 @@ public class SysPermissionController extends BaseController {
      * 根据用户id获取该用户所有权限编码
      */
     @GetMapping("/getPermissionCodesByUserId/{userId}")
+    @RequiresPermissions("sys:permission:codes")
     @ApiOperation(value = "根据用户id获取该用户所有权限编码", notes = "根据用户id获取该用户所有权限编码", response = ApiResult.class)
     public ApiResult<String> getPermissionCodesByUserId(@PathVariable("userId") Long userId) throws Exception {
         List<String> list = sysPermissionService.getPermissionCodesByUserId(userId);

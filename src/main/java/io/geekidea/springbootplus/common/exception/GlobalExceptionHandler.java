@@ -22,6 +22,8 @@ import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.system.exception.VerificationCodeException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.UnauthenticatedException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
@@ -146,6 +148,35 @@ public class GlobalExceptionHandler {
                 .setCode(ApiCode.AUTHENTICATION_EXCEPTION.getCode())
                 .setMsg(exception.getMessage());
     }
+
+
+    /**
+     * 未认证异常处理
+     *
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = UnauthenticatedException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult unauthenticatedExceptionHandler(UnauthenticatedException exception) {
+        log.error("unauthenticatedException:", exception);
+        return ApiResult.fail(ApiCode.UNAUTHENTICATED_EXCEPTION);
+    }
+
+
+    /**
+     * 未授权异常处理
+     *
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult unauthorizedExceptionHandler(UnauthorizedException exception) {
+        log.error("unauthorizedException:", exception);
+        return ApiResult.fail(ApiCode.UNAUTHORIZED_EXCEPTION);
+    }
+
 
     /**
      * 默认的异常处理

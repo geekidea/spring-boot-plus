@@ -49,7 +49,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    @ApiOperation(value = "登陆", notes = "系统用户登陆", response = ApiResult.class)
+    @ApiOperation(value = "登陆", notes = "系统用户登陆", response = LoginSysUserTokenVo.class)
     public ApiResult login(@Valid @RequestBody LoginParam loginParam, HttpServletResponse response) throws Exception {
         LoginSysUserTokenVo loginSysUserTokenVo = loginService.login(loginParam);
         // 设置token响应头
