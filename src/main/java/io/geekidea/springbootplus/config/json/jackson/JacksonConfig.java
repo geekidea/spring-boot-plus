@@ -34,8 +34,8 @@ import io.geekidea.springbootplus.config.json.jackson.deserializer.JacksonDouble
 import io.geekidea.springbootplus.config.json.jackson.serializer.JacksonDateSerializer;
 import io.geekidea.springbootplus.config.json.jackson.serializer.JacksonIntegerDeserializer;
 import io.geekidea.springbootplus.constant.DatePattern;
-import io.geekidea.springbootplus.xss.XssJacksonDeserializer;
-import io.geekidea.springbootplus.xss.XssJacksonSerializer;
+import io.geekidea.springbootplus.common.xss.XssJacksonDeserializer;
+import io.geekidea.springbootplus.common.xss.XssJacksonSerializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
