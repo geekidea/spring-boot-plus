@@ -59,7 +59,6 @@ public class JwtRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        // TODO 被调用两次
         log.debug("doGetAuthorizationInfo principalCollection...");
         // 设置角色/权限信息
         JwtToken jwtToken = (JwtToken) principalCollection.getPrimaryPrincipal();
