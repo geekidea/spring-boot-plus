@@ -1,4 +1,4 @@
-# TODO
+# CHANGELOG TODO
 
 ## [V1.5]
 - 代码生成起优化，是否生成自定义update方法
@@ -10,6 +10,7 @@
 - 字典表
 - 配置参数表
 - 上传文件附件表
+- Redis分布式锁
 
 ## [V1.6]
 - Spring security集成

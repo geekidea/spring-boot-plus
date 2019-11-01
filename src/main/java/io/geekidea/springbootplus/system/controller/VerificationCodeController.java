@@ -24,7 +24,6 @@ import io.geekidea.springbootplus.util.VerificationCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
@@ -60,7 +59,6 @@ public class VerificationCodeController {
      * 获取验证码
      */
     @GetMapping("/getImage")
-    @RequiresPermissions("verification:code")
     @ApiOperation(value = "获取验证码", notes = "获取验证码", response = ApiResult.class)
     public void getImage(HttpServletResponse response) throws Exception {
         VerificationCode verificationCode = new VerificationCode();
@@ -68,7 +66,7 @@ public class VerificationCodeController {
         String code = verificationCode.getText();
         String verifyToken = UUIDUtil.getUUID();
         // 缓存到Redis
-        redisTemplate.opsForValue().set(String.format(CommonRedisKey.VERIFY_CODE, verifyToken), code, 10, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(String.format(CommonRedisKey.VERIFY_CODE, verifyToken), code, 5, TimeUnit.MINUTES);
         response.setHeader(CommonConstant.VERIFY_TOKEN, verifyToken);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         response.setHeader("Pragma", "No-cache");
@@ -82,7 +80,6 @@ public class VerificationCodeController {
      * 获取图片Base64验证码
      */
     @GetMapping("/getBase64Image")
-    @RequiresPermissions("verification:code")
     @ResponseBody
     @ApiOperation(value = "获取图片Base64验证码", notes = "获取图片Base64验证码", response = ApiResult.class)
     public ApiResult getCode(HttpServletResponse response) throws Exception {
@@ -99,7 +96,7 @@ public class VerificationCodeController {
         map.put(CommonConstant.IMAGE, CommonConstant.BASE64_PREFIX + base64);
         map.put(CommonConstant.VERIFY_TOKEN, verifyToken);
         // 缓存到Redis
-        redisTemplate.opsForValue().set(String.format(CommonRedisKey.VERIFY_CODE, verifyToken), code, 10, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(String.format(CommonRedisKey.VERIFY_CODE, verifyToken), code, 5, TimeUnit.MINUTES);
         return ApiResult.ok(map);
     }
 
