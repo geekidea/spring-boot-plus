@@ -309,7 +309,6 @@ INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, vers
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (29, 1, 4002, 1, null, 0, '2019-10-26 22:16:19', null);
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (30, 1, 4003, 1, null, 0, '2019-10-26 22:16:19', null);
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (31, 1, 4004, 1, null, 0, '2019-10-26 22:16:19', null);
-INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (32, 1, 4005, 1, null, 0, '2019-10-26 22:16:19', null);
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (100, 1, 1, 1, null, 0, '2019-10-26 22:16:19', null);
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (101, 1, 100, 1, null, 0, '2019-10-26 22:16:19', null);
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (102, 1, 1000, 1, null, 0, '2019-10-26 22:16:19', null);
