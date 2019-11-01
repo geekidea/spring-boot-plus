@@ -103,42 +103,35 @@ mvn clean package -Plocal
 ### 1. 创建数据库表
 ```sql
 -- ----------------------------
--- Table structure for sys_user
+-- Table structure for foo_bar
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user`
+DROP TABLE IF EXISTS `foo_bar`;
+CREATE TABLE `foo_bar`
 (
     `id`            bigint(20)  NOT NULL COMMENT '主键',
-    `username`      varchar(20) NOT NULL COMMENT '用户名',
-    `nickname`      varchar(20)          DEFAULT NULL COMMENT '昵称',
-    `password`      varchar(64) NOT NULL COMMENT '密码',
-    `salt`          varchar(32)          DEFAULT NULL COMMENT '盐值',
-    `phone`         varchar(20) NOT NULL COMMENT '手机号码',
-    `gender`        int(11)     NOT NULL DEFAULT '1' COMMENT '性别，0：女，1：男，默认1',
-    `head`          varchar(200) null comment '头像',
-    `remark`        varchar(200)         DEFAULT NULL COMMENT 'remark',
-    `state`         int(11)     NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用，2：锁定',
-    `department_id` bigint(20)  NOT NULL COMMENT '部门id',
-    `role_id`       bigint(20)  NOT NULL COMMENT '角色id',
-    `deleted`       int(11)     NOT NULL DEFAULT '0' COMMENT '逻辑删除，0：未删除，1：已删除',
+    `name`          varchar(20) NOT NULL COMMENT '名称',
+    `foo`           varchar(20)          DEFAULT NULL COMMENT 'Foo',
+    `bar`           varchar(20) NOT NULL COMMENT 'Bar',
+    `remark`        varchar(200)         DEFAULT NULL COMMENT '备注',
+    `state`         int(11)     NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
     `version`       int(11)     NOT NULL DEFAULT '0' COMMENT '版本',
     `create_time`   timestamp   NULL     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time`   timestamp   NULL     DEFAULT NULL COMMENT '修改时间',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `sys_user_username_uindex` (`username`)
+    PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT ='系统用户';
+  COLLATE = utf8mb4_general_ci COMMENT ='FooBar';
 
 -- ----------------------------
--- Records of sys_user
+-- Records of foo_bar
 -- ----------------------------
-INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) 
-    VALUES (1, 'admin', '管理员', '11a254dab80d52bc4a347e030e54d861a9d2cdb2af2185a9ca4a7318e830d04d', '666', '', 1, 'http://localhost:8888//resource/201910281559227.jpg', 'Administrator Account', 1, 1, 1, 0, 1, '2019-08-26 00:52:01', '2019-10-27 23:32:29');
-INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) 
-    VALUES (2, 'test', '测试人员', '34783fb724b259beb71a1279f7cd93bdcfd92a273d566f926419a37825c500df', '087c2e9857f35f1e243367f3b89b81c1', '', 1, null, 'Tester Account', 1, 1, 2, 0, 0, '2019-10-05 14:04:27', null);
+INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time) 
+    VALUES (1, 'FooBar', 'foo', 'bar', 'remark...', 1, 0, '2019-11-01 14:05:14', null);
+INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time) 
+    VALUES (2, 'HelloWorld', 'hello', 'world', null, 1, 0, '2019-11-01 14:05:14', null);
 
 ```
+
 
 ### 2.使用代码生成器生成增删改查代码
 > 修改数据库信息
@@ -175,7 +168,7 @@ public class SpringBootPlusGenerator {
 
         // 组件作者等配置
         codeGenerator
-                .setModuleName("system")
+                .setModuleName("foobar")
                 .setAuthor("geekidea")
                 .setPkIdColumnName("id");
 
@@ -201,7 +194,7 @@ public class SpringBootPlusGenerator {
                 .setGeneratorMapperXml(true);
 
         // 是否生成Shiro RequiresPermissions注解
-        codeGenerator.setRequiresPermissions(true);
+        codeGenerator.setRequiresPermissions(false);
 
         // 是否覆盖已有文件
         codeGenerator.setFileOverride(true);
@@ -212,9 +205,7 @@ public class SpringBootPlusGenerator {
         // 需要生成的表数组
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
-                "xxx",
-                "yyy",
-                "zzz",
+                "foo_bar"
         };
 
         // 循环生成
@@ -233,31 +224,30 @@ public class SpringBootPlusGenerator {
 > 生成的代码结构
 
 ```text
-/src/main/java/io/geekidea/springbootplus/system
+/src/main/java/io/geekidea/springbootplus/foobar
 ```
 
 ```text
-└── system
+└── foobar
+    ├── controller
+    │   └── FooBarController.java
     ├── entity
-    │   └── SysUser.java
+    │   └── FooBar.java
     ├── mapper
-    │   └── SysUserMapper.java
+    │   └── FooBarMapper.java
+    ├── param
+    │   └── FooBarQueryParam.java
     ├── service
-    │   ├── SysUserService.java
+    │   ├── FooBarService.java
     │   └── impl
-    │       └── SysUserServiceImpl.java
-    └── web
-        ├── controller
-        │   └── SysUserController.java
-        ├── param
-        │   └── SysUserQueryParam.java
-        └── vo
-            └── SysUserQueryVo.java
+    │       └── FooBarServiceImpl.java
+    └── vo
+        └── FooBarQueryVo.java
 ```
 
 > Mapper XML
 ```text
-/src/main/resources/mapper/system/SysUserMapper.xml
+/src/main/resources/mapper/foobar/FooBarMapper.xml
 ```
 
 ### 3. 启动项目

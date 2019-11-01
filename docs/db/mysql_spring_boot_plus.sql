@@ -66,6 +66,35 @@ INSERT INTO `sys_log` VALUES (1060438809495224322, 0, 'D', 100000, '2018-11-08 1
 
 
 -- ----------------------------
+-- Table structure for foo_bar
+-- ----------------------------
+DROP TABLE IF EXISTS `foo_bar`;
+CREATE TABLE `foo_bar`
+(
+    `id`            bigint(20)  NOT NULL COMMENT '主键',
+    `name`          varchar(20) NOT NULL COMMENT '名称',
+    `foo`           varchar(20)          DEFAULT NULL COMMENT 'Foo',
+    `bar`           varchar(20) NOT NULL COMMENT 'Bar',
+    `remark`        varchar(200)         DEFAULT NULL COMMENT '备注',
+    `state`         int(11)     NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
+    `version`       int(11)     NOT NULL DEFAULT '0' COMMENT '版本',
+    `create_time`   timestamp   NULL     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time`   timestamp   NULL     DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT ='FooBar';
+
+-- ----------------------------
+-- Records of foo_bar
+-- ----------------------------
+INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time)
+VALUES (1, 'FooBar', 'foo', 'bar', 'remark...', 1, 0, '2019-11-01 14:05:14', null);
+INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time)
+VALUES (2, 'HelloWorld', 'hello', 'world', null, 1, 0, '2019-11-01 14:05:14', null);
+
+
+-- ----------------------------
 -- Table structure for sys_department
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_department`;
