@@ -145,10 +145,10 @@ spring-boot-plus:
       /templates/**=anon
       /druid/**=anon
       /hello/world=anon
-      /ip/**=anon
       /sysLog/**=anon
       /verificationCode/**=anon
       /resource/**=anon
+      /fooBar/**=anon
     # 权限配置
     permission:
         # 排除登陆登出相关

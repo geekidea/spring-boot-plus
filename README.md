@@ -105,40 +105,32 @@ mvn clean package -Plocal
 ### 1. Create Table
 ```sql
 -- ----------------------------
--- Table structure for sys_user
+-- Table structure for foo_bar
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user`
+DROP TABLE IF EXISTS `foo_bar`;
+CREATE TABLE `foo_bar`
 (
-    `id`            bigint(20)  NOT NULL COMMENT 'id',
-    `username`      varchar(20) NOT NULL COMMENT 'username',
-    `nickname`      varchar(20)          DEFAULT NULL COMMENT 'nickname',
-    `password`      varchar(64) NOT NULL COMMENT 'password',
-    `salt`          varchar(32)          DEFAULT NULL COMMENT 'salt',
-    `phone`         varchar(20) NOT NULL COMMENT 'phone',
-    `gender`        int(11)     NOT NULL DEFAULT '1' COMMENT 'gender，0：female，1：male，default:1',
-    `head`          varchar(200) null comment 'head',
-    `remark`        varchar(200)         DEFAULT NULL COMMENT 'remark',
-    `state`         int(11)     NOT NULL DEFAULT '1' COMMENT 'state，0：disable，1：enable，2：lock',
-    `department_id` bigint(20)  NOT NULL COMMENT 'department id',
-    `role_id`       bigint(20)  NOT NULL COMMENT 'role id',
-    `deleted`       int(11)     NOT NULL DEFAULT '0' COMMENT 'logic delete，0：not-delete，1：delete',
-    `version`       int(11)     NOT NULL DEFAULT '0' COMMENT 'version',
-    `create_time`   timestamp   NULL     DEFAULT CURRENT_TIMESTAMP COMMENT 'create time',
-    `update_time`   timestamp   NULL     DEFAULT NULL COMMENT 'update time',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `sys_user_username_uindex` (`username`)
+    `id`            bigint(20)  NOT NULL COMMENT 'ID',
+    `name`          varchar(20) NOT NULL COMMENT 'Name',
+    `foo`           varchar(20)          DEFAULT NULL COMMENT 'Foo',
+    `bar`           varchar(20) NOT NULL COMMENT 'Bar',
+    `remark`        varchar(200)         DEFAULT NULL COMMENT 'Remark',
+    `state`         int(11)     NOT NULL DEFAULT '1' COMMENT 'State，0：Disable，1：Enable',
+    `version`       int(11)     NOT NULL DEFAULT '0' COMMENT 'Version',
+    `create_time`   timestamp   NULL     DEFAULT CURRENT_TIMESTAMP COMMENT 'Create Time',
+    `update_time`   timestamp   NULL     DEFAULT NULL COMMENT 'Update Time',
+    PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT ='SysUser';
+  COLLATE = utf8mb4_general_ci COMMENT ='FooBar';
 
 -- ----------------------------
--- Records of sys_user
+-- Records of foo_bar
 -- ----------------------------
-INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) 
-    VALUES (1, 'admin', 'Administrator', '11a254dab80d52bc4a347e030e54d861a9d2cdb2af2185a9ca4a7318e830d04d', '666', '', 1, 'http://localhost:8888//resource/201910281559227.jpg', 'Administrator Account', 1, 1, 1, 0, 1, '2019-08-26 00:52:01', '2019-10-27 23:32:29');
-INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) 
-    VALUES (2, 'test', 'Tester', '34783fb724b259beb71a1279f7cd93bdcfd92a273d566f926419a37825c500df', '087c2e9857f35f1e243367f3b89b81c1', '', 1, null, 'Tester Account', 1, 1, 2, 0, 0, '2019-10-05 14:04:27', null);
+INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time) 
+    VALUES (1, 'FooBar', 'foo', 'bar', 'remark...', 1, 0, '2019-11-01 14:05:14', null);
+INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time) 
+    VALUES (2, 'HelloWorld', 'hello', 'world', null, 1, 0, '2019-11-01 14:05:14', null);
 
 ```
 
@@ -177,7 +169,7 @@ public class SpringBootPlusGenerator {
 
         // Configuration of component author, etc.
         codeGenerator
-                .setModuleName("system")
+                .setModuleName("foobar")
                 .setAuthor("geekidea")
                 .setPkIdColumnName("id");
 
@@ -202,7 +194,7 @@ public class SpringBootPlusGenerator {
                 .setGeneratorMapperXml(true);
 
         // Generated RequiresPermissions Annotation
-        codeGenerator.setRequiresPermissions(true);
+        codeGenerator.setRequiresPermissions(false);
 
         // Overwrite existing file or not
         codeGenerator.setFileOverride(true);
@@ -212,9 +204,7 @@ public class SpringBootPlusGenerator {
 
         // Table array to be generated
         String[] tables = {
-                "xxx",
-                "yyy",
-                "zzz",
+                "foo_bar"
         };
 
         // Cycle generation
@@ -233,31 +223,30 @@ public class SpringBootPlusGenerator {
 > Generated code structure
 
 ```text
-/src/main/java/io/geekidea/springbootplus/system
+/src/main/java/io/geekidea/springbootplus/foobar
 ```
 
 ```text
-└── system
+└── foobar
+    ├── controller
+    │   └── FooBarController.java
     ├── entity
-    │   └── SysUser.java
+    │   └── FooBar.java
     ├── mapper
-    │   └── SysUserMapper.java
+    │   └── FooBarMapper.java
+    ├── param
+    │   └── FooBarQueryParam.java
     ├── service
-    │   ├── SysUserService.java
+    │   ├── FooBarService.java
     │   └── impl
-    │       └── SysUserServiceImpl.java
-    └── web
-        ├── controller
-        │   └── SysUserController.java
-        ├── param
-        │   └── SysUserQueryParam.java
-        └── vo
-            └── SysUserQueryVo.java
+    │       └── FooBarServiceImpl.java
+    └── vo
+        └── FooBarQueryVo.java
 ```
 
 > Mapper XML
 ```text
-/src/main/resources/mapper/system/SysUserMapper.xml
+/src/main/resources/mapper/foobar/FooBarMapper.xml
 ```
 
 ### 3. Startup Project
