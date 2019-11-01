@@ -16,13 +16,15 @@
 
 package io.geekidea.springbootplus.system.service;
 
-import io.geekidea.springbootplus.system.entity.SysDepartment;
 import io.geekidea.springbootplus.common.service.BaseService;
+import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.system.entity.SysDepartment;
 import io.geekidea.springbootplus.system.param.SysDepartmentQueryParam;
 import io.geekidea.springbootplus.system.vo.SysDepartmentQueryVo;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.system.vo.SysDepartmentTreeVo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -87,5 +89,17 @@ public interface SysDepartmentService extends BaseService<SysDepartment> {
      * @throws Exception
      */
     boolean isEnableSysDepartment(Long id) throws Exception;
+
+    /**
+     * 获取所有可用的部门列表
+     * @return
+     */
+    List<SysDepartment> getAllDepartmentList();
+
+    /**
+     * 获取所有可用的部门树形列表
+     * @return
+     */
+    List<SysDepartmentTreeVo> getAllDepartmentTree();
 
 }

@@ -124,8 +124,8 @@ public class SysPermissionController extends BaseController {
     @RequiresPermissions("sys:permission:all:menu:tree")
     @ApiOperation(value = "获取所有菜单列表", notes = "获取所有菜单列表", response = SysPermissionTreeVo.class)
     public ApiResult<SysPermissionTreeVo> getAllMenuTree() throws Exception {
-        List<SysPermissionTreeVo> list = sysPermissionService.getAllMenuTree();
-        return ApiResult.ok(list);
+        List<SysPermissionTreeVo> treeVos = sysPermissionService.getAllMenuTree();
+        return ApiResult.ok(treeVos);
     }
 
 
@@ -147,8 +147,8 @@ public class SysPermissionController extends BaseController {
     @RequiresPermissions("sys:permission:menu:tree")
     @ApiOperation(value = "根据用户id获取菜单树形列表", notes = "根据用户id获取菜单树形列表", response = SysPermissionTreeVo.class)
     public ApiResult<SysPermissionTreeVo> getMenuTreeByUserId(@PathVariable("userId") Long userId) throws Exception {
-        List<SysPermissionTreeVo> list = sysPermissionService.getMenuTreeByUserId(userId);
-        return ApiResult.ok(list);
+        List<SysPermissionTreeVo> treeVos = sysPermissionService.getMenuTreeByUserId(userId);
+        return ApiResult.ok(treeVos);
     }
 
     /**
