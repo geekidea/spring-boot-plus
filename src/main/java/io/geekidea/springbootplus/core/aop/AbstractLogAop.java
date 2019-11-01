@@ -16,7 +16,6 @@
 
 package io.geekidea.springbootplus.core.aop;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.geekidea.springbootplus.common.api.ApiCode;
 import io.geekidea.springbootplus.common.api.ApiResult;
@@ -25,6 +24,7 @@ import io.geekidea.springbootplus.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.util.AnsiUtil;
 import io.geekidea.springbootplus.util.DateUtil;
 import io.geekidea.springbootplus.util.IpUtil;
+import io.geekidea.springbootplus.util.Jackson;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
@@ -294,9 +294,9 @@ public abstract class AbstractLogAop {
         String requestInfo = null;
         try {
             if (logAopConfig.isRequestLogFormat()) {
-                requestInfo = "\n" + JSON.toJSONString(map, true);
+                requestInfo = "\n" + Jackson.toJsonString(map, true);
             } else {
-                requestInfo = JSON.toJSONString(map);
+                requestInfo = Jackson.toJsonString(map);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -323,9 +323,9 @@ public abstract class AbstractLogAop {
         String responseResultInfo = "responseResult:";
         try {
             if (logAopConfig.isResponseLogFormat()) {
-                responseResultInfo += "\n" + JSON.toJSONString(apiResult, true);
+                responseResultInfo += "\n" + Jackson.toJsonString(apiResult, true);
             } else {
-                responseResultInfo += JSON.toJSONString(apiResult);
+                responseResultInfo += Jackson.toJsonString(apiResult);
             }
             int code = apiResult.getCode();
             if (code == ApiCode.SUCCESS.getCode()) {
