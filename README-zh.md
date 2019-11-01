@@ -356,6 +356,49 @@ sh deploy.sh
 tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 ```
 
+
+## spring-boot-plus Views
+
+### spring-boot-plus IDEA Sources Views
+
+![spring-boot-plus-idea](https://spring-boot-plus.gitee.io/img/home/spring-boot-plus-idea.png)
+
+### [Spring Boot Admin Instances](http://47.105.159.10:8888/instances/e211ba082db8/details)
+<p>
+    <a href="http://47.105.159.10:8888/instances/e211ba082db8/details">
+        <img src="https://spring-boot-plus.gitee.io/img/home/spring-boot-admin.png" alt="spring-boot-admin instances">
+    </a>
+</p>
+
+### [Spring Boot Admin Statistics](http://47.105.159.10:8888/instances/e211ba082db8/details)
+<p>
+    <a href="http://47.105.159.10:8888/instances/e211ba082db8/details">
+        <img src="https://spring-boot-plus.gitee.io/img/home/spring-boot-admin-1.png" alt="spring-boot-admin statistics">
+    </a>
+</p>
+
+### [Spring Boot Admin Log](http://47.105.159.10:8888/instances/e211ba082db8/logfile)
+<p>
+    <a href="http://47.105.159.10:8888/instances/e211ba082db8/logfile">
+        <img src="https://spring-boot-plus.gitee.io/img/home/spring-boot-admin-log.png" alt="spring-boot-admin log">
+    </a>
+</p>
+
+### [spring-boot-plus Swagger文档](http://47.105.159.10:8888/swagger-ui.html)
+<p>
+    <a href="http://47.105.159.10:8888/swagger-ui.html">
+        <img src="https://spring-boot-plus.gitee.io/img/home/spring-boot-plus-swagger.png" alt="spring-boot-plus swagger docs">
+    </a>
+</p>
+
+### [spring-boot-plus Java Api Docs](http://geekidea.io/spring-boot-plus-apidocs/)
+<p>
+    <a href="http://geekidea.io/spring-boot-plus-apidocs/">
+        <img src="https://spring-boot-plus.gitee.io/img/home/spring-boot-plus-java-apidocs.png" alt="spring-boot-plus Java Api Docs">
+    </a>
+</p>
+
+
 ## spring-boot-plus 视频  :movie_camera:
 - [5分钟完成增删改查](https://www.bilibili.com/video/av67401204)
 - [CentOS 快速安装 JDK/Git/Maven/Redis/MySQL](https://www.bilibili.com/video/av67218836/)
