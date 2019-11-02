@@ -48,7 +48,7 @@
 - Integrate maven-assembly-plugin for different environment package deployment, including startup and restart commands, and extract configuration files to external config directory
 
 ## Architecture
-![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
+![spring-boot-plus-architecture.jpg](https://springboot.plus/img/spring-boot-plus-architecture.jpg)
 
 ### Project Environment 
 Middleware | Version |  Remark
@@ -284,7 +284,7 @@ public class SpringBootPlusApplication {
 [http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html)
 
 ### 5. SysUser CRUD Swagger
-![sys_user_swagger.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/sys_user_swagger.png)
+![sys_user_swagger.png](https://springboot.plus/img/sys_user_swagger.png)
 
 
 ## Quick Start
@@ -300,7 +300,7 @@ public class SpringBootPlusApplication {
 > Install `jdk`, `git`, `maven`, `redis`, `mysql`
 
 ```bash
-wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/download-install-all.sh
+wget -O download-install-all.sh https://springboot.plus/bin/download-install-all.sh
 ```
 
 ### 2. Run the installation script
@@ -326,7 +326,7 @@ exit
 
 ### 5. Download deployment script `deploy.sh`
 ```bash
-wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/deploy/deploy.sh
+wget -O deploy.sh https://springboot.plus/bin/deploy.sh
 ```
 
 ### 6. Execution script
