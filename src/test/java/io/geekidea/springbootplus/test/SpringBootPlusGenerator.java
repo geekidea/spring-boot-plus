@@ -41,7 +41,7 @@ public class SpringBootPlusGenerator {
 
         // 组件作者等配置
         codeGenerator
-                .setModuleName("system")
+                .setModuleName("foobar")
                 .setAuthor("geekidea")
                 .setPkIdColumnName("id");
 
@@ -67,7 +67,7 @@ public class SpringBootPlusGenerator {
                 .setGeneratorMapperXml(true);
 
         // 是否生成Shiro RequiresPermissions注解
-        codeGenerator.setRequiresPermissions(true);
+        codeGenerator.setRequiresPermissions(false);
 
         // 是否覆盖已有文件
         codeGenerator.setFileOverride(true);
@@ -78,9 +78,7 @@ public class SpringBootPlusGenerator {
         // 需要生成的表数组
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
-                "xxx",
-                "yyy",
-                "zzz"
+                "foo_bar"
         };
 
         // 循环生成

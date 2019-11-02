@@ -51,8 +51,8 @@ fi
 pwd
 
 # 2. maven打包
-mvn clean
-mvn package -Ptest
+mvn clean install
+mvn clean package -Ptest
 
 pwd
 # 判断是否生成成功

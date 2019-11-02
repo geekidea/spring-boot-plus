@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/geekidea/spring-boot-plus">
-   <img alt="spring-boot-plus logo" src="https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/logo.png">
+   <img alt="spring-boot-plus logo" src="https://springboot.plus/img/logo.png">
   </a>
 </p>
 <p align="center">
@@ -104,36 +104,33 @@ mvn clean package -Plocal
 
 ### 1. Create Table
 ```sql
-
 -- ----------------------------
--- Table structure for sys_user
+-- Table structure for foo_bar
 -- ----------------------------
-drop table if exists `sys_user`;
-create table sys_user
+DROP TABLE IF EXISTS `foo_bar`;
+CREATE TABLE `foo_bar`
 (
-    id          bigint                              not null comment ''
-        primary key,
-    username    varchar(20)                         not null comment '',
-    nickname    varchar(20)                         null comment '',
-    password    varchar(64)                         not null comment '',
-    salt        varchar(32)                         null comment '',
-    remark      varchar(200)                        null comment '',
-    status      int       default 1                 not null comment '',
-    create_time timestamp default CURRENT_TIMESTAMP null comment '',
-    update_time timestamp                           null comment '',
-    constraint sys_user_username_uindex
-        unique (username)
-)
-    comment 'SysUser';
+    `id`            bigint(20)  NOT NULL COMMENT 'ID',
+    `name`          varchar(20) NOT NULL COMMENT 'Name',
+    `foo`           varchar(20)          DEFAULT NULL COMMENT 'Foo',
+    `bar`           varchar(20) NOT NULL COMMENT 'Bar',
+    `remark`        varchar(200)         DEFAULT NULL COMMENT 'Remark',
+    `state`         int(11)     NOT NULL DEFAULT '1' COMMENT 'State，0：Disable，1：Enable',
+    `version`       int(11)     NOT NULL DEFAULT '0' COMMENT 'Version',
+    `create_time`   timestamp   NULL     DEFAULT CURRENT_TIMESTAMP COMMENT 'Create Time',
+    `update_time`   timestamp   NULL     DEFAULT NULL COMMENT 'Update Time',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT ='FooBar';
 
 -- ----------------------------
--- Records of sys_user
+-- Records of foo_bar
 -- ----------------------------
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
-    VALUES (1, 'admin', 'Administrators', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', 'e4cc3292e3ebc483998adb2c0e4e640e', 'Administrator Account', 1, '2019-08-26 00:52:01', null);
-
-INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, remark, state, create_time, update_time) 
-    VALUES (2, 'test', 'Testers', '751ade2f90ceb660cb2460f12cc6fe08268e628e4607bdb88a00605b3d66973c', '99952b31c18156169a26bec80fd211f6', 'Tester Account', 1, '2019-10-05 14:04:27', null);
+INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time) 
+    VALUES (1, 'FooBar', 'foo', 'bar', 'remark...', 1, 0, '2019-11-01 14:05:14', null);
+INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time) 
+    VALUES (2, 'HelloWorld', 'hello', 'world', null, 1, 0, '2019-11-01 14:05:14', null);
 
 ```
 
@@ -143,7 +140,7 @@ INSERT INTO spring_boot_plus.sys_user (id, username, nickname, password, salt, r
 > Modify module name / author / table name / primary key id
 
 ```text
-/src/test/java/io/geekidea/springbootplus/test/CodeGenerator.java
+/src/test/java/io/geekidea/springbootplus/test/SpringBootPlusGenerator.java
 ```
 
 ```java
@@ -172,7 +169,7 @@ public class SpringBootPlusGenerator {
 
         // Configuration of component author, etc.
         codeGenerator
-                .setModuleName("system")
+                .setModuleName("foobar")
                 .setAuthor("geekidea")
                 .setPkIdColumnName("id");
 
@@ -197,7 +194,7 @@ public class SpringBootPlusGenerator {
                 .setGeneratorMapperXml(true);
 
         // Generated RequiresPermissions Annotation
-        codeGenerator.setRequiresPermissions(true);
+        codeGenerator.setRequiresPermissions(false);
 
         // Overwrite existing file or not
         codeGenerator.setFileOverride(true);
@@ -207,9 +204,7 @@ public class SpringBootPlusGenerator {
 
         // Table array to be generated
         String[] tables = {
-                "xxx",
-                "yyy",
-                "zzz",
+                "foo_bar"
         };
 
         // Cycle generation
@@ -228,31 +223,30 @@ public class SpringBootPlusGenerator {
 > Generated code structure
 
 ```text
-/src/main/java/io/geekidea/springbootplus/system
+/src/main/java/io/geekidea/springbootplus/foobar
 ```
 
 ```text
-└── system
+└── foobar
+    ├── controller
+    │   └── FooBarController.java
     ├── entity
-    │   └── SysUser.java
+    │   └── FooBar.java
     ├── mapper
-    │   └── SysUserMapper.java
+    │   └── FooBarMapper.java
+    ├── param
+    │   └── FooBarQueryParam.java
     ├── service
-    │   ├── SysUserService.java
+    │   ├── FooBarService.java
     │   └── impl
-    │       └── SysUserServiceImpl.java
-    └── web
-        ├── controller
-        │   └── SysUserController.java
-        ├── param
-        │   └── SysUserQueryParam.java
-        └── vo
-            └── SysUserQueryVo.java
+    │       └── FooBarServiceImpl.java
+    └── vo
+        └── FooBarQueryVo.java
 ```
 
 > Mapper XML
 ```text
-/src/main/resources/mapper/system/SysUserMapper.xml
+/src/main/resources/mapper/foobar/FooBarMapper.xml
 ```
 
 ### 3. Startup Project
@@ -353,6 +347,48 @@ sh deploy.sh
 ```bash
 tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 ```
+
+
+## spring-boot-plus Views
+
+### spring-boot-plus IDEA Sources Views
+
+![spring-boot-plus-idea](https://springboot.plus/img/home/spring-boot-plus-idea.png)
+
+### [Spring Boot Admin Instances](http://47.105.159.10:8888/instances/e211ba082db8/details)
+<p>
+    <a href="http://47.105.159.10:8888/instances/e211ba082db8/details">
+        <img src="https://springboot.plus/img/home/spring-boot-admin.png" alt="spring-boot-admin instances">
+    </a>
+</p>
+
+### [Spring Boot Admin Statistics](http://47.105.159.10:8888/instances/e211ba082db8/details)
+<p>
+    <a href="http://47.105.159.10:8888/instances/e211ba082db8/details">
+        <img src="https://springboot.plus/img/home/spring-boot-admin-1.png" alt="spring-boot-admin statistics">
+    </a>
+</p>
+
+### [Spring Boot Admin Log](http://47.105.159.10:8888/instances/e211ba082db8/logfile)
+<p>
+    <a href="http://47.105.159.10:8888/instances/e211ba082db8/logfile">
+        <img src="https://springboot.plus/img/home/spring-boot-admin-log.png" alt="spring-boot-admin log">
+    </a>
+</p>
+
+### [spring-boot-plus Swagger文档](http://47.105.159.10:8888/swagger-ui.html)
+<p>
+    <a href="http://47.105.159.10:8888/swagger-ui.html">
+        <img src="https://springboot.plus/img/home/spring-boot-plus-swagger.png" alt="spring-boot-plus swagger docs">
+    </a>
+</p>
+
+### [spring-boot-plus Java Api Docs](http://geekidea.io/spring-boot-plus-apidocs/)
+<p>
+    <a href="http://geekidea.io/spring-boot-plus-apidocs/">
+        <img src="https://springboot.plus/img/home/spring-boot-plus-java-apidocs.png" alt="spring-boot-plus Java Api Docs">
+    </a>
+</p>
 
 
 ## spring-boot-plus Videos  :movie_camera: 
