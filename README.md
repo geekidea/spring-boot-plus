@@ -397,6 +397,12 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 - [CentOS Quick Build / Deploy / Launch Spring-boot-plus Project](https://www.bilibili.com/video/av67218970/)
 
 
+## Contact
+- spring-boot-plus技术交流群
+
+![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png)
+
+
 ## License
 spring-boot-plus is under the Apache 2.0 license. See the [LICENSE](https://github.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.
 

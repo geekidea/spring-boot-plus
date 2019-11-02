@@ -396,7 +396,6 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 
 
 ## 联系
-- Email: [springbootplus@aliyun.com](mailto:springbootplus@aliyun.com)
 - spring-boot-plus技术交流群
 
 ![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png)
