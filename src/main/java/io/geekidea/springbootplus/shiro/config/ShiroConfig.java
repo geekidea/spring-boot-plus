@@ -46,7 +46,6 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSessionStorageEvaluator;
-import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -253,9 +252,9 @@ public class ShiroConfig {
             } else {
                 String[] strings = value.split(",");
                 List<String> list = new ArrayList<>();
-                list.addAll(Arrays.asList(strings));
                 // 添加默认filter过滤
                 list.add(REQUEST_PATH_FILTER_NAME);
+                list.addAll(Arrays.asList(strings));
                 definition = String.join(",", list);
             }
             map.put(key, definition);
@@ -298,18 +297,6 @@ public class ShiroConfig {
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
-    }
-
-    /**
-     * depends-on lifecycleBeanPostProcessor
-     *
-     * @return
-     */
-    @Bean
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
-        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
-        return defaultAdvisorAutoProxyCreator;
     }
 
     @Bean

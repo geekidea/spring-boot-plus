@@ -142,6 +142,9 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
 
     @Override
     public List<SysPermissionTreeVo> convertSysPermissionTreeVoList(List<SysPermission> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            throw new IllegalArgumentException("SysPermission列表不能为空");
+        }
         // 按level分组获取map
         Map<Integer, List<SysPermission>> map = list.stream().collect(Collectors.groupingBy(SysPermission::getLevel));
         List<SysPermissionTreeVo> treeVos = new ArrayList<>();

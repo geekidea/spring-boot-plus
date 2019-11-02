@@ -23,15 +23,16 @@ import io.geekidea.springbootplus.system.entity.SysDepartment;
 import io.geekidea.springbootplus.system.param.SysDepartmentQueryParam;
 import io.geekidea.springbootplus.system.service.SysDepartmentService;
 import io.geekidea.springbootplus.system.vo.SysDepartmentQueryVo;
+import io.geekidea.springbootplus.system.vo.SysDepartmentTreeVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <pre>
@@ -103,6 +104,28 @@ public class SysDepartmentController extends BaseController {
     public ApiResult<Paging<SysDepartmentQueryVo>> getSysDepartmentPageList(@Valid @RequestBody SysDepartmentQueryParam sysDepartmentQueryParam) throws Exception {
         Paging<SysDepartmentQueryVo> paging = sysDepartmentService.getSysDepartmentPageList(sysDepartmentQueryParam);
         return ApiResult.ok(paging);
+    }
+
+    /**
+     * 获取所有部门列表
+     */
+    @PostMapping("/getAllDepartmentList")
+//    @RequiresPermissions("sys:department:all:list")
+    @ApiOperation(value = "获取所有部门的树形列表", notes = "获取所有部门的树形列表", response = SysDepartment.class)
+    public ApiResult<Paging<SysDepartment>> getAllDepartmentList() throws Exception {
+        List<SysDepartment> list = sysDepartmentService.getAllDepartmentList();
+        return ApiResult.ok(list);
+    }
+
+    /**
+     * 获取所有部门的树形列表
+     */
+    @PostMapping("/getAllDepartmentTree")
+//    @RequiresPermissions("sys:department:all:tree")
+    @ApiOperation(value = "获取所有部门的树形列表", notes = "获取所有部门的树形列表", response = SysDepartmentTreeVo.class)
+    public ApiResult<Paging<SysDepartmentTreeVo>> getAllDepartmentTree() throws Exception {
+        List<SysDepartmentTreeVo> treeVos = sysDepartmentService.getAllDepartmentTree();
+        return ApiResult.ok(treeVos);
     }
 
 }

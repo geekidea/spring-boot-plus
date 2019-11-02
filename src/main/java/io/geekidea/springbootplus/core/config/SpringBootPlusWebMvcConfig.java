@@ -17,9 +17,9 @@
 package io.geekidea.springbootplus.core.config;
 
 import com.alibaba.fastjson.JSON;
-import io.geekidea.springbootplus.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.core.properties.SpringBootPlusInterceptorProperties;
 import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.interceptor.PermissionInterceptor;
 import io.geekidea.springbootplus.resource.interceptor.DownloadInterceptor;
 import io.geekidea.springbootplus.resource.interceptor.ResourceInterceptor;
 import io.geekidea.springbootplus.resource.interceptor.UploadInterceptor;
@@ -27,6 +27,7 @@ import io.geekidea.springbootplus.util.IniUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -44,20 +45,56 @@ import java.util.Map;
 @Configuration
 public class SpringBootPlusWebMvcConfig implements WebMvcConfigurer {
 
+    /**
+     * spring-boot-plus配置属性
+     */
     @Autowired
     private SpringBootPlusProperties springBootPlusProperties;
 
-    @Autowired
-    private PermissionInterceptor permissionInterceptor;
+    /**
+     * 权限拦截器
+     *
+     * @return
+     */
+    @Bean
+    public PermissionInterceptor permissionInterceptor() {
+        PermissionInterceptor permissionInterceptor = new PermissionInterceptor();
+        return permissionInterceptor;
+    }
 
-    @Autowired
-    private ResourceInterceptor resourceInterceptor;
+    /**
+     * 上传拦截器
+     *
+     * @return
+     */
+    @Bean
+    public UploadInterceptor uploadInterceptor() {
+        UploadInterceptor uploadInterceptor = new UploadInterceptor();
+        return uploadInterceptor;
+    }
 
-    @Autowired
-    private UploadInterceptor uploadInterceptor;
+    /**
+     * 资源拦截器
+     *
+     * @return
+     */
+    @Bean
+    public ResourceInterceptor resourceInterceptor() {
+        ResourceInterceptor resourceInterceptor = new ResourceInterceptor();
+        return resourceInterceptor;
+    }
 
-    @Autowired
-    private DownloadInterceptor downloadInterceptor;
+    /**
+     * 下载拦截器
+     *
+     * @return
+     */
+    @Bean
+    public DownloadInterceptor downloadInterceptor() {
+        DownloadInterceptor downloadInterceptor = new DownloadInterceptor();
+        return downloadInterceptor;
+    }
+
 
     @PostConstruct
     public void init(){
@@ -71,25 +108,25 @@ public class SpringBootPlusWebMvcConfig implements WebMvcConfigurer {
 
         // 上传拦截器
         if (interceptorConfig.getUpload().isEnabled()){
-            registry.addInterceptor(uploadInterceptor)
+            registry.addInterceptor(uploadInterceptor())
                     .addPathPatterns(interceptorConfig.getUpload().getIncludePaths());
         }
 
         // 资源拦截器注册
         if (interceptorConfig.getResource().isEnabled()){
-            registry.addInterceptor(resourceInterceptor)
+            registry.addInterceptor(resourceInterceptor())
                     .addPathPatterns(interceptorConfig.getResource().getIncludePaths());
         }
 
         // 下载拦截器注册
         if (interceptorConfig.getDownload().isEnabled()){
-            registry.addInterceptor(downloadInterceptor)
+            registry.addInterceptor(downloadInterceptor())
                     .addPathPatterns(interceptorConfig.getDownload().getIncludePaths());
         }
 
         if (interceptorConfig.getPermission().isEnabled()){
             // 权限拦截器注册
-            registry.addInterceptor(permissionInterceptor)
+            registry.addInterceptor(permissionInterceptor())
                     .addPathPatterns(interceptorConfig.getPermission().getIncludePaths())
                     .excludePathPatterns(interceptorConfig.getPermission().getExcludePaths());
         }

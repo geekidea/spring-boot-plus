@@ -66,6 +66,35 @@ INSERT INTO `sys_log` VALUES (1060438809495224322, 0, 'D', 100000, '2018-11-08 1
 
 
 -- ----------------------------
+-- Table structure for foo_bar
+-- ----------------------------
+DROP TABLE IF EXISTS `foo_bar`;
+CREATE TABLE `foo_bar`
+(
+    `id`            bigint(20)  NOT NULL COMMENT '主键',
+    `name`          varchar(20) NOT NULL COMMENT '名称',
+    `foo`           varchar(20)          DEFAULT NULL COMMENT 'Foo',
+    `bar`           varchar(20) NOT NULL COMMENT 'Bar',
+    `remark`        varchar(200)         DEFAULT NULL COMMENT '备注',
+    `state`         int(11)     NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
+    `version`       int(11)     NOT NULL DEFAULT '0' COMMENT '版本',
+    `create_time`   timestamp   NULL     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time`   timestamp   NULL     DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT ='FooBar';
+
+-- ----------------------------
+-- Records of foo_bar
+-- ----------------------------
+INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time)
+VALUES (1, 'FooBar', 'foo', 'bar', 'remark...', 1, 0, '2019-11-01 14:05:14', null);
+INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time)
+VALUES (2, 'HelloWorld', 'hello', 'world', null, 1, 0, '2019-11-01 14:05:14', null);
+
+
+-- ----------------------------
 -- Table structure for sys_department
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_department`;
@@ -74,6 +103,7 @@ CREATE TABLE `sys_department`
     `id`          bigint(20)  NOT NULL COMMENT '主键',
     `name`        varchar(32) NOT NULL COMMENT '部门名称',
     `parent_id`   bigint(20)           DEFAULT NULL COMMENT '父id',
+    `level`       int         NULL COMMENT '部门层级',
     `state`       int(11)     NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
     `sort`        int(11)     NOT NULL DEFAULT '0' COMMENT '排序',
     `remark`      varchar(200)         DEFAULT NULL COMMENT '备注',
@@ -89,8 +119,17 @@ CREATE TABLE `sys_department`
 -- ----------------------------
 -- Records of sys_department
 -- ----------------------------
-INSERT INTO sys_department (id, name, parent_id, state, sort, remark, version, create_time, update_time) VALUES (1, '管理部', null, 1, 0, null, 0, '2019-10-25 09:46:49', null);
-INSERT INTO sys_department (id, name, parent_id, state, sort, remark, version, create_time, update_time) VALUES (2, '测试部', null, 1, 0, null, 0, '2019-10-25 09:47:06', null);
+INSERT INTO sys_department (id, name, parent_id, level, state, sort, remark, version, create_time, update_time) VALUES (1, '管理部', null, 1, 1, 0, null, 0, '2019-10-25 09:46:49', null);
+INSERT INTO sys_department (id, name, parent_id, level, state, sort, remark, version, create_time, update_time) VALUES (2, '技术部', null, 1, 1, 0, null, 0, '2019-11-01 20:45:43', null);
+INSERT INTO sys_department (id, name, parent_id, level, state, sort, remark, version, create_time, update_time) VALUES (20, '前端开发部', 2, 2, 1, 0, null, 0, '2019-11-01 20:48:38', null);
+INSERT INTO sys_department (id, name, parent_id, level, state, sort, remark, version, create_time, update_time) VALUES (21, '后台开发部', 2, 2, 1, 0, null, 0, '2019-11-01 20:48:38', null);
+INSERT INTO sys_department (id, name, parent_id, level, state, sort, remark, version, create_time, update_time) VALUES (22, '测试部', 2, 2, 1, 0, null, 0, '2019-11-01 20:48:38', null);
+INSERT INTO sys_department (id, name, parent_id, level, state, sort, remark, version, create_time, update_time) VALUES (201, '前端一组', 20, 3, 1, 0, null, 0, '2019-11-01 20:48:38', null);
+INSERT INTO sys_department (id, name, parent_id, level, state, sort, remark, version, create_time, update_time) VALUES (202, '前端二组', 20, 3, 1, 0, null, 0, '2019-11-01 20:48:38', null);
+INSERT INTO sys_department (id, name, parent_id, level, state, sort, remark, version, create_time, update_time) VALUES (203, '后台一组', 21, 3, 1, 0, null, 0, '2019-11-01 20:48:38', null);
+INSERT INTO sys_department (id, name, parent_id, level, state, sort, remark, version, create_time, update_time) VALUES (204, '后台二组', 21, 3, 1, 0, null, 0, '2019-11-01 20:48:38', null);
+INSERT INTO sys_department (id, name, parent_id, level, state, sort, remark, version, create_time, update_time) VALUES (205, '测试一组', 22, 3, 1, 0, null, 0, '2019-11-01 20:48:38', null);
+
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -271,7 +310,6 @@ INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, vers
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (29, 1, 4002, 1, null, 0, '2019-10-26 22:16:19', null);
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (30, 1, 4003, 1, null, 0, '2019-10-26 22:16:19', null);
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (31, 1, 4004, 1, null, 0, '2019-10-26 22:16:19', null);
-INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (32, 1, 4005, 1, null, 0, '2019-10-26 22:16:19', null);
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (100, 1, 1, 1, null, 0, '2019-10-26 22:16:19', null);
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (101, 1, 100, 1, null, 0, '2019-10-26 22:16:19', null);
 INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, version, create_time, update_time) VALUES (102, 1, 1000, 1, null, 0, '2019-10-26 22:16:19', null);
