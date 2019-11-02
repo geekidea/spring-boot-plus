@@ -12,6 +12,8 @@
 - 自定义是否启用Shiro权限拦截
 - 优化LogAop配置
 - 代码生成模板优化，三种生成策略
+- 自定义生成Shiro `RequiresPermissions`注解
+- Jackson工具类，按字段顺序格式化输出
 	
 ### 🐞  Bug Fixes
 - fix #81 刷新token问题
@@ -19,6 +21,7 @@
 - fix refreshToken方法和LoginUtil工具类方法问题
 
 ### 📔  Documentation
+- [RBAC用户角色权限](https://springboot.plus/guide/rbac.html)
 
 ### 🔨 Dependency Upgrades
 - Upgrade to `spring-boot` 2.2.0.RELEASE

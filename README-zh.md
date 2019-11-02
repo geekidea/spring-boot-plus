@@ -46,7 +46,7 @@
 10. 使用assembly maven插件进行不同环境打包部署,包含启动、重启命令，配置文件提取到外部config目录
 
 ## 项目架构
-![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
+![spring-boot-plus-architecture.jpg](https://spring-boot-plus.gitee.io/img/spring-boot-plus-architecture.jpg)
 
 ### 项目环境 
 中间件 | 版本 |  备注
@@ -285,7 +285,7 @@ public class SpringBootPlusApplication {
 [http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html)
 
 ### 5. 系统用户 增删改查分页Swagger
-![sys_user_swagger-zh.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/sys_user_swagger-zh.png)
+![sys_user_swagger-zh.png](https://spring-boot-plus.gitee.io/img/sys_user_swagger-zh.png)
 
 ## 快速开始
 [快速开始](https://springboot.plus/guide/quick-start.html)
@@ -298,7 +298,7 @@ public class SpringBootPlusApplication {
 > 安装 `jdk`, `git`, `maven`, `redis`, `mysql`
 
 ```bash
-wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/download-install-all.sh
+wget -O download-install-all.sh https://springboot.plus/bin/download-install-all.sh
 ```
 
 ### 2. 运行安装脚本
@@ -324,7 +324,7 @@ exit
 
 ### 5. 下载部署脚本 `deploy.sh`
 ```bash
-wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/deploy/deploy.sh
+wget -O deploy.sh https://springboot.plus/bin/deploy.sh
 ```
 
 ### 6. 执行脚本
@@ -399,7 +399,7 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 - Email: [springbootplus@aliyun.com](mailto:springbootplus@aliyun.com)
 - spring-boot-plus技术交流群
 
-![spring-boot-plus QQ Group](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-qq-group.png)
+![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png)
 
 
 ## License
