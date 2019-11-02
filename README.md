@@ -399,3 +399,4 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 
 ## License
 spring-boot-plus is under the Apache 2.0 license. See the [LICENSE](https://github.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.
+
