@@ -103,6 +103,7 @@ CREATE TABLE `sys_department`
     `id`          bigint(20)  NOT NULL COMMENT '主键',
     `name`        varchar(32) NOT NULL COMMENT '部门名称',
     `parent_id`   bigint(20)           DEFAULT NULL COMMENT '父id',
+    `level`       int         NULL COMMENT '部门层级',
     `state`       int(11)     NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
     `sort`        int(11)     NOT NULL DEFAULT '0' COMMENT '排序',
     `remark`      varchar(200)         DEFAULT NULL COMMENT '备注',
