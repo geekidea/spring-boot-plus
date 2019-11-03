@@ -13,7 +13,8 @@
 - 优化LogAop配置
 - 代码生成模板优化，三种生成策略
 - 自定义生成Shiro `RequiresPermissions`注解
-- Jackson工具类，按字段顺序格式化输出
+- `Jackson`工具类，按字段顺序格式化输出
+- `BaseEnum` 枚举父接口，`EnumController`,`BaseEnumUtil`, `EnumTypeValidator` 校验/获取枚举信息
 	
 ### 🐞  Bug Fixes
 - fix #81 刷新token问题 
@@ -29,6 +30,7 @@
 - Upgrade to `lombok` 1.18.10
 - Upgrade to `hutool` 5.0.3
 - Upgrade to `mapstruct` 1.3.1.Final
+- Upgrade to `hutool` 5.0.4
 
 
 ## [V1.3.1-RELEASE] 2019.10.15

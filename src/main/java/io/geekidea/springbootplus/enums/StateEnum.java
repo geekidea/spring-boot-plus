@@ -16,22 +16,33 @@
 
 package io.geekidea.springbootplus.enums;
 
-import io.geekidea.springbootplus.common.enums.BaseTypeStateEnum;
+import io.geekidea.springbootplus.common.enums.BaseEnum;
 
 /**
+ * 启用禁用状态枚举
+ *
  * @author geekidea
  * @date 2019-10-24
  **/
-public enum StateEnum implements BaseTypeStateEnum {
-    DISABLE,ENABLE;
+public enum StateEnum implements BaseEnum {
+    DISABLE(0, "禁用"),
+    ENABLE(1, "启用");
 
-    @Override
-    public Integer getKey() {
-        return this.ordinal();
+    private Integer code;
+    private String desc;
+
+    StateEnum(Integer code, String desc) {
+        this.code = code;
+        this.desc = desc;
     }
 
     @Override
-    public String getValue() {
-        return this.name();
+    public Integer getCode() {
+        return this.code;
+    }
+
+    @Override
+    public String getDesc() {
+        return this.desc;
     }
 }

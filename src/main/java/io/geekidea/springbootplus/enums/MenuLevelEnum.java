@@ -14,30 +14,35 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.controller;
+package io.geekidea.springbootplus.enums;
 
-import io.geekidea.springbootplus.common.api.ApiResult;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
+import io.geekidea.springbootplus.common.enums.BaseEnum;
 
 /**
- * <p>
- * 项目根路径提示信息
- * </p>
- *
+ * 层级枚举
  * @author geekidea
- * @date 2018/11/12
- */
-@RestController
-@ApiIgnore
-@Slf4j
-public class IndexController {
+ * @date 2019-10-24
+ **/
+public enum MenuLevelEnum implements BaseEnum {
+    ONE(1, "一级菜单"),
+    TWO(2, "二级菜单"),
+    THREE(3, "功能菜单");
 
-    @RequestMapping("/index")
-    public ApiResult<String> index() {
-        log.debug("index...");
-        return ApiResult.ok("Welcome to Spring Boot Plus Project...");
+    private Integer code;
+    private String desc;
+
+    MenuLevelEnum(Integer code, String desc) {
+        this.code = code;
+        this.desc = desc;
+    }
+
+    @Override
+    public Integer getCode() {
+        return this.code;
+    }
+
+    @Override
+    public String getDesc() {
+        return this.desc;
     }
 }

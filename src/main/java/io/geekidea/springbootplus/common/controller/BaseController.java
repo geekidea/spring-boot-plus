@@ -39,6 +39,7 @@ public abstract class BaseController extends ApiController {
     public HttpServletRequest getRequest() {
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     }
+
     /**
      * 获取当前请求
      *

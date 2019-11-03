@@ -27,6 +27,7 @@ import java.util.List;
 
 /**
  * spring-boot-plus属性配置信息
+ *
  * @author geekidea
  * @date 2019-08-04
  * @since 1.2.0-RELEASE
@@ -44,6 +45,11 @@ public class SpringBootPlusProperties {
      * 是否启用验证码
      */
     private boolean enableVerifyCode;
+
+    /**
+     * 实现BaseEnum接口的枚举包
+     */
+    private String[] enumPackages;
 
     /**
      * 拦截器配置
@@ -97,6 +103,7 @@ public class SpringBootPlusProperties {
 
     /**
      * 项目静态资源访问配置
+     *
      * @see SpringBootPlusWebMvcConfig addResourceHandlers
      */
     private String resourceHandlers;

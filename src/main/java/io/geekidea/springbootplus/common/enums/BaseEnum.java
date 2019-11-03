@@ -14,34 +14,28 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.enums;
-
-import io.geekidea.springbootplus.common.enums.BaseTypeStateEnum;
+package io.geekidea.springbootplus.common.enums;
 
 /**
+ * 枚举类型父接口
+ *
  * @author geekidea
- * @date 2019-10-24
- **/
-public enum LevelEnum implements BaseTypeStateEnum {
-    ONE(1, "一级菜单"),
-    TWO(2, "二级菜单"),
-    THREE(3, "功能菜单");
+ * @date 2018-11-08
+ */
+public interface BaseEnum {
 
-    private Integer key;
-    private String value;
+    /**
+     * 获取枚举索引
+     *
+     * @return
+     */
+    Integer getCode();
 
-    LevelEnum(Integer key, String value) {
-        this.key = key;
-        this.value = value;
-    }
+    /**
+     * 获取描述
+     *
+     * @return
+     */
+    String getDesc();
 
-    @Override
-    public Integer getKey() {
-        return this.key;
-    }
-
-    @Override
-    public String getValue() {
-        return this.value;
-    }
 }

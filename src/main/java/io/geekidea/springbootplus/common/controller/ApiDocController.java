@@ -35,10 +35,10 @@ import springfox.documentation.annotations.ApiIgnore;
 public class ApiDocController extends BaseController {
 
     /**
-    * swaggerUI
-    */
+     * swaggerUI
+     */
     @GetMapping("")
-    public String swaggerUI(){
+    public String swaggerUI() {
         return "redirect:/swagger-ui.html";
     }
 

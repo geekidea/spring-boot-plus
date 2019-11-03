@@ -91,14 +91,14 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
     public boolean isEnableSysDepartment(Long id) throws Exception {
         SysDepartment sysDepartment = new SysDepartment()
                 .setId(id)
-                .setState(StateEnum.ENABLE.ordinal());
+                .setState(StateEnum.ENABLE.getCode());
         int count = sysDepartmentMapper.selectCount(new QueryWrapper<>(sysDepartment));
         return count > 0;
     }
 
     @Override
     public List<SysDepartment> getAllDepartmentList() {
-        SysDepartment sysDepartment = new SysDepartment().setState(StateEnum.ENABLE.ordinal());
+        SysDepartment sysDepartment = new SysDepartment().setState(StateEnum.ENABLE.getCode());
         // 获取所有已启用的部门列表
         return sysDepartmentMapper.selectList(new QueryWrapper(sysDepartment));
     }
