@@ -110,7 +110,7 @@ public class LoginServiceImpl implements LoginService {
             log.error("登陆失败,loginParam:{}", loginParam);
             throw new AuthenticationException("用户名或密码错误");
         }
-        if (StateEnum.DISABLE.getKey().equals(sysUser.getState())) {
+        if (StateEnum.DISABLE.getCode().equals(sysUser.getState())) {
             throw new AuthenticationException("账号已禁用");
         }
 
@@ -131,7 +131,7 @@ public class LoginServiceImpl implements LoginService {
         if (sysDepartment == null) {
             throw new AuthenticationException("部门不存在");
         }
-        if (!StateEnum.ENABLE.getKey().equals(sysDepartment.getState())) {
+        if (!StateEnum.ENABLE.getCode().equals(sysDepartment.getState())) {
             throw new AuthenticationException("部门已禁用");
         }
         loginSysUserVo.setDepartmentId(sysDepartment.getId())
@@ -143,7 +143,7 @@ public class LoginServiceImpl implements LoginService {
         if (sysRole == null) {
             throw new AuthenticationException("角色不存在");
         }
-        if (StateEnum.DISABLE.getKey().equals(sysRole.getState())) {
+        if (StateEnum.DISABLE.getCode().equals(sysRole.getState())) {
             throw new AuthenticationException("角色已禁用");
         }
         loginSysUserVo.setRoleId(sysRole.getId())
