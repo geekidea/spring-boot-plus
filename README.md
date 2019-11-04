@@ -48,7 +48,7 @@
 - Integrate maven-assembly-plugin for different environment package deployment, including startup and restart commands, and extract configuration files to external config directory
 
 ## Architecture
-![spring-boot-plus-architecture.jpg](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-architecture.jpg)
+![spring-boot-plus-architecture.jpg](https://springboot.plus/img/spring-boot-plus-architecture.jpg)
 
 ### Project Environment 
 Middleware | Version |  Remark
@@ -284,7 +284,7 @@ public class SpringBootPlusApplication {
 [http://127.0.0.1:8888/swagger-ui.html](http://127.0.0.1:8888/swagger-ui.html)
 
 ### 5. SysUser CRUD Swagger
-![sys_user_swagger.png](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/sys_user_swagger.png)
+![sys_user_swagger.png](https://springboot.plus/img/sys_user_swagger.png)
 
 
 ## Quick Start
@@ -300,7 +300,7 @@ public class SpringBootPlusApplication {
 > Install `jdk`, `git`, `maven`, `redis`, `mysql`
 
 ```bash
-wget -O download-install-all.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/bin/install/download-install-all.sh
+wget -O download-install-all.sh https://springboot.plus/bin/download-install-all.sh
 ```
 
 ### 2. Run the installation script
@@ -326,7 +326,7 @@ exit
 
 ### 5. Download deployment script `deploy.sh`
 ```bash
-wget -O deploy.sh https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/deploy/deploy.sh
+wget -O deploy.sh https://springboot.plus/bin/deploy.sh
 ```
 
 ### 6. Execution script
@@ -358,25 +358,25 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 ### [Spring Boot Admin Instances](http://47.105.159.10:8888/instances/e211ba082db8/details)
 <p>
     <a href="http://47.105.159.10:8888/instances/e211ba082db8/details">
-        <img src="https://springboot.plus/img/home/spring-boot-admin.png" alt="spring-boot-admin instances">
+        <img src="https://springboot.plus/img/home/spring-boot-admin-en.png" alt="spring-boot-admin instances">
     </a>
 </p>
 
 ### [Spring Boot Admin Statistics](http://47.105.159.10:8888/instances/e211ba082db8/details)
 <p>
     <a href="http://47.105.159.10:8888/instances/e211ba082db8/details">
-        <img src="https://springboot.plus/img/home/spring-boot-admin-1.png" alt="spring-boot-admin statistics">
+        <img src="https://springboot.plus/img/home/spring-boot-admin-1-en.png" alt="spring-boot-admin statistics">
     </a>
 </p>
 
 ### [Spring Boot Admin Log](http://47.105.159.10:8888/instances/e211ba082db8/logfile)
 <p>
     <a href="http://47.105.159.10:8888/instances/e211ba082db8/logfile">
-        <img src="https://springboot.plus/img/home/spring-boot-admin-log.png" alt="spring-boot-admin log">
+        <img src="https://springboot.plus/img/home/spring-boot-admin-log-en.png" alt="spring-boot-admin log">
     </a>
 </p>
 
-### [spring-boot-plus Swagger文档](http://47.105.159.10:8888/swagger-ui.html)
+### [spring-boot-plus Swagger Docs](http://47.105.159.10:8888/swagger-ui.html)
 <p>
     <a href="http://47.105.159.10:8888/swagger-ui.html">
         <img src="https://springboot.plus/img/home/spring-boot-plus-swagger.png" alt="spring-boot-plus swagger docs">
@@ -397,5 +397,12 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 - [CentOS Quick Build / Deploy / Launch Spring-boot-plus Project](https://www.bilibili.com/video/av67218970/)
 
 
+## Contact
+- spring-boot-plus QQ Group
+
+![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png)
+
+
 ## License
 spring-boot-plus is under the Apache 2.0 license. See the [LICENSE](https://github.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.
+

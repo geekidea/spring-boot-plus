@@ -49,6 +49,8 @@ spring-boot-plus:
   enable-ansi: true
   # 是否启用验证码
   enable-verify-code: false
+  # 实现BaseEnum接口的枚举包
+  enum-packages: io.geekidea.springbootplus.enums
   # 过滤器配置
   filter:
     # 请求路径Filter配置
@@ -149,6 +151,8 @@ spring-boot-plus:
       /verificationCode/**=anon
       /resource/**=anon
       /fooBar/**=anon
+      /index=anon
+      /enum=anon
     # 权限配置
     permission:
         # 排除登陆登出相关
