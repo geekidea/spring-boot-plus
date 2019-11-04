@@ -24,8 +24,9 @@ import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * <p>
- *     项目根路径提示信息
+ * 项目根路径提示信息
  * </p>
+ *
  * @author geekidea
  * @date 2018/11/12
  */
@@ -35,7 +36,7 @@ import springfox.documentation.annotations.ApiIgnore;
 public class IndexController {
 
     @RequestMapping("/index")
-    public ApiResult<String> index(){
+    public ApiResult<String> index() {
         log.debug("index...");
         return ApiResult.ok("Welcome to Spring Boot Plus Project...");
     }

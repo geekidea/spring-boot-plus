@@ -153,7 +153,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
     @Override
     public boolean isExistsSysUserByRoleId(Long roleId) throws Exception {
         SysUser sysUser = new SysUser()
-                .setState(StateEnum.ENABLE.ordinal())
+                .setState(StateEnum.ENABLE.getCode())
                 .setRoleId(roleId);
         return sysUserMapper.selectCount(new QueryWrapper(sysUser)) > 0;
     }
@@ -175,7 +175,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         if (sysUser == null) {
             throw new BusinessException("用户不存在");
         }
-        if (StateEnum.DISABLE.getKey().equals(sysUser.getState())) {
+        if (StateEnum.DISABLE.getCode().equals(sysUser.getState())) {
             throw new BusinessException("用户已禁用");
         }
         // 密码加密处理

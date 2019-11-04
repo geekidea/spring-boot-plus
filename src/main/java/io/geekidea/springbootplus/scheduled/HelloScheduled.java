@@ -14,34 +14,28 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.enums;
+package io.geekidea.springbootplus.scheduled;
 
-import io.geekidea.springbootplus.common.enums.BaseTypeStateEnum;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 /**
+ * Hello任务调度
+ *
  * @author geekidea
- * @date 2019-10-24
+ * @date 2019-10-29
  **/
-public enum LevelEnum implements BaseTypeStateEnum {
-    ONE(1, "一级菜单"),
-    TWO(2, "二级菜单"),
-    THREE(3, "功能菜单");
+@Slf4j
+@Component
+public class HelloScheduled {
 
-    private Integer key;
-    private String value;
-
-    LevelEnum(Integer key, String value) {
-        this.key = key;
-        this.value = value;
+    /**
+     * 每小时执行一次
+     */
+    @Scheduled(cron = "0 0 0/1 * * ? ")
+    public void hello() {
+        log.debug("Test Scheduled...");
     }
 
-    @Override
-    public Integer getKey() {
-        return this.key;
-    }
-
-    @Override
-    public String getValue() {
-        return this.value;
-    }
 }

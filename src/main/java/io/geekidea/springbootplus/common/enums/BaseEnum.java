@@ -17,14 +17,25 @@
 package io.geekidea.springbootplus.common.enums;
 
 /**
+ * 枚举类型父接口
+ *
  * @author geekidea
  * @date 2018-11-08
  */
-public interface BaseTypeStateEnum {
+public interface BaseEnum {
 
-    Integer getKey();
+    /**
+     * 获取枚举索引
+     *
+     * @return
+     */
+    Integer getCode();
 
-    String getValue();
-
+    /**
+     * 获取描述
+     *
+     * @return
+     */
+    String getDesc();
 
 }

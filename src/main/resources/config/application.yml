@@ -33,6 +33,13 @@ spring:
 spring:
   profiles:
     active: '@profileActive@'
+
+# logback.xml中有详细的日志配置
+logging:
+  config: classpath:config/logback.xml
+  #  方便Spring Boot Admin页面上实时查看日志
+  file:
+    name: logs/spring-boot-plus.log
 ################################ spring config end #################################
 
 
@@ -42,6 +49,8 @@ spring-boot-plus:
   enable-ansi: true
   # 是否启用验证码
   enable-verify-code: false
+  # 实现BaseEnum接口的枚举包
+  enum-packages: io.geekidea.springbootplus.enums
   # 过滤器配置
   filter:
     # 请求路径Filter配置
@@ -138,10 +147,12 @@ spring-boot-plus:
       /templates/**=anon
       /druid/**=anon
       /hello/world=anon
-      /ip/**=anon
       /sysLog/**=anon
       /verificationCode/**=anon
       /resource/**=anon
+      /fooBar/**=anon
+      /index=anon
+      /enum=anon
     # 权限配置
     permission:
         # 排除登陆登出相关
@@ -314,3 +325,4 @@ info:
   project-mybatis-plus-version: '@mybatis-plus-boot-starter.version@'
   project-version: '@project.version@'
 ############################## Spring boot admin end ###############################
+

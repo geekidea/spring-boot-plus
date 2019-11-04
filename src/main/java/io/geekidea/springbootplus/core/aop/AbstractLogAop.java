@@ -25,8 +25,11 @@ import io.geekidea.springbootplus.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.util.AnsiUtil;
 import io.geekidea.springbootplus.util.DateUtil;
 import io.geekidea.springbootplus.util.IpUtil;
+import io.geekidea.springbootplus.util.Jackson;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.shiro.authz.annotation.*;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -41,6 +44,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -147,6 +151,13 @@ public abstract class AbstractLogAop {
             Annotation[][] annotations = method.getParameterAnnotations();
             boolean isRequestBody = isRequestBody(annotations);
             map.put("isRequestBody", isRequestBody);
+
+            AnnotatedType[] annotatedTypes = method.getAnnotatedParameterTypes();
+            System.out.println(Arrays.toString(annotatedTypes));
+
+            // 获取Shiro注解值，并记录到map中
+            handleShiroAnnotationValue(map, method);
+
             // 设置请求参数
             Object requestParamJson = getRequestParamJsonString(joinPoint, request, requestMethod, contentType, isRequestBody);
             map.put("param", requestParamJson);
@@ -170,6 +181,48 @@ public abstract class AbstractLogAop {
             log.error("处理响应结果异常", e);
         }
         return result;
+    }
+
+    /**
+     * 获取Shiro注解值，并记录到map中
+     *
+     * @param map
+     * @param method
+     */
+    protected void handleShiroAnnotationValue(Map<String, Object> map, Method method) {
+        RequiresRoles requiresRoles = method.getAnnotation(RequiresRoles.class);
+        if (requiresRoles != null) {
+            String[] requiresRolesValues = requiresRoles.value();
+            if (ArrayUtils.isNotEmpty(requiresRolesValues)) {
+                String requiresRolesString = Arrays.toString(requiresRolesValues);
+                map.put("requiresRoles", requiresRolesString);
+            }
+        }
+
+        RequiresPermissions requiresPermissions = method.getAnnotation(RequiresPermissions.class);
+        if (requiresPermissions != null) {
+            String[] requiresPermissionsValues = requiresPermissions.value();
+            if (ArrayUtils.isNotEmpty(requiresPermissionsValues)) {
+                String requiresPermissionsString = Arrays.toString(requiresPermissionsValues);
+                map.put("requiresPermissions", requiresPermissionsString);
+            }
+        }
+
+        RequiresAuthentication requiresAuthentication = method.getAnnotation(RequiresAuthentication.class);
+        if (requiresAuthentication != null) {
+            map.put("requiresAuthentication", true);
+        }
+
+        RequiresUser requiresUser = method.getAnnotation(RequiresUser.class);
+        if (requiresUser != null) {
+            map.put("requiresUser", true);
+        }
+
+        RequiresGuest requiresGuest = method.getAnnotation(RequiresGuest.class);
+        if (requiresGuest != null) {
+            map.put("requiresGuest", true);
+        }
+
     }
 
     /**
@@ -244,7 +297,7 @@ public abstract class AbstractLogAop {
             if (logAopConfig.isRequestLogFormat()) {
                 requestInfo = "\n" + JSON.toJSONString(map, true);
             } else {
-                requestInfo = JSON.toJSONString(map);
+                requestInfo = Jackson.toJsonString(map);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -271,9 +324,9 @@ public abstract class AbstractLogAop {
         String responseResultInfo = "responseResult:";
         try {
             if (logAopConfig.isResponseLogFormat()) {
-                responseResultInfo += "\n" + JSON.toJSONString(apiResult, true);
+                responseResultInfo += "\n" + Jackson.toJsonString(apiResult, true);
             } else {
-                responseResultInfo += JSON.toJSONString(apiResult);
+                responseResultInfo += Jackson.toJsonString(apiResult);
             }
             int code = apiResult.getCode();
             if (code == ApiCode.SUCCESS.getCode()) {

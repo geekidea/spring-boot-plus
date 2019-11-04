@@ -23,17 +23,22 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
 import io.geekidea.springbootplus.common.vo.Paging;
 import io.geekidea.springbootplus.enums.StateEnum;
+import io.geekidea.springbootplus.system.convert.SysDepartmentConvert;
 import io.geekidea.springbootplus.system.entity.SysDepartment;
 import io.geekidea.springbootplus.system.mapper.SysDepartmentMapper;
 import io.geekidea.springbootplus.system.param.SysDepartmentQueryParam;
 import io.geekidea.springbootplus.system.service.SysDepartmentService;
 import io.geekidea.springbootplus.system.vo.SysDepartmentQueryVo;
+import io.geekidea.springbootplus.system.vo.SysDepartmentTreeVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -86,9 +91,52 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
     public boolean isEnableSysDepartment(Long id) throws Exception {
         SysDepartment sysDepartment = new SysDepartment()
                 .setId(id)
-                .setState(StateEnum.ENABLE.ordinal());
+                .setState(StateEnum.ENABLE.getCode());
         int count = sysDepartmentMapper.selectCount(new QueryWrapper<>(sysDepartment));
         return count > 0;
     }
+
+    @Override
+    public List<SysDepartment> getAllDepartmentList() {
+        SysDepartment sysDepartment = new SysDepartment().setState(StateEnum.ENABLE.getCode());
+        // 获取所有已启用的部门列表
+        return sysDepartmentMapper.selectList(new QueryWrapper(sysDepartment));
+    }
+
+    @Override
+    public List<SysDepartmentTreeVo> getAllDepartmentTree() {
+        List<SysDepartment> sysDepartmentList = getAllDepartmentList();
+        if (CollectionUtils.isEmpty(sysDepartmentList)) {
+            throw new IllegalArgumentException("SysDepartment列表不能为空");
+        }
+        List<SysDepartmentTreeVo> list = SysDepartmentConvert.INSTANCE.listToTreeVoList(sysDepartmentList);
+        List<SysDepartmentTreeVo> treeVos = new ArrayList<>();
+        for (SysDepartmentTreeVo treeVo : list) {
+            if (treeVo.getParentId() == null) {
+                treeVos.add(findChildren(treeVo, list));
+            }
+        }
+        return treeVos;
+    }
+
+    /**
+     * 递归获取树形结果列表
+     *
+     * @param tree
+     * @param list
+     * @return
+     */
+    public SysDepartmentTreeVo findChildren(SysDepartmentTreeVo tree, List<SysDepartmentTreeVo> list) {
+        for (SysDepartmentTreeVo vo : list) {
+            if (tree.getId().equals(vo.getParentId())) {
+                if (tree.getChildren() == null) {
+                    tree.setChildren(new ArrayList<>());
+                }
+                tree.getChildren().add(findChildren(vo, list));
+            }
+        }
+        return tree;
+    }
+
 
 }

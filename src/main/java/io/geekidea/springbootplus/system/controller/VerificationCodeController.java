@@ -66,7 +66,7 @@ public class VerificationCodeController {
         String code = verificationCode.getText();
         String verifyToken = UUIDUtil.getUUID();
         // 缓存到Redis
-        redisTemplate.opsForValue().set(String.format(CommonRedisKey.VERIFY_CODE, verifyToken), code, 10, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(String.format(CommonRedisKey.VERIFY_CODE, verifyToken), code, 5, TimeUnit.MINUTES);
         response.setHeader(CommonConstant.VERIFY_TOKEN, verifyToken);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         response.setHeader("Pragma", "No-cache");
@@ -96,7 +96,7 @@ public class VerificationCodeController {
         map.put(CommonConstant.IMAGE, CommonConstant.BASE64_PREFIX + base64);
         map.put(CommonConstant.VERIFY_TOKEN, verifyToken);
         // 缓存到Redis
-        redisTemplate.opsForValue().set(String.format(CommonRedisKey.VERIFY_CODE, verifyToken), code, 10, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(String.format(CommonRedisKey.VERIFY_CODE, verifyToken), code, 5, TimeUnit.MINUTES);
         return ApiResult.ok(map);
     }
 

@@ -64,12 +64,13 @@
         <reflections.version>0.9.11</reflections.version>
         <jansi.version>1.18</jansi.version>
         <lombok.version>1.18.10</lombok.version>
-        <hutool.version>5.0.3</hutool.version>
+        <hutool.version>5.0.4</hutool.version>
         <junit.version>4.12</junit.version>
         <ini4j.version>0.5.4</ini4j.version>
         <mapstruct.version>1.3.1.Final</mapstruct.version>
         <shiro.version>1.4.1</shiro.version>
         <jwt.version>3.8.3</jwt.version>
+        <guava.version>28.1-jre</guava.version>
 
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -175,6 +176,12 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger2.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -222,6 +229,12 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>${reflections.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
 
         <dependency>
@@ -284,7 +297,7 @@
         <!-- Shiro+JWT start -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring-boot-starter</artifactId>
+            <artifactId>shiro-spring</artifactId>
             <version>${shiro.version}</version>
         </dependency>
 

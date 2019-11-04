@@ -168,7 +168,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         if (isExistsUser) {
             throw new DaoException("该角色下还存在可用用户，不能删除");
         }
-        // 角色逻辑删除
+        // 角色真实删除
         boolean deleteRoleResult = removeById(id);
         if (!deleteRoleResult) {
             throw new DaoException("删除角色失败");
@@ -197,7 +197,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     public boolean isEnableSysRole(Long id) throws Exception {
         SysRole sysRole = new SysRole()
                 .setId(id)
-                .setState(StateEnum.ENABLE.ordinal());
+                .setState(StateEnum.ENABLE.getCode());
         int count = sysRoleMapper.selectCount(new QueryWrapper<>(sysRole));
         return count > 0;
     }

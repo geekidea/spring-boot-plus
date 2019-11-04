@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.geekidea.springbootplus.common.exception.BusinessException;
 import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
 import io.geekidea.springbootplus.common.vo.Paging;
-import io.geekidea.springbootplus.enums.LevelEnum;
+import io.geekidea.springbootplus.enums.MenuLevelEnum;
 import io.geekidea.springbootplus.enums.StateEnum;
 import io.geekidea.springbootplus.system.convert.SysPermissionConvert;
 import io.geekidea.springbootplus.system.entity.SysPermission;
@@ -127,7 +127,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
 
     @Override
     public List<SysPermission> getAllMenuList() throws Exception {
-        SysPermission sysPermission = new SysPermission().setState(StateEnum.ENABLE.ordinal());
+        SysPermission sysPermission = new SysPermission().setState(StateEnum.ENABLE.getCode());
         // 获取所有已启用的权限列表
         return sysPermissionMapper.selectList(new QueryWrapper(sysPermission));
     }
@@ -142,24 +142,27 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
 
     @Override
     public List<SysPermissionTreeVo> convertSysPermissionTreeVoList(List<SysPermission> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            throw new IllegalArgumentException("SysPermission列表不能为空");
+        }
         // 按level分组获取map
         Map<Integer, List<SysPermission>> map = list.stream().collect(Collectors.groupingBy(SysPermission::getLevel));
         List<SysPermissionTreeVo> treeVos = new ArrayList<>();
         // 循环获取三级菜单树形集合
-        for (SysPermission one : map.get(LevelEnum.ONE.getKey())) {
+        for (SysPermission one : map.get(MenuLevelEnum.ONE.getCode())) {
             SysPermissionTreeVo oneVo = SysPermissionConvert.INSTANCE.permissionToTreeVo(one);
             Long oneParentId = oneVo.getParentId();
             if (oneParentId == null || oneParentId == 0) {
                 treeVos.add(oneVo);
             }
-            List<SysPermission> twoList = map.get(LevelEnum.TWO.getKey());
+            List<SysPermission> twoList = map.get(MenuLevelEnum.TWO.getCode());
             if (CollectionUtils.isNotEmpty(twoList)) {
                 for (SysPermission two : twoList) {
                     SysPermissionTreeVo twoVo = SysPermissionConvert.INSTANCE.permissionToTreeVo(two);
                     if (two.getParentId().equals(one.getId())) {
                         oneVo.getChildren().add(twoVo);
                     }
-                    List<SysPermission> threeList = map.get(LevelEnum.THREE.getKey());
+                    List<SysPermission> threeList = map.get(MenuLevelEnum.THREE.getCode());
                     if (CollectionUtils.isNotEmpty(threeList)) {
                         for (SysPermission three : threeList) {
                             if (three.getParentId().equals(two.getId())) {
