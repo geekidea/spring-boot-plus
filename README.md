@@ -358,25 +358,25 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 ### [Spring Boot Admin Instances](http://47.105.159.10:8888/instances/e211ba082db8/details)
 <p>
     <a href="http://47.105.159.10:8888/instances/e211ba082db8/details">
-        <img src="https://springboot.plus/img/home/spring-boot-admin.png" alt="spring-boot-admin instances">
+        <img src="https://springboot.plus/img/home/spring-boot-admin-en.png" alt="spring-boot-admin instances">
     </a>
 </p>
 
 ### [Spring Boot Admin Statistics](http://47.105.159.10:8888/instances/e211ba082db8/details)
 <p>
     <a href="http://47.105.159.10:8888/instances/e211ba082db8/details">
-        <img src="https://springboot.plus/img/home/spring-boot-admin-1.png" alt="spring-boot-admin statistics">
+        <img src="https://springboot.plus/img/home/spring-boot-admin-1-en.png" alt="spring-boot-admin statistics">
     </a>
 </p>
 
 ### [Spring Boot Admin Log](http://47.105.159.10:8888/instances/e211ba082db8/logfile)
 <p>
     <a href="http://47.105.159.10:8888/instances/e211ba082db8/logfile">
-        <img src="https://springboot.plus/img/home/spring-boot-admin-log.png" alt="spring-boot-admin log">
+        <img src="https://springboot.plus/img/home/spring-boot-admin-log-en.png" alt="spring-boot-admin log">
     </a>
 </p>
 
-### [spring-boot-plus Swagger文档](http://47.105.159.10:8888/swagger-ui.html)
+### [spring-boot-plus Swagger Docs](http://47.105.159.10:8888/swagger-ui.html)
 <p>
     <a href="http://47.105.159.10:8888/swagger-ui.html">
         <img src="https://springboot.plus/img/home/spring-boot-plus-swagger.png" alt="spring-boot-plus swagger docs">
@@ -398,7 +398,7 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 
 
 ## Contact
-- spring-boot-plus技术交流群
+- spring-boot-plus QQ Group
 
 ![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png)
 
