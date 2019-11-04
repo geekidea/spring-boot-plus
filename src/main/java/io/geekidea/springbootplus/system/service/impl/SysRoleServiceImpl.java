@@ -197,7 +197,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     public boolean isEnableSysRole(Long id) throws Exception {
         SysRole sysRole = new SysRole()
                 .setId(id)
-                .setState(StateEnum.ENABLE.ordinal());
+                .setState(StateEnum.ENABLE.getCode());
         int count = sysRoleMapper.selectCount(new QueryWrapper<>(sysRole));
         return count > 0;
     }

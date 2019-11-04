@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.common.constraints;
 
-import io.geekidea.springbootplus.common.enums.BaseTypeStateEnum;
+import io.geekidea.springbootplus.common.enums.BaseEnum;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -39,7 +39,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface EnumType {
 	String message() default "请输入正确的类型值";
 
-	Class<? extends BaseTypeStateEnum> type();
+	Class<? extends BaseEnum> type();
 
 	Class<?>[] groups() default { };
 

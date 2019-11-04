@@ -14,17 +14,27 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.enums;
+package io.geekidea.springbootplus.common.vo;
+
+import lombok.Data;
 
 /**
+ * 枚举类型VO
+ *
  * @author geekidea
- * @date 2018-11-08
- */
-public interface BaseTypeStateEnum {
+ * @date 2019-11-02
+ **/
+@Data
+public class EnumVo {
 
-    Integer getKey();
+    /**
+     * 枚举code
+     */
+    private Integer code;
 
-    String getValue();
-
+    /**
+     * 枚举描述
+     */
+    private String desc;
 
 }
