@@ -47,7 +47,7 @@
         <project.reporting.outputEncoding>${utf8}</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
-        <spring-boot-admin.version>2.2.0-SNAPSHOT</spring-boot-admin.version>
+        <spring-boot-admin.version>2.2.0</spring-boot-admin.version>
         <mybatis-plus-boot-starter.version>3.2.0</mybatis-plus-boot-starter.version>
         <swagger2.version>2.6.1</swagger2.version>
         <commons-lang3.version>3.9</commons-lang3.version>
@@ -518,18 +518,6 @@
             <id>central</id>
             <name>maven-central</name>
             <url>http://central.maven.org/maven2/</url>
-        </repository>
-        <!-- 快照仓库 -->
-        <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
         </repository>
     </repositories>
 
