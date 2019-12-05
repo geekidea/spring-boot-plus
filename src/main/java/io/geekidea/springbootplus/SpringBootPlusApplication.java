@@ -23,6 +23,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -31,6 +33,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * spring-boot-plus 项目启动入口
+ *
  * @author geekidea
  * @since 2018-11-08
  */
@@ -41,6 +44,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAdminServer
 @MapperScan({"io.geekidea.springbootplus.**.mapper"})
 @ServletComponentScan
+@EnableFeignClients(basePackages = {"io.geekidea.springbootplus.openfeign"})
+@EnableDiscoveryClient
 @SpringBootApplication
 public class SpringBootPlusApplication {
 

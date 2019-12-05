@@ -18,8 +18,14 @@ spring:
     host: localhost
     password:
     port: 6379
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/ry
 
 # 打印SQL语句和结果集，本地开发环境可开启，线上注释掉
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+feign:
+  okhttp:
+    enabled: true
