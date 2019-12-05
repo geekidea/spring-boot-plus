@@ -2,7 +2,7 @@
 
 ############################# 访问路径、端口tomcat start #############################
 server:
-  port: 8888
+  port: 8111
   servlet:
     context-path: /
   tomcat:
@@ -15,7 +15,7 @@ server:
 ################################ spring config start ###############################
 spring:
   application:
-    name: spring-boot-plus
+    name: micro-skeleton
   http:
     encoding:
       charset: UTF-8
@@ -27,8 +27,36 @@ spring:
   banner:
     charset: UTF-8
     location: classpath:config/banner.txt
-
+  #sentinel配置 alibaba
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: 11.5.0.28:8858
+    consul:
+      discovery:
+        health-check-path: /actuator/health #健康检查路径，可以自己实现
+        health-check-interval: 10s
+        enabled: true
+        register: true
+        deregister: true
+        ip-address: 192.168.192.87
+        port: 8111
+        hostname: 192.168.192.87
+        service-name: micro-skeleton1
+        heartbeat:
+          enabled: true
+      host: 11.5.0.28
+      port: 8500
 # 当前项目maven激活环境，例如：local/dev/test，对应pom.xml中profile设置值
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+  endpoint:
+    health:
+      show-details: always
 ---
 spring:
   profiles:
@@ -143,6 +171,8 @@ spring-boot-plus:
     # shiro ini 多行字符串配置
     filter-chain-definitions: |
       /=anon
+      /greeting/**=anon
+      /film/**=anon
       /static/**=anon
       /templates/**=anon
       /druid/**=anon
@@ -155,7 +185,7 @@ spring-boot-plus:
       /enum=anon
     # 权限配置
     permission:
-        # 排除登陆登出相关
+      # 排除登陆登出相关
       - urls: /login,/logout
         permission: anon
         # 排除静态资源
@@ -224,7 +254,7 @@ mybatis-plus:
 ---
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       filter:
         slf4j:
@@ -286,9 +316,9 @@ swagger:
     name: geekidea
     url: ''
   description: ''
-  title: spring-boot-plus
+  title: micro-skeleton
   url: ''
-  version: 1.0
+  version: 1.0.0
 #################################### Swagger end ###################################
 
 
