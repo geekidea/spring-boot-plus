@@ -167,9 +167,6 @@ spring-boot-plus:
         # 排除SpringBootAdmin
       - urls: /,/favicon.ico,/actuator/**,/instances/**,/assets/**,/sba-settings.js,/applications/**
         permission: anon
-        # 测试
-      - url: /sysUser/getPageList
-        permission: anon
   ######################## Spring Shiro end ##########################
 
   ############################ JWT start #############################
