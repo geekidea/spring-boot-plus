@@ -53,7 +53,7 @@ public class SpringBootPlusCorsConfig {
         corsConfiguration.setAllowedMethods(corsProperties.getAllowedMethods());
         corsConfiguration.setAllowCredentials(corsProperties.isAllowCredentials());
         corsConfiguration.setExposedHeaders(corsProperties.getExposedHeaders());
-        corsConfiguration.setMaxAge(corsConfiguration.getMaxAge());
+        corsConfiguration.setMaxAge(corsProperties.getMaxAge());
 
         source.registerCorsConfiguration(corsProperties.getPath(), corsConfiguration);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
