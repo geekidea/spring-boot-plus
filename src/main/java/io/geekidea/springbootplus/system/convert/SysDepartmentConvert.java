@@ -19,6 +19,9 @@ package io.geekidea.springbootplus.system.convert;
 import io.geekidea.springbootplus.system.entity.SysDepartment;
 import io.geekidea.springbootplus.system.vo.SysDepartmentTreeVo;
 import org.mapstruct.Mapper;
+import org.mapstruct.MapperConfig;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -40,6 +43,10 @@ public interface SysDepartmentConvert {
      * @param sysDepartment
      * @return
      */
+    @Mappings({
+            @Mapping(source = "name", target = "title"),
+            @Mapping(source = "id", target = "value")
+    })
     SysDepartmentTreeVo entityToTreeVo(SysDepartment sysDepartment);
 
     /**

@@ -20,10 +20,12 @@ import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.controller.BaseController;
 import io.geekidea.springbootplus.common.vo.Paging;
 import io.geekidea.springbootplus.system.entity.SysDepartment;
+import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.param.SysDepartmentQueryParam;
 import io.geekidea.springbootplus.system.service.SysDepartmentService;
 import io.geekidea.springbootplus.system.vo.SysDepartmentQueryVo;
 import io.geekidea.springbootplus.system.vo.SysDepartmentTreeVo;
+import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +46,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/sysDepartment")
+@RequestMapping("api/sysDepartment")
 @Api("部门 API")
 public class SysDepartmentController extends BaseController {
 

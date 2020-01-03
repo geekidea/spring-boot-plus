@@ -46,7 +46,7 @@ import javax.validation.Valid;
  */
 @Slf4j
 @RestController
-@RequestMapping("/sysUser")
+@RequestMapping("api/sysUser")
 @Api("系统用户 API")
 public class SysUserController extends BaseController {
 

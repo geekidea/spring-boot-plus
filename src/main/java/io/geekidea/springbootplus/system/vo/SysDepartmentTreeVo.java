@@ -39,6 +39,19 @@ import java.util.List;
 public class SysDepartmentTreeVo implements Serializable {
     private static final long serialVersionUID = -2250233632748939400L;
 
+
+    /**
+     * 标题
+     */
+    @ApiModelProperty(value = "标题")
+    private String title;
+
+    /**
+     * 值
+     */
+    @ApiModelProperty(value = "值")
+    private Long value;
+
     @ApiModelProperty(value = "主键")
     private Long id;
 
@@ -65,6 +78,7 @@ public class SysDepartmentTreeVo implements Serializable {
 
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
+
 
     private List<SysDepartmentTreeVo> children;
 

@@ -37,4 +37,14 @@ import io.geekidea.springbootplus.common.param.OrderQueryParam;
 @ApiModel(value = "SysUserQueryParam对象", description = "系统用户查询参数")
 public class SysUserQueryParam extends OrderQueryParam {
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 手机号
+     */
+    private String phone;
 }

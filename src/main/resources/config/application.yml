@@ -156,7 +156,7 @@ spring-boot-plus:
     # 权限配置
     permission:
         # 排除登陆登出相关
-      - urls: /login,/logout
+      - urls: /api/login,/api/logout
         permission: anon
         # 排除静态资源
       - urls: /static/**,/templates/**
