@@ -48,6 +48,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -143,15 +144,17 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         SetUtils.SetView addSet = SetUtils.difference(afterSet, beforeSet);
         log.debug("deleteSet = " + deleteSet);
         log.debug("addSet = " + addSet);
-
-        // 删除权限关联
-        UpdateWrapper updateWrapper = new UpdateWrapper();
-        updateWrapper.eq("role_id",roleId);
-        updateWrapper.in("permission_id",deleteSet);
-        boolean deleteResult = sysRolePermissionService.remove(updateWrapper);
-        if (!deleteResult) {
-            throw new DaoException("删除角色权限关系失败");
+        if (deleteSet.size() != 0) {
+            // 删除权限关联
+            UpdateWrapper updateWrapper = new UpdateWrapper();
+            updateWrapper.eq("role_id",roleId);
+            updateWrapper.in("permission_id",deleteSet);
+            boolean deleteResult = sysRolePermissionService.remove(updateWrapper);
+            if (!deleteResult) {
+                throw new DaoException("删除角色权限关系失败");
+            }
         }
+
         // 新增权限关联
         boolean addResult = sysRolePermissionService.saveSysRolePermissionBatch(roleId, addSet);
         if (!addResult) {
@@ -181,9 +184,18 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         return true;
     }
 
+    /**
+     * 通过Id获取系统角色信息
+     *
+             * @param id id
+     * @return {@link SysRoleQueryVo}* @throws Exception 异常
+     */
     @Override
     public SysRoleQueryVo getSysRoleById(Serializable id) throws Exception {
-        return sysRoleMapper.getSysRoleById(id);
+        final SysRoleQueryVo sysRoleById = sysRoleMapper.getSysRoleById(id);
+        final Set<Long> permissions = new HashSet<>(sysRolePermissionService.getPermissionIdsByRoleId((long) id));
+        sysRoleById.setPermissions(permissions);
+        return sysRoleById;
     }
 
     @Override

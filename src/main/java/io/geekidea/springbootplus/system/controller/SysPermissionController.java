@@ -44,7 +44,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/sysPermission")
+@RequestMapping("api/sysPermission")
 @Api("系统权限 API")
 public class SysPermissionController extends BaseController {
 
@@ -104,6 +104,16 @@ public class SysPermissionController extends BaseController {
     public ApiResult<Paging<SysPermissionQueryVo>> getSysPermissionPageList(@Valid @RequestBody SysPermissionQueryParam sysPermissionQueryParam) throws Exception {
         Paging<SysPermissionQueryVo> paging = sysPermissionService.getSysPermissionPageList(sysPermissionQueryParam);
         return ApiResult.ok(paging);
+    }
+
+    /**
+     * 系统权限列表
+     */
+    @PostMapping("/getList")
+//    @RequiresPermissions("sys:permission:list")
+    @ApiOperation(value = "获取SysPermission列表", notes = "系统权限列表", response = SysPermission.class)
+    public ApiResult<Paging<SysPermissionQueryVo>> getSysPermissionList() throws Exception {
+        return ApiResult.ok(sysPermissionService.list());
     }
 
     /**

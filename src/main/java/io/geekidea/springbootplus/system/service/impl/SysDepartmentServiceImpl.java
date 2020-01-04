@@ -66,6 +66,7 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean updateSysDepartment(SysDepartment sysDepartment) throws Exception {
+        // 这里会忽略 null 修改
         return super.updateById(sysDepartment);
     }
 

@@ -36,6 +36,19 @@ import java.util.List;
 @Accessors(chain = true)
 @ApiModel(value = "SysPermissionTreeVo对象", description = "系统权限树形列表")
 public class SysPermissionTreeVo implements Serializable {
+
+    /**
+     * 标题
+     */
+    @ApiModelProperty(value = "标题")
+    private String title;
+
+    /**
+     * 值
+     */
+    @ApiModelProperty(value = "值")
+    private Long value;
+
     private static final long serialVersionUID = 2738804574228359190L;
 
     @ApiModelProperty(value = "主键")
