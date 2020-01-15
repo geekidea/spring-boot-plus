@@ -19,6 +19,8 @@
   </a>
 </p>
 
+English | [简体中文](./README-zh_CN.md)
+
 ## What is spring-boot-plus?
 
 ### A **easy-to-use**, **high-speed**, **high-efficient**, **feature-rich**, **open source** spring boot scaffolding.
@@ -390,6 +392,9 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
     </a>
 </p>
 
+### spring-boot-plus Maven-Dependency-Diagrams
+
+![Maven-Dependency-Diagrams](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-maven-diagrams.png)
 
 ## spring-boot-plus Videos  :movie_camera: 
 - [5-Minutes-Finish-CRUD](https://www.bilibili.com/video/av67401204)
