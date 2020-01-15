@@ -19,6 +19,8 @@
   </a>
 </p>
 
+简体中文 | [English](./README.md)
+
 ### spring-boot-plus是一套集成spring boot常用开发组件的后台快速开发框架
 > Spring-Boot-Plus是易于使用，快速，高效，功能丰富，开源的spring boot 脚手架.
 
@@ -388,6 +390,9 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
     </a>
 </p>
 
+### spring-boot-plus Maven-Dependency-Diagrams
+
+![Maven-Dependency-Diagrams](https://raw.githubusercontent.com/geekidea/spring-boot-plus/master/docs/img/spring-boot-plus-maven-diagrams.png)
 
 ## spring-boot-plus 视频  :movie_camera:
 - [5分钟完成增删改查](https://www.bilibili.com/video/av67401204)
