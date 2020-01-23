@@ -50,6 +50,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,27 +74,35 @@ import java.util.Set;
 @Service
 public class LoginServiceImpl implements LoginService {
 
+    @Lazy
     @Autowired
     private LoginRedisService loginRedisService;
 
+    @Lazy
     @Autowired
     private JwtProperties jwtProperties;
 
+    @Lazy
     @Autowired
     private SysUserMapper sysUserMapper;
 
+    @Lazy
     @Autowired
     private SysDepartmentService sysDepartmentService;
 
+    @Lazy
     @Autowired
     private SysRoleService sysRoleService;
 
+    @Lazy
     @Autowired
     private SysRolePermissionService sysRolePermissionService;
 
+    @Lazy
     @Autowired
     private SpringBootPlusProperties springBootPlusProperties;
 
+    @Lazy
     @Autowired
     private RedisTemplate redisTemplate;
 
