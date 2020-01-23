@@ -38,6 +38,7 @@ import io.geekidea.springbootplus.system.service.SysRoleService;
 import io.geekidea.springbootplus.system.service.SysUserService;
 import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,18 +145,23 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         log.debug("deleteSet = " + deleteSet);
         log.debug("addSet = " + addSet);
 
-        // 删除权限关联
-        UpdateWrapper updateWrapper = new UpdateWrapper();
-        updateWrapper.eq("role_id",roleId);
-        updateWrapper.in("permission_id",deleteSet);
-        boolean deleteResult = sysRolePermissionService.remove(updateWrapper);
-        if (!deleteResult) {
-            throw new DaoException("删除角色权限关系失败");
+        if (CollectionUtils.isNotEmpty(deleteSet)){
+            // 删除权限关联
+            UpdateWrapper updateWrapper = new UpdateWrapper();
+            updateWrapper.eq("role_id",roleId);
+            updateWrapper.in("permission_id",deleteSet);
+            boolean deleteResult = sysRolePermissionService.remove(updateWrapper);
+            if (!deleteResult) {
+                throw new DaoException("删除角色权限关系失败");
+            }
         }
-        // 新增权限关联
-        boolean addResult = sysRolePermissionService.saveSysRolePermissionBatch(roleId, addSet);
-        if (!addResult) {
-            throw new DaoException("新增角色权限关系失败");
+
+        if (CollectionUtils.isNotEmpty(addSet)){
+            // 新增权限关联
+            boolean addResult = sysRolePermissionService.saveSysRolePermissionBatch(roleId, addSet);
+            if (!addResult) {
+                throw new DaoException("新增角色权限关系失败");
+            }
         }
         return true;
     }
