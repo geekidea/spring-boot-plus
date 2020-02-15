@@ -22,6 +22,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -66,6 +67,12 @@ public class SysDepartmentTreeVo implements Serializable {
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 
-    private List<SysDepartmentTreeVo> children;
+    @ApiModelProperty(value = "标题")
+    private String title;
+
+    @ApiModelProperty(value = "值")
+    private Long value;
+
+    private List<SysDepartmentTreeVo> children = new ArrayList<>();
 
 }

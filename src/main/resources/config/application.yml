@@ -4,7 +4,7 @@
 server:
   port: 8888
   servlet:
-    context-path: /
+    context-path: /api
   tomcat:
     max-threads: 1000
     min-spare-threads: 30

@@ -19,6 +19,7 @@ package io.geekidea.springbootplus.system.controller;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.controller.BaseController;
 import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.param.SysRoleQueryParam;
 import io.geekidea.springbootplus.system.param.sysrole.AddSysRoleParam;
 import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRoleParam;
@@ -32,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <pre>
@@ -103,6 +105,17 @@ public class SysRoleController extends BaseController {
     public ApiResult<Paging<SysRoleQueryVo>> getSysRolePageList(@Valid @RequestBody SysRoleQueryParam sysRoleQueryParam) throws Exception {
         Paging<SysRoleQueryVo> paging = sysRoleService.getSysRolePageList(sysRoleQueryParam);
         return ApiResult.ok(paging);
+    }
+
+    /**
+     * 获取系统角色列表
+     * @return
+     */
+    @GetMapping("/list")
+//    @RequiresPermissions("sys:role:list")
+    @ApiOperation(value = "获取SysRole列表", notes = "系统角色列表", response = SysRole.class)
+    public ApiResult<List<SysRole>> getRoleList() {
+        return ApiResult.ok(sysRoleService.list());
     }
 
 }

@@ -80,6 +80,12 @@ public class SysPermissionTreeVo implements Serializable {
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 
+    @ApiModelProperty(value = "标题")
+    private String title;
+
+    @ApiModelProperty(value = "值")
+    private Long value;
+
     @ApiModelProperty(value = "子节点集合")
     private List<SysPermissionTreeVo> children = new ArrayList<>();
 

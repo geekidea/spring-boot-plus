@@ -19,6 +19,8 @@ package io.geekidea.springbootplus.system.convert;
 import io.geekidea.springbootplus.system.entity.SysPermission;
 import io.geekidea.springbootplus.system.vo.SysPermissionTreeVo;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -38,6 +40,10 @@ public interface SysPermissionConvert {
      * @param sysPermission
      * @return
      */
+    @Mappings({
+            @Mapping(source = "name", target = "title"),
+            @Mapping(source = "id", target = "value")
+    })
     SysPermissionTreeVo permissionToTreeVo(SysPermission sysPermission);
 
 }

@@ -35,6 +35,12 @@
         <include refid="Base_Column_List"/>
         from sys_user
         where deleted = 0
+        <if test="param.username != null and param.username != ''">
+            and username like CONCAT('%', #{param.username,jdbcType=VARCHAR} ,'%')
+        </if>
+        <if test="param.phone != null and param.phone != ''">
+            and phone like CONCAT('%', #{param.phone,jdbcType=VARCHAR} ,'%')
+        </if>
     </select>
 
 </mapper>

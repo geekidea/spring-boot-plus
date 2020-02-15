@@ -23,6 +23,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * <pre>
@@ -64,5 +65,8 @@ public class SysRoleQueryVo implements Serializable {
 
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
+
+    @ApiModelProperty(value = "权限集合")
+    private Set<Long> permissions;
 
 }

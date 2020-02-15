@@ -17,6 +17,7 @@
 package io.geekidea.springbootplus.system.param;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -36,5 +37,12 @@ import io.geekidea.springbootplus.common.param.OrderQueryParam;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "SysUserQueryParam对象", description = "系统用户查询参数")
 public class SysUserQueryParam extends OrderQueryParam {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 7419628475131719554L;
+
+    @ApiModelProperty("用户名")
+    private String username;
+
+    @ApiModelProperty("手机号")
+    private String phone;
+
 }

@@ -16,9 +16,7 @@
 
 package io.geekidea.springbootplus.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.*;
 import io.geekidea.springbootplus.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -55,6 +53,7 @@ public class SysDepartment extends BaseEntity {
     private String name;
 
     @ApiModelProperty(value = "父id")
+    @TableField(updateStrategy = FieldStrategy.IGNORED, insertStrategy = FieldStrategy.IGNORED)
     private Long parentId;
 
     @ApiModelProperty(value = "状态，0：禁用，1：启用")

@@ -145,18 +145,18 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         log.debug("deleteSet = " + deleteSet);
         log.debug("addSet = " + addSet);
 
-        if (CollectionUtils.isNotEmpty(deleteSet)){
+        if (CollectionUtils.isNotEmpty(deleteSet)) {
             // 删除权限关联
             UpdateWrapper updateWrapper = new UpdateWrapper();
-            updateWrapper.eq("role_id",roleId);
-            updateWrapper.in("permission_id",deleteSet);
+            updateWrapper.eq("role_id", roleId);
+            updateWrapper.in("permission_id", deleteSet);
             boolean deleteResult = sysRolePermissionService.remove(updateWrapper);
             if (!deleteResult) {
                 throw new DaoException("删除角色权限关系失败");
             }
         }
 
-        if (CollectionUtils.isNotEmpty(addSet)){
+        if (CollectionUtils.isNotEmpty(addSet)) {
             // 新增权限关联
             boolean addResult = sysRolePermissionService.saveSysRolePermissionBatch(roleId, addSet);
             if (!addResult) {
@@ -189,7 +189,13 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
 
     @Override
     public SysRoleQueryVo getSysRoleById(Serializable id) throws Exception {
-        return sysRoleMapper.getSysRoleById(id);
+        SysRoleQueryVo sysRoleQueryVo = sysRoleMapper.getSysRoleById(id);
+        if (sysRoleQueryVo == null){
+            return null;
+        }
+        List<Long> permissionIds = sysRolePermissionService.getPermissionIdsByRoleId((Long) id);
+        sysRoleQueryVo.setPermissions(new HashSet<>(permissionIds));
+        return sysRoleQueryVo;
     }
 
     @Override
