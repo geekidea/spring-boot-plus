@@ -87,6 +87,6 @@ public class SysPermissionTreeVo implements Serializable {
     private Long value;
 
     @ApiModelProperty(value = "子节点集合")
-    private List<SysPermissionTreeVo> children = new ArrayList<>();
+    private List<SysPermissionTreeVo> children;
 
 }

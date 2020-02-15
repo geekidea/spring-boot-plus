@@ -73,6 +73,6 @@ public class SysDepartmentTreeVo implements Serializable {
     @ApiModelProperty(value = "值")
     private Long value;
 
-    private List<SysDepartmentTreeVo> children = new ArrayList<>();
+    private List<SysDepartmentTreeVo> children;
 
 }

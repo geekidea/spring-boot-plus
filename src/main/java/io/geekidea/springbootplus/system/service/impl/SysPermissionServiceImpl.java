@@ -160,6 +160,9 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
                 for (SysPermission two : twoList) {
                     SysPermissionTreeVo twoVo = SysPermissionConvert.INSTANCE.permissionToTreeVo(two);
                     if (two.getParentId().equals(one.getId())) {
+                        if (oneVo.getChildren() == null){
+                            oneVo.setChildren(new ArrayList<>());
+                        }
                         oneVo.getChildren().add(twoVo);
                     }
                     List<SysPermission> threeList = map.get(MenuLevelEnum.THREE.getCode());
@@ -167,6 +170,9 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
                         for (SysPermission three : threeList) {
                             if (three.getParentId().equals(two.getId())) {
                                 SysPermissionTreeVo threeVo = SysPermissionConvert.INSTANCE.permissionToTreeVo(three);
+                                if (twoVo.getChildren() == null){
+                                    twoVo.setChildren(new ArrayList<>());
+                                }
                                 twoVo.getChildren().add(threeVo);
                             }
                         }
