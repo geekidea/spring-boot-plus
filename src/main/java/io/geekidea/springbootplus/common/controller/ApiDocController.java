@@ -38,7 +38,7 @@ public class ApiDocController extends BaseController {
      * swaggerUI
      */
     @GetMapping("")
-    public String swaggerUI() {
+    public String swagger() {
         return "redirect:/swagger-ui.html";
     }
 

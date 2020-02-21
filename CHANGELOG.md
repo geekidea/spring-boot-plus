@@ -290,7 +290,7 @@
 - 统一响应结果处理：ApiResult
 - 公共常量
 - 常用validator注解约束：EmailValidator、EnumTypeValidator、IdCardValidator、PhoneValidator
-- 提取公共类：BaseEntity、BaseService、BaseServiceImpl、BaseTypeStateEnum、BaseController、QueryParam等
+- 提取公共类：BaseEntity、BaseService、BaseServiceImpl、BaseTypeStateEnum、BaseController、PageParam等
 - 全局异常处理：BusinessException、GlobalErrorController、GlobalExceptionHandler
 - 跨域处理Filter：CrossDomainFilter
 - 请求路径处理Filter：RequestPathFilter

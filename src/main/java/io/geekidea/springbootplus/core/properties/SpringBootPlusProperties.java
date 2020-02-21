@@ -114,4 +114,9 @@ public class SpringBootPlusProperties {
     @NestedConfigurationProperty
     private SpringBootPlusCorsProperties cors = new SpringBootPlusCorsProperties();
 
+    /**
+     * Swagger路径
+     */
+    private List<String> swaggerPaths;
+
 }

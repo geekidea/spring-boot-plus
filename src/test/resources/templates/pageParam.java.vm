@@ -1,15 +1,15 @@
-package ${cfg.queryParamPackage};
+package ${cfg.paramPackage};
+
+#if(${cfg.pageListOrder})
+import ${cfg.superPageOrderParamPath};
+#else
+import ${cfg.superPageParamPath};
+#end
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-#if(${cfg.pageListOrder})
-import ${cfg.orderQueryParamPath};
-#else
-import ${cfg.queryParamCommonPath};
-#end
 
 /**
  * <pre>
@@ -22,11 +22,11 @@ import ${cfg.queryParamCommonPath};
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "${entity}QueryParam对象", description = "$!{table.comment}查询参数")
+@ApiModel(value = "${entity}PageParam对象", description = "$!{table.comment}查询参数")
 #if(${cfg.pageListOrder})
-public class ${entity}QueryParam extends OrderQueryParam {
+public class ${entity}PageParam extends BasePageOrderParam {
 #else
-public class ${entity}QueryParam extends QueryParam {
+public class ${entity}PageParam extends BasePageParam {
 #end
     private static final long serialVersionUID = 1L;
 }

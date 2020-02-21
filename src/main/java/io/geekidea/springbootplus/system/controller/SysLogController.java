@@ -19,9 +19,9 @@ package io.geekidea.springbootplus.system.controller;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.controller.BaseController;
 import io.geekidea.springbootplus.common.param.IdParam;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysLog;
-import io.geekidea.springbootplus.system.param.SysLogQueryParam;
+import io.geekidea.springbootplus.system.param.SysLogPageParam;
 import io.geekidea.springbootplus.system.service.SysLogService;
 import io.geekidea.springbootplus.system.vo.SysLogQueryVo;
 import io.swagger.annotations.Api;
@@ -97,8 +97,8 @@ public class SysLogController extends BaseController {
      */
     @PostMapping("/getPageList")
     @ApiOperation(value = "获取SysLog分页列表", notes = "系统日志分页列表", response = SysLogQueryVo.class)
-    public ApiResult<Paging<SysLogQueryVo>> getSysLogPageList(@Valid @RequestBody SysLogQueryParam sysLogQueryParam) throws Exception {
-        Paging<SysLogQueryVo> paging = sysLogService.getSysLogPageList(sysLogQueryParam);
+    public ApiResult<Paging<SysLogQueryVo>> getSysLogPageList(@Valid @RequestBody SysLogPageParam sysLogPageParam) throws Exception {
+        Paging<SysLogQueryVo> paging = sysLogService.getSysLogPageList(sysLogPageParam);
         return ApiResult.ok(paging);
     }
 

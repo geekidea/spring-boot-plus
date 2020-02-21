@@ -21,11 +21,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import io.geekidea.springbootplus.common.param.OrderQueryParam;
+import io.geekidea.springbootplus.common.pagination.BasePageOrderParam;
 
 /**
  * <pre>
- * 角色权限关系 查询参数对象
+ * 系统角色 查询参数对象
  * </pre>
  *
  * @author geekidea
@@ -34,7 +34,7 @@ import io.geekidea.springbootplus.common.param.OrderQueryParam;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysRolePermissionQueryParam对象", description = "角色权限关系查询参数")
-public class SysRolePermissionQueryParam extends OrderQueryParam {
+@ApiModel(value = "SysRolePageParam对象", description = "系统角色查询参数")
+public class SysRolePageParam extends BasePageOrderParam {
     private static final long serialVersionUID = 1L;
 }

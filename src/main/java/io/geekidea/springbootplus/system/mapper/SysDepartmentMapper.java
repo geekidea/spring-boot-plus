@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.geekidea.springbootplus.system.entity.SysDepartment;
-import io.geekidea.springbootplus.system.param.SysDepartmentQueryParam;
+import io.geekidea.springbootplus.system.param.SysDepartmentPageParam;
 import io.geekidea.springbootplus.system.vo.SysDepartmentQueryVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -50,9 +50,9 @@ public interface SysDepartmentMapper extends BaseMapper<SysDepartment> {
      * 获取分页对象
      *
      * @param page
-     * @param sysDepartmentQueryParam
+     * @param sysDepartmentPageParam
      * @return
      */
-    IPage<SysDepartmentQueryVo> getSysDepartmentPageList(@Param("page") Page page, @Param("param") SysDepartmentQueryParam sysDepartmentQueryParam);
+    IPage<SysDepartmentQueryVo> getSysDepartmentPageList(@Param("page") Page page, @Param("param") SysDepartmentPageParam sysDepartmentPageParam);
 
 }

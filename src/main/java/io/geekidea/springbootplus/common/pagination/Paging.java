@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.vo;
+package io.geekidea.springbootplus.common.pagination;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -30,6 +32,9 @@ import java.util.List;
  * @author geekidea
  * @date 2018-11-08
  */
+
+@Slf4j
+@Data
 @ApiModel("分页")
 public class Paging<T> implements Serializable {
     private static final long serialVersionUID = -1683800405530086022L;
@@ -44,6 +49,9 @@ public class Paging<T> implements Serializable {
     @JsonProperty("records")
     private List<T> records = Collections.emptyList();
 
+    @ApiModelProperty("当前页最后一行分页标识，需作为参数回传")
+    private Long lastRowLimitValue;
+
     public Paging() {
     }
 
@@ -52,27 +60,16 @@ public class Paging<T> implements Serializable {
         this.records = page.getRecords();
     }
 
-    public long getTotal() {
-        return total;
+    public Paging(IPage page, boolean optimizeLimit) {
+        this(page, optimizeLimit, null);
     }
 
-    public void setTotal(long total) {
-        this.total = total;
+    public Paging(IPage page, boolean optimizeLimit, String optimizeLimitColumn) {
+        this(page);
+        if (optimizeLimit) {
+            this.lastRowLimitValue = PageUtil.getLastRowLimitValue(page, optimizeLimitColumn);
+        }
     }
 
-    public List<T> getRecords() {
-        return records;
-    }
 
-    public void setRecords(List<T> records) {
-        this.records = records;
-    }
-
-    @Override
-    public String toString() {
-        return "Paging{" +
-                "total=" + total +
-                ", records=" + records +
-                '}';
-    }
 }

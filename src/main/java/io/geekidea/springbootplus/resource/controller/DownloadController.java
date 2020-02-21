@@ -55,7 +55,6 @@ public class DownloadController {
         // 允许下载的文件后缀
         List<String> allowFileExtensions = springBootPlusProperties.getAllowDownloadFileExtensions();
         // 文件下载，使用默认下载处理器
-//        DownloadUtil.download(downloadDir,downloadFileName,allowFileExtensions,response);
         // 文件下载，使用自定义下载处理器
         DownloadUtil.download(downloadDir,downloadFileName,allowFileExtensions,response, (dir, fileName, file, fileExtension, contentType, length) -> {
             // 下载自定义处理，返回true：执行下载，false：取消下载

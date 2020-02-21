@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus.util;
 
+import io.geekidea.springbootplus.constant.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -31,6 +32,7 @@ import java.util.List;
 
 /**
  * 文件下载工具类
+ *
  * @author geekidea
  * @date 2019/8/21
  * @since 1.2.1-RELEASE
@@ -40,63 +42,65 @@ public final class DownloadUtil {
 
     /**
      * 下载文件，使用默认下载处理器
+     *
      * @param downloadDir
      * @param downloadFileName
      * @param allowFileExtensions
      * @param response
      * @throws Exception
      */
-    public static void download( String downloadDir, String downloadFileName, List<String> allowFileExtensions, HttpServletResponse response) throws Exception{
-        download(downloadDir,downloadFileName,allowFileExtensions,response,new DefaultDownloadHandler());
+    public static void download(String downloadDir, String downloadFileName, List<String> allowFileExtensions, HttpServletResponse response) throws Exception {
+        download(downloadDir, downloadFileName, allowFileExtensions, response, new DefaultDownloadHandler());
     }
 
     /**
      * 下载文件，使用自定义下载处理器
-     * @param downloadDir 文件目录
+     *
+     * @param downloadDir      文件目录
      * @param downloadFileName 文件名称
      * @throws Exception
      */
-    public static void download( String downloadDir, String downloadFileName, List<String> allowFileExtensions, HttpServletResponse response,DownloadHandler downloadHandler) throws Exception {
-        log.info("downloadDir:{}",downloadDir);
-        log.info("downloadFileName:{}",downloadFileName);
+    public static void download(String downloadDir, String downloadFileName, List<String> allowFileExtensions, HttpServletResponse response, DownloadHandler downloadHandler) throws Exception {
+        log.info("downloadDir:{}", downloadDir);
+        log.info("downloadFileName:{}", downloadFileName);
 
-        if (StringUtils.isBlank(downloadDir)){
+        if (StringUtils.isBlank(downloadDir)) {
             throw new IOException("文件目录不能为空");
         }
-        if (StringUtils.isBlank(downloadFileName)){
+        if (StringUtils.isBlank(downloadFileName)) {
             throw new IOException("文件名称不能为空");
         }
         // 安全判断，防止../情况,防止出现类似非法文件名称：../../hello/123.txt
-        if (downloadFileName.contains("..")||downloadFileName.contains("../")){
+        if (downloadFileName.contains(CommonConstant.SPOT_SPOT) || downloadFileName.contains(CommonConstant.SPOT_SPOT_BACKSLASH)) {
             throw new IOException("非法的文件名称");
         }
         // 允许下载的文件后缀判断
-        if (CollectionUtils.isEmpty(allowFileExtensions)){
+        if (CollectionUtils.isEmpty(allowFileExtensions)) {
             throw new IllegalArgumentException("请设置允许下载的文件后缀");
         }
         // 获取文件名称
         String fileExtension = FilenameUtils.getExtension(downloadFileName);
 
         // 从服务器读取文件，然后输出
-        File downloadFile = new File(downloadDir,downloadFileName);
-        if (!downloadFile.exists()){
+        File downloadFile = new File(downloadDir, downloadFileName);
+        if (!downloadFile.exists()) {
             throw new IOException("文件不存在");
         }
 
         // 判断文件类型，输出对应ContentType,如果没有对应的内容类型，可在config/mime-type.properties配置
         String contentType = ContentTypeUtil.getContentType(downloadFile);
-        log.info("contentType:{}",contentType);
+        log.info("contentType:{}", contentType);
         // 文件大小
         long length = downloadFile.length();
-        log.info("length:{}",length);
+        log.info("length:{}", length);
 
         // 下载回调处理
-        if (downloadHandler == null){
+        if (downloadHandler == null) {
             // 使用默认下载处理器
             downloadHandler = new DefaultDownloadHandler();
         }
-        boolean flag = downloadHandler.handle(downloadDir,downloadFileName,downloadFile,fileExtension,contentType,length);
-        if (!flag){
+        boolean flag = downloadHandler.handle(downloadDir, downloadFileName, downloadFile, fileExtension, contentType, length);
+        if (!flag) {
             log.info("下载自定义校验失败，取消下载");
             return;
         }
@@ -104,15 +108,15 @@ public final class DownloadUtil {
         // 下载文件名称编码，Firefox中文乱码处理
         String encodeDownFileName;
 
-        HttpServletRequest request =  HttpServletRequestUtil.getRequest();
+        HttpServletRequest request = HttpServletRequestUtil.getRequest();
 
         String browser = BrowserUtil.getCurrent(request);
-        if(BrowserUtil.FIREFOX.equals(browser)) {
+        if (BrowserUtil.FIREFOX.equals(browser)) {
             encodeDownFileName = "=?UTF-8?B?" + (new String(Base64Utils.encodeToString(downloadFileName.getBytes("UTF-8")))) + "?=";
         } else {
-            encodeDownFileName = URLEncoder.encode(downloadFileName,"utf-8").replaceAll("\\+", "%20");
+            encodeDownFileName = URLEncoder.encode(downloadFileName, "utf-8").replaceAll("\\+", "%20");
         }
-        log.info("encodeDownFileName:{}",encodeDownFileName);
+        log.info("encodeDownFileName:{}", encodeDownFileName);
 
         log.info("下载文件：" + downloadFile.getAbsolutePath());
 
@@ -129,14 +133,27 @@ public final class DownloadUtil {
         FileCopyUtils.copy(in, response.getOutputStream());
     }
 
-    public static interface DownloadHandler{
-        boolean handle(String dir, String fileName,File file,String fileExtension,String contentType,long length) throws Exception;
+    public static interface DownloadHandler {
+        /**
+         * 下载自定义处理
+         *
+         * @param dir
+         * @param fileName
+         * @param file
+         * @param fileExtension
+         * @param contentType
+         * @param length
+         * @return
+         * @throws Exception
+         */
+        boolean handle(String dir, String fileName, File file, String fileExtension, String contentType, long length) throws Exception;
     }
-   public static class DefaultDownloadHandler implements DownloadHandler{
-       @Override
-       public boolean handle(String dir, String fileName, File file, String fileExtension, String contentType, long length) throws Exception {
-           return false;
-       }
-   }
+
+    public static class DefaultDownloadHandler implements DownloadHandler {
+        @Override
+        public boolean handle(String dir, String fileName, File file, String fileExtension, String contentType, long length) throws Exception {
+            return false;
+        }
+    }
 
 }

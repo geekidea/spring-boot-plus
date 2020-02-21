@@ -31,8 +31,8 @@ import java.util.*;
  */
 public class BaseEnumUtil {
 
-    private static final Map<String, List<EnumVo>> enumMap = new LinkedHashMap<>();
-    private static final Map<String, Map<Integer, String>> enumClassMap = new LinkedHashMap<>();
+    private static final Map<String, List<EnumVo>> ENUM_MAP = new LinkedHashMap<>();
+    private static final Map<String, Map<Integer, String>> ENUM_CLASS_MAP = new LinkedHashMap<>();
 
     /**
      * 通过类型获取枚举Map
@@ -41,7 +41,7 @@ public class BaseEnumUtil {
      * @return
      */
     public static Map<Integer, String> getMap(Class<? extends BaseEnum> clazz) {
-        return enumClassMap.get(clazz.getName());
+        return ENUM_CLASS_MAP.get(clazz.getName());
     }
 
     /**
@@ -51,7 +51,7 @@ public class BaseEnumUtil {
      * @return
      */
     public static Set<Integer> getCodeSet(Class<? extends BaseEnum> clazz) {
-        Map<Integer, String> map =  enumClassMap.get(clazz.getName());
+        Map<Integer, String> map =  ENUM_CLASS_MAP.get(clazz.getName());
         if (MapUtils.isEmpty(map)){
             return null;
         }
@@ -65,7 +65,7 @@ public class BaseEnumUtil {
      * @return
      */
     public static Collection<String> getDescList(Class<? extends BaseEnum> clazz) {
-        Map<Integer, String> map =  enumClassMap.get(clazz.getName());
+        Map<Integer, String> map =  ENUM_CLASS_MAP.get(clazz.getName());
         if (MapUtils.isEmpty(map)){
             return null;
         }
@@ -80,7 +80,7 @@ public class BaseEnumUtil {
      * @return
      */
     public static String getDesc(Class<? extends BaseEnum> clazz, Integer code) {
-        Map<Integer, String> map = enumClassMap.get(clazz.getName());
+        Map<Integer, String> map = ENUM_CLASS_MAP.get(clazz.getName());
         if (MapUtils.isEmpty(map)) {
             return null;
         }
@@ -114,11 +114,11 @@ public class BaseEnumUtil {
     }
 
     public static Map<String, List<EnumVo>> getEnumMap(){
-        return enumMap;
+        return ENUM_MAP;
     }
 
     public static Map<String, Map<Integer, String>> getEnumClassMap(){
-        return enumClassMap;
+        return ENUM_CLASS_MAP;
     }
 
 }

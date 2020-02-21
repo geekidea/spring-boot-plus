@@ -2,15 +2,19 @@ package ${package.Controller};
 
 import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};
-import ${cfg.queryParamPath};
+import ${cfg.paging};
+import ${cfg.pageParamPath};
 import ${cfg.queryVoPath};
 import ${cfg.apiResult};
 #if(${superControllerClassPackage})
 import ${superControllerClassPackage};
 #end
 #if(${swagger2})
+
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
 #end
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -22,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 #end
 
-import ${cfg.paging};
 import ${cfg.idParamPath};
 
 /**
@@ -127,8 +130,8 @@ public class ${table.controllerName} {
     @RequiresPermissions("$!{cfg.colonTableName}:page")
 #end
     @ApiOperation(value = "获取${entity}分页列表", notes = "$!{table.comment}分页列表", response = ${entity}QueryVo.class)
-    public ApiResult<Paging<${entity}QueryVo>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        Paging<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
+    public ApiResult<Paging<${entity}QueryVo>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}PageParam ${cfg.entityObjectName}PageParam) throws Exception {
+        Paging<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}PageParam);
         return ApiResult.ok(paging);
     }
 #end

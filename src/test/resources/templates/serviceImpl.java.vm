@@ -3,10 +3,12 @@ package ${package.ServiceImpl};
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
-import ${cfg.queryParamPath};
+import ${cfg.paging};
+import ${cfg.pageParamPath};
+import ${cfg.commonPageUtilPath};
 import ${cfg.queryVoPath};
 import ${superServiceImplClassPackage};
-import ${cfg.paging};
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 
 import java.io.Serializable;
 
@@ -66,9 +69,9 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     }
 
     @Override
-    public Paging<${entity}QueryVo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        Page page = setPageParam(${cfg.entityObjectName}QueryParam, OrderItem.desc("create_time"));
-        IPage<${entity}QueryVo> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}QueryParam);
+    public Paging<${entity}QueryVo> get${entity}PageList(${entity}PageParam ${cfg.entityObjectName}PageParam) throws Exception {
+        Page page = PageUtil.getPage(${cfg.entityObjectName}PageParam, OrderItem.desc(getLambdaColumn(${cfg.entityObjectName}::getCreateTime)));
+        IPage<${entity}QueryVo> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}PageParam);
         return new Paging(iPage);
     }
 #end

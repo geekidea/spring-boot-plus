@@ -89,13 +89,20 @@ public class JwtUtil {
             Algorithm algorithm = Algorithm.HMAC256(salt);
             String token = JWT.create()
                     .withClaim(CommonConstant.JWT_USERNAME, username)
-                    .withJWTId(UUIDUtil.getUUID())              // jwt唯一id
-                    .withIssuer(jwtProperties.getIssuer())      // 签发人
-                    .withSubject(jwtProperties.getSubject())    // 主题
-                    .withAudience(jwtProperties.getAudience())  // 签发的目标
-                    .withIssuedAt(new Date())                   // 签名时间
-                    .withExpiresAt(expireDate)                  // token过期时间
-                    .sign(algorithm);                           // 签名
+                    // jwt唯一id
+                    .withJWTId(UUIDUtil.getUuid())
+                    // 签发人
+                    .withIssuer(jwtProperties.getIssuer())
+                    // 主题
+                    .withSubject(jwtProperties.getSubject())
+                    // 签发的目标
+                    .withAudience(jwtProperties.getAudience())
+                    // 签名时间
+                    .withIssuedAt(new Date())
+                    // token过期时间
+                    .withExpiresAt(expireDate)
+                    // 签名
+                    .sign(algorithm);
             return token;
         } catch (Exception e) {
             log.error("generateToken exception", e);
@@ -107,9 +114,12 @@ public class JwtUtil {
         try {
             Algorithm algorithm = Algorithm.HMAC256(salt);
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(jwtProperties.getIssuer())      // 签发人
-                    .withSubject(jwtProperties.getSubject())    // 主题
-                    .withAudience(jwtProperties.getAudience())  // 签发的目标
+                    // 签发人
+                    .withIssuer(jwtProperties.getIssuer())
+                    // 主题
+                    .withSubject(jwtProperties.getSubject())
+                    // 签发的目标
+                    .withAudience(jwtProperties.getAudience())
                     .build();
             DecodedJWT jwt = verifier.verify(token);
             if (jwt != null) {
@@ -128,8 +138,7 @@ public class JwtUtil {
      * @return
      */
     public static DecodedJWT getJwtInfo(String token) {
-        DecodedJWT decodedJWT = JWT.decode(token);
-        return decodedJWT;
+        return JWT.decode(token);
     }
 
     /**
@@ -142,11 +151,11 @@ public class JwtUtil {
         if (StringUtils.isBlank(token)){
             return null;
         }
-        DecodedJWT decodedJWT = getJwtInfo(token);
-        if (decodedJWT == null) {
+        DecodedJWT decodedJwt = getJwtInfo(token);
+        if (decodedJwt == null) {
             return null;
         }
-        String username = decodedJWT.getClaim(CommonConstant.JWT_USERNAME).asString();
+        String username = decodedJwt.getClaim(CommonConstant.JWT_USERNAME).asString();
         return username;
     }
 
@@ -157,11 +166,11 @@ public class JwtUtil {
      * @return
      */
     public static Date getIssuedAt(String token) {
-        DecodedJWT decodedJWT = getJwtInfo(token);
-        if (decodedJWT == null) {
+        DecodedJWT decodedJwt = getJwtInfo(token);
+        if (decodedJwt == null) {
             return null;
         }
-        return decodedJWT.getIssuedAt();
+        return decodedJwt.getIssuedAt();
     }
 
     /**
@@ -171,11 +180,11 @@ public class JwtUtil {
      * @return
      */
     public static Date getExpireDate(String token) {
-        DecodedJWT decodedJWT = getJwtInfo(token);
-        if (decodedJWT == null) {
+        DecodedJWT decodedJwt = getJwtInfo(token);
+        if (decodedJwt == null) {
             return null;
         }
-        return decodedJWT.getExpiresAt();
+        return decodedJwt.getExpiresAt();
     }
 
     /**

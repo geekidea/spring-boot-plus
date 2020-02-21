@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${superMapperClassPackage};
 import ${package.Entity}.${entity};
-import ${cfg.queryParamPath};
+import ${cfg.paging};
+import ${cfg.pageParamPath};
 import ${cfg.queryVoPath};
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -38,10 +39,10 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
      * 获取分页对象
      *
      * @param page
-     * @param ${cfg.entityObjectName}QueryParam
+     * @param ${cfg.entityObjectName}PageParam
      * @return
      */
-    IPage<${entity}QueryVo> get${entity}PageList(@Param("page") Page page, @Param("param") ${entity}QueryParam ${cfg.entityObjectName}QueryParam);
+    IPage<${entity}QueryVo> get${entity}PageList(@Param("page") Page page, @Param("param") ${entity}PageParam ${cfg.entityObjectName}PageParam);
 #end
 
 }

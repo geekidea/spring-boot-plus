@@ -23,14 +23,6 @@
 # date: 2019-8-29
 #======================================================================
 
-
-# 配置阿里云yum镜像源
-wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-
-yum clean all
-
-yum makecache
-
 # 下载mysql rpm
 wget https://repo.mysql.com//mysql80-community-release-el7-3.noarch.rpm
 

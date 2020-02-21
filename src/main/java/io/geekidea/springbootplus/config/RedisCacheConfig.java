@@ -60,8 +60,8 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         // 生成一个默认配置，通过config对象即可对缓存进行自定义配置
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
         // 设置缓存的默认过期时间，也是使用Duration设置
-        config = config.entryTtl(Duration.ofMinutes(5));   // 过期时间5分钟
-                //.disableCachingNullValues();              // 不缓存空值
+        // 过期时间5分钟
+        config = config.entryTtl(Duration.ofMinutes(5));
 
         // 设置一个初始化的缓存空间set集合
         Set<String> cacheNames =  new HashSet<>();
@@ -69,13 +69,14 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         cacheNames.add("my-redis-cache2");
 
         // 对每个缓存空间应用不同的配置
-        Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
+        Map<String, RedisCacheConfiguration> configMap = new HashMap<>(10);
         configMap.put("my-redis-cache1", config);
         configMap.put("my-redis-cache2", config.entryTtl(Duration.ofSeconds(120)));
 
         // 使用自定义的缓存配置初始化一个cacheManager
         RedisCacheManager cacheManager = RedisCacheManager.builder(factory)
-                .initialCacheNames(cacheNames)  // 注意这两句的调用顺序，一定要先调用该方法设置初始化的缓存名，再初始化相关的配置
+                // 注意这两句的调用顺序，一定要先调用该方法设置初始化的缓存名，再初始化相关的配置
+                .initialCacheNames(cacheNames)
                 .withInitialCacheConfigurations(configMap)
                 .build();
 

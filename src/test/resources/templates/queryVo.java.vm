@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 #end
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -62,7 +63,7 @@ public class ${entity}QueryVo implements Serializable {
 #if(${logicDeleteFieldName}==${field.name})
     @TableLogic
 #end
-private ${field.propertyType} ${field.propertyName};
+    private ${field.propertyType} ${field.propertyName};
 #end
 ## ----------  END 字段循环遍历  ----------
 #if(!${entityLombokModel})

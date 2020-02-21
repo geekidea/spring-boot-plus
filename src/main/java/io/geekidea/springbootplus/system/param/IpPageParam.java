@@ -21,20 +21,20 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import io.geekidea.springbootplus.common.param.OrderQueryParam;
+import io.geekidea.springbootplus.common.pagination.BasePageParam;
 
 /**
- * <pre>
- * 系统用户 查询参数对象
- * </pre>
+ * <p>
+ * IP地址 查询参数对象
+ * </p>
  *
  * @author geekidea
- * @date 2019-10-24
+ * @date 2019-10-11
  */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysUserQueryParam对象", description = "系统用户查询参数")
-public class SysUserQueryParam extends OrderQueryParam {
+@ApiModel(value = "IpPageParam对象", description = "IP地址查询参数")
+public class IpPageParam extends BasePageParam {
     private static final long serialVersionUID = 1L;
 }

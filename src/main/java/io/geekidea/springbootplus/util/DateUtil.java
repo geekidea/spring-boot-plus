@@ -16,6 +16,8 @@
 
 package io.geekidea.springbootplus.util;
 
+import io.geekidea.springbootplus.constant.DatePattern;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -25,22 +27,22 @@ import java.util.Date;
  */
 public class DateUtil {
 
-    public static final String formatStr_yyyyMMddHHmmssS_ = "yyyyMMddHHmmss";
-    public static final String formatStr_yyyyMMddHHmmssS = "yyyy-MM-dd HH:mm:ss.S";
-    public static final String formatStr_yyyyMMddHHmmss = "yyyy-MM-dd HH:mm:ss";
-    public static final String formatStr_yyyyMMddHHmm = "yyyy-MM-dd HH:mm";
-    public static final String formatStr_yyyyMMddHH = "yyyy-MM-dd HH";
-    public static final String formatStr_yyyyMMdd = "yyyy-MM-dd";
-    public static final String formatStr_yyyy = "yyyy";
-    public static final String formatStr_yyyy_MM_dd = "yyyyMMdd";
-    public static final String formatStr_yyyyMMddDelimiter = "-";
-
-    public static String getYYYYMMDDHHMMSS(Date date){
+    public static String getDateString(Date date){
         if (date == null){
             return null;
         }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DatePattern.YYYY_MM_DD);
         String dateString = simpleDateFormat.format(date);
         return dateString;
     }
+
+    public static String getDateTimeString(Date date){
+        if (date == null){
+            return null;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DatePattern.YYYY_MM_DD_HH_MM_SS);
+        String dateString = simpleDateFormat.format(date);
+        return dateString;
+    }
+
 }

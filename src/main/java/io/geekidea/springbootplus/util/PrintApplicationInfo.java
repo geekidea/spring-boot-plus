@@ -83,7 +83,7 @@ public class PrintApplicationInfo {
                 "                                                                                                ";
 
         String homeUrl = "http://" + IpUtil.getLocalhostIp() + ":" + port + contextPath;
-        String swaggerUrl = "http://" + IpUtil.getLocalhostIp() + ":" + port + contextPath + "docs";
+        String swaggerUrl = "http://" + IpUtil.getLocalhostIp() + ":" + port + contextPath + "/docs";
         log.info("home:{}",homeUrl);
         log.info("docs:{}",swaggerUrl);
         log.info("spring-boot-plus project start success...........");

@@ -34,6 +34,9 @@ import java.util.regex.Pattern;
  **/
 public class ClientInfoUtil {
 
+    private static final Pattern DEVICE_INFO_PATTERN = Pattern.compile(";\\s?(\\S*?\\s?\\S*?)\\s?Build/(\\S*?)[;)]");
+    private static final Pattern DEVICE_INFO_PATTERN_1 = Pattern.compile(";\\s?(\\S*?\\s?\\S*?)\\s?\\)");
+
     /**
      * 获取用户客户端信息
      * @param request
@@ -89,8 +92,8 @@ public class ClientInfoUtil {
     public static DeviceInfo getDeviceInfo(String userAgentString){
         DeviceInfo deviceInfo = new DeviceInfo();
         try {
-            Pattern pattern = Pattern.compile(";\\s?(\\S*?\\s?\\S*?)\\s?Build/(\\S*?)[;)]");
-            Matcher matcher = pattern.matcher(userAgentString);
+
+            Matcher matcher = DEVICE_INFO_PATTERN.matcher(userAgentString);
             String model = null;
             String name = null;
 
@@ -100,8 +103,7 @@ public class ClientInfoUtil {
             }
 
             if (model == null && name == null){
-                pattern = Pattern.compile(";\\s?(\\S*?\\s?\\S*?)\\s?\\)");
-                matcher = pattern.matcher(userAgentString);
+                matcher = DEVICE_INFO_PATTERN_1.matcher(userAgentString);
                 if (matcher.find()) {
                     model = matcher.group(1);
                 }

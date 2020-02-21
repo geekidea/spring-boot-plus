@@ -79,9 +79,9 @@ public class JwtToken implements HostAuthenticationToken {
     }
 
     public static JwtToken build(String token, String username, String salt, long expireSecond) {
-        DecodedJWT decodedJWT = JwtUtil.getJwtInfo(token);
-        Date createDate = decodedJWT.getIssuedAt();
-        Date expireDate = decodedJWT.getExpiresAt();
+        DecodedJWT decodedJwt = JwtUtil.getJwtInfo(token);
+        Date createDate = decodedJwt.getIssuedAt();
+        Date expireDate = decodedJwt.getExpiresAt();
         return new JwtToken()
                 .setUsername(username)
                 .setToken(token)

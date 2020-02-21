@@ -23,13 +23,14 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.geekidea.springbootplus.common.exception.BusinessException;
 import io.geekidea.springbootplus.common.exception.DaoException;
+import io.geekidea.springbootplus.common.pagination.PageUtil;
+import io.geekidea.springbootplus.common.pagination.Paging;
 import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.common.vo.Paging;
 import io.geekidea.springbootplus.enums.StateEnum;
 import io.geekidea.springbootplus.system.convert.SysRoleConvert;
 import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.mapper.SysRoleMapper;
-import io.geekidea.springbootplus.system.param.SysRoleQueryParam;
+import io.geekidea.springbootplus.system.param.SysRolePageParam;
 import io.geekidea.springbootplus.system.param.sysrole.AddSysRoleParam;
 import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRoleParam;
 import io.geekidea.springbootplus.system.service.SysPermissionService;
@@ -189,13 +190,19 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
 
     @Override
     public SysRoleQueryVo getSysRoleById(Serializable id) throws Exception {
-        return sysRoleMapper.getSysRoleById(id);
+        SysRoleQueryVo sysRoleQueryVo = sysRoleMapper.getSysRoleById(id);
+        if (sysRoleQueryVo == null){
+            return null;
+        }
+        List<Long> permissionIds = sysRolePermissionService.getPermissionIdsByRoleId((Long) id);
+        sysRoleQueryVo.setPermissions(new HashSet<>(permissionIds));
+        return sysRoleQueryVo;
     }
 
     @Override
-    public Paging<SysRoleQueryVo> getSysRolePageList(SysRoleQueryParam sysRoleQueryParam) throws Exception {
-        Page page = setPageParam(sysRoleQueryParam, OrderItem.desc("create_time"));
-        IPage<SysRoleQueryVo> iPage = sysRoleMapper.getSysRolePageList(page, sysRoleQueryParam);
+    public Paging<SysRoleQueryVo> getSysRolePageList(SysRolePageParam sysRolePageParam) throws Exception {
+        Page page = PageUtil.getPage(sysRolePageParam, OrderItem.desc(getLambdaColumn(SysRole::getCreateTime)));
+        IPage<SysRoleQueryVo> iPage = sysRoleMapper.getSysRolePageList(page, sysRolePageParam);
         return new Paging(iPage);
     }
 

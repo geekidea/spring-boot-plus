@@ -24,8 +24,11 @@ import io.geekidea.springbootplus.common.enums.BaseEnum;
  * @date 2019-10-24
  **/
 public enum MenuLevelEnum implements BaseEnum {
+    /** 一级菜单 **/
     ONE(1, "一级菜单"),
+    /** 二级菜单 **/
     TWO(2, "二级菜单"),
+    /** 功能菜单 **/
     THREE(3, "功能菜单");
 
     private Integer code;

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.constraints;
+package io.geekidea.springbootplus.common.validator.constraints;
 
-import io.geekidea.springbootplus.common.enums.BaseEnum;
+import io.geekidea.springbootplus.common.validator.PhoneValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -28,18 +28,16 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * 枚举类型注解
+ * 自定义手机号码正则验证注解
  * @author geekidea
  * @date 2018-11-08
  */
 @Documented
-@Constraint(validatedBy = { EnumTypeValidator.class })
+@Constraint(validatedBy = { PhoneValidator.class })
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
-public @interface EnumType {
-	String message() default "请输入正确的类型值";
-
-	Class<? extends BaseEnum> type();
+public @interface Phone {
+	String message() default "请输入有效的手机号码";
 
 	Class<?>[] groups() default { };
 

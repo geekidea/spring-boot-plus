@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.geekidea.springbootplus.system.entity.SysPermission;
-import io.geekidea.springbootplus.system.param.SysPermissionQueryParam;
+import io.geekidea.springbootplus.system.param.SysPermissionPageParam;
 import io.geekidea.springbootplus.system.vo.SysPermissionQueryVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -51,10 +51,10 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * 获取分页对象
      *
      * @param page
-     * @param sysPermissionQueryParam
+     * @param sysPermissionPageParam
      * @return
      */
-    IPage<SysPermissionQueryVo> getSysPermissionPageList(@Param("page") Page page, @Param("param") SysPermissionQueryParam sysPermissionQueryParam);
+    IPage<SysPermissionQueryVo> getSysPermissionPageList(@Param("page") Page page, @Param("param") SysPermissionPageParam sysPermissionPageParam);
 
     /**
      * 根据用户id获取该用户所有权限编码

@@ -26,12 +26,12 @@ public interface CommonConstant {
     /**
      * 默认页码为1
      */
-    Integer DEFAULT_PAGE_INDEX = 1;
+    Long DEFAULT_PAGE_INDEX = 1L;
 
     /**
      * 默认页大小为10
      */
-    Integer DEFAULT_PAGE_SIZE = 10;
+    Long DEFAULT_PAGE_SIZE = 10L;
 
     /**
      * 登录用户
@@ -105,4 +105,15 @@ public interface CommonConstant {
      * base64前缀
      */
     String BASE64_PREFIX = "data:image/png;base64,";
+
+    /**
+     * ..
+     */
+    String SPOT_SPOT = "..";
+
+    /**
+     * ../
+     */
+    String SPOT_SPOT_BACKSLASH = "../";
+
 }

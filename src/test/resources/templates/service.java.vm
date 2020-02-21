@@ -2,9 +2,9 @@ package ${package.Service};
 
 import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
-import ${cfg.queryParamPath};
-import ${cfg.queryVoPath};
 import ${cfg.paging};
+import ${cfg.pageParamPath};
+import ${cfg.queryVoPath};
 
 import java.io.Serializable;
 
@@ -63,11 +63,11 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 获取分页对象
      *
-     * @param ${cfg.entityObjectName}QueryParam
+     * @param ${cfg.entityObjectName}PageParam
      * @return
      * @throws Exception
      */
-    Paging<${entity}QueryVo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
+    Paging<${entity}QueryVo> get${entity}PageList(${entity}PageParam ${cfg.entityObjectName}PageParam) throws Exception;
 #end
 
 }

@@ -16,9 +16,12 @@
 
 package io.geekidea.springbootplus.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
 import io.geekidea.springbootplus.enums.StateEnum;
+import io.geekidea.springbootplus.system.entity.SysPermission;
 import io.geekidea.springbootplus.system.entity.SysRolePermission;
 import io.geekidea.springbootplus.system.mapper.SysRolePermissionMapper;
 import io.geekidea.springbootplus.system.service.SysRolePermissionService;
@@ -68,8 +71,8 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
         SysRolePermission sysRolePermission = new SysRolePermission()
                 .setRoleId(roleId)
                 .setState(StateEnum.ENABLE.getCode());
-        QueryWrapper queryWrapper = new QueryWrapper(sysRolePermission, "permission_id");
-        return sysRolePermissionMapper.selectObjs(queryWrapper);
+        Wrapper wrapper = lambdaQuery().select(SysRolePermission::getPermissionId);
+        return sysRolePermissionMapper.selectObjs(wrapper);
     }
 
     @Override

@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.geekidea.springbootplus.system.entity.Ip;
-import io.geekidea.springbootplus.system.param.IpQueryParam;
+import io.geekidea.springbootplus.system.param.IpPageParam;
 import io.geekidea.springbootplus.system.vo.IpQueryVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -50,9 +50,9 @@ public interface IpMapper extends BaseMapper<Ip> {
      * 获取分页对象
      *
      * @param page
-     * @param ipQueryParam
+     * @param ipPageParam
      * @return
      */
-    IPage<IpQueryVo> getIpPageList(@Param("page") Page page, @Param("param") IpQueryParam ipQueryParam);
+    IPage<IpQueryVo> getIpPageList(@Param("page") Page page, @Param("param") IpPageParam ipPageParam);
 
 }

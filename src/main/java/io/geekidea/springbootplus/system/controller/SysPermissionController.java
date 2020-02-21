@@ -18,9 +18,9 @@ package io.geekidea.springbootplus.system.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.controller.BaseController;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysPermission;
-import io.geekidea.springbootplus.system.param.SysPermissionQueryParam;
+import io.geekidea.springbootplus.system.param.SysPermissionPageParam;
 import io.geekidea.springbootplus.system.service.SysPermissionService;
 import io.geekidea.springbootplus.system.vo.SysPermissionQueryVo;
 import io.geekidea.springbootplus.system.vo.SysPermissionTreeVo;
@@ -101,8 +101,8 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/getPageList")
     @RequiresPermissions("sys:permission:page")
     @ApiOperation(value = "获取SysPermission分页列表", notes = "系统权限分页列表", response = SysPermissionQueryVo.class)
-    public ApiResult<Paging<SysPermissionQueryVo>> getSysPermissionPageList(@Valid @RequestBody SysPermissionQueryParam sysPermissionQueryParam) throws Exception {
-        Paging<SysPermissionQueryVo> paging = sysPermissionService.getSysPermissionPageList(sysPermissionQueryParam);
+    public ApiResult<Paging<SysPermissionQueryVo>> getSysPermissionPageList(@Valid @RequestBody SysPermissionPageParam sysPermissionPageParam) throws Exception {
+        Paging<SysPermissionQueryVo> paging = sysPermissionService.getSysPermissionPageList(sysPermissionPageParam);
         return ApiResult.ok(paging);
     }
 

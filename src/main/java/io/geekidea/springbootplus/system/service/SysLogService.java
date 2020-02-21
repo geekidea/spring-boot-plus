@@ -18,9 +18,9 @@ package io.geekidea.springbootplus.system.service;
 
 import io.geekidea.springbootplus.system.entity.SysLog;
 import io.geekidea.springbootplus.common.service.BaseService;
-import io.geekidea.springbootplus.system.param.SysLogQueryParam;
+import io.geekidea.springbootplus.system.param.SysLogPageParam;
 import io.geekidea.springbootplus.system.vo.SysLogQueryVo;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.pagination.Paging;
 
 import java.io.Serializable;
 
@@ -39,15 +39,17 @@ public interface SysLogService extends BaseService<SysLog> {
      *
      * @param id
      * @return
+     * @throws Exception
      */
     SysLogQueryVo getSysLogById(Serializable id) throws Exception;
 
     /**
      * 获取分页对象
      *
-     * @param sysLogQueryParam
+     * @param sysLogPageParam
      * @return
+     * @throws Exception
      */
-    Paging<SysLogQueryVo> getSysLogPageList(SysLogQueryParam sysLogQueryParam) throws Exception;
+    Paging<SysLogQueryVo> getSysLogPageList(SysLogPageParam sysLogPageParam) throws Exception;
 
 }

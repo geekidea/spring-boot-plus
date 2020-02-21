@@ -18,9 +18,9 @@ package io.geekidea.springbootplus.system.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.controller.BaseController;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysDepartment;
-import io.geekidea.springbootplus.system.param.SysDepartmentQueryParam;
+import io.geekidea.springbootplus.system.param.SysDepartmentPageParam;
 import io.geekidea.springbootplus.system.service.SysDepartmentService;
 import io.geekidea.springbootplus.system.vo.SysDepartmentQueryVo;
 import io.geekidea.springbootplus.system.vo.SysDepartmentTreeVo;
@@ -101,8 +101,8 @@ public class SysDepartmentController extends BaseController {
     @PostMapping("/getPageList")
     @RequiresPermissions("sys:department:page")
     @ApiOperation(value = "获取SysDepartment分页列表", notes = "部门分页列表", response = SysDepartmentQueryVo.class)
-    public ApiResult<Paging<SysDepartmentQueryVo>> getSysDepartmentPageList(@Valid @RequestBody SysDepartmentQueryParam sysDepartmentQueryParam) throws Exception {
-        Paging<SysDepartmentQueryVo> paging = sysDepartmentService.getSysDepartmentPageList(sysDepartmentQueryParam);
+    public ApiResult<Paging<SysDepartmentQueryVo>> getSysDepartmentPageList(@Valid @RequestBody SysDepartmentPageParam sysDepartmentPageParam) throws Exception {
+        Paging<SysDepartmentQueryVo> paging = sysDepartmentService.getSysDepartmentPageList(sysDepartmentPageParam);
         return ApiResult.ok(paging);
     }
 
@@ -110,7 +110,7 @@ public class SysDepartmentController extends BaseController {
      * 获取所有部门列表
      */
     @PostMapping("/getAllDepartmentList")
-//    @RequiresPermissions("sys:department:all:list")
+    @RequiresPermissions("sys:department:all:list")
     @ApiOperation(value = "获取所有部门的树形列表", notes = "获取所有部门的树形列表", response = SysDepartment.class)
     public ApiResult<Paging<SysDepartment>> getAllDepartmentList() throws Exception {
         List<SysDepartment> list = sysDepartmentService.getAllDepartmentList();
@@ -121,7 +121,7 @@ public class SysDepartmentController extends BaseController {
      * 获取所有部门的树形列表
      */
     @PostMapping("/getAllDepartmentTree")
-//    @RequiresPermissions("sys:department:all:tree")
+    @RequiresPermissions("sys:department:all:tree")
     @ApiOperation(value = "获取所有部门的树形列表", notes = "获取所有部门的树形列表", response = SysDepartmentTreeVo.class)
     public ApiResult<Paging<SysDepartmentTreeVo>> getAllDepartmentTree() throws Exception {
         List<SysDepartmentTreeVo> treeVos = sysDepartmentService.getAllDepartmentTree();

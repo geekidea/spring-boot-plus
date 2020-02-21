@@ -54,7 +54,7 @@ public class ResourceInterceptor extends HandlerInterceptorAdapter {
         // 未启用资源访问时，返回错误消息
         if (!springBootPlusProperties.getInterceptor().getResource().isEnabled()){
             log.error("资源访问已关闭，非法访问：{}",fullUrl);
-            HttpServletResponseUtil.printJSON(response,ApiResult.fail("非法访问"));
+            HttpServletResponseUtil.printJson(response,ApiResult.fail("非法访问"));
             return false;
         }
 

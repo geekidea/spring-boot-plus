@@ -17,6 +17,7 @@
         select
         <include refid="Base_Column_List"/>
         from foo_bar
+        where id > #{param.lastRowLimitValue}
     </select>
 
 </mapper>

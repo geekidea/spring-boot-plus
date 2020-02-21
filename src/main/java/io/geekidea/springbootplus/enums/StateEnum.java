@@ -25,7 +25,9 @@ import io.geekidea.springbootplus.common.enums.BaseEnum;
  * @date 2019-10-24
  **/
 public enum StateEnum implements BaseEnum {
+    /** 禁用 **/
     DISABLE(0, "禁用"),
+    /** 启用 **/
     ENABLE(1, "启用");
 
     private Integer code;

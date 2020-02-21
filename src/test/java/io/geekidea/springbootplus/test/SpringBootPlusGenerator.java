@@ -41,7 +41,7 @@ public class SpringBootPlusGenerator {
 
         // 组件作者等配置
         codeGenerator
-                .setModuleName("foobar")
+                .setModuleName("system")
                 .setAuthor("geekidea")
                 .setPkIdColumnName("id");
 
@@ -52,10 +52,10 @@ public class SpringBootPlusGenerator {
                 .setParamValidation(true);
 
         // 生成实体映射相关代码,可用于数据库字段更新
-        // 当数据库字段更新时，可自定义自动生成哪些那文件
+        // 当数据库字段更新时，可自定义自动生成哪些文件
         codeGenerator
                 .setGeneratorEntity(true)
-                .setGeneratorQueryParam(true)
+                .setGeneratorPageParam(true)
                 .setGeneratorQueryVo(true);
 
         // 生成业务相关代码
@@ -78,7 +78,7 @@ public class SpringBootPlusGenerator {
         // 需要生成的表数组
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
-                "foo_bar"
+                "xxx"
         };
 
         // 循环生成

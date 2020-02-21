@@ -40,7 +40,7 @@ public class JacksonLocalDateTimeSerializer extends JsonSerializer<LocalDateTime
     public void serialize(LocalDateTime localDateTime, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
         String string = null;
         if (localDateTime != null) {
-            string = localDateTime.format(DateTimeFormatter.ofPattern(DatePattern.yyyy_MM_dd_HH_mm_ss));
+            string = localDateTime.format(DateTimeFormatter.ofPattern(DatePattern.YYYY_MM_DD_HH_MM_SS));
         }
         jsonGenerator.writeString(string);
     }

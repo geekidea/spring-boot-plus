@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.param;
+package io.geekidea.springbootplus.common.pagination;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import io.swagger.annotations.ApiModel;
@@ -35,7 +35,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("可排序查询参数对象")
-public abstract class OrderQueryParam extends QueryParam {
+public abstract class BasePageOrderParam extends BasePageParam {
     private static final long serialVersionUID = 57714391204790143L;
 
     @ApiModelProperty(value = "排序")

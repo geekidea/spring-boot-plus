@@ -17,9 +17,9 @@
 package io.geekidea.springbootplus.system.service;
 
 import io.geekidea.springbootplus.common.service.BaseService;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysRole;
-import io.geekidea.springbootplus.system.param.SysRoleQueryParam;
+import io.geekidea.springbootplus.system.param.SysRolePageParam;
 import io.geekidea.springbootplus.system.param.sysrole.AddSysRoleParam;
 import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRoleParam;
 import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
@@ -75,11 +75,11 @@ public interface SysRoleService extends BaseService<SysRole> {
     /**
      * 获取分页对象
      *
-     * @param sysRoleQueryParam
+     * @param sysRolePageParam
      * @return
      * @throws Exception
      */
-    Paging<SysRoleQueryVo> getSysRolePageList(SysRoleQueryParam sysRoleQueryParam) throws Exception;
+    Paging<SysRoleQueryVo> getSysRolePageList(SysRolePageParam sysRolePageParam) throws Exception;
 
     /**
      * 根据id校验角色是否存在并且已启用

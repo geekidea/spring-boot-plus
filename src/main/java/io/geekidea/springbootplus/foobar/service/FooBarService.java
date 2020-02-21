@@ -2,9 +2,9 @@ package io.geekidea.springbootplus.foobar.service;
 
 import io.geekidea.springbootplus.foobar.entity.FooBar;
 import io.geekidea.springbootplus.common.service.BaseService;
-import io.geekidea.springbootplus.foobar.param.FooBarQueryParam;
+import io.geekidea.springbootplus.foobar.param.FooBarPageParam;
 import io.geekidea.springbootplus.foobar.vo.FooBarQueryVo;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.pagination.Paging;
 
 import java.io.Serializable;
 
@@ -57,10 +57,10 @@ public interface FooBarService extends BaseService<FooBar> {
     /**
      * 获取分页对象
      *
-     * @param fooBarQueryParam
+     * @param fooBarPageParam
      * @return
      * @throws Exception
      */
-    Paging<FooBarQueryVo> getFooBarPageList(FooBarQueryParam fooBarQueryParam) throws Exception;
+    Paging<FooBarQueryVo> getFooBarPageList(FooBarPageParam fooBarPageParam) throws Exception;
 
 }

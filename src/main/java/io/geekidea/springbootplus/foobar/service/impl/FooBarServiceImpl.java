@@ -1,13 +1,17 @@
 package io.geekidea.springbootplus.foobar.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import io.geekidea.springbootplus.common.pagination.PageUtil;
 import io.geekidea.springbootplus.foobar.entity.FooBar;
 import io.geekidea.springbootplus.foobar.mapper.FooBarMapper;
 import io.geekidea.springbootplus.foobar.service.FooBarService;
-import io.geekidea.springbootplus.foobar.param.FooBarQueryParam;
+import io.geekidea.springbootplus.foobar.param.FooBarPageParam;
 import io.geekidea.springbootplus.foobar.vo.FooBarQueryVo;
 import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.pagination.Paging;
+import io.geekidea.springbootplus.util.LambdaColumn;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -57,11 +62,20 @@ public class FooBarServiceImpl extends BaseServiceImpl<FooBarMapper, FooBar> imp
         return fooBarMapper.getFooBarById(id);
     }
 
+    /**
+     *  String optimizeLimitColumn = getLambdaColumn(FooBar::getId);
+     *  等价于
+     *  String optimizeLimitColumn = new LambdaColumn<FooBar>().get(FooBar::getId);
+     * @param fooBarPageParam
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Paging<FooBarQueryVo> getFooBarPageList(FooBarQueryParam fooBarQueryParam) throws Exception {
-        Page page = setPageParam(fooBarQueryParam, OrderItem.desc("create_time"));
-        IPage<FooBarQueryVo> iPage = fooBarMapper.getFooBarPageList(page, fooBarQueryParam);
-        return new Paging(iPage);
+    public Paging<FooBarQueryVo> getFooBarPageList(FooBarPageParam fooBarPageParam) throws Exception {
+        String optimizeLimitColumn = getLambdaColumn(FooBar::getId);
+        Page page = PageUtil.getPage(fooBarPageParam, true, optimizeLimitColumn);
+        IPage<FooBarQueryVo> iPage = fooBarMapper.getFooBarPageList(page, fooBarPageParam);
+        return new Paging(iPage, true, optimizeLimitColumn);
     }
 
 }

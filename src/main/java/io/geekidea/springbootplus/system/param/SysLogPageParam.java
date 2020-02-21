@@ -21,7 +21,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import io.geekidea.springbootplus.common.param.QueryParam;
+import io.geekidea.springbootplus.common.pagination.BasePageParam;
 
 /**
  * <p>
@@ -34,7 +34,7 @@ import io.geekidea.springbootplus.common.param.QueryParam;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysLogQueryParam对象", description = "系统日志查询参数")
-public class SysLogQueryParam extends QueryParam {
+@ApiModel(value = "SysLogPageParam对象", description = "系统日志查询参数")
+public class SysLogPageParam extends BasePageParam {
     private static final long serialVersionUID = 1L;
 }

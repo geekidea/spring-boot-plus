@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import io.geekidea.springbootplus.common.param.OrderQueryParam;
+import io.geekidea.springbootplus.common.pagination.BasePageOrderParam;
 
 /**
  * <pre>
@@ -18,7 +18,8 @@ import io.geekidea.springbootplus.common.param.OrderQueryParam;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "FooBarQueryParam对象", description = "FooBar查询参数")
-public class FooBarQueryParam extends OrderQueryParam {
+@ApiModel(value = "FooBarPageParam对象", description = "FooBar查询参数")
+// fooBarBasePageParamBaseOrder
+public class FooBarPageParam extends BasePageOrderParam {
     private static final long serialVersionUID = 1L;
 }

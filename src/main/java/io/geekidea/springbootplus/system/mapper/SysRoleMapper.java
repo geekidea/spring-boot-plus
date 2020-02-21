@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.geekidea.springbootplus.system.entity.SysRole;
-import io.geekidea.springbootplus.system.param.SysRoleQueryParam;
+import io.geekidea.springbootplus.system.param.SysRolePageParam;
 import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -50,9 +50,9 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * 获取分页对象
      *
      * @param page
-     * @param sysRoleQueryParam
+     * @param sysRolePageParam
      * @return
      */
-    IPage<SysRoleQueryVo> getSysRolePageList(@Param("page") Page page, @Param("param") SysRoleQueryParam sysRoleQueryParam);
+    IPage<SysRoleQueryVo> getSysRolePageList(@Param("page") Page page, @Param("param") SysRolePageParam sysRolePageParam);
 
 }

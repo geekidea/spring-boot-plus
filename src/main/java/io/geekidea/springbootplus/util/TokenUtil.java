@@ -27,7 +27,7 @@ public class TokenUtil {
      * @return
      */
     public static String generateFirstLoginRestPwdToken(){
-        String token = "first-login-rest-pwd-token:" + UUIDUtil.getUUID();
+        String token = "first-login-rest-pwd-token:" + UUIDUtil.getUuid();
         return token;
     }
 
@@ -36,7 +36,7 @@ public class TokenUtil {
      * @return
      */
     public static String generateVerificationCodeToken(){
-        String token = "verification-code-token:" + UUIDUtil.getUUID();
+        String token = "verification-code-token:" + UUIDUtil.getUuid();
         return token;
     }
 }

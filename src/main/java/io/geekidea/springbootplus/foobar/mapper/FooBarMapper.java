@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.geekidea.springbootplus.foobar.entity.FooBar;
-import io.geekidea.springbootplus.foobar.param.FooBarQueryParam;
+import io.geekidea.springbootplus.foobar.param.FooBarPageParam;
 import io.geekidea.springbootplus.foobar.vo.FooBarQueryVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -34,9 +34,9 @@ public interface FooBarMapper extends BaseMapper<FooBar> {
      * 获取分页对象
      *
      * @param page
-     * @param fooBarQueryParam
+     * @param fooBarPageParam
      * @return
      */
-    IPage<FooBarQueryVo> getFooBarPageList(@Param("page") Page page, @Param("param") FooBarQueryParam fooBarQueryParam);
+    IPage<FooBarQueryVo> getFooBarPageList(@Param("page") Page page, @Param("param") FooBarPageParam fooBarPageParam);
 
 }

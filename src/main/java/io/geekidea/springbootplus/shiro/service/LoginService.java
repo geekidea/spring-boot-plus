@@ -53,13 +53,14 @@ public interface LoginService {
      *
      * @param jwtToken
      * @param httpServletResponse
+     * @throws Exception
      */
     void refreshToken(JwtToken jwtToken, HttpServletResponse httpServletResponse) throws Exception;
 
     /**
      * 退出
-     *
      * @param request
+     * @throws Exception
      */
     void logout(HttpServletRequest request) throws Exception;
 

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.constraints;
+package io.geekidea.springbootplus.common.validator;
+
+import io.geekidea.springbootplus.common.validator.constraints.IdCard;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

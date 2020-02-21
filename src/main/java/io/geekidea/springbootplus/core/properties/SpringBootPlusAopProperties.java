@@ -52,9 +52,15 @@ public class SpringBootPlusAopProperties {
     @EqualsAndHashCode(callSuper = true)
     public static class LogAopConfig extends AopConfig{
 
+        // 1. 请求和响应分开，按照执行顺序打印
+        public static Integer PRINT_TYPE_ORDER = 1;
+        public static Integer PRINT_TYPE_CONTINUITY = 2;
+        public static Integer PRINT_TYPE_FINAL = 3;
+
+
         /**
          * 日志输出类型：print-type
-         *   1. 请求和响应分开，按照执行顺序打印
+         *
          *   2. ThreadLocal线程绑定，方法执行结束时，连续打印请求和响应日志
          *   3. ThreadLocal线程绑定，方法执行结束时，同时打印请求和响应日志
          */

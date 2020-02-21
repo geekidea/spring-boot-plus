@@ -54,7 +54,7 @@ public class DownloadInterceptor extends HandlerInterceptorAdapter {
         // 未启用资源访问时，返回错误消息
         if (!springBootPlusProperties.getInterceptor().getDownload().isEnabled()){
             log.error("下载已关闭，非法下载：{}",fullUrl);
-            HttpServletResponseUtil.printJSON(response, ApiResult.fail("非法下载"));
+            HttpServletResponseUtil.printJson(response, ApiResult.fail("非法下载"));
             return false;
         }
 

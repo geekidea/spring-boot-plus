@@ -144,7 +144,7 @@ public class CodeGenerator {
     /**
      * 是否生成查询参数
      */
-    private boolean generatorQueryParam;
+    private boolean generatorPageParam;
     /**
      * 是否生成查询VO
      */
@@ -177,9 +177,20 @@ public class CodeGenerator {
      */
     private String superServiceImpl;
     /**
-     * 查询参数父类
+     * 分页查询参数父类
      */
-    private String superQueryParam;
+    private String superPageParam;
+
+    /**
+     * 分页排序查询参数父类
+     */
+    private String superPageOrderParam;
+
+    /**
+     * 分页工具类路径
+     */
+    private String commonPageUtil;
+
     /**
      * 实体父类实体列表
      */
@@ -201,7 +212,7 @@ public class CodeGenerator {
     /**
      * 公共排序查询参数
      */
-    private String commonOrderQueryParam;
+    private String commonOrderPageParam;
     /**
      * 公共分页对象
      */
@@ -222,15 +233,16 @@ public class CodeGenerator {
         this.superController = this.commonParentPackage + ".controller.BaseController";
         this.superService = this.commonParentPackage + ".service.BaseService";
         this.superServiceImpl = this.commonParentPackage + ".service.impl.BaseServiceImpl";
-        this.superQueryParam = this.commonParentPackage + ".param.QueryParam";
+        this.superPageParam = this.commonParentPackage + ".pagination.BasePageParam";
+        this.superPageOrderParam = this.commonParentPackage + ".pagination.BasePageOrderParam";
         this.superEntityCommonColumns = new String[]{};
 
         // 公共类包路径
         this.commonIdParam = this.commonParentPackage + ".param.IdParam";
         this.commonApiResult = this.commonParentPackage + ".api.ApiResult";
         this.commonOrderEnum = this.commonParentPackage + ".enums.OrderEnum";
-        this.commonOrderQueryParam = this.commonParentPackage + ".param.OrderQueryParam";
-        this.commonPaging = this.commonParentPackage + ".vo.Paging";
+        this.commonPaging = this.commonParentPackage + ".pagination.Paging";
+        this.commonPageUtil = this.commonParentPackage + ".pagination.PageUtil";
     }
 
     /**
@@ -286,12 +298,15 @@ public class CodeGenerator {
                 Map<String, Object> map = new HashMap<>();
                 map.put("customField", "Hello " + this.getConfig().getGlobalConfig().getAuthor());
                 // 查询参数包路径
-                String queryParamPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".param";
-                map.put("queryParamPackage", queryParamPackage);
+                String paramPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".param";
+                map.put("paramPackage", paramPackage);
                 // 查询参数类路径
-                map.put("queryParamPath", queryParamPackage + StringPool.DOT + pascalTableName + "QueryParam");
+                map.put("pageParamPath", paramPackage + StringPool.DOT + pascalTableName + "PageParam");
                 // 查询参数共公包路径
-                map.put("queryParamCommonPath", superQueryParam);
+                System.out.println("superPageParam = " + superPageParam);
+                map.put("superPageParamPath", superPageParam);
+                map.put("superPageOrderParamPath", superPageOrderParam);
+                map.put("commonPageUtilPath", commonPageUtil);
                 // 查询参数共公包路径
                 map.put("idParamPath", commonIdParam);
                 // 响应结果包路径
@@ -318,7 +333,7 @@ public class CodeGenerator {
                 // 分页列表查询是否排序
                 map.put("pageListOrder", pageListOrder);
                 // 导入排序查询参数类
-                map.put("orderQueryParamPath", commonOrderQueryParam);
+                map.put("orderPageParamPath", commonOrderPageParam);
                 // 代码生成策略
                 map.put("generatorStrategy", generatorStrategy);
                 // 代码Validation校验
@@ -344,12 +359,12 @@ public class CodeGenerator {
             });
         }
 
-        // 自定义queryParam模板
-        if (generatorQueryParam) {
-            focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
+        // 自定义pageParam模板
+        if (generatorPageParam) {
+            focList.add(new FileOutConfig("/templates/pageParam.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "PageParam" + StringPool.DOT_JAVA;
                 }
             });
         }
@@ -458,10 +473,5 @@ public class CodeGenerator {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        System.out.println(underlineToColon("sys_user"));
-    }
-
 
 }

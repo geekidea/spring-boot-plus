@@ -53,7 +53,7 @@ public class UploadInterceptor extends HandlerInterceptorAdapter {
         String fullUrl = request.getRequestURL().toString();
         if (!springBootPlusProperties.getInterceptor().getUpload().isEnabled()){
             log.error("上传功能已关闭，非法上传：{}",fullUrl);
-            HttpServletResponseUtil.printJSON(response, ApiResult.fail("非法上传"));
+            HttpServletResponseUtil.printJson(response, ApiResult.fail("非法上传"));
             return false;
         }
 

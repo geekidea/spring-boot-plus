@@ -153,7 +153,6 @@ public abstract class AbstractLogAop {
             map.put("isRequestBody", isRequestBody);
 
             AnnotatedType[] annotatedTypes = method.getAnnotatedParameterTypes();
-            System.out.println(Arrays.toString(annotatedTypes));
 
             // 获取Shiro注解值，并记录到map中
             handleShiroAnnotationValue(map, method);
@@ -161,7 +160,7 @@ public abstract class AbstractLogAop {
             // 设置请求参数
             Object requestParamJson = getRequestParamJsonString(joinPoint, request, requestMethod, contentType, isRequestBody);
             map.put("param", requestParamJson);
-            map.put("time", DateUtil.getYYYYMMDDHHMMSS(new Date()));
+            map.put("time", DateUtil.getDateTimeString(new Date()));
 
             // 获取请求头token
             map.put("token", request.getHeader(JwtTokenUtil.getTokenName()));
@@ -252,17 +251,17 @@ public abstract class AbstractLogAop {
             int code = apiResult.getCode();
             // 获取格式化后的响应结果
             String responseResultInfo = formatResponseInfo(apiResult);
-            if (logAopConfig.getPrintType() == 1) {
+            if (logAopConfig.getPrintType() == SpringBootPlusAopProperties.LogAopConfig.PRINT_TYPE_ORDER) {
                 printResponseInfo(code, responseResultInfo);
             } else {
                 // 从threadLocal中获取线程请求信息
                 String requestInfo = threadLocal.get();
                 threadLocal.remove();
                 // 如果是连续打印，则先打印请求参数，再打印响应结果
-                if (logAopConfig.getPrintType() == 2) {
+                if (logAopConfig.getPrintType() == SpringBootPlusAopProperties.LogAopConfig.PRINT_TYPE_CONTINUITY) {
                     printRequestInfo(requestInfo);
                     printResponseInfo(code, responseResultInfo);
-                } else if (logAopConfig.getPrintType() == 3) {
+                } else if (logAopConfig.getPrintType() == SpringBootPlusAopProperties.LogAopConfig.PRINT_TYPE_FINAL) {
                     printRequestResponseInfo(code, requestInfo, responseResultInfo);
                 }
             }
@@ -364,41 +363,16 @@ public abstract class AbstractLogAop {
      * @param isRequestBody
      */
     protected Object getRequestParamJsonString(ProceedingJoinPoint joinPoint, HttpServletRequest request, String requestMethod, String contentType, boolean isRequestBody) {
-        /**
-         * 判断请求内容类型
-         * 通常有3中请求内容类型
-         * 1.发送get请求时,contentType为null
-         * 2.发送post请求时,contentType为application/x-www-form-urlencoded
-         * 3.发送post json请求,contentType为application/json
-         * 4.发送post json请求并有RequestBody注解,contentType为application/json
-         */
         Object paramObject = null;
-        int requestType = 0;
-        if (GET.equals(requestMethod)) {
-            requestType = 1;
-        } else if (POST.equals(requestMethod)) {
-            if (contentType == null) {
-                requestType = 5;
-            } else if (contentType.startsWith(APPLICATION_X_WWW_FORM_URLENCODED)) {
-                requestType = 2;
-            } else if (contentType.startsWith(APPLICATION_JSON)) {
-                if (isRequestBody) {
-                    requestType = 4;
-                } else {
-                    requestType = 3;
-                }
-            }
-        }
-
-        // 1,2,3中类型时,获取getParameterMap中所有的值,处理后序列化成JSON字符串
-        if (requestType == 1 || requestType == 2 || requestType == 3 || requestType == 5) {
-            Map<String, String[]> paramsMap = request.getParameterMap();
-            paramObject = getJsonForParamMap(paramsMap);
-        } else if (requestType == 4) { // POST,application/json,RequestBody的类型,简单判断,然后序列化成JSON字符串
+        if (isRequestBody){
+            // POST,application/json,RequestBody的类型,简单判断,然后序列化成JSON字符串
             Object[] args = joinPoint.getArgs();
             paramObject = argsArrayToJsonString(args);
+        }else{
+            // 获取getParameterMap中所有的值,处理后序列化成JSON字符串
+            Map<String, String[]> paramsMap = request.getParameterMap();
+            paramObject = getJsonForParamMap(paramsMap);
         }
-
         return paramObject;
     }
 
@@ -470,11 +444,14 @@ public abstract class AbstractLogAop {
         for (Map.Entry<String, String[]> kv : paramsMap.entrySet()) {
             String key = kv.getKey();
             String[] values = kv.getValue();
-            if (values == null) { // 没有值
+            // 没有值
+            if (values == null) {
                 jsonObject.put(key, null);
-            } else if (values.length == 1) { // 一个值
+            } else if (values.length == 1) {
+                // 一个值
                 jsonObject.put(key, values[0]);
-            } else { // 多个值
+            } else {
+                // 多个值
                 jsonObject.put(key, values);
             }
         }

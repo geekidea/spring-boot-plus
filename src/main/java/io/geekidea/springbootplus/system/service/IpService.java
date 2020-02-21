@@ -18,9 +18,9 @@ package io.geekidea.springbootplus.system.service;
 
 import io.geekidea.springbootplus.system.entity.Ip;
 import io.geekidea.springbootplus.common.service.BaseService;
-import io.geekidea.springbootplus.system.param.IpQueryParam;
+import io.geekidea.springbootplus.system.param.IpPageParam;
 import io.geekidea.springbootplus.system.vo.IpQueryVo;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.pagination.Paging;
 
 import java.io.Serializable;
 
@@ -39,15 +39,17 @@ public interface IpService extends BaseService<Ip> {
      *
      * @param id
      * @return
+     * @throws Exception
      */
     IpQueryVo getIpById(Serializable id) throws Exception;
 
     /**
      * 获取分页对象
      *
-     * @param ipQueryParam
+     * @param ipPageParam
      * @return
+     * @throws Exception
      */
-    Paging<IpQueryVo> getIpPageList(IpQueryParam ipQueryParam) throws Exception;
+    Paging<IpQueryVo> getIpPageList(IpPageParam ipPageParam) throws Exception;
 
 }

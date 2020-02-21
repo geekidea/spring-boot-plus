@@ -16,19 +16,21 @@
 
 package io.geekidea.springbootplus.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.geekidea.springbootplus.common.exception.BusinessException;
+import io.geekidea.springbootplus.common.pagination.PageUtil;
+import io.geekidea.springbootplus.common.pagination.Paging;
 import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.common.vo.Paging;
 import io.geekidea.springbootplus.enums.MenuLevelEnum;
 import io.geekidea.springbootplus.enums.StateEnum;
 import io.geekidea.springbootplus.system.convert.SysPermissionConvert;
 import io.geekidea.springbootplus.system.entity.SysPermission;
 import io.geekidea.springbootplus.system.mapper.SysPermissionMapper;
-import io.geekidea.springbootplus.system.param.SysPermissionQueryParam;
+import io.geekidea.springbootplus.system.param.SysPermissionPageParam;
 import io.geekidea.springbootplus.system.service.SysPermissionService;
 import io.geekidea.springbootplus.system.service.SysRolePermissionService;
 import io.geekidea.springbootplus.system.vo.SysPermissionQueryVo;
@@ -112,17 +114,16 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
     }
 
     @Override
-    public Paging<SysPermissionQueryVo> getSysPermissionPageList(SysPermissionQueryParam sysPermissionQueryParam) throws Exception {
-        Page page = setPageParam(sysPermissionQueryParam, OrderItem.desc("create_time"));
-        IPage<SysPermissionQueryVo> iPage = sysPermissionMapper.getSysPermissionPageList(page, sysPermissionQueryParam);
+    public Paging<SysPermissionQueryVo> getSysPermissionPageList(SysPermissionPageParam sysPermissionPageParam) throws Exception {
+        Page page = PageUtil.getPage(sysPermissionPageParam, OrderItem.desc(getLambdaColumn(SysPermission::getCreateTime)));
+        IPage<SysPermissionQueryVo> iPage = sysPermissionMapper.getSysPermissionPageList(page, sysPermissionPageParam);
         return new Paging(iPage);
     }
 
     @Override
     public boolean isExistsByPermissionIds(List<Long> permissionIds) {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.in("id", permissionIds);
-        return sysPermissionMapper.selectCount(queryWrapper).intValue() == permissionIds.size();
+        Wrapper wrapper = lambdaQuery().in(SysPermission::getId,permissionIds).getWrapper();
+        return sysPermissionMapper.selectCount(wrapper).intValue() == permissionIds.size();
     }
 
     @Override

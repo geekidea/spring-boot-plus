@@ -21,13 +21,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.geekidea.springbootplus.common.exception.BusinessException;
+import io.geekidea.springbootplus.common.pagination.PageUtil;
 import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.pagination.Paging;
 import io.geekidea.springbootplus.enums.StateEnum;
 import io.geekidea.springbootplus.shiro.util.SaltUtil;
 import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.mapper.SysUserMapper;
-import io.geekidea.springbootplus.system.param.SysUserQueryParam;
+import io.geekidea.springbootplus.system.param.SysUserPageParam;
 import io.geekidea.springbootplus.system.param.UpdatePasswordParam;
 import io.geekidea.springbootplus.system.service.SysDepartmentService;
 import io.geekidea.springbootplus.system.service.SysRoleService;
@@ -124,9 +125,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
     }
 
     @Override
-    public Paging<SysUserQueryVo> getSysUserPageList(SysUserQueryParam sysUserQueryParam) throws Exception {
-        Page page = setPageParam(sysUserQueryParam, OrderItem.desc("create_time"));
-        IPage<SysUserQueryVo> iPage = sysUserMapper.getSysUserPageList(page, sysUserQueryParam);
+    public Paging<SysUserQueryVo> getSysUserPageList(SysUserPageParam sysUserPageParam) throws Exception {
+        Page page = PageUtil.getPage(sysUserPageParam, OrderItem.desc(getLambdaColumn(SysUser::getCreateTime)));
+        IPage<SysUserQueryVo> iPage = sysUserMapper.getSysUserPageList(page, sysUserPageParam);
         return new Paging(iPage);
     }
 

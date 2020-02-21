@@ -40,11 +40,12 @@ public interface LoginRedisService {
 
     /**
      * 刷新登陆信息
+     *
      * @param oldToken
      * @param username
      * @param newJwtToken
      */
-    void refreshLoginInfo(String oldToken,String username,JwtToken newJwtToken);
+    void refreshLoginInfo(String oldToken, String username, JwtToken newJwtToken);
 
     /**
      * 通过用户名，从缓存中获取登陆用户LoginSysUserRedisVo
@@ -54,6 +55,12 @@ public interface LoginRedisService {
      */
     LoginSysUserRedisVo getLoginSysUserRedisVo(String username);
 
+    /**
+     * 获取登陆用户对象
+     *
+     * @param username
+     * @return
+     */
     LoginSysUserVo getLoginSysUserVo(String username);
 
     /**
@@ -82,6 +89,7 @@ public interface LoginRedisService {
 
     /**
      * 删除用户所有登陆缓存
+     *
      * @param username
      */
     void deleteUserAllCache(String username);

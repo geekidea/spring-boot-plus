@@ -25,12 +25,38 @@ import java.util.Random;
  * @date 2018-11-08
  */
 public class VerificationCode {
-    private int weight = 110;             //验证码图片的长和宽
+    /**
+     * 验证码图片的长
+     **/
+    private int weight = 110;
+    /**
+     * 验证码图片的高
+     */
     private int height = 38;
-    private String text;                //用来保存验证码的文本内容
-    private Random r = new Random();      //获取随机数对象
-    private String[] fontNames = {"宋体", "华文楷体", "黑体", "微软雅黑", "楷体_GB2312"};   //字体数组
-    private String codes = "23456789acdefghjkmnopqrstuvwxyzACDEFGHJKMNPQRSTUVWXYZ";    //验证码数组
+    /**
+     * 用来保存验证码的文本内容
+     **/
+    private String text;
+    /**
+     * 获取随机数对象
+     **/
+    private Random r = new Random();
+    /**
+     * 字体数组
+     **/
+    private String[] fontNames = {"宋体", "华文楷体", "黑体", "微软雅黑", "楷体_GB2312"};
+    /**
+     * 验证码数组
+     **/
+    private String codes = "23456789acdefghjkmnopqrstuvwxyzACDEFGHJKMNPQRSTUVWXYZ";
+    /**
+     * 生成的验证码的个数
+     **/
+    private int codeNum = 4;
+    /**
+     * 255
+     **/
+    private static int TWO_FIVE_FIVE = 255;
 
     /**
      * 获取随机的颜色
@@ -109,7 +135,7 @@ public class VerificationCode {
         StringBuilder sb = new StringBuilder();
         drawLine(image);
         //画四个字符即可
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < codeNum; i++) {
             //随机生成字符，因为只有画字符串的方法，没有画字符的方法，所以需要将字符变成字符串再画
             String s = randomChar() + "";
             //添加到StringBuilder里面
@@ -131,12 +157,12 @@ public class VerificationCode {
      */
     Color getRandColor(int fc, int bc) {
         Random random = new Random();
-        if (fc > 255) {
-            fc = 255;
+        if (fc > TWO_FIVE_FIVE) {
+            fc = TWO_FIVE_FIVE;
         }
 
-        if (bc > 255) {
-            bc = 255;
+        if (bc > TWO_FIVE_FIVE) {
+            bc = TWO_FIVE_FIVE;
         }
 
         int r = fc + random.nextInt(bc - fc);

@@ -18,10 +18,10 @@ package io.geekidea.springbootplus.system.controller;
 
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.controller.BaseController;
-import io.geekidea.springbootplus.common.vo.Paging;
+import io.geekidea.springbootplus.common.pagination.Paging;
 import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.system.entity.SysUser;
-import io.geekidea.springbootplus.system.param.SysUserQueryParam;
+import io.geekidea.springbootplus.system.param.SysUserPageParam;
 import io.geekidea.springbootplus.system.param.UpdatePasswordParam;
 import io.geekidea.springbootplus.system.service.SysUserService;
 import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
@@ -106,8 +106,8 @@ public class SysUserController extends BaseController {
     @PostMapping("/getPageList")
     @RequiresPermissions("sys:user:page")
     @ApiOperation(value = "获取SysUser分页列表", notes = "系统用户分页列表", response = SysUserQueryVo.class)
-    public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Valid @RequestBody SysUserQueryParam sysUserQueryParam) throws Exception {
-        Paging<SysUserQueryVo> paging = sysUserService.getSysUserPageList(sysUserQueryParam);
+    public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Valid @RequestBody SysUserPageParam sysUserPageParam) throws Exception {
+        Paging<SysUserQueryVo> paging = sysUserService.getSysUserPageList(sysUserPageParam);
         return ApiResult.ok(paging);
     }
 

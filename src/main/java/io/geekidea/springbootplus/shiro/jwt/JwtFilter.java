@@ -112,7 +112,7 @@ public class JwtFilter extends AuthenticatingFilter {
         String url = httpServletRequest.getRequestURI();
         log.error("onAccessDenied url：{}", url);
         ApiResult apiResult = ApiResult.fail(ApiCode.UNAUTHORIZED);
-        HttpServletResponseUtil.printJSON(httpServletResponse, apiResult);
+        HttpServletResponseUtil.printJson(httpServletResponse, apiResult);
         return false;
     }
 

@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.common.param;
+package io.geekidea.springbootplus.common.pagination;
 
 import io.geekidea.springbootplus.constant.CommonConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.apache.ibatis.annotations.Lang;
 
 import java.io.Serializable;
 
@@ -31,17 +32,43 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel("查询参数对象")
-public abstract class QueryParam implements Serializable {
+public abstract class BasePageParam implements Serializable {
     private static final long serialVersionUID = -3263921252635611410L;
 
     @ApiModelProperty(value = "页码,默认为1", example = "1")
-    private Integer current = CommonConstant.DEFAULT_PAGE_INDEX;
+    private Long current = CommonConstant.DEFAULT_PAGE_INDEX;
+
     @ApiModelProperty(value = "页大小,默认为10", example = "10")
-    private Integer size = CommonConstant.DEFAULT_PAGE_SIZE;
+    private Long size = CommonConstant.DEFAULT_PAGE_SIZE;
+
     @ApiModelProperty(value = "搜索字符串", example = "")
     private String keyword;
 
-    public void setCurrent(Integer current) {
+    /**
+     * 每页显示3行数据
+     *
+     * 根据id顺序排列
+     * 1,2,3 lastRowId：3
+     *
+     * where id > 3 order by id limit 0,3
+     * 4,5,6 lastRowId：6
+     *
+     * where id > 6 order by id limit 0,3
+     * 7,8,9
+     *
+     * 根据id降序排列
+     * 9,8,7 lastRowId：7
+     *
+     * where id < 7 order by id desc limit 0,3
+     * 6,5,4 lastRowId：4
+     *
+     * where id < 4 order by id desc limit 0,3
+     * 3,2,1 lastRowId：1
+     */
+    @ApiModelProperty("当前页最后一行分页标识，需作为参数回传")
+    private Long lastRowLimitValue;
+
+    public void setCurrent(Long current) {
         if (current == null || current <= 0) {
             this.current = CommonConstant.DEFAULT_PAGE_INDEX;
         } else {
@@ -49,7 +76,7 @@ public abstract class QueryParam implements Serializable {
         }
     }
 
-    public void setSize(Integer size) {
+    public void setSize(Long size) {
         if (size == null || size <= 0) {
             this.size = CommonConstant.DEFAULT_PAGE_SIZE;
         } else {

@@ -2,22 +2,20 @@ package io.geekidea.springbootplus.foobar.controller;
 
 import io.geekidea.springbootplus.foobar.entity.FooBar;
 import io.geekidea.springbootplus.foobar.service.FooBarService;
-import io.geekidea.springbootplus.foobar.param.FooBarQueryParam;
+import io.geekidea.springbootplus.foobar.param.FooBarPageParam;
 import io.geekidea.springbootplus.foobar.vo.FooBarQueryVo;
 import io.geekidea.springbootplus.common.api.ApiResult;
 import io.geekidea.springbootplus.common.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
 
-import io.geekidea.springbootplus.common.vo.Paging;
-import io.geekidea.springbootplus.common.param.IdParam;
+import io.geekidea.springbootplus.common.pagination.Paging;
 
 /**
  * <pre>
@@ -81,8 +79,8 @@ public class FooBarController extends BaseController {
      */
     @PostMapping("/getPageList")
     @ApiOperation(value = "获取FooBar分页列表", notes = "FooBar分页列表", response = FooBarQueryVo.class)
-    public ApiResult<Paging<FooBarQueryVo>> getFooBarPageList(@Valid @RequestBody FooBarQueryParam fooBarQueryParam) throws Exception {
-        Paging<FooBarQueryVo> paging = fooBarService.getFooBarPageList(fooBarQueryParam);
+    public ApiResult<Paging<FooBarQueryVo>> getFooBarPageList(@Valid @RequestBody FooBarPageParam fooBarPageParam) throws Exception {
+        Paging<FooBarQueryVo> paging = fooBarService.getFooBarPageList(fooBarPageParam);
         return ApiResult.ok(paging);
     }
 

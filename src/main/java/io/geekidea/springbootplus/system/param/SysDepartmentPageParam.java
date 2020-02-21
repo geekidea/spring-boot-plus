@@ -21,7 +21,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import io.geekidea.springbootplus.common.param.OrderQueryParam;
+import io.geekidea.springbootplus.common.pagination.BasePageOrderParam;
 
 /**
  * <pre>
@@ -34,7 +34,7 @@ import io.geekidea.springbootplus.common.param.OrderQueryParam;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysDepartmentQueryParam对象", description = "部门查询参数")
-public class SysDepartmentQueryParam extends OrderQueryParam {
+@ApiModel(value = "SysDepartmentPageParam对象", description = "部门查询参数")
+public class SysDepartmentPageParam extends BasePageOrderParam {
     private static final long serialVersionUID = 1L;
 }
