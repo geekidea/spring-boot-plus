@@ -403,6 +403,12 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 ![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png)
 
 
+## Donate
+Ask the author to drink coffee and let the code fly for a while! 
+
+![geekidea-wechat-donate](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-donate.jpeg)
+
+
 ## License
 spring-boot-plus is under the Apache 2.0 license. See the [LICENSE](https://github.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.
 
