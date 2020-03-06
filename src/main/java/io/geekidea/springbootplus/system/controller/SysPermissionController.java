@@ -16,12 +16,13 @@
 
 package io.geekidea.springbootplus.system.controller;
 
-import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.common.controller.BaseController;
-import io.geekidea.springbootplus.common.pagination.Paging;
+import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.common.controller.BaseController;
+import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysPermission;
 import io.geekidea.springbootplus.system.param.SysPermissionPageParam;
 import io.geekidea.springbootplus.system.service.SysPermissionService;
+import io.geekidea.springbootplus.system.service.SysRolePermissionService;
 import io.geekidea.springbootplus.system.vo.SysPermissionQueryVo;
 import io.geekidea.springbootplus.system.vo.SysPermissionTreeVo;
 import io.swagger.annotations.Api;
@@ -50,6 +51,9 @@ public class SysPermissionController extends BaseController {
 
     @Autowired
     private SysPermissionService sysPermissionService;
+
+    @Autowired
+    private SysRolePermissionService sysRolePermissionService;
 
     /**
      * 添加系统权限
@@ -159,6 +163,30 @@ public class SysPermissionController extends BaseController {
     @ApiOperation(value = "根据用户id获取该用户所有权限编码", notes = "根据用户id获取该用户所有权限编码", response = ApiResult.class)
     public ApiResult<String> getPermissionCodesByUserId(@PathVariable("userId") Long userId) throws Exception {
         List<String> list = sysPermissionService.getPermissionCodesByUserId(userId);
+        return ApiResult.ok(list);
+    }
+
+    /**
+     * 根据角色id获取该对应的所有三级权限ID
+     */
+    @GetMapping("/getThreeLevelPermissionIdsByRoleId/{roleId}")
+    // TODO
+//    @RequiresPermissions("sys:permission:three-ids-by-role-id")
+    @ApiOperation(value = "根据角色id获取该对应的所有三级权限ID", response = ApiResult.class)
+    public ApiResult<Long> getPermissionIdsByRoleId(@PathVariable("roleId") Long roleId) throws Exception {
+        List<Long> list = sysRolePermissionService.getThreeLevelPermissionIdsByRoleId(roleId);
+        return ApiResult.ok(list);
+    }
+
+    /**
+     * 获取所有导航树形菜单(一级/二级菜单)
+     */
+    @PostMapping("/getNavMenuTree")
+    // TODO
+//    @RequiresPermissions("sys:permission:nav-menu")
+    @ApiOperation(value = "获取所有导航菜单(一级/二级菜单)", response = ApiResult.class)
+    public ApiResult<SysPermissionTreeVo> getNavMenuTree() throws Exception {
+        List<SysPermissionTreeVo> list = sysPermissionService.getNavMenuTree();
         return ApiResult.ok(list);
     }
 

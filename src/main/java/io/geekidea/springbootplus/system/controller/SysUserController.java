@@ -16,16 +16,16 @@
 
 package io.geekidea.springbootplus.system.controller;
 
-import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.common.controller.BaseController;
-import io.geekidea.springbootplus.common.pagination.Paging;
-import io.geekidea.springbootplus.core.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.common.controller.BaseController;
+import io.geekidea.springbootplus.framework.pagination.Paging;
+import io.geekidea.springbootplus.framework.core.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.param.SysUserPageParam;
 import io.geekidea.springbootplus.system.param.UpdatePasswordParam;
 import io.geekidea.springbootplus.system.service.SysUserService;
 import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
-import io.geekidea.springbootplus.util.UploadUtil;
+import io.geekidea.springbootplus.framework.util.UploadUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -89,11 +89,12 @@ public class SysUserController extends BaseController {
         return ApiResult.result(flag);
     }
 
+
     /**
-     * 获取系统用户
+     * 根据id获取系统用户
      */
     @GetMapping("/info/{id}")
-    @RequiresPermissions("sys:user:info")
+    @RequiresPermissions("sys:user:info:id")
     @ApiOperation(value = "获取SysUser对象详情", notes = "查看系统用户", response = SysUserQueryVo.class)
     public ApiResult<SysUserQueryVo> getSysUser(@PathVariable("id") Long id) throws Exception {
         SysUserQueryVo sysUserQueryVo = sysUserService.getSysUserById(id);
@@ -108,6 +109,7 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "获取SysUser分页列表", notes = "系统用户分页列表", response = SysUserQueryVo.class)
     public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Valid @RequestBody SysUserPageParam sysUserPageParam) throws Exception {
         Paging<SysUserQueryVo> paging = sysUserService.getSysUserPageList(sysUserPageParam);
+        Thread.sleep(500);
         return ApiResult.ok(paging);
     }
 

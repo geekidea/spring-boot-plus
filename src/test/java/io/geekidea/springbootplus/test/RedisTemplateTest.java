@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.test;
 
-import io.geekidea.springbootplus.constant.CommonRedisKey;
+import io.geekidea.springbootplus.framework.constant.CommonRedisKey;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -20,10 +20,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.geekidea.springbootplus.common.pagination.PageUtil;
-import io.geekidea.springbootplus.common.pagination.Paging;
-import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.enums.StateEnum;
+import io.geekidea.springbootplus.framework.pagination.PageUtil;
+import io.geekidea.springbootplus.framework.pagination.Paging;
+import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
+import io.geekidea.springbootplus.system.enums.StateEnum;
 import io.geekidea.springbootplus.system.convert.SysDepartmentConvert;
 import io.geekidea.springbootplus.system.entity.SysDepartment;
 import io.geekidea.springbootplus.system.mapper.SysDepartmentMapper;
@@ -105,7 +105,7 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentMappe
     }
 
     @Override
-    public List<SysDepartmentTreeVo> getAllDepartmentTree() {
+    public List<SysDepartmentTreeVo> getDepartmentTree() {
         List<SysDepartment> sysDepartmentList = getAllDepartmentList();
         if (CollectionUtils.isEmpty(sysDepartmentList)) {
             throw new IllegalArgumentException("SysDepartment列表不能为空");

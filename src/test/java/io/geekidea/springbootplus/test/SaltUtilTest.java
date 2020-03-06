@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.test;
 
-import io.geekidea.springbootplus.shiro.util.SaltUtil;
+import io.geekidea.springbootplus.framework.shiro.util.SaltUtil;
 
 /**
  * @author geekidea

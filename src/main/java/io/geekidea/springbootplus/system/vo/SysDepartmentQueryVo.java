@@ -38,31 +38,31 @@ import java.util.Date;
 public class SysDepartmentQueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty("主键")
     private Long id;
 
-    @ApiModelProperty(value = "部门名称")
+    @ApiModelProperty("部门名称")
     private String name;
 
-    @ApiModelProperty(value = "父id")
+    @ApiModelProperty("父id")
     private Long parentId;
 
-    @ApiModelProperty(value = "状态，0：禁用，1：启用")
+    @ApiModelProperty("状态，0：禁用，1：启用")
     private Integer state;
 
-    @ApiModelProperty(value = "排序")
+    @ApiModelProperty("排序")
     private Integer sort;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty(value = "版本")
+    @ApiModelProperty("版本")
     private Integer version;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty("修改时间")
     private Date updateTime;
 
 }

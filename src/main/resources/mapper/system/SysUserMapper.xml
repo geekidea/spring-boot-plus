@@ -23,18 +23,52 @@
         id, username, nickname, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time
     </sql>
 
-    <select id="getSysUserById" resultType="io.geekidea.springbootplus.system.vo.SysUserQueryVo">
+    <sql id="BaseQuerySelect">
         select
-        <include refid="Base_Column_List"/>
-        from sys_user
-        where deleted = 0 and id = #{id}
+            u.id, u.username, u.nickname, u.phone, u.gender, u.head, u.remark,
+            u.state, u.department_id, u.role_id, u.deleted, u.create_time, u.update_time,
+            d.name as departmentName,
+            r.name as roleName
+        from sys_user u
+        inner join sys_department d on u.department_id = d.id
+        inner join sys_role r on u.role_id = r.id
+        where u.deleted = 0
+    </sql>
+
+    <select id="getSysUserById" resultType="io.geekidea.springbootplus.system.vo.SysUserQueryVo">
+        <include refid="BaseQuerySelect"/>
+        and u.id = #{id}
     </select>
 
     <select id="getSysUserPageList" resultType="io.geekidea.springbootplus.system.vo.SysUserQueryVo">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_user
-        where deleted = 0
+        <include refid="BaseQuerySelect"/>
+        <if test="param.departmentId != null">
+            and u.department_id = #{param.departmentId}
+        </if>
+        <if test="param.roleId != null">
+            and u.role_id = #{param.roleId}
+        </if>
+        <if test="param.state != null">
+            and u.state = #{param.state}
+        </if>
+        <if test="param.createTimeStart != null">
+            and date_format(u.create_time,'%Y-%m-%d') >= date_format(#{param.createTimeStart},'%Y-%m-%d')
+        </if>
+        <if test="param.createTimeEnd != null">
+            and date_format(u.create_time,'%Y-%m-%d') &lt;= date_format(#{param.createTimeEnd},'%Y-%m-%d')
+        </if>
+        <if test="param.keyword != null and param.keyword != ''">
+            and (
+            u.username like concat('%', #{param.keyword} ,'%') or
+            u.nickname like concat('%', #{param.keyword} ,'%')
+            )
+        </if>
+        <if test="param.username != null and param.username != ''">
+            and u.username like concat('%', #{param.username} ,'%')
+        </if>
+        <if test="param.nickname != null and param.nickname != ''">
+            and u.nickname like concat('%', #{param.nickname} ,'%')
+        </if>
     </select>
 
 </mapper>

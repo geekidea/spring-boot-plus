@@ -17,10 +17,10 @@
 package io.geekidea.springbootplus.system.service;
 
 import io.geekidea.springbootplus.system.entity.SysPermission;
-import io.geekidea.springbootplus.common.service.BaseService;
+import io.geekidea.springbootplus.framework.common.service.BaseService;
 import io.geekidea.springbootplus.system.param.SysPermissionPageParam;
 import io.geekidea.springbootplus.system.vo.SysPermissionQueryVo;
-import io.geekidea.springbootplus.common.pagination.Paging;
+import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.system.vo.SysPermissionTreeVo;
 
 import java.io.Serializable;
@@ -141,4 +141,22 @@ public interface SysPermissionService extends BaseService<SysPermission> {
      * @throws Exception
      */
     List<SysPermissionTreeVo> getMenuTreeByUserId(Long userId) throws Exception;
+
+    /**
+     * 根据角色id获取该对应的所有三级权限ID
+     *
+     * @param roleId
+     * @return
+     * @throws Exception
+     */
+    List<Long> getPermissionIdsByRoleId(Long roleId) throws Exception;
+
+
+    /**
+     * 获取所有导航菜单(一级/二级菜单)
+     *
+     * @return
+     * @throws Exception
+     */
+    List<SysPermissionTreeVo> getNavMenuTree() throws Exception;
 }

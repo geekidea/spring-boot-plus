@@ -38,26 +38,21 @@ import java.util.List;
 @ApiModel(value = "添加角色", description = "添加系统角色参数对象")
 public class UpdateSysRoleParam {
 
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty("主键")
     @NotNull(message = "主键不能为空")
     private Long id;
 
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty("角色名称")
     @NotBlank(message = "角色名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "角色类型")
+    @ApiModelProperty("角色类型")
     private Integer type;
 
-    @ApiModelProperty(value = "角色状态，0：禁用，1：启用")
+    @ApiModelProperty("角色状态，0：禁用，1：启用")
     private Integer state;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty("备注")
     private String remark;
-
-    @ApiModelProperty(value = "权限id列表")
-    @NotEmpty(message = "权限集合不能为空")
-    @Size(max = 1000, message = "权限集合超过上限")
-    private List<Long> permissionIds;
 
 }

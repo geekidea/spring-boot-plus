@@ -16,12 +16,13 @@
 
 package io.geekidea.springbootplus.system.service;
 
-import io.geekidea.springbootplus.common.service.BaseService;
-import io.geekidea.springbootplus.common.pagination.Paging;
+import io.geekidea.springbootplus.framework.common.service.BaseService;
+import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.param.SysRolePageParam;
 import io.geekidea.springbootplus.system.param.sysrole.AddSysRoleParam;
 import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRoleParam;
+import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRolePermissionParam;
 import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 
 import java.io.Serializable;
@@ -92,10 +93,19 @@ public interface SysRoleService extends BaseService<SysRole> {
 
     /**
      * 判断角色编码是否存在
+     *
      * @param code
      * @return
      * @throws Exception
      */
     boolean isExistsByCode(String code) throws Exception;
 
+    /**
+     * 修改系统角色权限配置
+     *
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    boolean updateSysRolePermission(UpdateSysRolePermissionParam param) throws Exception;
 }

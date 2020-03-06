@@ -38,28 +38,28 @@ import java.util.Date;
 public class SysRolePermissionQueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty("主键")
     private Long id;
 
-    @ApiModelProperty(value = "角色id")
+    @ApiModelProperty("角色id")
     private Long roleId;
 
-    @ApiModelProperty(value = "权限id")
+    @ApiModelProperty("权限id")
     private Long permissionId;
 
-    @ApiModelProperty(value = "状态，0：禁用，1：启用")
+    @ApiModelProperty("状态，0：禁用，1：启用")
     private Integer state;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty(value = "版本")
+    @ApiModelProperty("版本")
     private Integer version;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty("修改时间")
     private Date updateTime;
 
 }

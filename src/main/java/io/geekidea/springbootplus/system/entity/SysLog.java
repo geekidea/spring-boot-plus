@@ -18,7 +18,7 @@ package io.geekidea.springbootplus.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.geekidea.springbootplus.common.entity.BaseEntity;
+import io.geekidea.springbootplus.framework.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -43,20 +43,20 @@ public class SysLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
-    @TableId(value = "log_id", type = IdType.ID_WORKER)
+    @ApiModelProperty("主键")
+    @TableId(value = "log_id", type = IdType.AUTO)
     private Long logId;
 
-    @ApiModelProperty(value = "类型")
+    @ApiModelProperty("类型")
     private Boolean type;
 
-    @ApiModelProperty(value = "内容")
+    @ApiModelProperty("内容")
     private String content;
 
-    @ApiModelProperty(value = "创建人ID")
+    @ApiModelProperty("创建人ID")
     private Long createId;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
 }

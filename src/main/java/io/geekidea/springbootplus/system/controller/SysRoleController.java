@@ -16,13 +16,14 @@
 
 package io.geekidea.springbootplus.system.controller;
 
-import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.common.controller.BaseController;
-import io.geekidea.springbootplus.common.pagination.Paging;
+import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.common.controller.BaseController;
+import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.param.SysRolePageParam;
 import io.geekidea.springbootplus.system.param.sysrole.AddSysRoleParam;
 import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRoleParam;
+import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRolePermissionParam;
 import io.geekidea.springbootplus.system.service.SysRoleService;
 import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 import io.swagger.annotations.Api;
@@ -111,11 +112,22 @@ public class SysRoleController extends BaseController {
      * 获取系统角色列表
      * @return
      */
-    @GetMapping("/list")
-//    @RequiresPermissions("sys:role:list")
+    @PostMapping("/getList")
+    @RequiresPermissions("sys:role:list")
     @ApiOperation(value = "获取SysRole列表", notes = "系统角色列表", response = SysRole.class)
     public ApiResult<List<SysRole>> getRoleList() {
         return ApiResult.ok(sysRoleService.list());
+    }
+
+    /**
+     * 修改系统角色权限
+     */
+    @PostMapping("/updateSysRolePermission")
+//    @RequiresPermissions("sys:role-permission:update")
+    @ApiOperation(value = "修改系统角色权限", response = ApiResult.class)
+    public ApiResult<Boolean> updateSysRolePermission(@Valid @RequestBody UpdateSysRolePermissionParam param) throws Exception {
+        boolean flag = sysRoleService.updateSysRolePermission(param);
+        return ApiResult.result(flag);
     }
 
 }

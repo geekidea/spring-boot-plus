@@ -16,8 +16,8 @@
 
 package io.geekidea.springbootplus.system.service;
 
-import io.geekidea.springbootplus.common.service.BaseService;
-import io.geekidea.springbootplus.common.pagination.Paging;
+import io.geekidea.springbootplus.framework.common.service.BaseService;
+import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysDepartment;
 import io.geekidea.springbootplus.system.param.SysDepartmentPageParam;
 import io.geekidea.springbootplus.system.vo.SysDepartmentQueryVo;
@@ -100,6 +100,6 @@ public interface SysDepartmentService extends BaseService<SysDepartment> {
      * 获取所有可用的部门树形列表
      * @return
      */
-    List<SysDepartmentTreeVo> getAllDepartmentTree();
+    List<SysDepartmentTreeVo> getDepartmentTree();
 
 }

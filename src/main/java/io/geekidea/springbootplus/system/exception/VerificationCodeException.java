@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.system.exception;
 
-import io.geekidea.springbootplus.common.exception.SpringBootPlusException;
+import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusException;
 
 /**
  * 验证码校验异常

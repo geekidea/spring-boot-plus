@@ -21,7 +21,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import io.geekidea.springbootplus.common.pagination.BasePageParam;
+import io.geekidea.springbootplus.framework.pagination.BasePageParam;
 
 /**
  * <p>

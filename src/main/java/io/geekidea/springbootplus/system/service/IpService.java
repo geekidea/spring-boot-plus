@@ -17,10 +17,10 @@
 package io.geekidea.springbootplus.system.service;
 
 import io.geekidea.springbootplus.system.entity.Ip;
-import io.geekidea.springbootplus.common.service.BaseService;
+import io.geekidea.springbootplus.framework.common.service.BaseService;
 import io.geekidea.springbootplus.system.param.IpPageParam;
 import io.geekidea.springbootplus.system.vo.IpQueryVo;
-import io.geekidea.springbootplus.common.pagination.Paging;
+import io.geekidea.springbootplus.framework.pagination.Paging;
 
 import java.io.Serializable;
 

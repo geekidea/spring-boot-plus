@@ -1,4 +1,4 @@
-/*
+package io.geekidea.springbootplus;/*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus;
-
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
-import io.geekidea.springbootplus.util.PrintApplicationInfo;
+import io.geekidea.springbootplus.framework.util.PrintApplicationInfo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -41,7 +40,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAdminServer
 @MapperScan({"io.geekidea.springbootplus.**.mapper"})
 @ServletComponentScan
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"io.geekidea.springbootplus","com.example"})
 public class SpringBootPlusApplication {
 
     public static void main(String[] args) {

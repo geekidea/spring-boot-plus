@@ -39,34 +39,34 @@ import java.util.Set;
 public class SysRoleQueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty("主键")
     private Long id;
 
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty("角色名称")
     private String name;
 
-    @ApiModelProperty(value = "角色唯一编码")
+    @ApiModelProperty("角色唯一编码")
     private String code;
 
-    @ApiModelProperty(value = "角色类型")
+    @ApiModelProperty("角色类型")
     private Integer type;
 
-    @ApiModelProperty(value = "角色状态，0：禁用，1：启用")
+    @ApiModelProperty("角色状态，0：禁用，1：启用")
     private Integer state;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty(value = "版本")
+    @ApiModelProperty("版本")
     private Integer version;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty("修改时间")
     private Date updateTime;
 
-    @ApiModelProperty(value = "权限集合")
+    @ApiModelProperty("权限集合")
     private Set<Long> permissions;
 
 }

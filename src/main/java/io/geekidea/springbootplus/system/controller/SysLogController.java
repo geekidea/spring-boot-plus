@@ -16,10 +16,10 @@
 
 package io.geekidea.springbootplus.system.controller;
 
-import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.common.controller.BaseController;
-import io.geekidea.springbootplus.common.param.IdParam;
-import io.geekidea.springbootplus.common.pagination.Paging;
+import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.common.controller.BaseController;
+import io.geekidea.springbootplus.framework.common.param.IdParam;
+import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysLog;
 import io.geekidea.springbootplus.system.param.SysLogPageParam;
 import io.geekidea.springbootplus.system.service.SysLogService;

@@ -19,7 +19,7 @@ package io.geekidea.springbootplus.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.Version;
-import io.geekidea.springbootplus.common.entity.BaseEntity;
+import io.geekidea.springbootplus.framework.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -46,36 +46,36 @@ public class SysRole extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
-    @TableId(value = "id", type = IdType.ID_WORKER)
+    @ApiModelProperty("主键")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty("角色名称")
     @NotBlank(message = "角色名称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "角色唯一编码")
+    @ApiModelProperty("角色唯一编码")
     private String code;
 
-    @ApiModelProperty(value = "角色类型")
+    @ApiModelProperty("角色类型")
     private Integer type;
 
-    @ApiModelProperty(value = "角色状态，0：禁用，1：启用")
+    @ApiModelProperty("角色状态，0：禁用，1：启用")
     private Integer state;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty(value = "版本")
+    @ApiModelProperty("版本")
     @Null(message = "版本不用传")
     @Version
     private Integer version;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty("创建时间")
     @Null(message = "创建时间不用传")
     private Date createTime;
 
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty("修改时间")
     @Null(message = "修改时间不用传")
     private Date updateTime;
 

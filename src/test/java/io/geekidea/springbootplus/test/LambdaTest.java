@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SerializedLambda;
 import io.geekidea.springbootplus.system.entity.SysUser;
-import io.geekidea.springbootplus.util.LambdaColumn;
+import io.geekidea.springbootplus.framework.util.LambdaColumn;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

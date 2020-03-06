@@ -38,19 +38,19 @@ import java.util.Date;
 public class SysLogQueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty("主键")
     private Long logId;
 
-    @ApiModelProperty(value = "类型")
+    @ApiModelProperty("类型")
     private Boolean type;
 
-    @ApiModelProperty(value = "内容")
+    @ApiModelProperty("内容")
     private String content;
 
-    @ApiModelProperty(value = "创建人ID")
+    @ApiModelProperty("创建人ID")
     private Long createId;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
 }

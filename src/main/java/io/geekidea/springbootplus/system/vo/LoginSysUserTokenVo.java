@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.system.vo;
 
-import io.geekidea.springbootplus.shiro.vo.LoginSysUserVo;
+import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

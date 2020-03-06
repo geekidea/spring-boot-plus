@@ -16,8 +16,10 @@
 
 package io.geekidea.springbootplus.system.service;
 
-import io.geekidea.springbootplus.common.service.BaseService;
+import io.geekidea.springbootplus.framework.common.service.BaseService;
+import io.geekidea.springbootplus.system.entity.SysPermission;
 import io.geekidea.springbootplus.system.entity.SysRolePermission;
+import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRolePermissionParam;
 import org.apache.commons.collections4.SetUtils;
 
 import java.util.List;
@@ -51,6 +53,15 @@ public interface SysRolePermissionService extends BaseService<SysRolePermission>
      * @throws Exception
      */
     List<Long> getPermissionIdsByRoleId(Long roleId) throws Exception;
+
+    /**
+     * 根据角色id获取该对应的所有三级权限ID
+     *
+     * @param roleId
+     * @return
+     * @throws Exception
+     */
+    List<Long> getThreeLevelPermissionIdsByRoleId(Long roleId) throws Exception;
 
     /**
      * 批量保存角色权限关系
@@ -88,5 +99,4 @@ public interface SysRolePermissionService extends BaseService<SysRolePermission>
      * @throws Exception
      */
     boolean isExistsByPermissionId(Long permissionId) throws Exception;
-
 }

@@ -16,11 +16,11 @@
 
 package io.geekidea.springbootplus.system.controller;
 
-import io.geekidea.springbootplus.common.api.ApiResult;
-import io.geekidea.springbootplus.constant.CommonConstant;
-import io.geekidea.springbootplus.constant.CommonRedisKey;
-import io.geekidea.springbootplus.util.UUIDUtil;
-import io.geekidea.springbootplus.util.VerificationCode;
+import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.constant.CommonConstant;
+import io.geekidea.springbootplus.framework.constant.CommonRedisKey;
+import io.geekidea.springbootplus.framework.util.UUIDUtil;
+import io.geekidea.springbootplus.framework.util.VerificationCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

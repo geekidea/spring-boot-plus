@@ -19,20 +19,21 @@ package io.geekidea.springbootplus.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.geekidea.springbootplus.common.exception.BusinessException;
-import io.geekidea.springbootplus.common.exception.DaoException;
-import io.geekidea.springbootplus.common.pagination.PageUtil;
-import io.geekidea.springbootplus.common.pagination.Paging;
-import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.enums.StateEnum;
+import io.geekidea.springbootplus.framework.common.exception.BusinessException;
+import io.geekidea.springbootplus.framework.common.exception.DaoException;
+import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusException;
+import io.geekidea.springbootplus.framework.pagination.PageUtil;
+import io.geekidea.springbootplus.framework.pagination.Paging;
+import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
+import io.geekidea.springbootplus.system.enums.StateEnum;
 import io.geekidea.springbootplus.system.convert.SysRoleConvert;
 import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.mapper.SysRoleMapper;
 import io.geekidea.springbootplus.system.param.SysRolePageParam;
 import io.geekidea.springbootplus.system.param.sysrole.AddSysRoleParam;
 import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRoleParam;
+import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRolePermissionParam;
 import io.geekidea.springbootplus.system.service.SysPermissionService;
 import io.geekidea.springbootplus.system.service.SysRolePermissionService;
 import io.geekidea.springbootplus.system.service.SysRoleService;
@@ -110,17 +111,11 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     @Override
     public boolean updateSysRole(UpdateSysRoleParam updateSysRoleParam) throws Exception {
         Long roleId = updateSysRoleParam.getId();
-        List<Long> permissionIds = updateSysRoleParam.getPermissionIds();
         // 校验角色是否存在
         SysRole sysRole = getById(roleId);
         if (sysRole == null) {
             throw new BusinessException("该角色不存在");
         }
-        // 校验权限列表是否存在
-        if (!sysPermissionService.isExistsByPermissionIds(permissionIds)) {
-            throw new BusinessException("权限列表id匹配失败");
-        }
-
         // 修改角色
         sysRole.setName(updateSysRoleParam.getName())
                 .setType(updateSysRoleParam.getType())
@@ -131,7 +126,78 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         if (!updateResult) {
             throw new DaoException("修改系统角色失败");
         }
+        return true;
+    }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean deleteSysRole(Long id) throws Exception {
+        // 判断该角色下是否有可用用户，如果有，则不能删除
+        boolean isExistsUser = sysUserService.isExistsSysUserByRoleId(id);
+        if (isExistsUser) {
+            throw new DaoException("该角色下还存在可用用户，不能删除");
+        }
+        // 角色真实删除
+        boolean deleteRoleResult = removeById(id);
+        if (!deleteRoleResult) {
+            throw new DaoException("删除角色失败");
+        }
+        // 角色权限关系真实删除
+        boolean deletePermissionResult = sysRolePermissionService.deleteSysRolePermissionByRoleId(id);
+        if (!deletePermissionResult) {
+            throw new DaoException("删除角色权限关系失败");
+        }
+        return true;
+    }
+
+    @Override
+    public SysRoleQueryVo getSysRoleById(Serializable id) throws Exception {
+        SysRoleQueryVo sysRoleQueryVo = sysRoleMapper.getSysRoleById(id);
+        if (sysRoleQueryVo == null){
+            throw new SpringBootPlusException("角色不存在");
+        }
+        List<Long> permissionIds = sysRolePermissionService.getPermissionIdsByRoleId((Long) id);
+        sysRoleQueryVo.setPermissions(new HashSet<>(permissionIds));
+        return sysRoleQueryVo;
+    }
+
+    @Override
+    public Paging<SysRoleQueryVo> getSysRolePageList(SysRolePageParam sysRolePageParam) throws Exception {
+        Page page = PageUtil.getPage(sysRolePageParam);
+        IPage<SysRoleQueryVo> iPage = sysRoleMapper.getSysRolePageList(page, sysRolePageParam);
+        return new Paging(iPage);
+    }
+
+    @Override
+    public boolean isEnableSysRole(Long id) throws Exception {
+        SysRole sysRole = new SysRole()
+                .setId(id)
+                .setState(StateEnum.ENABLE.getCode());
+        int count = sysRoleMapper.selectCount(new QueryWrapper<>(sysRole));
+        return count > 0;
+    }
+
+    @Override
+    public boolean isExistsByCode(String code) throws Exception {
+        SysRole sysRole = new SysRole().setCode(code);
+        return sysRoleMapper.selectCount(new QueryWrapper<>(sysRole)) > 0;
+    }
+
+    @Override
+    public boolean updateSysRolePermission(UpdateSysRolePermissionParam param) throws Exception {
+        Long roleId = param.getRoleId();
+        List<Long> permissionIds = param.getPermissionIds();
+        // 校验角色是否存在
+        SysRole sysRole = getById(roleId);
+        if (sysRole == null) {
+            throw new BusinessException("该角色不存在");
+        }
+        if (CollectionUtils.isNotEmpty(permissionIds)){
+            // 校验权限列表是否存在
+            if (!sysPermissionService.isExistsByPermissionIds(permissionIds)) {
+                throw new BusinessException("权限列表id匹配失败");
+            }
+        }
         // 获取之前的权限id集合
         List<Long> beforeList = sysRolePermissionService.getPermissionIdsByRoleId(roleId);
         // 差集计算
@@ -164,61 +230,8 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
                 throw new DaoException("新增角色权限关系失败");
             }
         }
+
         return true;
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public boolean deleteSysRole(Long id) throws Exception {
-        // 判断该角色下是否有可用用户，如果有，则不能删除
-        boolean isExistsUser = sysUserService.isExistsSysUserByRoleId(id);
-        if (isExistsUser) {
-            throw new DaoException("该角色下还存在可用用户，不能删除");
-        }
-        // 角色真实删除
-        boolean deleteRoleResult = removeById(id);
-        if (!deleteRoleResult) {
-            throw new DaoException("删除角色失败");
-        }
-        // 角色权限关系真实删除
-        boolean deletePermissionResult = sysRolePermissionService.deleteSysRolePermissionByRoleId(id);
-        if (!deletePermissionResult) {
-            throw new DaoException("删除角色权限关系失败");
-        }
-        return true;
-    }
-
-    @Override
-    public SysRoleQueryVo getSysRoleById(Serializable id) throws Exception {
-        SysRoleQueryVo sysRoleQueryVo = sysRoleMapper.getSysRoleById(id);
-        if (sysRoleQueryVo == null){
-            return null;
-        }
-        List<Long> permissionIds = sysRolePermissionService.getPermissionIdsByRoleId((Long) id);
-        sysRoleQueryVo.setPermissions(new HashSet<>(permissionIds));
-        return sysRoleQueryVo;
-    }
-
-    @Override
-    public Paging<SysRoleQueryVo> getSysRolePageList(SysRolePageParam sysRolePageParam) throws Exception {
-        Page page = PageUtil.getPage(sysRolePageParam, OrderItem.desc(getLambdaColumn(SysRole::getCreateTime)));
-        IPage<SysRoleQueryVo> iPage = sysRoleMapper.getSysRolePageList(page, sysRolePageParam);
-        return new Paging(iPage);
-    }
-
-    @Override
-    public boolean isEnableSysRole(Long id) throws Exception {
-        SysRole sysRole = new SysRole()
-                .setId(id)
-                .setState(StateEnum.ENABLE.getCode());
-        int count = sysRoleMapper.selectCount(new QueryWrapper<>(sysRole));
-        return count > 0;
-    }
-
-    @Override
-    public boolean isExistsByCode(String code) throws Exception {
-        SysRole sysRole = new SysRole().setCode(code);
-        return sysRoleMapper.selectCount(new QueryWrapper<>(sysRole)) > 0;
     }
 
 }

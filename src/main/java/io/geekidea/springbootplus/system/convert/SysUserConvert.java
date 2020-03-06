@@ -16,8 +16,8 @@
 
 package io.geekidea.springbootplus.system.convert;
 
-import io.geekidea.springbootplus.shiro.vo.LoginSysUserRedisVo;
-import io.geekidea.springbootplus.shiro.vo.LoginSysUserVo;
+import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserRedisVo;
+import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserVo;
 import io.geekidea.springbootplus.system.entity.SysUser;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

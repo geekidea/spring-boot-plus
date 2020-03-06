@@ -24,7 +24,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import io.geekidea.springbootplus.generator.config.SpringBootPlusMySqlQuery;
+import io.geekidea.springbootplus.framework.generator.config.SpringBootPlusMySqlQuery;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
@@ -259,7 +259,7 @@ public class CodeGenerator {
         gc.setAuthor(author);
         gc.setOpen(false);                  // 是否打开输出目录
         gc.setSwagger2(true);               // 启用swagger注解
-        gc.setIdType(IdType.ID_WORKER);     // 主键类型:ID_WORKER
+        gc.setIdType(IdType.AUTO);     // 主键类型:ID_WORKER
         gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
         gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date

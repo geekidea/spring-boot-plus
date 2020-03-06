@@ -16,7 +16,7 @@
 
 package io.geekidea.springbootplus.test;
 
-import io.geekidea.springbootplus.util.PasswordUtil;
+import io.geekidea.springbootplus.framework.util.PasswordUtil;
 import org.junit.Assert;
 
 /**

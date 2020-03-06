@@ -38,46 +38,52 @@ import java.util.Date;
 public class SysUserQueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
+    @ApiModelProperty("主键")
     private Long id;
 
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty("用户名")
     private String username;
 
-    @ApiModelProperty(value = "昵称")
+    @ApiModelProperty("昵称")
     private String nickname;
 
-    @ApiModelProperty(value = "手机号码")
+    @ApiModelProperty("手机号码")
     private String phone;
 
-    @ApiModelProperty(value = "性别，0：女，1：男，默认1")
+    @ApiModelProperty("性别，0：女，1：男，默认1")
     private Integer gender;
 
-    @ApiModelProperty(value = "头像")
+    @ApiModelProperty("头像")
     private String head;
 
-    @ApiModelProperty(value = "remark")
+    @ApiModelProperty("remark")
     private String remark;
 
-    @ApiModelProperty(value = "状态，0：禁用，1：启用，2：锁定")
+    @ApiModelProperty("状态，0：禁用，1：启用，2：锁定")
     private Integer state;
 
-    @ApiModelProperty(value = "部门id")
+    @ApiModelProperty("部门id")
     private Long departmentId;
 
-    @ApiModelProperty(value = "角色id")
+    @ApiModelProperty("角色id")
     private Long roleId;
 
-    @ApiModelProperty(value = "逻辑删除，0：未删除，1：已删除")
+    @ApiModelProperty("逻辑删除，0：未删除，1：已删除")
     private Integer deleted;
 
-    @ApiModelProperty(value = "版本")
+    @ApiModelProperty("版本")
     private Integer version;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "修改时间")
+    @ApiModelProperty("修改时间")
     private Date updateTime;
+
+    @ApiModelProperty("部门名称")
+    private String departmentName;
+
+    @ApiModelProperty("角色名称")
+    private String roleName;
 
 }

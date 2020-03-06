@@ -26,6 +26,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -63,4 +64,11 @@ public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
      * @return
      */
     Set<String> getPermissionCodesByRoleId(@Param("roleId") Long roleId);
+
+    /**
+     * 根据角色id获取该对应的所有三级权限ID
+     * @param roleId
+     * @return
+     */
+    List<Long> getThreeLevelPermissionIdsByRoleId(@Param("roleId") Long roleId);
 }

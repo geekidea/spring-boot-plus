@@ -17,23 +17,28 @@
 package io.geekidea.springbootplus.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.geekidea.springbootplus.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.enums.StateEnum;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import io.geekidea.springbootplus.framework.common.exception.BusinessException;
+import io.geekidea.springbootplus.framework.common.exception.DaoException;
+import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
 import io.geekidea.springbootplus.system.entity.SysPermission;
+import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.entity.SysRolePermission;
+import io.geekidea.springbootplus.system.enums.MenuLevelEnum;
+import io.geekidea.springbootplus.system.enums.StateEnum;
+import io.geekidea.springbootplus.system.mapper.SysRoleMapper;
 import io.geekidea.springbootplus.system.mapper.SysRolePermissionMapper;
+import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRolePermissionParam;
 import io.geekidea.springbootplus.system.service.SysRolePermissionService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -50,6 +55,9 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
 
     @Autowired
     private SysRolePermissionMapper sysRolePermissionMapper;
+
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -68,11 +76,17 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
 
     @Override
     public List<Long> getPermissionIdsByRoleId(Long roleId) throws Exception {
-        SysRolePermission sysRolePermission = new SysRolePermission()
-                .setRoleId(roleId)
-                .setState(StateEnum.ENABLE.getCode());
-        Wrapper wrapper = lambdaQuery().select(SysRolePermission::getPermissionId);
+        Wrapper wrapper = lambdaQuery()
+                .select(SysRolePermission::getPermissionId)
+                .eq(SysRolePermission::getRoleId,roleId)
+                .eq(SysRolePermission::getState,StateEnum.ENABLE.getCode())
+                .getWrapper();
         return sysRolePermissionMapper.selectObjs(wrapper);
+    }
+
+    @Override
+    public List<Long> getThreeLevelPermissionIdsByRoleId(Long roleId) throws Exception {
+        return sysRolePermissionMapper.getThreeLevelPermissionIdsByRoleId(roleId);
     }
 
     @Override
@@ -109,4 +123,5 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
                 .setPermissionId(permissionId);
         return count(new QueryWrapper(sysRolePermission)) > 0;
     }
+
 }
