@@ -365,7 +365,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>SpringBootPlusApplication</mainClass>
+                    <mainClass>io.geekidea.springbootplus.SpringBootPlusApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
