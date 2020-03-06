@@ -406,7 +406,7 @@ tail -f -n 1000 /root/spring-boot-plus-server/logs/spring-boot-plus.log
 ## Donate
 Ask the author to drink coffee and let the code fly for a while! 
 
-![geekidea-wechat-donate](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-donate.png)
+![geekidea-wechat-donate](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-donate.jpeg)
 
 
 ## License
