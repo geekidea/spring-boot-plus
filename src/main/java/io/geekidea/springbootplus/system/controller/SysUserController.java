@@ -109,7 +109,6 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "获取SysUser分页列表", notes = "系统用户分页列表", response = SysUserQueryVo.class)
     public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Valid @RequestBody SysUserPageParam sysUserPageParam) throws Exception {
         Paging<SysUserQueryVo> paging = sysUserService.getSysUserPageList(sysUserPageParam);
-        Thread.sleep(500);
         return ApiResult.ok(paging);
     }
 

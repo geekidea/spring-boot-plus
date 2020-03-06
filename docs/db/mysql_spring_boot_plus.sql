@@ -14,6 +14,7 @@
  * limitations under the License.
 */
 
+drop database spring_boot_plus;
 -- ----------------------------
 -- Create Database for spring_boot_plus
 -- ----------------------------
