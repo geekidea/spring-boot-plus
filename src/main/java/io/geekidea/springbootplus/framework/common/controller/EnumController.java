@@ -59,43 +59,43 @@ public class EnumController {
 //    @PostConstruct
    // TODO
     public void init() {
-        try {
-            // 获取BaseEnum接口的所有实现
-            log.debug("enumPackages:" + Arrays.toString(enumPackages));
-            if (ArrayUtils.isEmpty(enumPackages)) {
-                log.info("enumPackages为空");
-                return;
-            }
-            Reflections reflections = new Reflections(enumPackages);
-            Set<Class<? extends BaseEnum>> set = reflections.getSubTypesOf(BaseEnum.class);
-            if (CollectionUtils.isEmpty(set)) {
-                return;
-            }
-            // 循环获取BaseEnum枚举
-            for (Class<? extends BaseEnum> clazz : set) {
-                List<EnumVo> list = new ArrayList<>();
-                Object[] objects = clazz.getEnumConstants();
-                Method codeMethod = clazz.getDeclaredMethod("getCode");
-                Method descMethod = clazz.getDeclaredMethod("getDesc");
-                Map<Integer, String> codeDescMap = new HashMap<>(objects.length);
-                for (Object object : objects) {
-                    Integer code = (Integer) codeMethod.invoke(object);
-                    String desc = (String) descMethod.invoke(object);
-                    EnumVo enumVo = new EnumVo();
-                    enumVo.setCode(code);
-                    enumVo.setDesc(desc);
-                    list.add(enumVo);
-                    codeDescMap.put(code, desc);
-                }
-                // 设置map
-                BaseEnumUtil.getEnumMap().put(clazz.getSimpleName(), list);
-                BaseEnumUtil.getEnumClassMap().put(clazz.getName(), codeDescMap);
-            }
-            log.debug("baseEnumMap:{}", BaseEnumUtil.getEnumMap());
-            log.debug("baseEnumClassMap:{}", BaseEnumUtil.getEnumClassMap());
-        } catch (Exception e) {
-            log.error("获取BaseEnum枚举map异常", e);
-        }
+//        try {
+//            // 获取BaseEnum接口的所有实现
+//            log.debug("enumPackages:" + Arrays.toString(enumPackages));
+//            if (ArrayUtils.isEmpty(enumPackages)) {
+//                log.info("enumPackages为空");
+//                return;
+//            }
+//            Reflections reflections = new Reflections(enumPackages);
+//            Set<Class<? extends BaseEnum>> set = reflections.getSubTypesOf(BaseEnum.class);
+//            if (CollectionUtils.isEmpty(set)) {
+//                return;
+//            }
+//            // 循环获取BaseEnum枚举
+//            for (Class<? extends BaseEnum> clazz : set) {
+//                List<EnumVo> list = new ArrayList<>();
+//                Object[] objects = clazz.getEnumConstants();
+//                Method codeMethod = clazz.getDeclaredMethod("getCode");
+//                Method descMethod = clazz.getDeclaredMethod("getDesc");
+//                Map<Integer, String> codeDescMap = new HashMap<>(objects.length);
+//                for (Object object : objects) {
+//                    Integer code = (Integer) codeMethod.invoke(object);
+//                    String desc = (String) descMethod.invoke(object);
+//                    EnumVo enumVo = new EnumVo();
+//                    enumVo.setCode(code);
+//                    enumVo.setDesc(desc);
+//                    list.add(enumVo);
+//                    codeDescMap.put(code, desc);
+//                }
+//                // 设置map
+//                BaseEnumUtil.getEnumMap().put(clazz.getSimpleName(), list);
+//                BaseEnumUtil.getEnumClassMap().put(clazz.getName(), codeDescMap);
+//            }
+//            log.debug("baseEnumMap:{}", BaseEnumUtil.getEnumMap());
+//            log.debug("baseEnumClassMap:{}", BaseEnumUtil.getEnumClassMap());
+//        } catch (Exception e) {
+//            log.error("获取BaseEnum枚举map异常", e);
+//        }
     }
 
 }
