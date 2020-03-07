@@ -1,7 +1,8 @@
 spring-boot-plus:
   # 是否启用ansi控制台输出有颜色的字体，local环境建议开启，服务器环境设置为false
   enable-ansi: false
-
+  # 资源访问全路径前缀
+  resource-access-url: http://47.105.159.10:${server.port}${server.servlet.context-path}${spring-boot-plus.resource-access-path}
 server:
   port: 8888
   servlet:
@@ -18,4 +19,6 @@ spring:
     host: localhost
     password:
     port: 6379
+
+
 
