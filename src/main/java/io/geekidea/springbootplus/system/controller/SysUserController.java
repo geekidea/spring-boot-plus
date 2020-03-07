@@ -23,6 +23,7 @@ import io.geekidea.springbootplus.framework.core.properties.SpringBootPlusProper
 import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.param.SysUserPageParam;
 import io.geekidea.springbootplus.system.param.UpdatePasswordParam;
+import io.geekidea.springbootplus.system.param.UploadHeadParam;
 import io.geekidea.springbootplus.system.service.SysUserService;
 import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
 import io.geekidea.springbootplus.framework.util.UploadUtil;
@@ -31,6 +32,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -117,7 +119,7 @@ public class SysUserController extends BaseController {
      */
     @PostMapping("/updatePassword")
     @RequiresPermissions("sys:user:update:password")
-    @ApiOperation(value = "修改密码", notes = "修改密码", response = ApiResult.class)
+    @ApiOperation(value = "修改密码", response = ApiResult.class)
     public ApiResult<Boolean> updatePassword(@Valid @RequestBody UpdatePasswordParam updatePasswordParam) throws Exception {
         boolean flag = sysUserService.updatePassword(updatePasswordParam);
         return ApiResult.result(flag);
@@ -126,32 +128,12 @@ public class SysUserController extends BaseController {
     /**
      * 修改头像
      */
-    @PostMapping("/uploadHead/{id}")
+    @PostMapping("/uploadHead")
     @RequiresPermissions("sys:user:update:head")
-    @ApiOperation(value = "修改头像",notes = "修改头像",response = ApiResult.class)
-    public ApiResult<Boolean> uploadHead(@PathVariable("id") Long id,
-                                         @RequestParam("head") MultipartFile multipartFile) throws Exception{
-        log.info("multipartFile = " + multipartFile);
-        log.info("ContentType = " + multipartFile.getContentType());
-        log.info("OriginalFilename = " + multipartFile.getOriginalFilename());
-        log.info("Name = " + multipartFile.getName());
-        log.info("Size = " + multipartFile.getSize());
-
-        // 上传文件，返回保存的文件名称
-        String uploadPath = springBootPlusProperties.getUploadPath();
-        String saveFileName = UploadUtil.upload(uploadPath, multipartFile);
-        // 上传成功之后，返回访问路径，请根据实际情况设置
-        String headPath = springBootPlusProperties.getResourceAccessUrl() + saveFileName;
-        log.info("headPath:{}",headPath);
-
-        boolean flag = sysUserService.updateSysUserHead(id,headPath);
-        if (flag){
-            return ApiResult.ok(headPath);
-        }
-
-        // 删除图片文件
-        UploadUtil.deleteQuietly(uploadPath,saveFileName);
-        return ApiResult.fail();
+    @ApiOperation(value = "修改头像",response = ApiResult.class)
+    public ApiResult<Boolean> uploadHead(@Valid @RequestBody UploadHeadParam uploadHeadParam) throws Exception{
+        boolean flag = sysUserService.updateSysUserHead(uploadHeadParam.getId(),uploadHeadParam.getHead());
+        return ApiResult.result(flag);
     }
 }
 

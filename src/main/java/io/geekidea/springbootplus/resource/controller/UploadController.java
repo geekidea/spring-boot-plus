@@ -46,33 +46,19 @@ public class UploadController {
     @Autowired
     private SpringBootPlusProperties springBootPlusProperties;
 
-    @GetMapping("/hello")
-    public ApiResult hello(){
-        log.info("hello...");
-        return ApiResult.ok();
-    }
-
-    /**
-     * 获取系统日志
-     */
-    @PostMapping("/info")
-    @ApiOperation(value = "获取SysLog对象详情",notes = "查看系统日志",response = SysLogQueryVo.class)
-    public ApiResult<SysLogQueryVo> getSysUser(@Valid @RequestBody IdParam idParam) throws Exception{
-        log.info("idParam = " + idParam);
-        return ApiResult.ok();
-    }
-
     /**
      * 上传单个文件
      */
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "上传单个文件",notes = "上传单个文件",response = ApiResult.class)
-    public ApiResult<Boolean> upload(@RequestParam("img") MultipartFile multipartFile) throws Exception{
+    public ApiResult<Boolean> upload(@RequestParam("file") MultipartFile multipartFile,
+                                     @RequestParam("type") String type) throws Exception{
         log.info("multipartFile = " + multipartFile);
         log.info("ContentType = " + multipartFile.getContentType());
         log.info("OriginalFilename = " + multipartFile.getOriginalFilename());
         log.info("Name = " + multipartFile.getName());
         log.info("Size = " + multipartFile.getSize());
+        log.info("type = " + type);
 
         // 上传文件，返回保存的文件名称
         String saveFileName = UploadUtil.upload(springBootPlusProperties.getUploadPath(), multipartFile, originalFilename -> {
