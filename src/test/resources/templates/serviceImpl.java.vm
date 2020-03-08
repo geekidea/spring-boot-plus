@@ -70,7 +70,7 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
 
     @Override
     public Paging<${entity}QueryVo> get${entity}PageList(${entity}PageParam ${cfg.entityObjectName}PageParam) throws Exception {
-        Page page = PageUtil.getPage(${cfg.entityObjectName}PageParam, OrderItem.desc(getLambdaColumn(${cfg.entityObjectName}::getCreateTime)));
+        Page page = PageUtil.getPage(${cfg.entityObjectName}PageParam, OrderItem.desc(getLambdaColumn(${entity}::getCreateTime)));
         IPage<${entity}QueryVo> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}PageParam);
         return new Paging(iPage);
     }

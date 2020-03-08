@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus.framework.config;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +37,10 @@ public class MybatisPlusConfig {
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        // SQLServer2005/2008配置
+//        paginationInterceptor.setDbType(DbType.SQL_SERVER2005);
+        return paginationInterceptor;
     }
 
     /**

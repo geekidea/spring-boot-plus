@@ -25,6 +25,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import io.geekidea.springbootplus.framework.generator.config.SpringBootPlusMySqlQuery;
+import io.geekidea.springbootplus.framework.generator.config.SpringBootPlusSqlServerQuery;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
@@ -156,6 +157,11 @@ public class CodeGenerator {
     // ############################ 自定义配置部分 end ############################
 
     /**
+     * 框架父包
+     */
+    private String frameworkParentPackage;
+
+    /**
      * 公共父包
      */
     private String commonParentPackage;
@@ -227,22 +233,23 @@ public class CodeGenerator {
      * 初始化变量
      */
     public void init() {
-        this.commonParentPackage = this.parentPackage + ".common";
+        this.frameworkParentPackage = this.parentPackage + ".framework";
+        this.commonParentPackage = this.frameworkParentPackage + ".common";
         // 父类包路径
         this.superEntity = this.commonParentPackage + ".entity.BaseEntity";
         this.superController = this.commonParentPackage + ".controller.BaseController";
         this.superService = this.commonParentPackage + ".service.BaseService";
         this.superServiceImpl = this.commonParentPackage + ".service.impl.BaseServiceImpl";
         this.superPageParam = this.commonParentPackage + ".pagination.BasePageParam";
-        this.superPageOrderParam = this.commonParentPackage + ".pagination.BasePageOrderParam";
+        this.superPageOrderParam = this.frameworkParentPackage + ".pagination.BasePageOrderParam";
         this.superEntityCommonColumns = new String[]{};
 
         // 公共类包路径
         this.commonIdParam = this.commonParentPackage + ".param.IdParam";
         this.commonApiResult = this.commonParentPackage + ".api.ApiResult";
         this.commonOrderEnum = this.commonParentPackage + ".enums.OrderEnum";
-        this.commonPaging = this.commonParentPackage + ".pagination.Paging";
-        this.commonPageUtil = this.commonParentPackage + ".pagination.PageUtil";
+        this.commonPaging = this.frameworkParentPackage + ".pagination.Paging";
+        this.commonPageUtil = this.frameworkParentPackage + ".pagination.PageUtil";
     }
 
     /**
@@ -274,8 +281,11 @@ public class CodeGenerator {
         dsc.setUsername(userName);
         dsc.setPassword(password);
         // 设置自定义查询
+        dsc.setDbQuery(new SpringBootPlusSqlServerQuery());
+        // MySQL
         dsc.setDbQuery(new SpringBootPlusMySqlQuery());
-
+        // SQLServer2005/2008
+//        dsc.setDbQuery(new SpringBootPlusSqlServerQuery());
         mpg.setDataSource(dsc);
 
         // 包配置

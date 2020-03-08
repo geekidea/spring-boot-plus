@@ -70,14 +70,14 @@ public class ${entity} implements Serializable {
 #if(${field.keyFlag})
 ## 主键
 #if(${field.keyIdentityFlag})
-    @TableId(value = "${field.name}", type = IdType.AUTO)
+@TableId(value = "${field.name}", type = IdType.AUTO)
 #elseif(!$null.isNull(${idType}) && "$!idType" != "")
 ## 设置主键注解
-    @TableId(value = "${field.name}", type = IdType.${idType})
+@TableId(value = "${field.name}", type = IdType.${idType})
 ## 是主键类型
 #set($custom_is_pk=true)
 #elseif(${field.convert})
-    @TableId("${field.name}")
+@TableId("${field.name}")
 #end
 ## 普通字段
 #elseif(${field.fill})
@@ -99,22 +99,23 @@ public class ${entity} implements Serializable {
     @TableLogic
 #end
 #if(${custom_is_pk})
-    private ${field.propertyType} ${field.propertyName};
+private ${field.propertyType} ${field.propertyName};
 #else
 ## 如果没有默认值，且不为空，则设置非空校验
 #if(${cfg.paramValidation})
 #if(${field.customMap.null} == 'NO' && !${field.customMap.default})
-#if(${field.propertyType} == 'String')
-    @NotBlank(message = "${field.comment}不能为空")
+#if(${field.keyIdentityFlag})
+#elseif(${field.propertyType} == 'String')
+@NotBlank(message = "${field.comment}不能为空")
 #else
-    @NotNull(message = "${field.comment}不能为空")
+@NotNull(message = "${field.comment}不能为空")
 #end
     private ${field.propertyType} ${field.propertyName};
 #else
-    private ${field.propertyType} ${field.propertyName};
+private ${field.propertyType} ${field.propertyName};
 #end
 #else
-    private ${field.propertyType} ${field.propertyName};
+private ${field.propertyType} ${field.propertyName};
 #end
 #end
 #end

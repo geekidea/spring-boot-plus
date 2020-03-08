@@ -228,6 +228,7 @@ mybatis-plus:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     type: com.zaxxer.hikari.HikariDataSource
     cachePrepStmts: true
     prepStmtCacheSize: 300
