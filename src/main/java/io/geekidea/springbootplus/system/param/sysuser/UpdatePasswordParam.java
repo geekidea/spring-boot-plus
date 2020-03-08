@@ -16,12 +16,14 @@
 
 package io.geekidea.springbootplus.system.param.sysuser;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 修改密码参数
@@ -31,7 +33,10 @@ import javax.validation.constraints.NotNull;
  **/
 @Data
 @Accessors(chain = true)
-public class UpdatePasswordParam {
+@ApiModel("修改密码参数")
+public class UpdatePasswordParam implements Serializable {
+
+    private static final long serialVersionUID = -186284285725426339L;
 
     @ApiModelProperty("用户id")
     @NotNull(message = "用户id不能为空")

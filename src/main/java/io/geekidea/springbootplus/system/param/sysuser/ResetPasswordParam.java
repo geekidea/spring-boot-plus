@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus.system.param.sysuser;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -32,7 +33,10 @@ import java.io.Serializable;
  **/
 @Data
 @Accessors(chain = true)
+@ApiModel("管理员重置用户密码参数")
 public class ResetPasswordParam implements Serializable {
+
+    private static final long serialVersionUID = 5364321420976152005L;
 
     @ApiModelProperty("用户id")
     @NotNull(message = "用户id不能为空")
