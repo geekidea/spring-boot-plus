@@ -19,8 +19,9 @@ package io.geekidea.springbootplus.system.service;
 import io.geekidea.springbootplus.framework.common.service.BaseService;
 import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysUser;
-import io.geekidea.springbootplus.system.param.SysUserPageParam;
-import io.geekidea.springbootplus.system.param.UpdatePasswordParam;
+import io.geekidea.springbootplus.system.param.sysuser.ResetPasswordParam;
+import io.geekidea.springbootplus.system.param.sysuser.SysUserPageParam;
+import io.geekidea.springbootplus.system.param.sysuser.UpdatePasswordParam;
 import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
 
 import java.io.Serializable;
@@ -125,4 +126,13 @@ public interface SysUserService extends BaseService<SysUser> {
      * @throws Exception
      */
     boolean updateSysUserHead(Long id, String headPath) throws Exception;
+
+    /**
+     * 管理员重置用户密码
+     *
+     * @param resetPasswordParam
+     * @return
+     * @throws Exception
+     */
+    boolean resetPassword(ResetPasswordParam resetPasswordParam) throws Exception;
 }

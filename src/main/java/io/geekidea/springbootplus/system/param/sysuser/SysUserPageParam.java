@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.param;
+package io.geekidea.springbootplus.system.param.sysuser;
 
 import io.geekidea.springbootplus.framework.pagination.BasePageOrderParam;
 import io.swagger.annotations.ApiModel;

@@ -1,4 +1,4 @@
-package io.geekidea.springbootplus.system.param;
+package io.geekidea.springbootplus.system.param.sysuser;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -21,20 +21,18 @@ import io.geekidea.springbootplus.framework.common.controller.BaseController;
 import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.framework.core.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.system.entity.SysUser;
-import io.geekidea.springbootplus.system.param.SysUserPageParam;
-import io.geekidea.springbootplus.system.param.UpdatePasswordParam;
-import io.geekidea.springbootplus.system.param.UploadHeadParam;
+import io.geekidea.springbootplus.system.param.sysuser.ResetPasswordParam;
+import io.geekidea.springbootplus.system.param.sysuser.SysUserPageParam;
+import io.geekidea.springbootplus.system.param.sysuser.UpdatePasswordParam;
+import io.geekidea.springbootplus.system.param.sysuser.UploadHeadParam;
 import io.geekidea.springbootplus.system.service.SysUserService;
 import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
-import io.geekidea.springbootplus.framework.util.UploadUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -122,6 +120,17 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "修改密码", response = ApiResult.class)
     public ApiResult<Boolean> updatePassword(@Valid @RequestBody UpdatePasswordParam updatePasswordParam) throws Exception {
         boolean flag = sysUserService.updatePassword(updatePasswordParam);
+        return ApiResult.result(flag);
+    }
+
+    /**
+     * 管理员重置用户密码
+     */
+    @PostMapping("/resetPassword")
+//    @RequiresPermissions("sys:user:reset:password")
+    @ApiOperation(value = "管理员重置用户密码", response = ApiResult.class)
+    public ApiResult<Boolean> resetPassword(@Valid @RequestBody ResetPasswordParam resetPasswordParam) throws Exception {
+        boolean flag = sysUserService.resetPassword(resetPasswordParam);
         return ApiResult.result(flag);
     }
 

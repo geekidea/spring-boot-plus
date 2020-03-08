@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.param;
+package io.geekidea.springbootplus.system.param.sysrole;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

@@ -14,27 +14,39 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.param;
+package io.geekidea.springbootplus.system.param.sysuser;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import io.geekidea.springbootplus.framework.pagination.BasePageOrderParam;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
- * <pre>
- * 系统角色 查询参数对象
- * </pre>
+ * 修改密码参数
  *
  * @author geekidea
- * @date 2019-10-24
- */
+ * @date 2019-10-27
+ **/
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysRolePageParam对象", description = "系统角色查询参数")
-public class SysRolePageParam extends BasePageOrderParam {
-    private static final long serialVersionUID = 1L;
+public class UpdatePasswordParam {
+
+    @ApiModelProperty("用户id")
+    @NotNull(message = "用户id不能为空")
+    private Long userId;
+
+    @ApiModelProperty("原密码")
+    @NotEmpty(message = "原密码不能为空")
+    private String oldPassword;
+
+    @ApiModelProperty("新密码")
+    @NotEmpty(message = "新密码不能为空")
+    private String newPassword;
+
+    @ApiModelProperty("新密码")
+    @NotEmpty(message = "确认密码不能为空")
+    private String confirmPassword;
+
 }

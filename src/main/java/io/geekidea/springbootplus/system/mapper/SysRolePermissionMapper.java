@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.geekidea.springbootplus.system.entity.SysRolePermission;
-import io.geekidea.springbootplus.system.param.SysRolePermissionPageParam;
+import io.geekidea.springbootplus.system.param.sysrole.SysRolePermissionPageParam;
 import io.geekidea.springbootplus.system.vo.SysRolePermissionQueryVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

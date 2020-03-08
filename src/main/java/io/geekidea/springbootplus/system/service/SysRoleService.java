@@ -19,7 +19,7 @@ package io.geekidea.springbootplus.system.service;
 import io.geekidea.springbootplus.framework.common.service.BaseService;
 import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysRole;
-import io.geekidea.springbootplus.system.param.SysRolePageParam;
+import io.geekidea.springbootplus.system.param.sysrole.SysRolePageParam;
 import io.geekidea.springbootplus.system.param.sysrole.AddSysRoleParam;
 import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRoleParam;
 import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRolePermissionParam;

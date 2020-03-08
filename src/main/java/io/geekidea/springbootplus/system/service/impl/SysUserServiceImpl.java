@@ -29,8 +29,9 @@ import io.geekidea.springbootplus.framework.shiro.util.SaltUtil;
 import io.geekidea.springbootplus.framework.util.PhoneUtil;
 import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.mapper.SysUserMapper;
-import io.geekidea.springbootplus.system.param.SysUserPageParam;
-import io.geekidea.springbootplus.system.param.UpdatePasswordParam;
+import io.geekidea.springbootplus.system.param.sysuser.ResetPasswordParam;
+import io.geekidea.springbootplus.system.param.sysuser.SysUserPageParam;
+import io.geekidea.springbootplus.system.param.sysuser.UpdatePasswordParam;
 import io.geekidea.springbootplus.system.service.SysDepartmentService;
 import io.geekidea.springbootplus.system.service.SysRoleService;
 import io.geekidea.springbootplus.system.service.SysUserService;
@@ -212,9 +213,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         String encryptNewPassword = PasswordUtil.encrypt(newPassword, salt);
 
         // 修改密码
-        sysUser.setPassword(encryptNewPassword)
+        SysUser updateSysUser = new SysUser()
+                .setId(sysUser.getId())
+                .setPassword(encryptNewPassword)
                 .setUpdateTime(new Date());
-        return updateById(sysUser);
+        return updateById(updateSysUser);
     }
 
     @Override
@@ -223,5 +226,33 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
                 .setId(id)
                 .setHead(headPath);
         return updateById(sysUser);
+    }
+
+    @Override
+    public boolean resetPassword(ResetPasswordParam resetPasswordParam) throws Exception {
+        String newPassword = resetPasswordParam.getNewPassword();
+        String confirmPassword = resetPasswordParam.getConfirmPassword();
+        if (!newPassword.equals(confirmPassword)) {
+            throw new BusinessException("两次输入的密码不一致");
+        }
+        // 判断用户是否可修改
+        SysUser sysUser = getById(resetPasswordParam.getUserId());
+        if (sysUser == null) {
+            throw new BusinessException("用户不存在");
+        }
+        if (StateEnum.DISABLE.getCode().equals(sysUser.getState())) {
+            throw new BusinessException("用户已禁用");
+        }
+        // 密码加密处理
+        String salt = sysUser.getSalt();
+        // 新密码加密
+        String encryptNewPassword = PasswordUtil.encrypt(newPassword, salt);
+
+        // 修改密码
+        SysUser updateSysUser = new SysUser()
+                .setId(sysUser.getId())
+                .setPassword(encryptNewPassword)
+                .setUpdateTime(new Date());
+        return updateById(updateSysUser);
     }
 }
