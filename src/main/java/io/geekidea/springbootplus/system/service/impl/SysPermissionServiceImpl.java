@@ -76,24 +76,11 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
     @Override
     public boolean updateSysPermission(SysPermission sysPermission) throws Exception {
         // 获取权限
-        SysPermission updateSysPermission = getById(sysPermission.getId());
-        if (updateSysPermission == null) {
+        if (getById(sysPermission.getId()) == null) {
             throw new BusinessException("权限不存在");
         }
-
-        // 指定需改的字段
-        updateSysPermission.setParentId(sysPermission.getParentId())
-                .setLevel(sysPermission.getLevel())
-                .setName(sysPermission.getName())
-                .setState(sysPermission.getState())
-                .setCode(sysPermission.getCode())
-                .setIcon(sysPermission.getIcon())
-                .setRemark(sysPermission.getRemark())
-                .setSort(sysPermission.getSort())
-                .setType(sysPermission.getType())
-                .setUrl(sysPermission.getUrl())
-                .setUpdateTime(new Date());
-        return super.updateById(updateSysPermission);
+        sysPermission.setUpdateTime(new Date());
+        return super.updateById(sysPermission);
     }
 
     @Transactional(rollbackFor = Exception.class)
