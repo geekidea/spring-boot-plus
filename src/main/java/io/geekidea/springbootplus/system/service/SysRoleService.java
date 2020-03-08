@@ -78,7 +78,7 @@ public interface SysRoleService extends BaseService<SysRole> {
      * @return
      * @throws Exception
      */
-    Paging<SysRoleQueryVo> getSysRolePageList(SysRolePageParam sysRolePageParam) throws Exception;
+    Paging<SysRole> getSysRolePageList(SysRolePageParam sysRolePageParam) throws Exception;
 
     /**
      * 根据id校验角色是否存在并且已启用

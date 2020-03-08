@@ -25,7 +25,6 @@ import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.param.sysrole.SysRolePageParam;
 import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRolePermissionParam;
 import io.geekidea.springbootplus.system.service.SysRoleService;
-import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -92,10 +91,10 @@ public class SysRoleController extends BaseController {
      */
     @GetMapping("/info/{id}")
     @RequiresPermissions("sys:role:info")
-    @ApiOperation(value = "获取SysRole对象详情", notes = "查看系统角色", response = SysRoleQueryVo.class)
-    public ApiResult<SysRoleQueryVo> getSysRole(@PathVariable("id") Long id) throws Exception {
-        SysRoleQueryVo sysRoleQueryVo = sysRoleService.getSysRoleById(id);
-        return ApiResult.ok(sysRoleQueryVo);
+    @ApiOperation(value = "获取SysRole对象详情", notes = "查看系统角色", response = SysRole.class)
+    public ApiResult<SysRole> getSysRole(@PathVariable("id") Long id) throws Exception {
+        SysRole sysRole = sysRoleService.getById(id);
+        return ApiResult.ok(sysRole);
     }
 
     /**
@@ -103,9 +102,9 @@ public class SysRoleController extends BaseController {
      */
     @PostMapping("/getPageList")
     @RequiresPermissions("sys:role:page")
-    @ApiOperation(value = "获取SysRole分页列表", notes = "系统角色分页列表", response = SysRoleQueryVo.class)
-    public ApiResult<Paging<SysRoleQueryVo>> getSysRolePageList(@Validated @RequestBody SysRolePageParam sysRolePageParam) throws Exception {
-        Paging<SysRoleQueryVo> paging = sysRoleService.getSysRolePageList(sysRolePageParam);
+    @ApiOperation(value = "获取SysRole分页列表", notes = "系统角色分页列表", response = SysRole.class)
+    public ApiResult<Paging<SysRole>> getSysRolePageList(@Validated @RequestBody SysRolePageParam sysRolePageParam) throws Exception {
+        Paging<SysRole> paging = sysRoleService.getSysRolePageList(sysRolePageParam);
         return ApiResult.ok(paging);
     }
 

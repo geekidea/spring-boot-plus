@@ -150,7 +150,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     }
 
     @Override
-    public Paging<SysRoleQueryVo> getSysRolePageList(SysRolePageParam sysRolePageParam) throws Exception {
+    public Paging<SysRole> getSysRolePageList(SysRolePageParam sysRolePageParam) throws Exception {
         Page page = PageUtil.getPage(sysRolePageParam, OrderItem.desc(getLambdaColumn(SysRole::getCreateTime)));
         // 此处演示单表，使用mybatisplus自带方法进行分页
         LambdaQueryWrapper<SysRole> lambdaQueryWrapper = new LambdaQueryWrapper();
