@@ -58,21 +58,25 @@ public class PageUtil {
      * @param page          分页对象
      */
     public static void setPageOrderParam(BasePageParam basePageParam, OrderItem defaultOrder, Page page) {
-        if (defaultOrder == null) {
-            return;
-        }
         if (basePageParam instanceof BasePageOrderParam) {
             BasePageOrderParam basePageOrderParam = (BasePageOrderParam) basePageParam;
             List<OrderItem> orderItems = basePageOrderParam.getPageSorts();
             if (CollectionUtils.isEmpty(orderItems)) {
-                page.setOrders(Arrays.asList(defaultOrder));
+                setDefaultOrder(page, defaultOrder);
             } else {
                 page.setOrders(orderItems);
             }
         } else {
+            setDefaultOrder(page, defaultOrder);
+        }
+    }
+
+    public static void setDefaultOrder(Page page, OrderItem defaultOrder) {
+        if (defaultOrder != null) {
             page.setOrders(Arrays.asList(defaultOrder));
         }
     }
+
 
     /**
      * 优化分页limit查询
@@ -101,7 +105,7 @@ public class PageUtil {
             optimizeLimitColumn = "id";
         }
         if (optimizeLimit) {
-            Page page = new Page(0,basePageParam.getPageSize());
+            Page page = new Page(0, basePageParam.getPageSize());
             page.setOrders(Arrays.asList(OrderItem.desc(optimizeLimitColumn)));
             return page;
         } else {
@@ -122,7 +126,7 @@ public class PageUtil {
      * @return
      */
     public static Long getLastRowLimitValue(IPage page, String optimizeLimitColumn) {
-        if (StringUtils.isBlank(optimizeLimitColumn)){
+        if (StringUtils.isBlank(optimizeLimitColumn)) {
             optimizeLimitColumn = "id";
         }
         List list = page.getRecords();

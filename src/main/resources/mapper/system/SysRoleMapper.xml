@@ -29,10 +29,4 @@
         from sys_role where id = #{id}
     </select>
 
-    <select id="getSysRolePageList" resultType="io.geekidea.springbootplus.system.vo.SysRoleQueryVo">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_role
-    </select>
-
 </mapper>

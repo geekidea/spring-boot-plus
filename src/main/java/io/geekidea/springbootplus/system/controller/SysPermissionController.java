@@ -30,9 +30,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -61,7 +61,7 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/add")
     @RequiresPermissions("sys:permission:add")
     @ApiOperation(value = "添加SysPermission对象", notes = "添加系统权限", response = ApiResult.class)
-    public ApiResult<Boolean> addSysPermission(@Valid @RequestBody SysPermission sysPermission) throws Exception {
+    public ApiResult<Boolean> addSysPermission(@Validated @RequestBody SysPermission sysPermission) throws Exception {
         boolean flag = sysPermissionService.saveSysPermission(sysPermission);
         return ApiResult.result(flag);
     }
@@ -72,7 +72,7 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/update")
     @RequiresPermissions("sys:permission:update")
     @ApiOperation(value = "修改SysPermission对象", notes = "修改系统权限", response = ApiResult.class)
-    public ApiResult<Boolean> updateSysPermission(@Valid @RequestBody SysPermission sysPermission) throws Exception {
+    public ApiResult<Boolean> updateSysPermission(@Validated @RequestBody SysPermission sysPermission) throws Exception {
         boolean flag = sysPermissionService.updateSysPermission(sysPermission);
         return ApiResult.result(flag);
     }
@@ -105,7 +105,7 @@ public class SysPermissionController extends BaseController {
     @PostMapping("/getPageList")
     @RequiresPermissions("sys:permission:page")
     @ApiOperation(value = "获取SysPermission分页列表", notes = "系统权限分页列表", response = SysPermissionQueryVo.class)
-    public ApiResult<Paging<SysPermissionQueryVo>> getSysPermissionPageList(@Valid @RequestBody SysPermissionPageParam sysPermissionPageParam) throws Exception {
+    public ApiResult<Paging<SysPermissionQueryVo>> getSysPermissionPageList(@Validated @RequestBody SysPermissionPageParam sysPermissionPageParam) throws Exception {
         Paging<SysPermissionQueryVo> paging = sysPermissionService.getSysPermissionPageList(sysPermissionPageParam);
         return ApiResult.ok(paging);
     }

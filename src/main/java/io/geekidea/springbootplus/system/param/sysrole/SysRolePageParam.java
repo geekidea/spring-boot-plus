@@ -17,6 +17,7 @@
 package io.geekidea.springbootplus.system.param.sysrole;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -36,5 +37,16 @@ import io.geekidea.springbootplus.framework.pagination.BasePageOrderParam;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "SysRolePageParam对象", description = "系统角色查询参数")
 public class SysRolePageParam extends BasePageOrderParam {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 5068991832024325736L;
+
+    @ApiModelProperty("角色名称")
+    private String name;
+
+    @ApiModelProperty("角色编码")
+    private String code;
+
+    @ApiModelProperty("角色状态，0：禁用，1：启用")
+    private Integer state;
+
 }

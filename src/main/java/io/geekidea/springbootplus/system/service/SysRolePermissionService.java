@@ -99,4 +99,14 @@ public interface SysRolePermissionService extends BaseService<SysRolePermission>
      * @throws Exception
      */
     boolean isExistsByPermissionId(Long permissionId) throws Exception;
+
+    /**
+     * 角色下是否有权限
+     *
+     * @param roleId
+     * @return
+     * @throws Exception
+     */
+    boolean hasPermission(Long roleId) throws Exception;
+
 }

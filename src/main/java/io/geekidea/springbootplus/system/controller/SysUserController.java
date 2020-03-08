@@ -18,8 +18,8 @@ package io.geekidea.springbootplus.system.controller;
 
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.common.controller.BaseController;
-import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.framework.core.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.param.sysuser.ResetPasswordParam;
 import io.geekidea.springbootplus.system.param.sysuser.SysUserPageParam;
@@ -32,9 +32,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * <pre>
@@ -62,7 +61,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/add")
     @RequiresPermissions("sys:user:add")
     @ApiOperation(value = "添加SysUser对象", notes = "添加系统用户", response = ApiResult.class)
-    public ApiResult<Boolean> addSysUser(@Valid @RequestBody SysUser sysUser) throws Exception {
+    public ApiResult<Boolean> addSysUser(@Validated @RequestBody SysUser sysUser) throws Exception {
         boolean flag = sysUserService.saveSysUser(sysUser);
         return ApiResult.result(flag);
     }
@@ -73,7 +72,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/update")
     @RequiresPermissions("sys:user:update")
     @ApiOperation(value = "修改SysUser对象", notes = "修改系统用户", response = ApiResult.class)
-    public ApiResult<Boolean> updateSysUser(@Valid @RequestBody SysUser sysUser) throws Exception {
+    public ApiResult<Boolean> updateSysUser(@Validated @RequestBody SysUser sysUser) throws Exception {
         boolean flag = sysUserService.updateSysUser(sysUser);
         return ApiResult.result(flag);
     }
@@ -107,7 +106,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/getPageList")
     @RequiresPermissions("sys:user:page")
     @ApiOperation(value = "获取SysUser分页列表", notes = "系统用户分页列表", response = SysUserQueryVo.class)
-    public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Valid @RequestBody SysUserPageParam sysUserPageParam) throws Exception {
+    public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Validated @RequestBody SysUserPageParam sysUserPageParam) throws Exception {
         Paging<SysUserQueryVo> paging = sysUserService.getSysUserPageList(sysUserPageParam);
         return ApiResult.ok(paging);
     }
@@ -118,7 +117,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/updatePassword")
     @RequiresPermissions("sys:user:update:password")
     @ApiOperation(value = "修改密码", response = ApiResult.class)
-    public ApiResult<Boolean> updatePassword(@Valid @RequestBody UpdatePasswordParam updatePasswordParam) throws Exception {
+    public ApiResult<Boolean> updatePassword(@Validated @RequestBody UpdatePasswordParam updatePasswordParam) throws Exception {
         boolean flag = sysUserService.updatePassword(updatePasswordParam);
         return ApiResult.result(flag);
     }
@@ -129,7 +128,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/resetPassword")
 //    @RequiresPermissions("sys:user:reset:password")
     @ApiOperation(value = "管理员重置用户密码", response = ApiResult.class)
-    public ApiResult<Boolean> resetPassword(@Valid @RequestBody ResetPasswordParam resetPasswordParam) throws Exception {
+    public ApiResult<Boolean> resetPassword(@Validated @RequestBody ResetPasswordParam resetPasswordParam) throws Exception {
         boolean flag = sysUserService.resetPassword(resetPasswordParam);
         return ApiResult.result(flag);
     }
@@ -140,7 +139,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/uploadHead")
     @RequiresPermissions("sys:user:update:head")
     @ApiOperation(value = "修改头像",response = ApiResult.class)
-    public ApiResult<Boolean> uploadHead(@Valid @RequestBody UploadHeadParam uploadHeadParam) throws Exception{
+    public ApiResult<Boolean> uploadHead(@Validated @RequestBody UploadHeadParam uploadHeadParam) throws Exception{
         boolean flag = sysUserService.updateSysUserHead(uploadHeadParam.getId(),uploadHeadParam.getHead());
         return ApiResult.result(flag);
     }

@@ -121,7 +121,14 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
         // 判断角色权限表是否有关联存在，如果存在，则不能删除
         SysRolePermission sysRolePermission = new SysRolePermission()
                 .setPermissionId(permissionId);
-        return count(new QueryWrapper(sysRolePermission)) > 0;
+        return count(new QueryWrapper<SysRolePermission>(sysRolePermission)) > 0;
+    }
+
+    @Override
+    public boolean hasPermission(Long roleId) throws Exception {
+        SysRolePermission sysRolePermission = new SysRolePermission()
+                .setRoleId(roleId);
+        return count(new QueryWrapper<SysRolePermission>(sysRolePermission)) > 0;
     }
 
 }

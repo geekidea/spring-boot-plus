@@ -20,11 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-
-#if(${cfg.paramValidation})
-import javax.validation.Valid;
-#end
+import org.springframework.validation.annotation.Validated;
 
 import ${cfg.idParamPath};
 
@@ -66,7 +62,7 @@ public class ${table.controllerName} {
     @RequiresPermissions("$!{cfg.colonTableName}:add")
 #end
     @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ApiResult.class)
-    public ApiResult<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
+    public ApiResult<Boolean> add${entity}(#if(${cfg.paramValidation})@Validated#end @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName});
 #else
@@ -83,7 +79,7 @@ public class ${table.controllerName} {
     @RequiresPermissions("$!{cfg.colonTableName}:update")
 #end
     @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ApiResult.class)
-    public ApiResult<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
+    public ApiResult<Boolean> update${entity}(#if(${cfg.paramValidation})@Validated#end @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});
 #else
@@ -130,7 +126,7 @@ public class ${table.controllerName} {
     @RequiresPermissions("$!{cfg.colonTableName}:page")
 #end
     @ApiOperation(value = "获取${entity}分页列表", notes = "$!{table.comment}分页列表", response = ${entity}QueryVo.class)
-    public ApiResult<Paging<${entity}QueryVo>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}PageParam ${cfg.entityObjectName}PageParam) throws Exception {
+    public ApiResult<Paging<${entity}QueryVo>> get${entity}PageList(#if(${cfg.paramValidation})@Validated#end @RequestBody ${entity}PageParam ${cfg.entityObjectName}PageParam) throws Exception {
         Paging<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}PageParam);
         return ApiResult.ok(paging);
     }

@@ -29,9 +29,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -57,7 +57,7 @@ public class SysDepartmentController extends BaseController {
     @PostMapping("/add")
     @RequiresPermissions("sys:department:add")
     @ApiOperation(value = "添加SysDepartment对象", notes = "添加部门", response = ApiResult.class)
-    public ApiResult<Boolean> addSysDepartment(@Valid @RequestBody SysDepartment sysDepartment) throws Exception {
+    public ApiResult<Boolean> addSysDepartment(@Validated @RequestBody SysDepartment sysDepartment) throws Exception {
             boolean flag = sysDepartmentService.saveSysDepartment(sysDepartment);
             return ApiResult.result(flag);
     }
@@ -68,7 +68,7 @@ public class SysDepartmentController extends BaseController {
     @PostMapping("/update")
     @RequiresPermissions("sys:department:update")
     @ApiOperation(value = "修改SysDepartment对象", notes = "修改部门", response = ApiResult.class)
-    public ApiResult<Boolean> updateSysDepartment(@Valid @RequestBody SysDepartment sysDepartment) throws Exception {
+    public ApiResult<Boolean> updateSysDepartment(@Validated @RequestBody SysDepartment sysDepartment) throws Exception {
             boolean flag = sysDepartmentService.updateSysDepartment(sysDepartment);
             return ApiResult.result(flag);
     }
@@ -101,7 +101,7 @@ public class SysDepartmentController extends BaseController {
     @PostMapping("/getPageList")
     @RequiresPermissions("sys:department:page")
     @ApiOperation(value = "获取SysDepartment分页列表", notes = "部门分页列表", response = SysDepartmentQueryVo.class)
-    public ApiResult<Paging<SysDepartmentQueryVo>> getSysDepartmentPageList(@Valid @RequestBody SysDepartmentPageParam sysDepartmentPageParam) throws Exception {
+    public ApiResult<Paging<SysDepartmentQueryVo>> getSysDepartmentPageList(@Validated @RequestBody SysDepartmentPageParam sysDepartmentPageParam) throws Exception {
         Paging<SysDepartmentQueryVo> paging = sysDepartmentService.getSysDepartmentPageList(sysDepartmentPageParam);
         return ApiResult.ok(paging);
     }

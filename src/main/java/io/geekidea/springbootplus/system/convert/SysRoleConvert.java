@@ -17,7 +17,6 @@
 package io.geekidea.springbootplus.system.convert;
 
 import io.geekidea.springbootplus.system.entity.SysRole;
-import io.geekidea.springbootplus.system.param.sysrole.AddSysRoleParam;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -32,11 +31,4 @@ public interface SysRoleConvert {
 
     SysRoleConvert INSTANCE = Mappers.getMapper(SysRoleConvert.class);
 
-    /**
-     * AddSysRoleParam转SysRole
-     *
-     * @param addSysRoleParam
-     * @return
-     */
-    SysRole addSysRoleParamToSysRole(AddSysRoleParam addSysRoleParam);
 }

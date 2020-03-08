@@ -20,8 +20,6 @@ import io.geekidea.springbootplus.framework.common.service.BaseService;
 import io.geekidea.springbootplus.framework.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysRole;
 import io.geekidea.springbootplus.system.param.sysrole.SysRolePageParam;
-import io.geekidea.springbootplus.system.param.sysrole.AddSysRoleParam;
-import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRoleParam;
 import io.geekidea.springbootplus.system.param.sysrole.UpdateSysRolePermissionParam;
 import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 
@@ -44,7 +42,7 @@ public interface SysRoleService extends BaseService<SysRole> {
      * @return
      * @throws Exception
      */
-    boolean saveSysRole(AddSysRoleParam addSysRoleParam) throws Exception;
+    boolean saveSysRole(SysRole sysRole) throws Exception;
 
     /**
      * 修改
@@ -53,7 +51,7 @@ public interface SysRoleService extends BaseService<SysRole> {
      * @return
      * @throws Exception
      */
-    boolean updateSysRole(UpdateSysRoleParam updateSysRoleParam) throws Exception;
+    boolean updateSysRole(SysRole sysRole) throws Exception;
 
     /**
      * 删除

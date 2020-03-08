@@ -20,19 +20,15 @@ import com.alibaba.fastjson.JSON;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.shiro.param.LoginParam;
 import io.geekidea.springbootplus.framework.shiro.service.LoginService;
-import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
-import io.geekidea.springbootplus.framework.shiro.util.LoginUtil;
-import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserVo;
-import io.geekidea.springbootplus.framework.util.MapUtil;
 import io.geekidea.springbootplus.system.service.SysUserService;
 import io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo;
 import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,9 +36,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 登陆控制器
@@ -67,7 +60,7 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperation(value = "登陆", notes = "系统用户登陆", response = LoginSysUserTokenVo.class)
-    public ApiResult login(@Valid @RequestBody LoginParam loginParam, HttpServletResponse response) throws Exception {
+    public ApiResult login(@Validated @RequestBody LoginParam loginParam, HttpServletResponse response) throws Exception {
         LoginSysUserTokenVo loginSysUserTokenVo = loginService.login(loginParam);
 //        // 设置token响应头
 //        response.setHeader(JwtTokenUtil.getTokenName(), loginSysUserTokenVo.getToken());

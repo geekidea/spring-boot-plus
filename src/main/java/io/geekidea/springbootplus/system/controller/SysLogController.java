@@ -28,12 +28,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 /**
  * <p>
@@ -57,7 +56,7 @@ public class SysLogController extends BaseController {
      */
     @PostMapping("/add")
     @ApiOperation(value = "添加SysLog对象", notes = "添加系统日志", response = ApiResult.class)
-    public ApiResult<Boolean> addSysLog(@Valid @RequestBody SysLog sysLog) throws Exception {
+    public ApiResult<Boolean> addSysLog(@Validated @RequestBody SysLog sysLog) throws Exception {
         boolean flag = sysLogService.save(sysLog);
         return ApiResult.result(flag);
     }
@@ -67,7 +66,7 @@ public class SysLogController extends BaseController {
      */
     @PostMapping("/update")
     @ApiOperation(value = "修改SysLog对象", notes = "修改系统日志", response = ApiResult.class)
-    public ApiResult<Boolean> updateSysLog(@Valid @RequestBody SysLog sysLog) throws Exception {
+    public ApiResult<Boolean> updateSysLog(@Validated @RequestBody SysLog sysLog) throws Exception {
         boolean flag = sysLogService.updateById(sysLog);
         return ApiResult.result(flag);
     }
@@ -77,7 +76,7 @@ public class SysLogController extends BaseController {
      */
     @PostMapping("/delete")
     @ApiOperation(value = "删除SysLog对象", notes = "删除系统日志", response = ApiResult.class)
-    public ApiResult<Boolean> deleteSysLog(@Valid @RequestBody IdParam idParam) throws Exception {
+    public ApiResult<Boolean> deleteSysLog(@Validated @RequestBody IdParam idParam) throws Exception {
         boolean flag = sysLogService.removeById(idParam.getId());
         return ApiResult.result(flag);
     }
@@ -87,7 +86,7 @@ public class SysLogController extends BaseController {
      */
     @PostMapping("/info")
     @ApiOperation(value = "获取SysLog对象详情", notes = "查看系统日志", response = SysLogQueryVo.class)
-    public ApiResult<SysLogQueryVo> getSysLog(@Valid @RequestBody IdParam idParam) throws Exception {
+    public ApiResult<SysLogQueryVo> getSysLog(@Validated @RequestBody IdParam idParam) throws Exception {
         SysLogQueryVo sysLogQueryVo = sysLogService.getSysLogById(idParam.getId());
         return ApiResult.ok(sysLogQueryVo);
     }
@@ -97,7 +96,7 @@ public class SysLogController extends BaseController {
      */
     @PostMapping("/getPageList")
     @ApiOperation(value = "获取SysLog分页列表", notes = "系统日志分页列表", response = SysLogQueryVo.class)
-    public ApiResult<Paging<SysLogQueryVo>> getSysLogPageList(@Valid @RequestBody SysLogPageParam sysLogPageParam) throws Exception {
+    public ApiResult<Paging<SysLogQueryVo>> getSysLogPageList(@Validated @RequestBody SysLogPageParam sysLogPageParam) throws Exception {
         Paging<SysLogQueryVo> paging = sysLogService.getSysLogPageList(sysLogPageParam);
         return ApiResult.ok(paging);
     }
