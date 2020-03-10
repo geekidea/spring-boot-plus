@@ -229,6 +229,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
 #    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
     type: com.zaxxer.hikari.HikariDataSource
     cachePrepStmts: true
     prepStmtCacheSize: 300

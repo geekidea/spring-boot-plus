@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus.test;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -281,11 +282,16 @@ public class CodeGenerator {
         dsc.setUsername(userName);
         dsc.setPassword(password);
         // 设置自定义查询
-        dsc.setDbQuery(new SpringBootPlusSqlServerQuery());
+//        dsc.setDbQuery(new SpringBootPlusSqlServerQuery());
         // MySQL
         dsc.setDbQuery(new SpringBootPlusMySqlQuery());
         // SQLServer2005/2008
 //        dsc.setDbQuery(new SpringBootPlusSqlServerQuery());
+
+        // Oracle11G
+//        dsc.setDbType(DbType.ORACLE);
+//        dsc.setSchemaName("SPRING_BOOT_PLUS");
+
         mpg.setDataSource(dsc);
 
         // 包配置

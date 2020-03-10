@@ -28,11 +28,17 @@ public class SpringBootPlusGenerator {
         CodeGenerator codeGenerator = new CodeGenerator();
         // 公共配置
         // 数据库配置
+//        codeGenerator
+//                .setUserName("root")
+//                .setPassword("root")
+//                .setDriverName("com.mysql.jdbc.Driver")
+//                .setDriverUrl("jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+//
         codeGenerator
-                .setUserName("root")
-                .setPassword("root")
-                .setDriverName("com.mysql.jdbc.Driver")
-                .setDriverUrl("jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+                .setUserName("spring_boot_plus")
+                .setPassword("Oracle111")
+                .setDriverName("oracle.jdbc.driver.OracleDriver")
+                .setDriverUrl("jdbc:oracle:thin:@192.168.43.204:1521:orcl");
 
         // 包信息
         codeGenerator
@@ -78,7 +84,7 @@ public class SpringBootPlusGenerator {
         // 需要生成的表数组
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
-                "sys_user"
+                "FOO_BAR"
         };
 
         // 循环生成

@@ -17,6 +17,7 @@
 package io.geekidea.springbootplus.framework.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.incrementer.OracleKeyGenerator;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -24,8 +25,9 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>
- *     MybatisPlus配置
+ * MybatisPlus配置
  * </p>
+ *
  * @author geekidea
  * @since 2018-11-08
  */
@@ -40,16 +42,29 @@ public class MybatisPlusConfig {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
         // SQLServer2005/2008配置
 //        paginationInterceptor.setDbType(DbType.SQL_SERVER2005);
+        // Oracle11G
+//        paginationInterceptor.setDbType(DbType.ORACLE);
         return paginationInterceptor;
     }
 
     /**
      * mybatios-plus乐观锁插件
+     *
      * @return
      */
     @Bean
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {
         return new OptimisticLockerInterceptor();
     }
+
+    /**
+     * Oracle自增主键配置
+     *
+     * @return
+     */
+//    @Bean
+//    public OracleKeyGenerator oracleKeyGenerator() {
+//        return new OracleKeyGenerator();
+//    }
 
 }

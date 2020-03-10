@@ -18,6 +18,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 #end
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 /**
  * <pre>
  * $!{table.comment}

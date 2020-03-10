@@ -156,18 +156,27 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
         </dependency>
 
+        <!-- SQLServer2008 -->
 <!--        <dependency>-->
 <!--            <groupId>com.microsoft.sqlserver</groupId>-->
 <!--            <artifactId>mssql-jdbc</artifactId>-->
 <!--            <version>6.4.0.jre8</version>-->
 <!--        </dependency>-->
 
+        <!-- Oracle11G -->
+<!--        <dependency>-->
+<!--            <groupId>com.oracle</groupId>-->
+<!--            <artifactId>ojdbc6</artifactId>-->
+<!--            <version>11.2.0.3</version>-->
+<!--        </dependency>-->
 
         <!-- mybatis-plus end -->
 
