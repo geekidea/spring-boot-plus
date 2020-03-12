@@ -73,7 +73,7 @@ create table ip
     create_time  datetime default getdate() not null
 ) go
 
-exec sp_addextendedproperty 'MS_Description', '你好', 'SCHEMA', 'dbo', 'TABLE', 'ip'
+exec sp_addextendedproperty 'MS_Description', 'IP', 'SCHEMA', 'dbo', 'TABLE', 'ip'
 go
 
 exec sp_addextendedproperty 'MS_Description', '主键', 'SCHEMA', 'dbo', 'TABLE', 'ip', 'COLUMN', 'id'
@@ -284,7 +284,7 @@ create table sys_role_permission
     update_time   datetime
 ) go
 
-exec sp_addextendedproperty 'MS_Description', '你好', 'SCHEMA', 'dbo', 'TABLE', 'sys_role_permission'
+exec sp_addextendedproperty 'MS_Description', '角色权限', 'SCHEMA', 'dbo', 'TABLE', 'sys_role_permission'
 go
 
 exec sp_addextendedproperty 'MS_Description', '主键', 'SCHEMA', 'dbo', 'TABLE', 'sys_role_permission', 'COLUMN', 'id'
