@@ -62,7 +62,12 @@ public class LambdaColumn<T> {
         if (CollectionUtils.isEmpty(tableFieldInfos)){
             return null;
         }
+
         Map<String, String> map = new ConcurrentHashMap<>();
+        String keyProperty = tableInfo.getKeyProperty();
+        String keyColumn = tableInfo.getKeyColumn();
+        map.put(keyProperty, keyColumn);
+
         for (TableFieldInfo tableFieldInfo : tableFieldInfos) {
             String column = tableFieldInfo.getColumn();
             String property = tableFieldInfo.getProperty();
