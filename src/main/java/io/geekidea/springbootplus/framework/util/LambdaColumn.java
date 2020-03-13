@@ -27,7 +27,7 @@ public class LambdaColumn<T> {
     }
 
     public String get(SFunction<T, ?> func) {
-        SerializedLambda lambda = LambdaUtils.resolve(SysUser::getCreateTime);
+        SerializedLambda lambda = LambdaUtils.resolve(func);
         String methodName = lambda.getImplMethodName();
         String methodPropertyName = null;
         if (methodName.startsWith("get")) {
