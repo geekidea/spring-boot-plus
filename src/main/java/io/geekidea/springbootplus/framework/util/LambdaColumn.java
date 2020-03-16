@@ -35,7 +35,6 @@ public class LambdaColumn<T> {
             methodPropertyName = methodPropertyName.substring(0, 1).toLowerCase() + methodPropertyName.substring(1);
 
         }
-        System.out.println("methodPropertyName = " + methodPropertyName);
 
         Class cls = lambda.getImplClass();
         String className = lambda.getImplClassName();
