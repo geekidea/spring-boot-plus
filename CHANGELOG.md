@@ -1,5 +1,7 @@
 # 更新日志 CHANGELOG
 
+
+
 ## [V1.4.0] 2019.11.5  🚔
 > spring-boot-plus集成用户角色权限部门管理
 
