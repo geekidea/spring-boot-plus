@@ -1,0 +1,90 @@
+spring-boot-plus:
+  generator:
+    # Maven模块名称
+    maven-module-name: example
+    # 生成的父包全路径名称
+    parent-package: com.example
+    # 业务模块名称
+    module-name: foorbar
+    # 表前缀
+    table-prefix:
+    # 生成的表名称，可配置多张表
+    table-config:
+      # 表名称
+      - table-name: foo_bar
+        # 主键列名称
+        pk-id-name: id
+    # 开发人员名称
+    author: geekidea
+    # 是否覆盖已有文件
+    file-override: true
+    # 生成文件的输出目录,如果为空: 表示当前项目根目录
+    output-dir:
+    # 数据源配置
+    data-source-config:
+      # 数据库类型
+      db-type: MYSQL
+      # 数据库连接用户名
+      username: root
+      # 数据库连接密码
+      password: root
+      # 驱动URL
+      driver-name: com.mysql.jdbc.Driver
+      # 驱动URL
+      url: jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    # 代码生成配置
+    generator-config:
+      # 代码生成策略 SIMPLE:生成最基本的代码，NORMAL:生成普通代码， ALL:生成所有的代码
+      generator-strategy: ALL
+      # 是否生成实体类
+      generator-entity: true
+      # 是否生成控制器
+      generator-controller: true
+      # 是否生成service接口
+      generator-service: true
+      # 是否生成service实现类
+      generator-service-impl: true
+      # 是否生成Mapper
+      generator-mapper: true
+      # 是否生成Mapper XML
+      generator-mapper-xml: true
+      # 是否生成查询参数
+      generator-page-param: true
+      # 是否生成查询VO
+      generator-query-vo: true
+      # 是否生成Shiro RequiresPermissions 注解
+      requires-permissions: true
+      # 分页列表查询是否排序 true：有排序参数/false：无
+      page-list-order: true
+      # 是否生成validation校验，true：生成/false：不生成
+      param-validation: true
+    # mybatisplus配置
+    mybatis-plus-generator-config:
+      global-config:
+        # 是否打开输出目录
+        open: false
+        # 开启 swagger2 模式
+        swagger2: true
+        # 指定生成的主键的ID类型
+        id-type: AUTO
+        # 时间类型对应策略
+        date-type: ONLY_DATE
+      strategy-config:
+        # 数据库表映射到实体的命名策略
+        naming: underline_to_camel
+        # 数据库表字段映射到实体的命名策略
+        column-naming: underline_to_camel
+        # 实体】是否为lombok模型
+        entity-lombok-model: true
+        # RestController
+        rest-controller-style: true
+        # 自定义基础的Entity类，公共字段
+        super-entity-columns:
+        # 表填充字段
+        table-fill-list:
+        # 驼峰转连字符
+        controller-mapping-hyphenstyle: true
+        # 乐观锁属性名称
+        version-field-name: version
+        # 逻辑删除属性名称
+        logic-delete-field-name: deleted

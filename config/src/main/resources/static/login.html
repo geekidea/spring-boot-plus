@@ -1,0 +1,99 @@
+<!--
+  ~ Copyright 2019-2029 geekidea(https://github.com/geekidea)
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <base href=http://localhost:8888/api/admin/ >
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta name=format-detection content="telephone=no,email=no">
+    <meta name=theme-color content=#42d3a5>
+    <link rel="shortcut icon" href=assets/img/favicon.png type=image/png>
+    <title>Spring Boot Admin</title>
+    <link href=assets/css/chunk-common.2cd84e18.css rel=stylesheet>
+</head>
+<body class="login">
+<section class="hero is-fullheight">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <div class="box">
+                    <figure class="image is-128x128 login--logo">
+                        <img src="assets/img/icon-spring-boot-admin.svg"/>
+                    </figure>
+                    <h1 class="title has-text-primary">Spring Boot Admin</h1>
+                    <form name="loginForm" method="post" onsubmit="adminLogin(event)">
+                        <div class="field"></div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-medium" type="text" name="username" placeholder="Username" autofocus/>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-medium" type="password" name="password" placeholder="Password"/>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control"  style="padding-top: 10px;">
+                                <input type="submit" class="button is-block is-primary is-medium is-fullwidth" value="Login"/>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <p id="error" style="color:red;display: none;">账号或密码错误</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function ajax(url, param, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var result = JSON.parse(xhr.responseText);
+                    callback(result);
+                }
+            };
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(param));
+        }
+
+        function adminLogin(event) {
+            event.preventDefault();
+            var url = "/api/admin/login"
+            ajax(url, {
+                username: document.loginForm.username.value,
+                password: document.loginForm.password.value
+            }, function (response) {
+                console.log(response)
+                if (response.code == 200) {
+                    document.getElementById("error").style.display = "none";
+                    window.location = "/api/admin"
+                } else {
+                    document.getElementById("error").style.display = "block";
+                }
+            })
+        }
+    </script>
+</section>
+<script src=assets/js/chunk-vendors.2beb5fac.js></script>
+<script src=assets/js/chunk-common.6a3886a1.js></script>
+<script src=assets/js/login.90ffb59e.js></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+package ${cfg.pageParamPackage};
+
+import io.swagger.annotations.ApiModel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+#if(${cfg.pageListOrder})
+import ${cfg.superPageOrderParamClass};
+#else
+import ${cfg.superPageParamClass};
+#end
+
+/**
+ * <pre>
+ * $!{table.comment} 分页参数对象
+ * </pre>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "$!{table.comment}分页参数")
+#if(${cfg.pageListOrder})
+public class ${entity}${cfg.pageParam} extends BasePageOrderParam {
+#else
+public class ${entity}${cfg.pageParam} extends BasePageParam {
+#end
+    private static final long serialVersionUID = 1L;
+}

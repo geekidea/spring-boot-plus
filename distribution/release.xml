@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2019-2029 geekidea(https://github.com/geekidea)
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<assembly>
+    <id>server</id>
+
+    <formats>
+        <format>dir</format>
+        <format>tar.gz</format>
+        <format>zip</format>
+    </formats>
+
+    <includeBaseDirectory>true</includeBaseDirectory>
+
+    <fileSets>
+        <!--
+            0755->即用户具有读/写/执行权限，组用户和其它用户具有读写权限；
+            0644->即用户具有读写权限，组用户和其它用户具有只读权限；
+        -->
+
+        <fileSet>
+            <directory>target/classes/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <includes>
+                <include>config/**</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <includes>
+                <include>logs/**</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>../config/target/classes/config</directory>
+            <outputDirectory>config</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>../</directory>
+            <includes>
+                <include>LICENSE</include>
+                <include>README.md</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+
+    <moduleSets>
+        <moduleSet>
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <includes>
+                <include>io.geekidea.springbootplus:bootstrap</include>
+            </includes>
+            <binaries>
+                <!-- 将依赖的jar包抽取到lib目录中 -->
+                <outputDirectory>lib/</outputDirectory>
+                <unpack>false</unpack>
+                <dependencySets>
+                    <dependencySet>
+                        <outputDirectory>lib/</outputDirectory>
+                    </dependencySet>
+                </dependencySets>
+            </binaries>
+        </moduleSet>
+    </moduleSets>
+
+</assembly>

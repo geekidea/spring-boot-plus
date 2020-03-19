@@ -1,0 +1,329 @@
+# spring-boot-plus Common Config
+
+############################# 访问路径、端口tomcat start #############################
+server:
+  port: 8888
+  servlet:
+    context-path: /api
+  tomcat:
+    max-threads: 1000
+    min-spare-threads: 30
+    uri-encoding: UTF-8
+############################# 访问路径、端口tomcat end ###############################
+
+################################ spring config start ###############################
+spring:
+  application:
+    name: spring-boot-plus
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  jackson:
+    date-format: yyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  banner:
+    charset: UTF-8
+    location: classpath:config/banner.txt
+  servlet:
+    # 文件上传配置
+    multipart:
+      # 指定上传文件的临时目录
+      location: /opt/upload/tmp
+      # 单个文件最大值
+      max-file-size: 10MB
+      # 单个请求文件总计最大值
+      max-request-size: 100MB
+
+# 当前项目maven激活环境，例如：dev/test，对应pom.xml中profile设置值
+---
+spring:
+  profiles:
+    active: @profileActive@
+
+# logback.xml中有详细的日志配置
+logging:
+  config: classpath:config/logback.xml
+  #  方便Spring Boot Admin页面上实时查看日志
+  file:
+    name: logs/spring-boot-plus.log
+################################ spring config end #################################
+
+
+############################## spring-boot-plus start ##############################
+spring-boot-plus:
+  # 是否启用ansi控制台输出有颜色的字体
+  enable-ansi: true
+  # 是否启用验证码
+  enable-verify-code: false
+  # 默认新建用户登陆初始化密码
+  login-init-salt: 666666
+  login-init-password: 123456
+  login-init-head: http://localhost:8888/api/resource/201908201013068.png
+  # 实现BaseEnum接口的枚举包
+  enum-packages: com.example.foorbar.enums
+  # Swagger路径
+  swagger-paths: /swagger-ui.html,/swagger-resources/**,/webjars/springfox-swagger-ui/**,/v2/api-docs,/csrf
+  # 拦截器配置
+  interceptor:
+    permission:
+      enabled: true
+      include-paths: /**
+    resource:
+      enabled: true
+      include-paths: ${spring-boot-plus.resource-access-patterns}
+    upload:
+      enabled: true
+      include-paths: /upload/**
+    download:
+      enabled: true
+      include-paths: /download/**
+
+  # AOP配置
+  aop:
+    log:
+      # 是否启用
+      enabled: true
+      # ORDER：请求和响应日志，按照执行顺序分开打印
+      # LINE：方法执行结束时，连续分开打印请求和响应日志
+      # MERGE：方法执行结束时，合并请求和响应日志，同时打印
+      log-print-type: ORDER
+      # 请求日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
+      request-log-format: true
+      # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
+      response-log-format: true
+
+  # 文件上传下载配置
+  # 上传路径配置
+  upload-path: /opt/upload/
+  # 资源访问路径
+  resource-access-path: /resource/
+  # 资源访问路径匹配：/resource/**
+  resource-access-patterns: ${spring-boot-plus.resource-access-path}**
+  # 资源访问全路径前缀：http://localhost:8888/resource/
+  resource-access-url: http://localhost:${server.port}${server.servlet.context-path}${spring-boot-plus.resource-access-path}
+  # 全局允许上传的类型
+  allow-upload-file-extensions: jpg,png,docx,xlsx,pptx,pdf
+  # 全局允许下载的类型
+  allow-download-file-extensions: jpg,png,docx,xlsx,pptx,pdf
+
+  ############################ CORS start ############################
+  # CORS跨域配置，默认允许跨域
+  cors:
+    # 是否启用跨域，默认启用
+    enable: true
+    # CORS过滤的路径，默认：/**
+    path: /**
+    # 允许访问的源
+    allowed-origins: '*'
+    # 允许访问的请求头
+    allowed-headers: '*'
+    # 是否允许发送cookie
+    allow-credentials: true
+    # 允许访问的请求方式
+    allowed-methods: OPTION,GET,POST
+    # 允许响应的头
+    exposed-headers: token
+    # 该响应的有效时间默认为30分钟，在有效时间内，浏览器无须为同一请求再次发起预检请求
+    max-age: 1800
+
+  ############################ CORS end ##############################
+
+  ########################## Resource start ##########################
+  # 静态资源访问配置
+  resource-handlers: |
+    /static/**=classpath:/static/
+    /templates/**=classpath:/templates/
+    swagger-ui.html=classpath:/META-INF/resources/
+    /webjars/**=classpath:/META-INF/resources/webjars/
+  ########################## Resource end ############################
+
+  ######################## Spring Shiro start ########################
+  shiro:
+    # 是否启用
+    enable: true
+    # shiro ini 多行字符串配置
+    filter-chain-definitions: |
+      /=anon
+      /static/**=anon
+      /templates/**=anon
+      /hello/world=anon
+      /sysLog/**=anon
+      /verificationCode/**=anon
+      /resource/**=anon
+      /index=anon
+      /enum=anon
+      /docs=anon
+      /getSysUserInfo=anon
+      /upload/**=anon
+      /test/**=anon
+      /fooBar/**=anon
+      /exampleOrder/**=anon
+      /admin/**=anon
+      /sysOperationLog/**=anon
+    # 权限配置
+    permission:
+        # 排除登陆登出相关
+      - urls: /login,/logout
+        permission: anon
+        # 排除静态资源
+      - urls: /static/**,/templates/**
+        permission: anon
+        # 排除Swagger
+      - urls: ${spring-boot-plus.swagger-paths}
+        permission: anon
+        # 排除SpringBootAdmin
+      - urls: /,/favicon.ico,/actuator/**,/instances/**,/assets/**,/sba-settings.js,/applications/**
+        permission: anon
+  ######################## Spring Shiro end ##########################
+
+  ############################ JWT start #############################
+  jwt:
+    # token请求头名称
+    token-name: token
+    # jwt密钥
+    secret: 666666
+    # 发行人
+    issuer: spring-boot-plus
+    # 观众
+    audience: web
+    # 默认过期时间1小时，单位：秒
+    expire-second: 36000
+    # 是否刷新token
+    refresh-token: true
+    # 刷新token的时间间隔，默认10分钟，单位：秒
+    refresh-token-countdown: 600
+    # redis校验jwt token是否存在,可选
+    redis-check: true
+    # true: 同一个账号只能是最后一次登陆token有效，false：同一个账号可多次登陆
+    single-login: false
+    # 盐值校验，如果不加自定义盐值，则使用secret校验
+    salt-check: true
+  ############################ JWT end ###############################
+
+############################### spring-boot-plus end ###############################
+
+
+############################### mybatis-plus start #################################
+mybatis-plus:
+  # 启动时是否检查MyBatis XML文件是否存在
+  check-config-location: true
+  # 支持统配符 * 或者 ; 分割
+  typeEnumsPackage: io.geekidea.springbootplus.*.enums
+  # MyBatis原生配置
+  configuration:
+    # 字段名称下划线转驼峰命名
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      # 全局默认主键类型
+      id-type: auto
+      # 逻辑已删除值(默认为 1)
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0
+  # mapper xml映射路径
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+################################ mybatis-plus end ##################################
+
+
+############################### HikariCP 数据源配置 start ################################
+---
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
+    type: com.zaxxer.hikari.HikariDataSource
+    cachePrepStmts: true
+    prepStmtCacheSize: 300
+    prepStmtCacheSqlLimit: 2048
+    useServerPrepStmts: true
+    useLocalSessionState: true
+    rewriteBatchedStatements: true
+    cacheResultSetMetadata: true
+    cacheServerConfiguration: true
+    elideSetAutoCommits: true
+    maintainTimeStats: false
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      idle-timeout: 10000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+############################### HikariCP 数据源配置 end ################################
+
+
+############################### Redis 公共配置 start ###############################
+---
+spring:
+  redis:
+    timeout: 10s
+    lettuce:
+      pool:
+        max-active: 200
+        max-idle: 8
+        max-wait: 10s
+        min-idle: 2
+      shutdown-timeout: 3s
+############################### Redis 公共配置 end ##################################
+
+
+#################################### Swagger start #################################
+# swagger配置
+swagger:
+  base:
+    package: io.geekidea.springbootplus;com.example
+  contact:
+    email: geekidea@qq.com
+    name: geekidea
+    url: ''
+  description: ''
+  title:
+  url: ''
+  version:
+#################################### Swagger end ###################################
+
+
+############################## Spring boot admin start ##############################
+---
+spring:
+  boot:
+    admin:
+      monitor:
+        period: 100000
+        status-lifetime: 100000
+        connect-timeout: 100000
+        read-timeout: 100000
+      context-path: /admin
+      client:
+        url: http://localhost:${server.port}/${server.servlet.context-path}/${spring.boot.admin.context-path}
+
+
+# 开启和暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+    logfile:
+      enabled: true         #可在线查看日志
+
+# 自定义项目信息，Spring Boot Admin展示使用
+info:
+  project-groupId: '@project.groupId@'
+  project-artifactId: '@project.artifactId@'
+  project-name: '@project.name@'
+  project-finalName: '@project.build.finalName@'
+  project-author: ${swagger.contact.name}
+  project-description: '@project.description@'
+  project-sourceEncoding: '@project.build.sourceEncoding@'
+  project-spring-boot-version: '@spring-boot.version@'
+  project-mybatis-plus-version: '@mybatis-plus-boot-starter.version@'
+  project-version: '@project.version@'
+############################## Spring boot admin end ###############################
+
