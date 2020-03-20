@@ -94,8 +94,8 @@ public class SpringBootPlusGenerator {
                 .setEntityLombokModel(true)
                 .setRestControllerStyle(true)
                 .setControllerMappingHyphenStyle(true)
-                .setVersionFieldName("version")
-                .setLogicDeleteFieldName("deleted");
+                .setVersionFieldName(GeneratorConstant.VERSION)
+                .setLogicDeleteFieldName(GeneratorConstant.DELETED);
 
         // 生成代码
         CodeGenerator codeGenerator = new CodeGenerator();
