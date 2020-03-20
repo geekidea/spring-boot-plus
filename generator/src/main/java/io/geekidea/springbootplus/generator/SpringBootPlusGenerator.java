@@ -44,14 +44,14 @@ public class SpringBootPlusGenerator {
         generatorProperties
                 .setMavenModuleName("framework")
                 .setParentPackage("io.geekidea.springbootplus.framework")
-                .setModuleName("log")
+                .setModuleName("system")
                 .setAuthor("geekidea")
                 .setFileOverride(true);
 
         // 设置表前缀
         // generatorProperties.setTablePrefix(Arrays.asList("example","tb"))
         // 设置表信息
-        generatorProperties.addTable("sys_operation_log","id");
+        generatorProperties.addTable("ip","id");
 
         // 主键默认为ID时，传入表名即可
         // generatorProperties.setTables("foo_bar","example_order");

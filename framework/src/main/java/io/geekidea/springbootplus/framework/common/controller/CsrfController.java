@@ -13,6 +13,7 @@
 
 package io.geekidea.springbootplus.framework.common.controller;
 
+import io.geekidea.springbootplus.framework.log.annotation.OperationLogIgnore;
 import io.geekidea.springbootplus.framework.util.UUIDUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +27,7 @@ import springfox.documentation.annotations.ApiIgnore;
  * @date 2019/12/10
  **/
 @ApiIgnore
+@OperationLogIgnore
 @RestController
 public class CsrfController {
 

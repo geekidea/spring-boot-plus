@@ -13,13 +13,12 @@
 
 package io.geekidea.springbootplus.framework.common.controller;
 
-import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.log.annotation.OperationLogIgnore;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -30,14 +29,23 @@ import springfox.documentation.annotations.ApiIgnore;
  * @date 2018/11/12
  */
 @Slf4j
-@RestController
+@Controller
+@OperationLogIgnore
 @Api(value = "Index API", tags = {"Index"})
 public class IndexController {
 
-    @GetMapping("/index")
-    public ApiResult<String> index() {
-        log.debug("index...");
-        return ApiResult.ok("Welcome to spring-boot-plus Project...");
+    @GetMapping("/")
+    @ResponseBody
+    public String home() {
+        return "Welcome to spring-boot-plus Project...";
+    }
+
+    /**
+     * swaggerUI
+     */
+    @GetMapping("")
+    public String swagger() {
+        return "redirect:/swagger-ui.html";
     }
 
 }

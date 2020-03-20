@@ -1,0 +1,23 @@
+server:
+  port: 8000
+
+# Spring Boot Admin Server配置
+spring:
+  boot:
+    admin:
+      monitor:
+        period: 100000
+        status-lifetime: 100000
+        connect-timeout: 100000
+        read-timeout: 100000
+      ui:
+        external-views:
+          - label: "🚀"
+            url: https:springboot.plus
+            order: 2000
+
+# Spring Boot Admin 登陆账号密码
+spring-boot-plus:
+  admin:
+    username: admin
+    password: admin

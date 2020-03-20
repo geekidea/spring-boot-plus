@@ -29,6 +29,8 @@ import io.geekidea.springbootplus.framework.log.service.SysOperationLogService;
 import io.geekidea.springbootplus.framework.properties.SpringBootPlusAopProperties;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.framework.common.bean.ClientInfo;
+import io.geekidea.springbootplus.framework.system.entity.Ip;
+import io.geekidea.springbootplus.framework.system.service.IpService;
 import io.geekidea.springbootplus.framework.system.util.LoginUtil;
 import io.geekidea.springbootplus.framework.util.*;
 import lombok.Data;
@@ -76,6 +78,9 @@ public abstract class BaseLogAop {
 
     @Autowired
     protected SysOperationLogService sysOperationLogService;
+
+    @Autowired
+    private IpService ipService;
 
     /**
      * 本地线程变量，保存请求参数信息到当前线程中
@@ -644,6 +649,11 @@ public abstract class BaseLogAop {
                             .setMobile(clientInfo.isMobile())
                             .setDeviceName(clientInfo.getDeviceName())
                             .setDeviceModel(clientInfo.getDeviceModel());
+                }
+                // 设置IP区域
+                Ip ip = ipService.getByIp(requestInfo.getIp());
+                if (ip != null){
+                    sysOperationLog.setArea(ip.getArea());
                 }
             }
 

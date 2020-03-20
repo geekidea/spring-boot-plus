@@ -16,6 +16,7 @@ package io.geekidea.springbootplus.framework.common.controller;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.common.enums.BaseEnum;
 import io.geekidea.springbootplus.framework.common.vo.EnumVo;
+import io.geekidea.springbootplus.framework.log.annotation.OperationLogIgnore;
 import io.geekidea.springbootplus.framework.util.BaseEnumUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @RestController
 @Slf4j
+@OperationLogIgnore
 @Api(value = "枚举字典", tags = {"枚举字典"})
 public class EnumController {
 

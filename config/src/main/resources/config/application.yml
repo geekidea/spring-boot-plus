@@ -149,18 +149,14 @@ spring-boot-plus:
       /static/**=anon
       /templates/**=anon
       /hello/world=anon
-      /sysLog/**=anon
       /verificationCode/**=anon
       /resource/**=anon
-      /index=anon
       /enum=anon
       /docs=anon
       /getSysUserInfo=anon
       /upload/**=anon
-      /test/**=anon
       /fooBar/**=anon
       /exampleOrder/**=anon
-      /admin/**=anon
       /sysOperationLog/**=anon
     # 权限配置
     permission:
@@ -291,27 +287,30 @@ swagger:
 spring:
   boot:
     admin:
+      client:
+        url: http://localhost:8000
+        username: admin
+        password: admin
+        instance:
+          name: spring-boot-plus
       monitor:
         period: 100000
         status-lifetime: 100000
         connect-timeout: 100000
         read-timeout: 100000
-      context-path: /admin
-      client:
-        url: http://localhost:${server.port}/${server.servlet.context-path}/${spring.boot.admin.context-path}
 
-
-# 开启和暴露所有端点
+# 开启和暴露端点
 management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
   endpoint:
     health:
       show-details: ALWAYS
     logfile:
-      enabled: true         #可在线查看日志
+      #可在线查看日志
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
 # 自定义项目信息，Spring Boot Admin展示使用
 info:

@@ -11,26 +11,26 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.system.param;
+package io.geekidea.springbootplus.admin.config;
 
-import io.geekidea.springbootplus.framework.core.pagination.BasePageParam;
-import io.swagger.annotations.ApiModel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * <p>
- * IP地址 查询参数对象
- * </p>
+ * WebMvc配置
  *
  * @author geekidea
- * @date 2019-10-11
+ * @date 2020/3/19
  */
-@Data
-@Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "IpPageParam对象", description = "IP地址查询参数")
-public class IpPageParam extends BasePageParam {
-    private static final long serialVersionUID = 1L;
+@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 设置项目静态资源访问
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
+    }
+
 }

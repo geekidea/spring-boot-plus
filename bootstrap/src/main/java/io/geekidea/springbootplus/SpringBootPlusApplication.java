@@ -13,7 +13,6 @@
 
 package io.geekidea.springbootplus;
 
-import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import io.geekidea.springbootplus.framework.util.PrintApplicationInfo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -37,7 +36,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableTransactionManagement
 @EnableConfigurationProperties
 @EnableSwagger2
-@EnableAdminServer
 @MapperScan({"io.geekidea.springbootplus.**.mapper","com.example.**.mapper"})
 @ServletComponentScan
 @SpringBootApplication(scanBasePackages = {"io.geekidea.springbootplus","com.example"})
