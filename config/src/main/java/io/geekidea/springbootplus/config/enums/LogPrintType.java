@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.log.enums;
+package io.geekidea.springbootplus.config.enums;
 
 /**
  * 日志打印类型

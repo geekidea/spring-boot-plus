@@ -13,7 +13,7 @@
 
 package io.geekidea.springbootplus.framework.util;
 
-import io.geekidea.springbootplus.framework.core.constant.DatePattern;
+import io.geekidea.springbootplus.config.constant.DatePattern;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

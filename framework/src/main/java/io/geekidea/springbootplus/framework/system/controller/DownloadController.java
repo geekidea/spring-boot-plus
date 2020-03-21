@@ -15,7 +15,7 @@ package io.geekidea.springbootplus.framework.system.controller;
 
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.util.DownloadUtil;
-import io.geekidea.springbootplus.framework.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

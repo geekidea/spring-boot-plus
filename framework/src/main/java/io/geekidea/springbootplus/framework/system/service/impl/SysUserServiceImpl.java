@@ -21,7 +21,7 @@ import io.geekidea.springbootplus.framework.common.exception.BusinessException;
 import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
 import io.geekidea.springbootplus.framework.core.pagination.PageUtil;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
-import io.geekidea.springbootplus.framework.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.framework.util.PasswordUtil;
 import io.geekidea.springbootplus.framework.util.PhoneUtil;
 import io.geekidea.springbootplus.framework.shiro.util.SaltUtil;

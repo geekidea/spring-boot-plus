@@ -15,14 +15,14 @@ package io.geekidea.springbootplus.config;
 
 import com.alibaba.fastjson.JSON;
 import io.geekidea.springbootplus.framework.util.IniUtil;
-import io.geekidea.springbootplus.framework.properties.SpringBootPlusFilterProperties;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusFilterProperties;
 import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
-import io.geekidea.springbootplus.framework.shiro.config.ShiroPermissionProperties;
-import io.geekidea.springbootplus.framework.shiro.config.ShiroProperties;
+import io.geekidea.springbootplus.config.properties.ShiroPermissionProperties;
+import io.geekidea.springbootplus.config.properties.ShiroProperties;
 import io.geekidea.springbootplus.framework.shiro.exception.ShiroConfigException;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtCredentialsMatcher;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtFilter;
-import io.geekidea.springbootplus.framework.shiro.jwt.JwtProperties;
+import io.geekidea.springbootplus.config.properties.JwtProperties;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtRealm;
 import io.geekidea.springbootplus.framework.system.service.LoginService;
 import lombok.extern.slf4j.Slf4j;

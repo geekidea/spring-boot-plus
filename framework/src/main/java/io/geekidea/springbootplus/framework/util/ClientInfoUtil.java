@@ -15,7 +15,7 @@ package io.geekidea.springbootplus.framework.util;
 
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-import io.geekidea.springbootplus.framework.core.constant.CommonConstant;
+import io.geekidea.springbootplus.config.constant.CommonConstant;
 import io.geekidea.springbootplus.framework.common.bean.ClientInfo;
 import io.geekidea.springbootplus.framework.common.bean.DeviceInfo;
 

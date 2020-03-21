@@ -11,15 +11,12 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.properties;
+package io.geekidea.springbootplus.config.properties;
 
 
-import io.geekidea.springbootplus.framework.shiro.config.ShiroProperties;
-import io.geekidea.springbootplus.framework.shiro.jwt.JwtProperties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,7 +26,6 @@ import java.util.List;
  *
  * @author geekidea
  * @date 2019-08-04
- * @since 1.2.0-RELEASE
  */
 @Data
 @Component

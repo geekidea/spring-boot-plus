@@ -16,8 +16,12 @@ package io.geekidea.springbootplus.config;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
+import io.geekidea.springbootplus.config.properties.SwaggerProperties;
+import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusConfigException;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.RequestHandler;
@@ -30,88 +34,67 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Swagger2全局配置
+ *
  * @author geekidea
  * @date 2018-11-08
  */
+@Slf4j
 @Configuration
 public class Swagger2Config {
 
-    /**
-     * 标题
-     */
-    @Value("${swagger.title}")
-    private String title;
+    @Autowired
+    private SwaggerProperties swaggerProperties;
 
     /**
-     * 基本包
+     * 扫描多包时，包路径的拆分符,分号
      */
-    @Value("${swagger.base.package}")
-    private String basePackage;
+    private static final String SPLIT_COMMA = ",";
 
     /**
-     * 描述
+     * 扫描多包时，包路径的拆分符,逗号
      */
-    @Value("${swagger.description}")
-    private String description;
-
-    /**
-     * URL
-     */
-    @Value("${swagger.url}")
-    private String url;
-
-    /**
-     * 作者
-     */
-    @Value("${swagger.contact.name}")
-    private String contactName;
-
-    /**
-     * 作者网址
-     */
-    @Value("${swagger.contact.url}")
-    private String contactUrl;
-
-    /**
-     * 作者邮箱
-     */
-    @Value("${swagger.contact.email}")
-    private String contactEmail;
-
-    /**
-     * 版本
-     */
-    @Value("${swagger.version}")
-    private String version;
+    private static final String SPLIT_SEMICOLON = ";";
 
     @Bean
     public Docket createRestApi() {
+        log.debug("swaggerProperties = " + swaggerProperties);
+        String basePackage = swaggerProperties.getBasePackage();
+        if (StringUtils.isBlank(basePackage)) {
+            throw new SpringBootPlusConfigException("Swagger basePackage不能为空");
+        }
+        String[] basePackages = null;
+        if (basePackage.contains(SPLIT_COMMA)) {
+            basePackages = basePackage.split(SPLIT_COMMA);
+        } else if (basePackage.contains(SPLIT_SEMICOLON)) {
+            basePackages = basePackage.split(SPLIT_SEMICOLON);
+        }
+        log.info("swagger scan basePackages:" + Arrays.toString(basePackages));
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(basePackage(basePackage))
+                .apis(basePackage(basePackages))
                 .paths(PathSelectors.any())
                 .build()
-                .globalOperationParameters(setHeaderToken())
-                ;
+                .globalOperationParameters(setHeaderToken());
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title(title)
-                .description(description)
-                .termsOfServiceUrl(url)
-                .contact(new Contact(contactName,contactUrl,contactEmail))
-                .version(version)
+                .title(swaggerProperties.getTitle())
+                .description(swaggerProperties.getDescription())
+                .termsOfServiceUrl(swaggerProperties.getUrl())
+                .contact(new Contact(swaggerProperties.getContactName(), swaggerProperties.getContactUrl(), swaggerProperties.getContactEmail()))
+                .version(swaggerProperties.getVersion())
                 .build();
     }
+
     private List<Parameter> setHeaderToken() {
         List<Parameter> pars = new ArrayList<>();
 
@@ -131,14 +114,14 @@ public class Swagger2Config {
     }
 
 
-    public static Predicate<RequestHandler> basePackage(final String basePackage) {
-        return input -> declaringClass(input).transform(handlerPackage(basePackage)).or(true);
+    public static Predicate<RequestHandler> basePackage(final String[] basePackages) {
+        return input -> declaringClass(input).transform(handlerPackage(basePackages)).or(true);
     }
 
-    private static Function<Class<?>, Boolean> handlerPackage(final String basePackage) {
+    private static Function<Class<?>, Boolean> handlerPackage(final String[] basePackages) {
         return input -> {
             // 循环判断匹配
-            for (String strPackage : basePackage.split(";")) {
+            for (String strPackage : basePackages) {
                 boolean isMatch = input.getPackage().getName().startsWith(strPackage);
                 if (isMatch) {
                     return true;

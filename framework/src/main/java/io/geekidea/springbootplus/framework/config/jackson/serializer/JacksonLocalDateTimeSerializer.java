@@ -17,7 +17,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import io.geekidea.springbootplus.framework.core.constant.DatePattern;
+import io.geekidea.springbootplus.config.constant.DatePattern;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

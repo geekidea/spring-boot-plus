@@ -14,12 +14,12 @@
 package io.geekidea.springbootplus.framework.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.geekidea.springbootplus.framework.core.constant.CommonConstant;
-import io.geekidea.springbootplus.framework.core.constant.CommonRedisKey;
+import io.geekidea.springbootplus.config.constant.CommonConstant;
+import io.geekidea.springbootplus.config.constant.CommonRedisKey;
 import io.geekidea.springbootplus.framework.util.PasswordUtil;
-import io.geekidea.springbootplus.framework.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
-import io.geekidea.springbootplus.framework.shiro.jwt.JwtProperties;
+import io.geekidea.springbootplus.config.properties.JwtProperties;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.framework.system.param.LoginParam;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;

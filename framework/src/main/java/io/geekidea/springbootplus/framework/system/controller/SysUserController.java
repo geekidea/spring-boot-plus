@@ -16,7 +16,7 @@ package io.geekidea.springbootplus.framework.system.controller;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.common.controller.BaseController;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
-import io.geekidea.springbootplus.framework.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.framework.system.entity.SysUser;
 import io.geekidea.springbootplus.framework.system.param.sysuser.ResetPasswordParam;
 import io.geekidea.springbootplus.framework.system.param.sysuser.SysUserPageParam;

@@ -13,6 +13,7 @@
 
 package io.geekidea.springbootplus.framework.shiro.jwt;
 
+import io.geekidea.springbootplus.config.properties.JwtProperties;
 import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.util.HttpServletResponseUtil;

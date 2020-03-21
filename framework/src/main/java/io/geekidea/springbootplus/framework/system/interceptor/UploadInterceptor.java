@@ -15,7 +15,7 @@ package io.geekidea.springbootplus.framework.system.interceptor;
 
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.util.HttpServletResponseUtil;
-import io.geekidea.springbootplus.framework.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;

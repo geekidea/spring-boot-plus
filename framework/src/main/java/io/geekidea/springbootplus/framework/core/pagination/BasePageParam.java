@@ -13,7 +13,7 @@
 
 package io.geekidea.springbootplus.framework.core.pagination;
 
-import io.geekidea.springbootplus.framework.core.constant.CommonConstant;
+import io.geekidea.springbootplus.config.constant.CommonConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

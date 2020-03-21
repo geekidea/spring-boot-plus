@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.core.constant;
+package io.geekidea.springbootplus.config.constant;
 
 /**
  * <p>

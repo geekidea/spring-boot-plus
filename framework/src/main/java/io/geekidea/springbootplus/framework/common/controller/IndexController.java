@@ -41,9 +41,9 @@ public class IndexController {
     }
 
     /**
-     * swaggerUI
+     * SwaggerUI
      */
-    @GetMapping("")
+    @GetMapping("/docs")
     public String swagger() {
         return "redirect:/swagger-ui.html";
     }

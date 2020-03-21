@@ -13,12 +13,12 @@
 
 package io.geekidea.springbootplus.framework.shiro.cache.impl;
 
-import io.geekidea.springbootplus.framework.core.constant.CommonRedisKey;
+import io.geekidea.springbootplus.config.constant.CommonRedisKey;
 import io.geekidea.springbootplus.framework.util.ClientInfoUtil;
 import io.geekidea.springbootplus.framework.util.HttpServletRequestUtil;
 import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.framework.shiro.convert.ShiroMapstructConvert;
-import io.geekidea.springbootplus.framework.shiro.jwt.JwtProperties;
+import io.geekidea.springbootplus.config.properties.JwtProperties;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.framework.common.bean.ClientInfo;
 import io.geekidea.springbootplus.framework.shiro.vo.JwtTokenRedisVo;

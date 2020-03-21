@@ -13,7 +13,7 @@
 
 package io.geekidea.springbootplus.framework.system.util;
 
-import io.geekidea.springbootplus.framework.core.constant.CommonRedisKey;
+import io.geekidea.springbootplus.config.constant.CommonRedisKey;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.framework.shiro.util.JwtUtil;
 import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserRedisVo;

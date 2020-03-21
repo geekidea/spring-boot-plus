@@ -13,7 +13,7 @@
 
 package io.geekidea.springbootplus.framework.shiro.util;
 
-import io.geekidea.springbootplus.framework.shiro.jwt.JwtProperties;
+import io.geekidea.springbootplus.config.properties.JwtProperties;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;

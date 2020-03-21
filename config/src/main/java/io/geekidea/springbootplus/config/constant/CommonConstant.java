@@ -11,13 +11,10 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.core.constant;
-
-import java.util.Arrays;
-import java.util.List;
+package io.geekidea.springbootplus.config.constant;
 
 /**
- * 常量
+ * 公共常量
  *
  * @author geekidea
  * @date 2018-11-08

@@ -11,32 +11,44 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.shiro.config;
-
-import lombok.Data;
+package io.geekidea.springbootplus.config.constant;
 
 /**
- * Shiro权限配置映射类
- *
+ * <p>
+ *     日期格式常量
+ * </p>
  * @author geekidea
- * @date 2019-09-28
- * @since 1.3.0.RELEASE
- **/
-@Data
-public class ShiroPermissionProperties {
+ * @date 2018-11-08
+ */
+public interface DatePattern {
 
     /**
-     * 路径
+     * 年-月-日
      */
-    private String url;
+    String YYYY_MM_DD = "yyyy-MM-dd";
     /**
-     * 路径数组
+     * 年-月-日 时:分
      */
-    private String[] urls;
+    String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
+    /**
+     * 年-月-日 时:分:秒
+     */
+    String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+    /**
+     * 年-月-日 时:分:秒:毫秒
+     */
+    String YYYY_MM_DD_HH_MM_SS_S = "yyyy-MM-dd HH:mm:ss.S";
 
     /**
-     * 权限
+     * 时:分
      */
-    private String permission;
-
+    String HH_MM = "HH:mm";
+    /**
+     * 时:分:秒
+     */
+    String HH_MM_SS = "HH:mm:ss";
+    /**
+     * 时:分:秒:毫秒
+     */
+    String HH_MM_SS_S = "HH:mm:ss:S";
 }

@@ -268,17 +268,19 @@ spring:
 
 #################################### Swagger start #################################
 # swagger配置
-swagger:
-  base:
-    package: io.geekidea.springbootplus;com.example
-  contact:
-    email: geekidea@qq.com
-    name: geekidea
-    url: ''
-  description: ''
-  title:
-  url: ''
-  version:
+---
+spring-boot-plus:
+  swagger:
+    base:
+      package: io.geekidea.springbootplus,com.example
+    contact:
+      email:
+      name: springboo.plus
+      url: https://springboot.plus
+    description:
+    title: Spring-Boot-Plus Api
+    url: https://shang.qq.com/wpa/qunwpa?idkey=78b8584c34d411cfc990bd57c71938ef7090c53d21b7c017608c95ad80b63f4e
+    version: ${project.version}
 #################################### Swagger end ###################################
 
 

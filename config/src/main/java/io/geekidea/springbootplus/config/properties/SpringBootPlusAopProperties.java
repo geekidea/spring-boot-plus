@@ -11,14 +11,13 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.properties;
+package io.geekidea.springbootplus.config.properties;
 
-import io.geekidea.springbootplus.framework.log.enums.LogPrintType;
+import io.geekidea.springbootplus.config.enums.LogPrintType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,7 +25,6 @@ import org.springframework.stereotype.Component;
  *
  * @author geekidea
  * @date 2019-09-29
- * @since 1.3.0.RELEASE
  **/
 @Data
 @Component
@@ -68,13 +66,6 @@ public class SpringBootPlusAopProperties {
          */
         private boolean responseLogFormat = true;
 
-    }
-
-    public static enum PrintType {
-        /**
-         * 请求和响应分开，按照执行顺序打印
-         **/
-        order,
     }
 
 }

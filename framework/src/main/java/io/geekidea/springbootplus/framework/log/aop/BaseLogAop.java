@@ -17,16 +17,16 @@ import com.alibaba.fastjson.JSONObject;
 import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusException;
-import io.geekidea.springbootplus.framework.core.constant.CommonConstant;
+import io.geekidea.springbootplus.config.constant.CommonConstant;
 import io.geekidea.springbootplus.framework.log.annotation.Module;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLogIgnore;
 import io.geekidea.springbootplus.framework.log.bean.OperationLogInfo;
 import io.geekidea.springbootplus.framework.log.bean.RequestInfo;
 import io.geekidea.springbootplus.framework.log.entity.SysOperationLog;
-import io.geekidea.springbootplus.framework.log.enums.LogPrintType;
+import io.geekidea.springbootplus.config.enums.LogPrintType;
 import io.geekidea.springbootplus.framework.log.service.SysOperationLogService;
-import io.geekidea.springbootplus.framework.properties.SpringBootPlusAopProperties;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusAopProperties;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.framework.common.bean.ClientInfo;
 import io.geekidea.springbootplus.framework.system.entity.Ip;
@@ -152,39 +152,6 @@ public abstract class BaseLogAop {
     protected abstract void finish(RequestInfo requestInfo, OperationLogInfo operationLogInfo, Object result, Exception exception);
 
     /**
-     * 正常调用返回或者异常结束后调用此方法
-     *
-     * @param result
-     * @param exception
-     */
-    protected void handleAfterReturn(Object result, Exception exception) {
-        // 获取RequestInfo
-        RequestInfo requestInfo = requestInfoThreadLocal.get();
-        // 获取OperationLogInfo
-        OperationLogInfo operationLogInfo = operationLogThreadLocal.get();
-        // 调用抽象方法，是否保存日志操作，需要子类重写该方法，手动调用saveSysOperationLog
-        finish(requestInfo, operationLogInfo, result, null);
-        // 释放资源
-        remove();
-    }
-
-    /**
-     * 处理异常
-     *
-     * @param exception
-     */
-    public void handleAfterThrowing(Exception exception) {
-        // 获取RequestInfo
-        RequestInfo requestInfo = requestInfoThreadLocal.get();
-        // 获取OperationLogInfo
-        OperationLogInfo operationLogInfo = operationLogThreadLocal.get();
-        // 调用抽象方法，是否保存日志操作，需要子类重写该方法，手动调用saveSysOperationLog
-        finish(requestInfo, operationLogInfo, null, exception);
-        // 释放资源
-        remove();
-    }
-
-    /**
      * 处理
      *
      * @param joinPoint
@@ -206,6 +173,12 @@ public abstract class BaseLogAop {
             // HTTP请求信息对象
             RequestInfo requestInfo = new RequestInfo();
 
+            // 请求全路径
+            String path = request.getRequestURI();
+            requestInfo.setPath(path);
+
+            // TODO 通过路径排出，通过注解排除，@LogIgnore
+
             // 获取请求类名和方法名称
             Signature signature = joinPoint.getSignature();
 
@@ -216,9 +189,6 @@ public abstract class BaseLogAop {
             // 处理操作日志信息
             handleOperationLogInfo(method);
 
-            // 请求全路径
-            String path = request.getRequestURI();
-            requestInfo.setPath(path);
             // IP地址
             String ip = IpUtil.getRequestIp();
             requestInfo.setIp(ip);
@@ -272,6 +242,41 @@ public abstract class BaseLogAop {
         }
         return result;
     }
+
+
+    /**
+     * 正常调用返回或者异常结束后调用此方法
+     *
+     * @param result
+     * @param exception
+     */
+    protected void handleAfterReturn(Object result, Exception exception) {
+        // 获取RequestInfo
+        RequestInfo requestInfo = requestInfoThreadLocal.get();
+        // 获取OperationLogInfo
+        OperationLogInfo operationLogInfo = operationLogThreadLocal.get();
+        // 调用抽象方法，是否保存日志操作，需要子类重写该方法，手动调用saveSysOperationLog
+        finish(requestInfo, operationLogInfo, result, null);
+        // 释放资源
+        remove();
+    }
+
+    /**
+     * 处理异常
+     *
+     * @param exception
+     */
+    public void handleAfterThrowing(Exception exception) {
+        // 获取RequestInfo
+        RequestInfo requestInfo = requestInfoThreadLocal.get();
+        // 获取OperationLogInfo
+        OperationLogInfo operationLogInfo = operationLogThreadLocal.get();
+        // 调用抽象方法，是否保存日志操作，需要子类重写该方法，手动调用saveSysOperationLog
+        finish(requestInfo, operationLogInfo, null, exception);
+        // 释放资源
+        remove();
+    }
+
 
     private void handleOperationLogInfo(Method method) {
         // 设置控制器类名称和方法名称
@@ -473,7 +478,7 @@ public abstract class BaseLogAop {
                 return AnsiUtil.getAnsi(Ansi.Color.RED, responseResultString);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("格式化响应日志异常", e);
         }
         return responseResultString;
     }
@@ -652,7 +657,7 @@ public abstract class BaseLogAop {
                 }
                 // 设置IP区域
                 Ip ip = ipService.getByIp(requestInfo.getIp());
-                if (ip != null){
+                if (ip != null) {
                     sysOperationLog.setArea(ip.getArea());
                 }
             }

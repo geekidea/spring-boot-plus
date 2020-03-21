@@ -14,8 +14,8 @@
 package io.geekidea.springbootplus.framework.system.controller;
 
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
-import io.geekidea.springbootplus.framework.core.constant.CommonConstant;
-import io.geekidea.springbootplus.framework.core.constant.CommonRedisKey;
+import io.geekidea.springbootplus.config.constant.CommonConstant;
+import io.geekidea.springbootplus.config.constant.CommonRedisKey;
 import io.geekidea.springbootplus.framework.util.UUIDUtil;
 import io.geekidea.springbootplus.framework.util.VerificationCode;
 import io.swagger.annotations.Api;

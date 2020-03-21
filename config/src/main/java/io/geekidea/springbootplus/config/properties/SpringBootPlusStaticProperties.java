@@ -11,12 +11,11 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.properties;
+package io.geekidea.springbootplus.config.properties;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -26,7 +25,6 @@ import javax.annotation.PostConstruct;
  *
  * @author geekidea
  * @date 2019-10-11
- * @since 1.3.1.RELEASE
  **/
 @Slf4j
 @Data

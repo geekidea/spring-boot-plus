@@ -10,18 +10,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.geekidea.springbootplus.config;
 
-import lombok.extern.slf4j.Slf4j;
+package io.geekidea.springbootplus.config.properties;
+
+import lombok.Data;
 
 /**
- * spring-boot-plus配置
+ * Shiro权限配置映射类
  *
  * @author geekidea
- * @date 2019/8/4
- * @since 1.2.0-RELEASE
- */
-@Slf4j
-public class SpringBootPlusConfig {
+ * @date 2019-09-28
+ **/
+@Data
+public class ShiroPermissionProperties {
+
+    /**
+     * 路径
+     */
+    private String url;
+    /**
+     * 路径数组
+     */
+    private String[] urls;
+
+    /**
+     * 权限
+     */
+    private String permission;
 
 }

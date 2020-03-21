@@ -11,39 +11,47 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.shiro.config;
+package io.geekidea.springbootplus.config.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
-
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
- * Shiro配置映射类
+ * Filter配置属性
  *
  * @author geekidea
- * @date 2019-09-28
- * @since 1.3.0.RELEASE
+ * @date 2019-09-29
  **/
 @Data
-@ConfigurationProperties(prefix = "spring-boot-plus.shiro")
-public class ShiroProperties {
+@Component
+@ConfigurationProperties(prefix = "spring-boot-plus.filter")
+public class SpringBootPlusFilterProperties {
 
     /**
-     * 是否启用
-     */
-    private boolean enable;
-
-    /**
-     * 路径权限配置
-     */
-    private String filterChainDefinitions;
-
-    /**
-     * 权限配置集合
+     * 请求路径Filter配置
      */
     @NestedConfigurationProperty
-    private List<ShiroPermissionProperties> permission;
+    private FilterConfig requestPath = new FilterConfig();
 
+    @Data
+    public static class FilterConfig {
+
+        /**
+         * 是否启用
+         */
+        private boolean enabled;
+
+        /**
+         * 包含的路径
+         */
+        private String[] includePaths;
+
+        /**
+         * 排除路径
+         */
+        private String[] excludePaths;
+
+    }
 }

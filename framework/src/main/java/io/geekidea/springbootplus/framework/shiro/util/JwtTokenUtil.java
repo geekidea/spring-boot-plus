@@ -14,7 +14,7 @@
 package io.geekidea.springbootplus.framework.shiro.util;
 
 import io.geekidea.springbootplus.framework.util.HttpServletRequestUtil;
-import io.geekidea.springbootplus.framework.shiro.jwt.JwtProperties;
+import io.geekidea.springbootplus.config.properties.JwtProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

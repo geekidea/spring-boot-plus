@@ -14,7 +14,7 @@
 package io.geekidea.springbootplus.config;
 
 
-import io.geekidea.springbootplus.framework.properties.SpringBootPlusCorsProperties;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusCorsProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

@@ -13,7 +13,7 @@
 
 package io.geekidea.springbootplus.framework.util;
 
-import io.geekidea.springbootplus.framework.core.constant.CommonConstant;
+import io.geekidea.springbootplus.config.constant.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
