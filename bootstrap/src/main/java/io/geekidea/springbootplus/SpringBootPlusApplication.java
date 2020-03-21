@@ -35,7 +35,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableScheduling
 @EnableTransactionManagement
 @EnableConfigurationProperties
-@EnableSwagger2
 @MapperScan({"io.geekidea.springbootplus.**.mapper","com.example.**.mapper"})
 @ServletComponentScan
 @SpringBootApplication(scanBasePackages = {"io.geekidea.springbootplus","com.example"})

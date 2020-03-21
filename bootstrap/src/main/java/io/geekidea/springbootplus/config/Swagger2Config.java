@@ -13,27 +13,36 @@
 
 package io.geekidea.springbootplus.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import io.geekidea.springbootplus.config.properties.SwaggerProperties;
 import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusConfigException;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,10 +52,14 @@ import java.util.List;
  * Swagger2全局配置
  *
  * @author geekidea
- * @date 2018-11-08
+ * @date 2020/3/21
  */
 @Slf4j
 @Configuration
+@EnableSwagger2
+@EnableKnife4j
+@Import(BeanValidatorPluginsConfiguration.class)
+@ConditionalOnProperty(value = {"knife4j.enable"}, matchIfMissing = true)
 public class Swagger2Config {
 
     @Autowired
@@ -64,6 +77,45 @@ public class Swagger2Config {
 
     @Bean
     public Docket createRestApi() {
+        // 获取需要扫描的包
+        String[] basePackages = getBasePackages();
+        ApiSelectorBuilder apiSelectorBuilder = new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select();
+        // 如果扫描的包为空，则默认扫描类上有@Api注解的类
+        if (ArrayUtils.isEmpty(basePackages)) {
+            apiSelectorBuilder.apis(RequestHandlerSelectors.withClassAnnotation(Api.class));
+        } else {
+            // 扫描指定的包
+            apiSelectorBuilder.apis(basePackage(basePackages));
+        }
+        Docket docket = apiSelectorBuilder.paths(PathSelectors.any())
+                .build()
+                .globalOperationParameters(getParameters());
+        return docket;
+    }
+
+    /**
+     * 获取apiInfo
+     *
+     * @return
+     */
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title(swaggerProperties.getTitle())
+                .description(swaggerProperties.getDescription())
+                .termsOfServiceUrl(swaggerProperties.getUrl())
+                .contact(new Contact(swaggerProperties.getContactName(), swaggerProperties.getContactUrl(), swaggerProperties.getContactEmail()))
+                .version(swaggerProperties.getVersion())
+                .build();
+    }
+
+    /**
+     * 获取扫描的包
+     *
+     * @return
+     */
+    public String[] getBasePackages() {
         log.debug("swaggerProperties = " + swaggerProperties);
         String basePackage = swaggerProperties.getBasePackage();
         if (StringUtils.isBlank(basePackage)) {
@@ -76,41 +128,27 @@ public class Swagger2Config {
             basePackages = basePackage.split(SPLIT_SEMICOLON);
         }
         log.info("swagger scan basePackages:" + Arrays.toString(basePackages));
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(basePackage(basePackages))
-                .paths(PathSelectors.any())
-                .build()
-                .globalOperationParameters(setHeaderToken());
+        return basePackages;
     }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title(swaggerProperties.getTitle())
-                .description(swaggerProperties.getDescription())
-                .termsOfServiceUrl(swaggerProperties.getUrl())
-                .contact(new Contact(swaggerProperties.getContactName(), swaggerProperties.getContactUrl(), swaggerProperties.getContactEmail()))
-                .version(swaggerProperties.getVersion())
-                .build();
-    }
-
-    private List<Parameter> setHeaderToken() {
-        List<Parameter> pars = new ArrayList<>();
-
-        // token请求头
-        String testTokenValue = "";
-        ParameterBuilder tokenPar = new ParameterBuilder();
-        Parameter tokenParameter = tokenPar
+    /**
+     * 添加额外参数
+     *
+     * @return
+     */
+    private List<Parameter> getParameters() {
+        List<Parameter> parameters = new ArrayList<>();
+        // 设置Token请求头参数
+        Parameter tokenParameter = new ParameterBuilder()
                 .name(JwtTokenUtil.getTokenName())
                 .description("Token Request Header")
                 .modelRef(new ModelRef("string"))
                 .parameterType("header")
                 .required(false)
-                .defaultValue(testTokenValue)
+                .defaultValue(swaggerProperties.getTokenDefaultValue())
                 .build();
-        pars.add(tokenParameter);
-        return pars;
+        parameters.add(tokenParameter);
+        return parameters;
     }
 
 

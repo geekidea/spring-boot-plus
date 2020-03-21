@@ -80,9 +80,11 @@ public class PrintApplicationInfo {
                 "                                                                                                ";
 
         String homeUrl = "http://" + IpUtil.getLocalhostIp() + ":" + port + contextPath;
-        String swaggerUrl = "http://" + IpUtil.getLocalhostIp() + ":" + port + contextPath + "/docs";
-        log.info("home:{}",homeUrl);
-        log.info("docs:{}",swaggerUrl);
+        String swaggerUrl = "http://" + IpUtil.getLocalhostIp() + ":" + port + contextPath + "/swagger-ui.html";
+        String swaggerDocUrl = "http://" + IpUtil.getLocalhostIp() + ":" + port + contextPath + "/doc.html";
+        log.info("home:    {}",homeUrl);
+        log.info("swagger: {}",swaggerUrl);
+        log.info("document:{}",swaggerDocUrl);
         log.info("spring-boot-plus project start success...........");
         if ("dev".equals(profileActive)){
             log.info("\n{}",AnsiUtil.getAnsi(Ansi.Color.BLUE,startSuccess));

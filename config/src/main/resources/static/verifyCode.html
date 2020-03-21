@@ -35,10 +35,10 @@
 
 <script type="text/javascript">
     function changeImage() {
-        document.getElementById('imageCode').src = "http://localhost:8888/verificationCode/getImage?time=" + new Date().getTime();
+        document.getElementById('imageCode').src = "http://localhost:8888/api/verificationCode/getImage?time=" + new Date().getTime();
     }
 
-    var url = "http://localhost:8888/verificationCode/getBase64Image";
+    var url = "http://localhost:8888/api/verificationCode/getBase64Image";
 
     function changeBase64Image() {
         var  xhr = new XMLHttpRequest();

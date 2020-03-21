@@ -59,7 +59,7 @@ spring-boot-plus:
   enable-verify-code: false
   # 默认新建用户登陆初始化密码
   login-init-salt: 666666
-  login-init-password: 123456
+  login-init-password: admin
   login-init-head: http://localhost:8888/api/resource/201908201013068.png
   # 实现BaseEnum接口的枚举包
   enum-packages: com.example.foorbar.enums
@@ -134,9 +134,9 @@ spring-boot-plus:
   # 静态资源访问配置
   resource-handlers: |
     /static/**=classpath:/static/
-    /templates/**=classpath:/templates/
     swagger-ui.html=classpath:/META-INF/resources/
     /webjars/**=classpath:/META-INF/resources/webjars/
+    doc.html=classpath:/META-INF/resources/
   ########################## Resource end ############################
 
   ######################## Spring Shiro start ########################
@@ -147,7 +147,6 @@ spring-boot-plus:
     filter-chain-definitions: |
       /=anon
       /static/**=anon
-      /templates/**=anon
       /hello/world=anon
       /verificationCode/**=anon
       /resource/**=anon
@@ -158,6 +157,10 @@ spring-boot-plus:
       /fooBar/**=anon
       /exampleOrder/**=anon
       /sysOperationLog/**=anon
+      /doc.html=anon
+      /webjars/**=anon
+      /null/swagger-resources/**=anon
+      /index.html=anon
     # 权限配置
     permission:
         # 排除登陆登出相关
@@ -268,19 +271,27 @@ spring:
 
 #################################### Swagger start #################################
 # swagger配置
+knife4j:
+  enable: true
+  basic:
+    enable: true
+    username: admin
+    password: admin
 ---
 spring-boot-plus:
   swagger:
     base:
       package: io.geekidea.springbootplus,com.example
     contact:
-      email:
-      name: springboo.plus
+      email: geekidea@qq.com
+      name: geekidea
       url: https://springboot.plus
     description:
-    title: Spring-Boot-Plus Api
-    url: https://shang.qq.com/wpa/qunwpa?idkey=78b8584c34d411cfc990bd57c71938ef7090c53d21b7c017608c95ad80b63f4e
+    title: spring-boot-plus Api Documents
+    url: https://springboot.plus
     version: ${project.version}
+    # 测试接口时，自动填充token的值
+    token-default-value:
 #################################### Swagger end ###################################
 
 

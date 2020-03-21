@@ -35,9 +35,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IndexController {
 
     @GetMapping("/")
-    @ResponseBody
     public String home() {
-        return "Welcome to spring-boot-plus Project...";
+        return "redirect:/index.html";
     }
 
     /**

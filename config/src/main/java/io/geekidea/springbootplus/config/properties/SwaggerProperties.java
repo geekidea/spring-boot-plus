@@ -73,4 +73,10 @@ public class SwaggerProperties {
      */
     private String version;
 
+    /**
+     * 测试接口时，自动填充token的值
+     * 注意，仅用于开发和测试环境，生成环境请不要设置值
+     */
+    private String tokenDefaultValue;
+
 }

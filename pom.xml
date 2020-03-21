@@ -51,7 +51,6 @@
         <spring-boot-admin.version>2.2.2</spring-boot-admin.version>
         <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
         <velocity.version>2.2</velocity.version>
-        <swagger2.version>2.9.2</swagger2.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.6</commons-io.version>
@@ -72,6 +71,8 @@
         <jwt.version>3.10.0</jwt.version>
         <guava.version>28.2-jre</guava.version>
         <snakeyaml.version>1.25</snakeyaml.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <knife4j.version>2.0.2</knife4j.version>
 
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -181,6 +182,13 @@
                 <version>${swagger2.version}</version>
             </dependency>
             <!-- swagger end -->
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>com.alibaba</groupId>
