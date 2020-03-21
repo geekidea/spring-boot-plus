@@ -19,9 +19,9 @@ import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import io.geekidea.springbootplus.config.properties.SwaggerProperties;
 import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusConfigException;
-import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.RequestHandler;
+import springfox.documentation.annotations.ApiIgnore;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -44,6 +45,11 @@ import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -75,6 +81,18 @@ public class Swagger2Config {
      */
     private static final String SPLIT_SEMICOLON = ";";
 
+    /**
+     * Swagger忽略的参数类型
+     */
+    private Class[] ignoredParameterTypes = new Class[]{
+            ServletRequest.class,
+            ServletResponse.class,
+            HttpServletRequest.class,
+            HttpServletResponse.class,
+            HttpSession.class,
+            ApiIgnore.class
+    };
+
     @Bean
     public Docket createRestApi() {
         // 获取需要扫描的包
@@ -91,6 +109,8 @@ public class Swagger2Config {
         }
         Docket docket = apiSelectorBuilder.paths(PathSelectors.any())
                 .build()
+                .enable(swaggerProperties.isEnable())
+                .ignoredParameterTypes(ignoredParameterTypes)
                 .globalOperationParameters(getParameters());
         return docket;
     }
@@ -137,17 +157,23 @@ public class Swagger2Config {
      * @return
      */
     private List<Parameter> getParameters() {
+        // 获取自定义参数配置
+        List<SwaggerProperties.ParameterConfig> parameterConfig = swaggerProperties.getParameterConfig();
+        if (CollectionUtils.isEmpty(parameterConfig)){
+            return null;
+        }
         List<Parameter> parameters = new ArrayList<>();
-        // 设置Token请求头参数
-        Parameter tokenParameter = new ParameterBuilder()
-                .name(JwtTokenUtil.getTokenName())
-                .description("Token Request Header")
-                .modelRef(new ModelRef("string"))
-                .parameterType("header")
-                .required(false)
-                .defaultValue(swaggerProperties.getTokenDefaultValue())
-                .build();
-        parameters.add(tokenParameter);
+        parameterConfig.forEach(parameter -> {
+            // 设置自定义参数
+            parameters.add(new ParameterBuilder()
+                    .name(parameter.getName())
+                    .description(parameter.getDescription())
+                    .modelRef(new ModelRef(parameter.getDataType()))
+                    .parameterType(parameter.getType())
+                    .required(parameter.isRequired())
+                    .defaultValue(parameter.getDefaultValue())
+                    .build());
+        });
         return parameters;
     }
 

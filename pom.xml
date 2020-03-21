@@ -486,7 +486,7 @@
     </build>
 
     <!--MAVEN打包选择运行环境-->
-    <!-- dev:开发环境(默认) test:测试环境 uat:用户验收测试 prod:生产环境 -->
+    <!-- dev:开发环境(默认) test:测试环境 uat:用户验收 prod:生产环境 -->
     <profiles>
         <profile>
             <id>dev</id>

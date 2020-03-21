@@ -1,16 +1,21 @@
 spring-boot-plus:
   # 是否启用ansi控制台输出有颜色的字体，local环境建议开启，服务器环境设置为false
   enable-ansi: false
+  # 当前环境服务IP地址
+  server-ip:
+  # 生产环境禁用Swagger
+  swagger:
+    enable: false
 
   # AOP配置
   aop:
     log:
       # 是否启用
       enabled: true
-      # 1.请求和响应分开，按照执行顺序打印
-      # 2.ThreadLocal线程绑定，方法执行结束时，连续打印请求和响应日志
-      # 3.ThreadLocal线程绑定，方法执行结束时，同时打印请求和响应日志
-      print-type: 1
+      # ORDER：请求和响应日志，按照执行顺序分开打印
+      # LINE：方法执行结束时，连续分开打印请求和响应日志
+      # MERGE：方法执行结束时，合并请求和响应日志，同时打印
+      log-print-type: LINE
       # 请求日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
       request-log-format: false
       # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false

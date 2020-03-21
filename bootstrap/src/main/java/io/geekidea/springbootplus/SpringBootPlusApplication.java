@@ -41,6 +41,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SpringBootPlusApplication {
 
     public static void main(String[] args) {
+        // 打印项目提示
+        PrintApplicationInfo.printTip();
         // 启动spring-boot-plus
         ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusApplication.class, args);
         // 打印项目信息

@@ -38,6 +38,11 @@ public class SpringBootPlusProperties {
     private boolean enableAnsi;
 
     /**
+     * 项目IP或域名地址
+     */
+    private String serverIp;
+
+    /**
      * 是否启用验证码
      */
     private boolean enableVerifyCode;

@@ -20,38 +20,49 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * <p>
- *  打印项目信息
+ * 打印项目信息
  * </p>
+ *
  * @author geekidea
  * @date 2019-05-08
  **/
 @Slf4j
 public class PrintApplicationInfo {
 
-
     /**
      * 执行之前，打印前置条件提示
      */
-    public static void printTip(){
+    public static void printTip() {
         StringBuffer tip = new StringBuffer();
-        tip.append("======================================================================================\n");
+        tip.append("===========================================================================================\n");
         tip.append("                                                                                  \n");
         tip.append("                               !!!准备工作!!!                                      \n");
-        tip.append(" 1.请先在MySQL中创建数据库，默认数据库名称为：spring_boot_plus                        \n");
-        tip.append(" 2.数据库脚本在项目docs/mysql_spring_boot_plus.sql                                       \n");
-        tip.append(" 3.请先启动redis服务                                                               \n");
-        tip.append(" 4.更多注意事项：请查看: https://springboot.plus/faq.html                                                                                 \n");
+        tip.append(" 1.导入SQL初始化脚本：docs/db，根据不同数据库导入对应SQL脚本并修改链接等信息配置\n");
+        tip.append(" 2.启动Redis服务，必要条件\n");
+        tip.append(" 3.启动SpringBootAdmin Server，可选操作，admin模块中，启动SpringBootPlusAdminApplication\n");
+        tip.append(" 4.根据项目需要，修改项目配置，请先查看官网配置文档：https://springboot.plus/config/\n");
+        tip.append(" 5.项目模块说明：\n");
+        tip.append("    admin：       SpringBootAdmin Server启动模块\n");
+        tip.append("    bootstrap：   项目启动模块\n");
+        tip.append("    config：      项目配置模块\n");
+        tip.append("    distribution：项目打包模块，打包时，请先选中Maven Profiles中的release和对应环境\n");
+        tip.append("    example：     业务自定义模块，自己的业务代码可在example下进行，也可以再创建模块\n");
+        tip.append("    framework：   项目核心框架模块\n");
+        tip.append("    generator：   代码生成模块，启动类：SpringBootPlusGenerator，请根据实际情况进行配置\n");
+        tip.append("    scheduled：   任务调度模块\n");
+        tip.append(" 6.FAQ：https://springboot.plus/faq.html\n");
+        tip.append(" 7.如开发中遇到bug及问题，欢迎提交ISSUES：https://github.com/geekidea/spring-boot-plus/issues\n");
+        tip.append(" 8.QQ：625301326，进群答案：springboot.plus\n");
         tip.append("                                                                                  \n");
-        tip.append("======================================================================================\n");
-        log.info("\n{}",Ansi.ansi().eraseScreen().fg(Ansi.Color.YELLOW).a(tip.toString()).reset().toString());
+        tip.append("===========================================================================================\n");
+            log.info("\n{}", Ansi.ansi().eraseScreen().fg(Ansi.Color.YELLOW).a(tip.toString()).reset().toString());
     }
 
     /**
      * 启动成功之后，打印项目信息
      */
-    public static void print(ConfigurableApplicationContext context){
+    public static void print(ConfigurableApplicationContext context) {
         ConfigurableEnvironment environment = context.getEnvironment();
-
         // 项目名称
         String projectFinalName = environment.getProperty("info.project-finalName");
         // 项目版本
@@ -60,14 +71,19 @@ public class PrintApplicationInfo {
         String profileActive = environment.getProperty("spring.profiles.active");
         // 项目路径
         String contextPath = environment.getProperty("server.servlet.context-path");
+        // 项目IP或域名地址
+        String serverIp = environment.getProperty("spring-boot-plus.server-ip");
         // 项目端口
         String port = environment.getProperty("server.port");
+        // Spring Boot Admin Server地址，请先在admin模块中启动 SpringBootPlusAdminApplication
+        String springBootAdminServerUrl = environment.getProperty("spring.boot.admin.client.url");
 
-        log.info("projectFinalName : {}",projectFinalName);
-        log.info("projectVersion : {}",projectVersion);
-        log.info("profileActive : {}",profileActive);
-        log.info("contextPath : {}",contextPath);
-        log.info("port : {}",port);
+        log.info("projectFinalName : {}", projectFinalName);
+        log.info("projectVersion : {}", projectVersion);
+        log.info("profileActive : {}", profileActive);
+        log.info("contextPath : {}", contextPath);
+        log.info("serverIp : {}", serverIp);
+        log.info("port : {}", port);
 
         String startSuccess = " ____    __                    __        ____                                                   \n" +
                 "/\\  _`\\ /\\ \\__                /\\ \\__    /\\  _`\\                                                 \n" +
@@ -79,16 +95,17 @@ public class PrintApplicationInfo {
                 "                                                                                                \n" +
                 "                                                                                                ";
 
-        String homeUrl = "http://" + IpUtil.getLocalhostIp() + ":" + port + contextPath;
-        String swaggerUrl = "http://" + IpUtil.getLocalhostIp() + ":" + port + contextPath + "/swagger-ui.html";
-        String swaggerDocUrl = "http://" + IpUtil.getLocalhostIp() + ":" + port + contextPath + "/doc.html";
-        log.info("home:    {}",homeUrl);
-        log.info("swagger: {}",swaggerUrl);
-        log.info("document:{}",swaggerDocUrl);
+        String homeUrl = "http://" + serverIp + ":" + port + contextPath;
+        String swaggerUrl = "http://" + serverIp + ":" + port + contextPath + "/swagger-ui.html";
+        String swaggerDocUrl = "http://" + serverIp + ":" + port + contextPath + "/doc.html";
+        log.info("Home:    {}", homeUrl);
+        log.info("Swagger: {}", swaggerUrl);
+        log.info("Document:{}", swaggerDocUrl);
+        log.info("SpringBootAdmin: {}", springBootAdminServerUrl);
         log.info("spring-boot-plus project start success...........");
-        if ("dev".equals(profileActive)){
-            log.info("\n{}",AnsiUtil.getAnsi(Ansi.Color.BLUE,startSuccess));
-        }else{
+        if ("dev".equals(profileActive)) {
+            log.info("\n{}", AnsiUtil.getAnsi(Ansi.Color.BLUE, startSuccess));
+        } else {
             log.info(startSuccess);
         }
     }
