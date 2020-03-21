@@ -18,7 +18,7 @@
     <select id="getByIp" resultType="io.geekidea.springbootplus.framework.system.entity.Ip">
         select area,operator from ip
         where INET_ATON(#{ip}) > ip_start_num
-          and INET_ATON(#{ip}) <![CDATA[ < ]]> ip_end_num;
+          and INET_ATON(#{ip}) <![CDATA[ < ]]> ip_end_num
     </select>
 
 </mapper>

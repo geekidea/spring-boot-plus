@@ -24,7 +24,7 @@ import java.io.Serializable;
  * IP地址 服务类
  *
  * @author geekidea
- * @since 2020-03-20
+ * @since 2020-03-21
  */
 public interface IpService extends BaseService<Ip> {
 

@@ -28,7 +28,7 @@ import java.io.Serializable;
  * IP地址 Mapper 接口
  *
  * @author geekidea
- * @since 2020-03-20
+ * @since 2020-03-21
  */
 @Repository
 public interface IpMapper extends BaseMapper<Ip> {
