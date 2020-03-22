@@ -45,14 +45,14 @@ public class ApiResult<T> implements Serializable {
     private int code;
 
     /**
-     * 响应消息
-     */
-    private String message;
-
-    /**
      * 是否成功
      */
     private boolean success;
+
+    /**
+     * 响应消息
+     */
+    private String message;
 
     /**
      * 响应数据

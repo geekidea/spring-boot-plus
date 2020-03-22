@@ -13,6 +13,7 @@
 
 package io.geekidea.springbootplus.framework.log.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -74,6 +75,7 @@ public class RequestInfo implements Serializable {
      * 用户代理字符串
      */
     @JsonIgnore
+    @JSONField(serialize = false)
     private String userAgent;
 
     /**
