@@ -14,6 +14,7 @@
 package io.geekidea.springbootplus.framework.log.aop;
 
 import com.alibaba.fastjson.JSONObject;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import io.geekidea.springbootplus.config.constant.CommonConstant;
 import io.geekidea.springbootplus.config.enums.LogPrintType;
 import io.geekidea.springbootplus.config.properties.SpringBootPlusAopProperties;
@@ -751,6 +752,10 @@ public abstract class BaseLogAop {
             // 保存日志到数据库
             sysOperationLogService.saveSysOperationLog(sysOperationLog);
         } catch (Exception e) {
+            if (e instanceof JWTDecodeException) {
+                JWTDecodeException jwtDecodeException = (JWTDecodeException) e;
+                throw jwtDecodeException;
+            }
             log.error("保存系统操作日志失败", e);
         }
     }

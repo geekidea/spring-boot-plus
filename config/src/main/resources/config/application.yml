@@ -291,7 +291,8 @@ spring-boot-plus:
     parameter-config:
       - name: ${spring-boot-plus.jwt.token-name}
         description: Token Request Header
-        type: head
+        # header, cookie, body, query
+        type: header
         data-type: String
         required: false
         # 测试接口时，自动填充token的值

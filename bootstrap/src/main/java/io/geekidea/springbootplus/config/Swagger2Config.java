@@ -159,7 +159,7 @@ public class Swagger2Config {
     private List<Parameter> getParameters() {
         // 获取自定义参数配置
         List<SwaggerProperties.ParameterConfig> parameterConfig = swaggerProperties.getParameterConfig();
-        if (CollectionUtils.isEmpty(parameterConfig)){
+        if (CollectionUtils.isEmpty(parameterConfig)) {
             return null;
         }
         List<Parameter> parameters = new ArrayList<>();

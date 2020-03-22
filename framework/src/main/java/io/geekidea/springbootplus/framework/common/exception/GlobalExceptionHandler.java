@@ -14,6 +14,7 @@
 package io.geekidea.springbootplus.framework.common.exception;
 
 import com.alibaba.fastjson.JSON;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.system.exception.SysLoginException;
@@ -175,6 +176,19 @@ public class GlobalExceptionHandler {
         return ApiResult.fail(ApiCode.UNAUTHORIZED_EXCEPTION);
     }
 
+
+    /**
+     * JWT Token解析异常
+     *
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = JWTDecodeException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult jWTDecodeExceptionHandler(JWTDecodeException exception) {
+        log.error("JWTDecodeException:", exception);
+        return ApiResult.fail(ApiCode.JWTDECODE_EXCEPTION);
+    }
 
     /**
      * 默认的异常处理
