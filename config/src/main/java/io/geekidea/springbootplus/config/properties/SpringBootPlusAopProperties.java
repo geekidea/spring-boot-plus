@@ -20,6 +20,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * AOP配置属性
  *
@@ -37,13 +40,19 @@ public class SpringBootPlusAopProperties {
     @NestedConfigurationProperty
     private LogAopConfig log = new LogAopConfig();
 
+    /**
+     * 操作日志配置
+     */
+    @NestedConfigurationProperty
+    private OperationLogConfig operationLog;
+
     @Data
     public static class AopConfig {
 
         /**
          * 是否启用
          */
-        private boolean enabled;
+        private boolean enable;
 
     }
 
@@ -65,6 +74,28 @@ public class SpringBootPlusAopProperties {
          * 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
          */
         private boolean responseLogFormat = true;
+
+        /**
+         * 排除路径
+         */
+        private Set<String> excludePaths;
+    }
+
+    /**
+     * 操作日志配置
+     */
+    @Data
+    public static class OperationLogConfig {
+
+        /**
+         * 是否启用
+         */
+        private boolean enable = true;
+
+        /**
+         * 排除路径
+         */
+        private Set<String> excludePaths;
 
     }
 

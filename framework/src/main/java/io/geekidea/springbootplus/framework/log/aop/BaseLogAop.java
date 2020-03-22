@@ -14,21 +14,21 @@
 package io.geekidea.springbootplus.framework.log.aop;
 
 import com.alibaba.fastjson.JSONObject;
+import io.geekidea.springbootplus.config.constant.CommonConstant;
+import io.geekidea.springbootplus.config.enums.LogPrintType;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusAopProperties;
 import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.common.bean.ClientInfo;
 import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusException;
-import io.geekidea.springbootplus.config.constant.CommonConstant;
 import io.geekidea.springbootplus.framework.log.annotation.Module;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLogIgnore;
 import io.geekidea.springbootplus.framework.log.bean.OperationLogInfo;
 import io.geekidea.springbootplus.framework.log.bean.RequestInfo;
 import io.geekidea.springbootplus.framework.log.entity.SysOperationLog;
-import io.geekidea.springbootplus.config.enums.LogPrintType;
 import io.geekidea.springbootplus.framework.log.service.SysOperationLogService;
-import io.geekidea.springbootplus.config.properties.SpringBootPlusAopProperties;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
-import io.geekidea.springbootplus.framework.common.bean.ClientInfo;
 import io.geekidea.springbootplus.framework.system.entity.Ip;
 import io.geekidea.springbootplus.framework.system.service.IpService;
 import io.geekidea.springbootplus.framework.system.util.LoginUtil;
@@ -36,6 +36,7 @@ import io.geekidea.springbootplus.framework.util.*;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.*;
@@ -44,6 +45,7 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.fusesource.jansi.Ansi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -107,13 +109,28 @@ public abstract class BaseLogAop {
     private static final String POST = "POST";
 
     /**
-     * AOP配置
+     * 项目上下文路径
+     */
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+
+    /**
+     * Aop日志配置
      */
     protected SpringBootPlusAopProperties.LogAopConfig logAopConfig;
+
+    /**
+     * Aop操作日志配置
+     */
+    protected SpringBootPlusAopProperties.OperationLogConfig operationLogConfig;
 
     @Autowired
     public void setSpringBootPlusAopProperties(SpringBootPlusAopProperties springBootPlusAopProperties) {
         logAopConfig = springBootPlusAopProperties.getLog();
+        operationLogConfig = springBootPlusAopProperties.getOperationLog();
+        log.debug("logAopConfig = " + logAopConfig);
+        log.debug("operationLogConfig = " + operationLogConfig);
+        log.debug("contextPath = " + contextPath);
     }
 
     /**
@@ -159,11 +176,6 @@ public abstract class BaseLogAop {
      * @throws Throwable
      */
     public Object handle(ProceedingJoinPoint joinPoint) throws Throwable {
-        // 如果没有启用，则直接目标方法
-        if (!logAopConfig.isEnabled()) {
-            return joinPoint.proceed();
-        }
-
         // 获取请求相关信息
         try {
             // 获取当前的HttpServletRequest对象
@@ -177,7 +189,13 @@ public abstract class BaseLogAop {
             String path = request.getRequestURI();
             requestInfo.setPath(path);
 
-            // TODO 通过路径排出，通过注解排除，@LogIgnore
+            // 排除路径
+            Set<String> excludePaths = logAopConfig.getExcludePaths();
+            // 请求路径
+            String requestPath = requestInfo.getPath();
+            if (handleExcludePaths(excludePaths, requestPath)) {
+                return joinPoint.proceed();
+            }
 
             // 获取请求类名和方法名称
             Signature signature = joinPoint.getSignature();
@@ -288,7 +306,6 @@ public abstract class BaseLogAop {
         Class<?> controllerClass = method.getDeclaringClass();
         Module module = controllerClass.getAnnotation(Module.class);
         if (module != null) {
-            System.out.println("module = " + module);
             String moduleName = module.name();
             String moduleValue = module.value();
             if (StringUtils.isNotBlank(moduleValue)) {
@@ -302,12 +319,12 @@ public abstract class BaseLogAop {
         OperationLogIgnore classOperationLogIgnore = controllerClass.getAnnotation(OperationLogIgnore.class);
         if (classOperationLogIgnore != null) {
             // 不记录日志
-            operationLogInfo.setRecord(false);
+            operationLogInfo.setIgnore(true);
         }
         // 判断方法是否要过滤
         OperationLogIgnore operationLogIgnore = method.getAnnotation(OperationLogIgnore.class);
         if (operationLogIgnore != null) {
-            operationLogInfo.setRecord(false);
+            operationLogInfo.setIgnore(false);
         }
         // 从方法上获取OperationLog注解
         OperationLog operationLog = method.getAnnotation(OperationLog.class);
@@ -603,6 +620,32 @@ public abstract class BaseLogAop {
     }
 
     /**
+     * 处理排除路径，匹配返回true，否则返回false
+     *
+     * @param excludePaths 排除路径
+     * @param requestPath  请求路径
+     * @return
+     */
+    protected boolean handleExcludePaths(Set<String> excludePaths, String requestPath) {
+        if (CollectionUtils.isEmpty(excludePaths) || StringUtils.isBlank(requestPath)) {
+            return false;
+        }
+        // 实际路径
+        String realPath = null;
+        // 如果项目路径不为空，则去掉项目路径，获取实际访问路径
+        if (StringUtils.isNotBlank(contextPath)) {
+            realPath = requestPath.substring(contextPath.length());
+        } else {
+            realPath = requestPath;
+        }
+        // 如果是排除路径，则跳过
+        if (excludePaths.contains(realPath)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 异步保存系统操作日志
      *
      * @param o
@@ -613,10 +656,24 @@ public abstract class BaseLogAop {
     @Async
     protected void saveSysOperationLog(RequestInfo requestInfo, OperationLogInfo operationLogInfo, Object result, Exception exception) {
         try {
+            // 如果不记录日志，则跳过
+            if (!operationLogConfig.isEnable()) {
+                return;
+            }
+            // 排除路径
+            Set<String> excludePaths = operationLogConfig.getExcludePaths();
+            // 请求路径
+            String requestPath = requestInfo.getPath();
+            if (handleExcludePaths(excludePaths, requestPath)) {
+                return;
+            }
+
+            // 操作日志
             SysOperationLog sysOperationLog = new SysOperationLog();
             // 设置操作日志信息
             if (operationLogInfo != null) {
-                if (!operationLogInfo.isRecord()) {
+                // 如果类或方法上标注有OperationLogIgnore，则跳过
+                if (operationLogInfo.isIgnore()) {
                     return;
                 }
                 sysOperationLog.setModule(operationLogInfo.getModule())

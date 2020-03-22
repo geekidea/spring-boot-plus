@@ -41,7 +41,7 @@ public class SpringBootPlusFilterProperties {
         /**
          * 是否启用
          */
-        private boolean enabled;
+        private boolean enable;
 
         /**
          * 包含的路径

@@ -13,17 +13,16 @@
 
 package io.geekidea.springbootplus.aop;
 
-import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusException;
 import io.geekidea.springbootplus.framework.log.aop.BaseLogAop;
 import io.geekidea.springbootplus.framework.log.bean.OperationLogInfo;
 import io.geekidea.springbootplus.framework.log.bean.RequestInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,6 +37,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
+@ConditionalOnProperty(value = {"spring-boot-plus.aop.log.enable"}, matchIfMissing = true)
 public class LogAop extends BaseLogAop {
 
     /**

@@ -40,6 +40,11 @@ public class ShiroProperties {
     private String filterChainDefinitions;
 
     /**
+     * 设置无需权限路径集合
+     */
+    private List<String[]> anon;
+
+    /**
      * 权限配置集合
      */
     @NestedConfigurationProperty

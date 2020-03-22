@@ -14,17 +14,17 @@
 package io.geekidea.springbootplus.config;
 
 import com.alibaba.fastjson.JSON;
-import io.geekidea.springbootplus.framework.util.IniUtil;
-import io.geekidea.springbootplus.config.properties.SpringBootPlusFilterProperties;
-import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
+import io.geekidea.springbootplus.config.properties.JwtProperties;
 import io.geekidea.springbootplus.config.properties.ShiroPermissionProperties;
 import io.geekidea.springbootplus.config.properties.ShiroProperties;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusFilterProperties;
+import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.framework.shiro.exception.ShiroConfigException;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtCredentialsMatcher;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtFilter;
-import io.geekidea.springbootplus.config.properties.JwtProperties;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtRealm;
 import io.geekidea.springbootplus.framework.system.service.LoginService;
+import io.geekidea.springbootplus.framework.util.IniUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -44,6 +44,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSessionStorageEvaluator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -65,9 +66,8 @@ import java.util.*;
  **/
 @Slf4j
 @Configuration
-@EnableConfigurationProperties({
-        ShiroProperties.class
-})
+@EnableConfigurationProperties({ShiroProperties.class})
+@ConditionalOnProperty(value = {"spring-boot-plus.shiro.enable"}, matchIfMissing = true)
 public class ShiroConfig {
 
     /**
@@ -79,6 +79,11 @@ public class ShiroConfig {
      * Shiro过滤器名称
      */
     private static final String SHIRO_FILTER_NAME = "shiroFilter";
+
+    /**
+     * anon
+     */
+    private static final String ANON = "anon";
 
 
     @Bean
@@ -176,6 +181,19 @@ public class ShiroConfig {
      */
     private Map<String, String> getFilterChainDefinitionMap(ShiroProperties shiroProperties) {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap();
+        // 获取排除的路径
+        List<String[]> anonList = shiroProperties.getAnon();
+        log.debug("anonList:{}", JSON.toJSONString(anonList));
+        if (CollectionUtils.isNotEmpty(anonList)) {
+            anonList.forEach(anonArray -> {
+                if (ArrayUtils.isNotEmpty(anonArray)) {
+                    for (String anonPath : anonArray) {
+                        filterChainDefinitionMap.put(anonPath, ANON);
+                    }
+                }
+            });
+        }
+
         // 获取ini格式配置
         String definitions = shiroProperties.getFilterChainDefinitions();
         if (StringUtils.isNotBlank(definitions)) {
@@ -216,7 +234,7 @@ public class ShiroConfig {
         if (shiroProperties.isEnable()) {
             filterChainDefinitionMap.put("/**", JWT_FILTER_NAME);
         } else {
-            filterChainDefinitionMap.put("/**", "anon");
+            filterChainDefinitionMap.put("/**", ANON);
         }
 
         log.debug("filterChainMap:{}", JSON.toJSONString(filterChainDefinitionMap));

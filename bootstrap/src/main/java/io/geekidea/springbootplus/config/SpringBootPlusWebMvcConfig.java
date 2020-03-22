@@ -101,25 +101,25 @@ public class SpringBootPlusWebMvcConfig implements WebMvcConfigurer {
         SpringBootPlusInterceptorProperties interceptorConfig = springBootPlusProperties.getInterceptor();
 
         // 上传拦截器
-        if (interceptorConfig.getUpload().isEnabled()) {
+        if (interceptorConfig.getUpload().isEnable()) {
             registry.addInterceptor(uploadInterceptor())
                     .addPathPatterns(interceptorConfig.getUpload().getIncludePaths());
         }
 
         // 资源拦截器注册
-        if (interceptorConfig.getResource().isEnabled()) {
+        if (interceptorConfig.getResource().isEnable()) {
             registry.addInterceptor(resourceInterceptor())
                     .addPathPatterns(interceptorConfig.getResource().getIncludePaths());
         }
 
         // 下载拦截器注册
-        if (interceptorConfig.getDownload().isEnabled()) {
+        if (interceptorConfig.getDownload().isEnable()) {
             registry.addInterceptor(downloadInterceptor())
                     .addPathPatterns(interceptorConfig.getDownload().getIncludePaths());
         }
 
         // 自定义权限拦截器注册
-        if (interceptorConfig.getPermission().isEnabled()) {
+        if (interceptorConfig.getPermission().isEnable()) {
             registry.addInterceptor(permissionInterceptor())
                     .addPathPatterns(interceptorConfig.getPermission().getIncludePaths())
                     .excludePathPatterns(interceptorConfig.getPermission().getExcludePaths());

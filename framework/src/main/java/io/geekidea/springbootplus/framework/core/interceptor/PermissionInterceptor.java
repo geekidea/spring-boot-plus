@@ -14,6 +14,7 @@
 package io.geekidea.springbootplus.framework.core.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  * @since 2018-11-08
  */
 @Slf4j
+@ConditionalOnProperty(value = {"spring-boot-plus.interceptor.permission.enable"}, matchIfMissing = true)
 public class PermissionInterceptor extends HandlerInterceptorAdapter {
 
     @Override

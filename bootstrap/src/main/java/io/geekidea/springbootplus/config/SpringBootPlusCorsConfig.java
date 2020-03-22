@@ -16,6 +16,7 @@ package io.geekidea.springbootplus.config;
 
 import io.geekidea.springbootplus.config.properties.SpringBootPlusCorsProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,10 +30,10 @@ import org.springframework.web.filter.CorsFilter;
  *
  * @author geekidea
  * @date 2019/10/14
- * @since 1.3.1.RELEASE
  */
 @Slf4j
 @Configuration
+@ConditionalOnProperty(value = {"spring-boot-plus.cors.enable"}, matchIfMissing = true)
 public class SpringBootPlusCorsConfig {
 
     /**

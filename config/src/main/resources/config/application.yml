@@ -36,7 +36,7 @@ spring:
       # 单个请求文件总计最大值
       max-request-size: 100MB
 
-# 当前项目maven激活环境，例如：dev/test，对应pom.xml中profile设置值
+# 当前项目maven激活环境，例如：dev/test/uat/prod，对应pom.xml中profile设置值
 ---
 spring:
   profiles:
@@ -66,27 +66,28 @@ spring-boot-plus:
   # 实现BaseEnum接口的枚举包
   enum-packages: com.example.foorbar.enums
   # Swagger路径
-  swagger-paths: /swagger-ui.html,/swagger-resources/**,/webjars/springfox-swagger-ui/**,/v2/api-docs,/csrf
+  swagger-paths: /swagger-ui.html,/docs,/doc.html,/swagger-resources/**,/webjars/**,/v2/api-docs,/csrf,/v2/api-docs-ext,/null/swagger-resources/**
   # 拦截器配置
   interceptor:
     permission:
-      enabled: true
+      enable: false
       include-paths: /**
     resource:
-      enabled: true
+      enable: false
       include-paths: ${spring-boot-plus.resource-access-patterns}
     upload:
-      enabled: true
+      enable: false
       include-paths: /upload/**
     download:
-      enabled: true
+      enable: false
       include-paths: /download/**
 
   # AOP配置
   aop:
+    # Aop日志配置
     log:
       # 是否启用
-      enabled: true
+      enable: true
       # ORDER：请求和响应日志，按照执行顺序分开打印
       # LINE：方法执行结束时，连续分开打印请求和响应日志
       # MERGE：方法执行结束时，合并请求和响应日志，同时打印
@@ -95,6 +96,14 @@ spring-boot-plus:
       request-log-format: true
       # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
       response-log-format: true
+      # 排除的路径
+      excludePaths: /,/csrf
+    # 操作日志配置
+    operation-log:
+      # 是否启用
+      enable: true
+      # 排除的路径
+      excludePaths:
 
   # 文件上传下载配置
   # 上传路径配置
@@ -145,39 +154,29 @@ spring-boot-plus:
   shiro:
     # 是否启用
     enable: true
-    # shiro ini 多行字符串配置
-    filter-chain-definitions: |
-      /=anon
-      /static/**=anon
-      /hello/world=anon
-      /verificationCode/**=anon
-      /resource/**=anon
-      /enum=anon
-      /docs=anon
-      /getSysUserInfo=anon
-      /upload/**=anon
-      /fooBar/**=anon
-      /exampleOrder/**=anon
-      /sysOperationLog/**=anon
-      /doc.html=anon
-      /v2/api-docs-ext=anon
-      /webjars/**=anon
-      /null/swagger-resources/**=anon
-      /index.html=anon
     # 权限配置
-    permission:
-        # 排除登陆登出相关
-      - urls: /login,/logout
-        permission: anon
-        # 排除静态资源
-      - urls: /static/**,/templates/**
-        permission: anon
-        # 排除Swagger
-      - urls: ${spring-boot-plus.swagger-paths}
-        permission: anon
-        # 排除SpringBootAdmin
-      - urls: /,/favicon.ico,/actuator/**,/instances/**,/assets/**,/sba-settings.js,/applications/**
-        permission: anon
+    anon:
+      # 排除登陆登出
+      - /login,/logout
+      # 排除静态资源
+      - /static/**,/templates/**
+      # 排除Swagger
+      - ${spring-boot-plus.swagger-paths}
+      # 排除SpringBootAdmin
+      - /,/favicon.ico,/actuator/**,/instances/**,/assets/**,/sba-settings.js,/applications/**
+      # 排除首页
+      - /index.html
+      # 排除测试路径
+      - /hello/world,/fooBar/**,/exampleOrder/**
+    # 多行字符串权限配置
+    filter-chain-definitions: |
+      /resource/**=anon
+      /upload/**=anon
+      /verificationCode/**=anon
+      /enum=anon
+      /getSysUserInfo=anon
+      /sysOperationLog/**=anon
+
   ######################## Spring Shiro end ##########################
 
   ############################ JWT start #############################
@@ -289,7 +288,7 @@ spring-boot-plus:
     version: ${project.version}
     # 自定义参数配置，可配置N个
     parameter-config:
-      - name: token
+      - name: ${spring-boot-plus.jwt.token-name}
         description: Token Request Header
         type: head
         data-type: String

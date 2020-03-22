@@ -101,7 +101,7 @@ public class SysUserController extends BaseController {
      * 系统用户分页列表
      */
     @PostMapping("/getPageList")
-//    @RequiresPermissions("sys:user:page")
+    @RequiresPermissions("sys:user:page")
     @ApiOperation(value = "获取SysUser分页列表", notes = "系统用户分页列表", response = SysUserQueryVo.class)
     public ApiResult<Paging<SysUserQueryVo>> getSysUserPageList(@Validated @RequestBody SysUserPageParam sysUserPageParam) throws Exception {
         Paging<SysUserQueryVo> paging = sysUserService.getSysUserPageList(sysUserPageParam);

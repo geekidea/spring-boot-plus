@@ -28,9 +28,9 @@ import lombok.experimental.Accessors;
 public class OperationLogInfo {
 
     /**
-     * 是否记录
+     * 是否忽略
      */
-    private boolean record = true;
+    private boolean ignore;
 
     /**
      * 模块名称

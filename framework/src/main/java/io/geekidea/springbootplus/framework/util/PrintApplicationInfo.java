@@ -97,11 +97,11 @@ public class PrintApplicationInfo {
 
         String homeUrl = "http://" + serverIp + ":" + port + contextPath;
         String swaggerUrl = "http://" + serverIp + ":" + port + contextPath + "/swagger-ui.html";
-        String swaggerDocUrl = "http://" + serverIp + ":" + port + contextPath + "/doc.html";
+        String knife4jUrl = "http://" + serverIp + ":" + port + contextPath + "/doc.html";
+        log.info("Admin:   {}", springBootAdminServerUrl);
         log.info("Home:    {}", homeUrl);
+        log.info("Knife4j: {}", knife4jUrl);
         log.info("Swagger: {}", swaggerUrl);
-        log.info("Document:{}", swaggerDocUrl);
-        log.info("SpringBootAdmin: {}", springBootAdminServerUrl);
         log.info("spring-boot-plus project start success...........");
         if ("dev".equals(profileActive)) {
             log.info("\n{}", AnsiUtil.getAnsi(Ansi.Color.BLUE, startSuccess));
