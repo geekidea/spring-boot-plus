@@ -18,6 +18,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import java.time.ZoneId;
+import java.util.TimeZone;
+
 /**
  * Jackson序列化工具类
  *
@@ -25,6 +28,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  * @date 2019-11-01
  **/
 public class Jackson {
+
+    /**
+     * 时区
+     */
+    private static final TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
 
     /**
      * 键按自然顺序输出
@@ -53,6 +61,8 @@ public class Jackson {
             objectMapper.configure(SerializationFeature.INDENT_OUTPUT, prettyFormat);
             // 键按自然顺序输出
             objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
+            // 设置时区
+            objectMapper.setTimeZone(timeZone);
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -91,6 +101,8 @@ public class Jackson {
             objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
             // 为空的序列化
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            // 设置时区
+            objectMapper.setTimeZone(timeZone);
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
