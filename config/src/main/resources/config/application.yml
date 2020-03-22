@@ -97,13 +97,13 @@ spring-boot-plus:
       # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
       response-log-format: true
       # 排除的路径
-      excludePaths: /,/csrf
+      exclude-paths: /,/csrf
     # 操作日志配置
     operation-log:
       # 是否启用
       enable: true
       # 排除的路径
-      excludePaths:
+      exclude-paths:
 
   # 文件上传下载配置
   # 上传路径配置
@@ -156,6 +156,7 @@ spring-boot-plus:
     enable: true
     # 权限配置
     anon:
+      # 排除登陆登出
       # 排除登陆登出
       - /login,/logout
       # 排除静态资源
