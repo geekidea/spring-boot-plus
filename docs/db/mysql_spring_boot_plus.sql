@@ -78,32 +78,6 @@ create table if not exists sys_department
 )
     comment '部门';
 
-create table if not exists sys_login_log
-(
-    id bigint(18) auto_increment comment '主键'
-        primary key,
-    user_id bigint(18) null comment '用户ID',
-    user_name varchar(32) null comment '用户名称',
-    ip varchar(15) null comment 'IP',
-    area varchar(100) null comment '区域',
-    token varchar(32) null comment 'tokenMd5值',
-    type int null comment '1:登录，2：登出',
-    user_agent varchar(200) null comment '浏览器名称',
-    browser_name varchar(100) null comment '浏览器名称',
-    browser_version varchar(100) null comment '浏览器版本',
-    engine_name varchar(100) null comment '浏览器引擎名称',
-    engine_version varchar(100) null comment '浏览器引擎版本',
-    os_name varchar(100) null comment '系统名称',
-    platform_name varchar(100) null comment '平台名称',
-    mobile tinyint(1) null comment '是否是手机,0:否,1:是',
-    device_name varchar(100) null comment '移动端设备名称',
-    device_model varchar(100) null comment '移动端设备型号',
-    remark varchar(200) null comment '备注',
-    create_time datetime default CURRENT_TIMESTAMP null comment '创建时间',
-    update_time datetime null comment '修改时间'
-)
-    comment '系统登录日志';
-
 create table if not exists sys_operation_log
 (
     id bigint(18) auto_increment comment '主键'
