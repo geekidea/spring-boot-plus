@@ -831,8 +831,7 @@ public abstract class BaseLogAop {
                     sysLoginLog.setCode(errorCode).setExceptionMessage(exceptionMessage);
                 }
 
-                // 判断登录登出成功，才记录
-                // 判断result success为true
+                // 判断登录登出结果
                 if (result != null && result instanceof ApiResult) {
                     ApiResult apiResult = (ApiResult) result;
                     sysLoginLog.setSuccess(apiResult.isSuccess()).setCode(apiResult.getCode());

@@ -224,7 +224,7 @@ public class Swagger2Config {
         @Override
         public void apply(ModelPropertyContext context) {
             try {
-                Optional<BeanPropertyDefinition> beanPropertyDefinitionOpt = context.getBeanPropertyDefinition();
+                Optional<BeanPropertyDefinition> beanPropertyDefinitionOptional = context.getBeanPropertyDefinition();
                 Optional<ApiModelProperty> annotation = Optional.absent();
                 if (context.getAnnotatedElement().isPresent()) {
                     annotation = annotation.or(findApiModePropertyAnnotation(context.getAnnotatedElement().get()));
@@ -232,8 +232,8 @@ public class Swagger2Config {
                 if (context.getBeanPropertyDefinition().isPresent()) {
                     annotation = annotation.or(findPropertyAnnotation(context.getBeanPropertyDefinition().get(), ApiModelProperty.class));
                 }
-                if (beanPropertyDefinitionOpt.isPresent()) {
-                    BeanPropertyDefinition beanPropertyDefinition = beanPropertyDefinitionOpt.get();
+                if (beanPropertyDefinitionOptional.isPresent()) {
+                    BeanPropertyDefinition beanPropertyDefinition = beanPropertyDefinitionOptional.get();
                     if (annotation.isPresent() && annotation.get().position() != 0) {
                         return;
                     }

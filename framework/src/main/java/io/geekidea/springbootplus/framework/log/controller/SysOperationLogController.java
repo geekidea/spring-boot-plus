@@ -19,17 +19,19 @@ package io.geekidea.springbootplus.framework.log.controller;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.common.controller.BaseController;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
-import io.geekidea.springbootplus.framework.core.validator.groups.Add;
-import io.geekidea.springbootplus.framework.core.validator.groups.Update;
 import io.geekidea.springbootplus.framework.log.entity.SysOperationLog;
 import io.geekidea.springbootplus.framework.log.param.SysOperationLogPageParam;
 import io.geekidea.springbootplus.framework.log.service.SysOperationLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 系统操作日志 控制器
@@ -47,54 +49,10 @@ public class SysOperationLogController extends BaseController {
     private SysOperationLogService sysOperationLogService;
 
     /**
-     * 添加系统操作日志
-     */
-    @PostMapping("/add")
-    // @RequiresPermissions("sys:operation:log:add")
-    @ApiOperation(value = "添加系统操作日志", response = ApiResult.class)
-    public ApiResult<Boolean> addSysOperationLog(@Validated(Add.class) @RequestBody SysOperationLog sysOperationLog) throws Exception {
-        boolean flag = sysOperationLogService.saveSysOperationLog(sysOperationLog);
-        return ApiResult.result(flag);
-    }
-
-    /**
-     * 修改系统操作日志
-     */
-    @PostMapping("/update")
-    // @RequiresPermissions("sys:operation:log:update")
-    @ApiOperation(value = "修改系统操作日志", response = ApiResult.class)
-    public ApiResult<Boolean> updateSysOperationLog(@Validated(Update.class) @RequestBody SysOperationLog sysOperationLog) throws Exception {
-        boolean flag = sysOperationLogService.updateSysOperationLog(sysOperationLog);
-        return ApiResult.result(flag);
-    }
-
-    /**
-     * 删除系统操作日志
-     */
-    @PostMapping("/delete/{id}")
-    // @RequiresPermissions("sys:operation:log:delete")
-    @ApiOperation(value = "删除系统操作日志", response = ApiResult.class)
-    public ApiResult<Boolean> deleteSysOperationLog(@PathVariable("id") Long id) throws Exception {
-        boolean flag = sysOperationLogService.deleteSysOperationLog(id);
-        return ApiResult.result(flag);
-    }
-
-    /**
-     * 获取系统操作日志
-     */
-    @GetMapping("/info/{id}")
-    // @RequiresPermissions("sys:operation:log:info")
-    @ApiOperation(value = "查看系统操作日志", response = SysOperationLog.class)
-    public ApiResult<SysOperationLog> getSysOperationLog(@PathVariable("id") Long id) throws Exception {
-        SysOperationLog sysOperationLog = sysOperationLogService.getById(id);
-        return ApiResult.ok(sysOperationLog);
-    }
-
-    /**
      * 系统操作日志分页列表
      */
     @PostMapping("/getPageList")
-    // @RequiresPermissions("sys:operation:log:page")
+    @RequiresPermissions("sys:operation:log:page")
     @ApiOperation(value = "系统操作日志分页列表", response = SysOperationLog.class)
     public ApiResult<Paging<SysOperationLog>> getSysOperationLogPageList(@Validated @RequestBody SysOperationLogPageParam sysOperationLogPageParam) throws Exception {
         Paging<SysOperationLog> paging = sysOperationLogService.getSysOperationLogPageList(sysOperationLogPageParam);
