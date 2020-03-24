@@ -16,8 +16,6 @@
 
 package io.geekidea.springbootplus.framework.common.vo;
 
-import io.geekidea.springbootplus.framework.common.enums.BaseEnum;
-import io.geekidea.springbootplus.framework.system.enums.StateEnum;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

@@ -20,13 +20,12 @@ import com.alibaba.fastjson.JSON;
 import io.geekidea.springbootplus.config.properties.JwtProperties;
 import io.geekidea.springbootplus.config.properties.ShiroPermissionProperties;
 import io.geekidea.springbootplus.config.properties.ShiroProperties;
-import io.geekidea.springbootplus.config.properties.SpringBootPlusFilterProperties;
 import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.framework.shiro.exception.ShiroConfigException;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtCredentialsMatcher;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtFilter;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtRealm;
-import io.geekidea.springbootplus.framework.system.service.LoginService;
+import io.geekidea.springbootplus.framework.shiro.service.ShiroLoginService;
 import io.geekidea.springbootplus.framework.util.IniUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -147,13 +146,13 @@ public class ShiroConfig {
      */
     @Bean(SHIRO_FILTER_NAME)
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager,
-                                                         LoginService loginService,
+                                                         ShiroLoginService shiroLoginService,
                                                          LoginRedisService loginRedisService,
                                                          ShiroProperties shiroProperties,
                                                          JwtProperties jwtProperties) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        Map<String, Filter> filterMap = getFilterMap(loginService, loginRedisService, jwtProperties);
+        Map<String, Filter> filterMap = getFilterMap(shiroLoginService, loginRedisService, jwtProperties);
         shiroFilterFactoryBean.setFilters(filterMap);
         Map<String, String> filterChainMap = getFilterChainDefinitionMap(shiroProperties);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainMap);
@@ -166,11 +165,11 @@ public class ShiroConfig {
      *
      * @return
      */
-    private Map<String, Filter> getFilterMap(LoginService loginService,
+    private Map<String, Filter> getFilterMap(ShiroLoginService shiroLoginService,
                                              LoginRedisService loginRedisService,
                                              JwtProperties jwtProperties) {
         Map<String, Filter> filterMap = new LinkedHashMap();
-        filterMap.put(JWT_FILTER_NAME, new JwtFilter(loginService, loginRedisService, jwtProperties));
+        filterMap.put(JWT_FILTER_NAME, new JwtFilter(shiroLoginService, loginRedisService, jwtProperties));
         return filterMap;
     }
 

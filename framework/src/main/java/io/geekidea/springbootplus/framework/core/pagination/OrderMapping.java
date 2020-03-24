@@ -16,10 +16,8 @@
 
 package io.geekidea.springbootplus.framework.core.pagination;
 
-import cn.hutool.db.sql.Order;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.google.common.base.CaseFormat;
-import io.geekidea.springbootplus.framework.system.entity.SysUser;
 import io.geekidea.springbootplus.framework.util.PropertyColumnUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -27,7 +25,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -44,11 +41,11 @@ public class OrderMapping {
 
     private boolean underLineMode;
 
-    public OrderMapping(){
+    public OrderMapping() {
 
     }
 
-    public OrderMapping(boolean underLineMode){
+    public OrderMapping(boolean underLineMode) {
         this.underLineMode = underLineMode;
     }
 
@@ -92,15 +89,15 @@ public class OrderMapping {
             return;
         }
         // 如果集合不为空，则按照PropertyColumnUtil映射
-        if (MapUtils.isNotEmpty(map)){
+        if (MapUtils.isNotEmpty(map)) {
             orderItems.forEach(item -> {
                 item.setColumn(this.getMappingColumn(item.getColumn()));
             });
-        }else if (underLineMode){
+        } else if (underLineMode) {
             // 如果开启下划线模式，自动转换成下划线
             orderItems.forEach(item -> {
                 // 驼峰转换成下划线
-                String column = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE,item.getColumn());
+                String column = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, item.getColumn());
                 item.setColumn(column);
             });
         }

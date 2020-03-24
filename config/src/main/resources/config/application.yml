@@ -58,7 +58,7 @@ spring-boot-plus:
   # 服务器IP地址
   server-ip: 127.0.0.1
   # 是否启用验证码
-  enable-verify-code: false
+  enable-verify-code: true
   # 默认新建用户登陆初始化密码
   login-init-salt: 666666
   login-init-password: admin

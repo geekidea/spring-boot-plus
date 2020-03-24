@@ -17,17 +17,17 @@
 package io.geekidea.springbootplus.framework.shiro.cache.impl;
 
 import io.geekidea.springbootplus.config.constant.CommonRedisKey;
-import io.geekidea.springbootplus.framework.util.ClientInfoUtil;
-import io.geekidea.springbootplus.framework.util.HttpServletRequestUtil;
-import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
-import io.geekidea.springbootplus.framework.shiro.convert.ShiroMapstructConvert;
 import io.geekidea.springbootplus.config.properties.JwtProperties;
-import io.geekidea.springbootplus.framework.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.framework.common.bean.ClientInfo;
+import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
+import io.geekidea.springbootplus.framework.shiro.convert.LoginSysUserVoConvert;
+import io.geekidea.springbootplus.framework.shiro.convert.ShiroMapstructConvert;
+import io.geekidea.springbootplus.framework.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.framework.shiro.vo.JwtTokenRedisVo;
 import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserRedisVo;
 import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserVo;
-import io.geekidea.springbootplus.framework.system.convert.SysUserConvert;
+import io.geekidea.springbootplus.framework.util.ClientInfoUtil;
+import io.geekidea.springbootplus.framework.util.HttpServletRequestUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -88,7 +88,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
 
         // Redis缓存登陆用户信息
         // 将LoginSysUserVo对象复制到LoginSysUserRedisVo，使用mapstruct进行对象属性复制
-        LoginSysUserRedisVo loginSysUserRedisVo = SysUserConvert.INSTANCE.loginSysUserVoToLoginSysUserRedisVo(loginSysUserVo);
+        LoginSysUserRedisVo loginSysUserRedisVo = LoginSysUserVoConvert.INSTANCE.voToRedisVo(loginSysUserVo);
         loginSysUserRedisVo.setSalt(salt);
         loginSysUserRedisVo.setClientInfo(clientInfo);
 

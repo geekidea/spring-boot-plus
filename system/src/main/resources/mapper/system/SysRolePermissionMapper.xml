@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2019-2029 geekidea(https://github.com/geekidea)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.springbootplus.system.mapper.SysRolePermissionMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, role_id, permission_id, state, remark, version, create_time, update_time
+    </sql>
+
+    <select id="getSysRolePermissionById" resultType="io.geekidea.springbootplus.system.vo.SysRolePermissionQueryVo">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role_permission where id = #{id}
+    </select>
+
+    <select id="getSysRolePermissionPageList"
+            resultType="io.geekidea.springbootplus.system.vo.SysRolePermissionQueryVo">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role_permission
+    </select>
+
+    <select id="getPermissionCodesByRoleId" resultType="java.lang.String">
+        select p.code
+        from sys_role r
+                 inner join sys_role_permission rp
+                            on r.id = rp.role_id
+                 inner join sys_permission p
+                            on rp.permission_id = p.id
+        where r.state = 1
+          and rp.state = 1
+          and p.state = 1
+          and r.id = #{roleId};
+    </select>
+
+    <select id="getThreeLevelPermissionIdsByRoleId" resultType="long">
+        select distinct rp.permission_id
+        from sys_role r
+        inner join sys_role_permission rp on r.id = rp.role_id
+        inner join sys_permission p on rp.permission_id = p.id
+        where r.id = #{roleId} and p.level = 3 and r.state = 1 and rp.state = 1 and p.state = 1
+    </select>
+
+</mapper>

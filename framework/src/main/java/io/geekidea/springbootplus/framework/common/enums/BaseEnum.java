@@ -16,11 +16,6 @@
 
 package io.geekidea.springbootplus.framework.common.enums;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.geekidea.springbootplus.framework.system.enums.StateEnum;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serializable;
 
 /**
  * 枚举类型父接口

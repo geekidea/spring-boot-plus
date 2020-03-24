@@ -19,11 +19,11 @@ package io.geekidea.springbootplus.framework.shiro.jwt;
 import io.geekidea.springbootplus.config.properties.JwtProperties;
 import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
-import io.geekidea.springbootplus.framework.util.HttpServletResponseUtil;
 import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
+import io.geekidea.springbootplus.framework.shiro.service.ShiroLoginService;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.framework.shiro.util.JwtUtil;
-import io.geekidea.springbootplus.framework.system.service.LoginService;
+import io.geekidea.springbootplus.framework.util.HttpServletResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -47,14 +47,14 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class JwtFilter extends AuthenticatingFilter {
 
-    private LoginService loginService;
+    private ShiroLoginService shiroLoginService;
 
     private LoginRedisService loginRedisService;
 
     private JwtProperties jwtProperties;
 
-    public JwtFilter(LoginService loginService, LoginRedisService loginRedisService, JwtProperties jwtProperties) {
-        this.loginService = loginService;
+    public JwtFilter(ShiroLoginService shiroLoginService, LoginRedisService loginRedisService, JwtProperties jwtProperties) {
+        this.shiroLoginService = shiroLoginService;
         this.loginRedisService = loginRedisService;
         this.jwtProperties = jwtProperties;
     }
@@ -160,7 +160,7 @@ public class JwtFilter extends AuthenticatingFilter {
         // 刷新token
         JwtToken jwtToken = (JwtToken) token;
         HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
-        loginService.refreshToken(jwtToken, httpServletResponse);
+        shiroLoginService.refreshToken(jwtToken, httpServletResponse);
         return true;
     }
 

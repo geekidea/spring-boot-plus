@@ -49,7 +49,7 @@ public class EnumController {
 
     private static final List<String> FRAMEWORK_ENUM_PACKAGES = Arrays.asList(
             "io.geekidea.springbootplus.framework.common.enums",
-            "io.geekidea.springbootplus.framework.system.enums");
+            "io.geekidea.springbootplus.system.enums");
 
     /**
      * 枚举包路径

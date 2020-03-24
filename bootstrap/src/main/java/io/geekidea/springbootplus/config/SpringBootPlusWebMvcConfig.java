@@ -17,13 +17,13 @@
 package io.geekidea.springbootplus.config;
 
 import com.alibaba.fastjson.JSON;
-import io.geekidea.springbootplus.framework.core.interceptor.PermissionInterceptor;
-import io.geekidea.springbootplus.framework.util.IniUtil;
 import io.geekidea.springbootplus.config.properties.SpringBootPlusInterceptorProperties;
 import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
-import io.geekidea.springbootplus.framework.system.interceptor.DownloadInterceptor;
-import io.geekidea.springbootplus.framework.system.interceptor.ResourceInterceptor;
-import io.geekidea.springbootplus.framework.system.interceptor.UploadInterceptor;
+import io.geekidea.springbootplus.framework.core.interceptor.PermissionInterceptor;
+import io.geekidea.springbootplus.framework.util.IniUtil;
+import io.geekidea.springbootplus.system.interceptor.DownloadInterceptor;
+import io.geekidea.springbootplus.system.interceptor.ResourceInterceptor;
+import io.geekidea.springbootplus.system.interceptor.UploadInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

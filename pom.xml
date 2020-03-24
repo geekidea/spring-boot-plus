@@ -93,6 +93,7 @@
         <module>framework</module>
         <module>generator</module>
         <module>scheduled</module>
+        <module>system</module>
     </modules>
 
     <dependencyManagement>
