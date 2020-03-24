@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,9 +16,12 @@
 
 package io.geekidea.springbootplus.framework.system.controller;
 
-import io.geekidea.springbootplus.framework.common.api.ApiResult;
-import io.geekidea.springbootplus.framework.util.DownloadUtil;
 import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.log.annotation.Module;
+import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
+import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
+import io.geekidea.springbootplus.framework.util.DownloadUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +44,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/download")
+@Module("system")
 @Api(value = "文件下载", tags = {"文件下载"})
 public class DownloadController {
 
@@ -48,6 +55,7 @@ public class DownloadController {
      * 下载文件
      */
     @GetMapping("/{downloadFileName}")
+    @OperationLog(name = "下载文件", type = OperationLogType.download)
     @ApiOperation(value = "下载文件", notes = "下载文件", response = ApiResult.class)
     public void download(@PathVariable(required = true) String downloadFileName, HttpServletResponse response) throws Exception {
         // 下载目录，既是上传目录

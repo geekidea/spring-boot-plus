@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -42,19 +45,14 @@ public class SpringBootPlusGenerator {
 
         // 设置基本信息
         generatorProperties
-                .setMavenModuleName("framework")
-                .setParentPackage("io.geekidea.springbootplus.framework")
-                .setModuleName("system")
+                .setMavenModuleName("example")
+                .setParentPackage("com.example")
+                .setModuleName("foobar")
                 .setAuthor("geekidea")
                 .setFileOverride(true);
 
-        // 设置表前缀
-        // generatorProperties.setTablePrefix(Arrays.asList("example","tb"))
         // 设置表信息
-        generatorProperties.addTable("ip","id");
-
-        // 主键默认为ID时，传入表名即可
-        // generatorProperties.setTables("foo_bar","example_order");
+        generatorProperties.addTable("foo_bar","id");
 
         // 数据源配置
         generatorProperties.getDataSourceConfig()
@@ -78,11 +76,12 @@ public class SpringBootPlusGenerator {
                 .setRequiresPermissions(true)
                 .setPageListOrder(true)
                 .setParamValidation(true)
-                .setSwaggerTags(true);
+                .setSwaggerTags(true)
+                .setOperationLog(true);
 
         // 全局配置
         generatorProperties.getMybatisPlusGeneratorConfig().getGlobalConfig()
-                .setOpen(false)
+                .setOpen(true)
                 .setSwagger2(true)
                 .setIdType(IdType.AUTO)
                 .setDateType(DateType.ONLY_DATE);

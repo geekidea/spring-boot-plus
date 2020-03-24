@@ -1,16 +1,15 @@
 package ${package.Service};
 
 import ${package.Entity}.${entity};
-import ${superServiceClassPackage};
 #if(${cfg.generatorPageParam})
 import ${cfg.pageParamClass};
 #end
+import ${superServiceClassPackage};
 #if(${cfg.generatorQueryVo})
 import ${cfg.queryVoClass};
 #end
 #if(${cfg.generatorStrategy} != 'SIMPLE')
 import ${cfg.pagingClass};
-import java.io.Serializable;
 #end
 
 /**

@@ -2,35 +2,40 @@ package ${package.Controller};
 
 import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};
-#if(${swagger2})
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-#end
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-#if(${superControllerClassPackage})
-import ${superControllerClassPackage};
-#end
 #if(${cfg.generatorStrategy} != 'SIMPLE')
 #if(${cfg.generatorPageParam})
 import ${cfg.pageParamClass};
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
 #end
 #if(${cfg.generatorQueryVo})
 import ${cfg.queryVoClass};
 #end
 import ${cfg.apiResultClass};
-#if(${cfg.paramValidation})
-import org.springframework.validation.annotation.Validated;
-import ${cfg.validatorAddPackage};
-import ${cfg.validatorUpdatePackage};
-#end
 import ${cfg.pagingClass};
 import ${cfg.idParamClass};
+#if(${cfg.operationLog})
+import io.geekidea.springbootplus.framework.log.annotation.Module;
+import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
+import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
+#end
+#if(${cfg.paramValidation})
+import ${cfg.validatorAddPackage};
+import ${cfg.validatorUpdatePackage};
+import org.springframework.validation.annotation.Validated;
+#end
 #if(${cfg.requiresPermissions})
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 #end
 #end
+#if(${swagger2})
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+#end
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * $!{table.comment} 控制器
@@ -45,6 +50,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 @Controller
 #end
 @RequestMapping("/${cfg.entityObjectName}")
+#if(${cfg.operationLog})
+@Module("${cfg.module}")
+#end
 #if(${cfg.swaggerTags})
 @Api(value = "$!{table.comment}API", tags = {"$!{table.comment}"})
 #else
@@ -69,7 +77,10 @@ public class ${table.controllerName} {
      */
     @PostMapping("/add")
 #if(${cfg.requiresPermissions})
-    // @RequiresPermissions("$!{cfg.colonTableName}:add")
+    @RequiresPermissions("$!{cfg.colonTableName}:add")
+#end
+#if(${cfg.operationLog})
+    @OperationLog(name = "添加$!{table.comment}", type = OperationLogType.ADD)
 #end
     @ApiOperation(value = "添加$!{table.comment}", response = ApiResult.class)
     public ApiResult<Boolean> add${entity}(#if(${cfg.paramValidation})@Validated(Add.class) #end@RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
@@ -82,7 +93,10 @@ public class ${table.controllerName} {
      */
     @PostMapping("/update")
 #if(${cfg.requiresPermissions})
-    // @RequiresPermissions("$!{cfg.colonTableName}:update")
+    @RequiresPermissions("$!{cfg.colonTableName}:update")
+#end
+#if(${cfg.operationLog})
+    @OperationLog(name = "修改$!{table.comment}", type = OperationLogType.UPDATE)
 #end
     @ApiOperation(value = "修改$!{table.comment}", response = ApiResult.class)
     public ApiResult<Boolean> update${entity}(#if(${cfg.paramValidation})@Validated(Update.class) #end@RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
@@ -95,7 +109,10 @@ public class ${table.controllerName} {
      */
     @PostMapping("/delete/{id}")
 #if(${cfg.requiresPermissions})
-    // @RequiresPermissions("$!{cfg.colonTableName}:delete")
+    @RequiresPermissions("$!{cfg.colonTableName}:delete")
+#end
+#if(${cfg.operationLog})
+    @OperationLog(name = "删除$!{table.comment}", type = OperationLogType.DELETE)
 #end
     @ApiOperation(value = "删除$!{table.comment}", response = ApiResult.class)
     public ApiResult<Boolean> delete${entity}(@PathVariable("id") Long id) throws Exception {
@@ -104,13 +121,16 @@ public class ${table.controllerName} {
     }
 
     /**
-     * 获取$!{table.comment}
+     * 获取$!{table.comment}详情
      */
     @GetMapping("/info/{id}")
 #if(${cfg.requiresPermissions})
-    // @RequiresPermissions("$!{cfg.colonTableName}:info")
+    @RequiresPermissions("$!{cfg.colonTableName}:info")
 #end
-    @ApiOperation(value = "查看$!{table.comment}", response = ${entity}${cfg.queryVo}.class)
+#if(${cfg.operationLog})
+    @OperationLog(name = "$!{table.comment}详情", type = OperationLogType.INFO)
+#end
+    @ApiOperation(value = "$!{table.comment}详情", response = ${entity}${cfg.queryVo}.class)
     public ApiResult<${entity}${cfg.queryVo}> get${entity}(@PathVariable("id") Long id) throws Exception {
 #if(${cfg.generatorStrategy} == 'SINGLE')
         ${entity}${cfg.queryVo} ${cfg.entityObjectName}${cfg.queryVo} = ${cfg.serviceObjectName}.getById(id);
@@ -125,7 +145,10 @@ public class ${table.controllerName} {
      */
     @PostMapping("/getPageList")
 #if(${cfg.requiresPermissions})
-    // @RequiresPermissions("$!{cfg.colonTableName}:page")
+    @RequiresPermissions("$!{cfg.colonTableName}:page")
+#end
+#if(${cfg.operationLog})
+    @OperationLog(name = "$!{table.comment}分页列表", type = OperationLogType.PAGE)
 #end
     @ApiOperation(value = "$!{table.comment}分页列表", response = ${entity}${cfg.queryVo}.class)
     public ApiResult<Paging<${entity}${cfg.queryVo}>> get${entity}PageList(#if(${cfg.paramValidation})@Validated #end@RequestBody ${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam}) throws Exception {

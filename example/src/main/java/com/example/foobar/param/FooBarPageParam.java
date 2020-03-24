@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -11,54 +14,26 @@
  * limitations under the License.
  */
 
-package com.example.foorbar.vo;
+package com.example.foobar.param;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import java.io.Serializable;
-import java.util.Date;
+import io.geekidea.springbootplus.framework.core.pagination.BasePageOrderParam;
 
 /**
  * <pre>
- * FooBar 查询结果对象
+ * FooBar 分页参数对象
  * </pre>
  *
  * @author geekidea
- * @date 2020-03-14
+ * @date 2020-03-24
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "FooBarQueryVo对象")
-public class FooBarQueryVo implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "FooBar分页参数")
+public class FooBarPageParam extends BasePageOrderParam {
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty("ID")
-    private Long id;
-
-    @ApiModelProperty("Name")
-    private String name;
-
-    @ApiModelProperty("Foo")
-    private String foo;
-
-    @ApiModelProperty("Bar")
-    private String bar;
-
-    @ApiModelProperty("Remark")
-    private String remark;
-
-    @ApiModelProperty("State，0：Disable，1：Enable")
-    private Integer state;
-
-    @ApiModelProperty("Version")
-    private Integer version;
-
-    @ApiModelProperty("Create Time")
-    private Date createTime;
-
-    @ApiModelProperty("Update Time")
-    private Date updateTime;
-
 }

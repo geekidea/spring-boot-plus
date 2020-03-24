@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -11,40 +14,39 @@
  * limitations under the License.
  */
 
-package com.example.foorbar.controller;
+package com.example.foobar.controller;
 
-import com.example.foorbar.entity.FooBar;
-import com.example.foorbar.service.FooBarService;
-import io.geekidea.springbootplus.framework.common.api.ApiCode;
-import io.geekidea.springbootplus.framework.common.enums.BaseEnum;
-import io.geekidea.springbootplus.framework.log.annotation.Module;
-import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
-import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
-import io.geekidea.springbootplus.framework.system.enums.StateEnum;
-import io.geekidea.springbootplus.framework.system.exception.SysLoginException;
-import io.geekidea.springbootplus.framework.util.BaseEnumUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.example.foobar.entity.FooBar;
+import com.example.foobar.service.FooBarService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.example.foobar.param.FooBarPageParam;
 import io.geekidea.springbootplus.framework.common.controller.BaseController;
-import com.example.foorbar.param.FooBarPageParam;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
 import io.geekidea.springbootplus.framework.common.param.IdParam;
+import io.geekidea.springbootplus.framework.log.annotation.Module;
+import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
+import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
+import io.geekidea.springbootplus.framework.core.validator.groups.Add;
+import io.geekidea.springbootplus.framework.core.validator.groups.Update;
+import org.springframework.validation.annotation.Validated;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * FooBar 控制器
  *
  * @author geekidea
- * @since 2020-03-17
+ * @since 2020-03-24
  */
 @Slf4j
 @RestController
 @RequestMapping("/fooBar")
 @Module("foobar")
-@Api("FooBarAPI")
+@Api(value = "FooBarAPI", tags = {"FooBar"})
 public class FooBarController extends BaseController {
 
     @Autowired
@@ -54,20 +56,22 @@ public class FooBarController extends BaseController {
      * 添加FooBar
      */
     @PostMapping("/add")
+    @RequiresPermissions("foo:bar:add")
     @OperationLog(name = "添加FooBar", type = OperationLogType.ADD)
     @ApiOperation(value = "添加FooBar", response = ApiResult.class)
-    public ApiResult<Boolean> addFooBar(@RequestBody FooBar fooBar) throws Exception {
+    public ApiResult<Boolean> addFooBar(@Validated(Add.class) @RequestBody FooBar fooBar) throws Exception {
         boolean flag = fooBarService.saveFooBar(fooBar);
-        return ApiResult.ok(flag);
+        return ApiResult.result(flag);
     }
 
     /**
      * 修改FooBar
      */
     @PostMapping("/update")
+    @RequiresPermissions("foo:bar:update")
     @OperationLog(name = "修改FooBar", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改FooBar", response = ApiResult.class)
-    public ApiResult<Boolean> updateFooBar(@RequestBody FooBar fooBar) throws Exception {
+    public ApiResult<Boolean> updateFooBar(@Validated(Update.class) @RequestBody FooBar fooBar) throws Exception {
         boolean flag = fooBarService.updateFooBar(fooBar);
         return ApiResult.result(flag);
     }
@@ -76,6 +80,7 @@ public class FooBarController extends BaseController {
      * 删除FooBar
      */
     @PostMapping("/delete/{id}")
+    @RequiresPermissions("foo:bar:delete")
     @OperationLog(name = "删除FooBar", type = OperationLogType.DELETE)
     @ApiOperation(value = "删除FooBar", response = ApiResult.class)
     public ApiResult<Boolean> deleteFooBar(@PathVariable("id") Long id) throws Exception {
@@ -87,8 +92,9 @@ public class FooBarController extends BaseController {
      * 获取FooBar详情
      */
     @GetMapping("/info/{id}")
-    @OperationLog(name = "查看FooBar", type = OperationLogType.INFO)
-    @ApiOperation(value = "查看FooBar", response = FooBar.class)
+    @RequiresPermissions("foo:bar:info")
+    @OperationLog(name = "FooBar详情", type = OperationLogType.INFO)
+    @ApiOperation(value = "FooBar详情", response = FooBar.class)
     public ApiResult<FooBar> getFooBar(@PathVariable("id") Long id) throws Exception {
         FooBar fooBar = fooBarService.getById(id);
         return ApiResult.ok(fooBar);
@@ -98,9 +104,10 @@ public class FooBarController extends BaseController {
      * FooBar分页列表
      */
     @PostMapping("/getPageList")
+    @RequiresPermissions("foo:bar:page")
     @OperationLog(name = "FooBar分页列表", type = OperationLogType.PAGE)
     @ApiOperation(value = "FooBar分页列表", response = FooBar.class)
-    public ApiResult<Paging<FooBar>> getFooBarPageList(@RequestBody FooBarPageParam fooBarPageParam) throws Exception {
+    public ApiResult<Paging<FooBar>> getFooBarPageList(@Validated @RequestBody FooBarPageParam fooBarPageParam) throws Exception {
         Paging<FooBar> paging = fooBarService.getFooBarPageList(fooBarPageParam);
         return ApiResult.ok(paging);
     }

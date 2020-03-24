@@ -13,18 +13,17 @@ import ${cfg.queryVoClass};
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 #end
 import ${superServiceImplClassPackage};
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 #if(${cfg.generatorStrategy} != 'SIMPLE')
+import ${cfg.pagingClass};
+import ${cfg.pageUtilClass};
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.transaction.annotation.Transactional;
-import java.io.Serializable;
-import ${cfg.pagingClass};
-import ${cfg.pageUtilClass};
 #end
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * $!{table.comment} 服务实现类

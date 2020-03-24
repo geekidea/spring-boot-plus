@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -11,26 +14,27 @@
  * limitations under the License.
  */
 
-package com.example.foorbar.param;
+package com.example.foobar.mapper;
 
-import io.swagger.annotations.ApiModel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
-import io.geekidea.springbootplus.framework.core.pagination.BasePageParam;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.foobar.entity.FooBar;
+import com.example.foobar.param.FooBarPageParam;
+
+import org.springframework.stereotype.Repository;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Param;
+import java.io.Serializable;
 
 /**
- * <pre>
- * FooBar 分页参数对象
- * </pre>
+ * FooBar Mapper 接口
  *
  * @author geekidea
- * @date 2020-03-17
+ * @since 2020-03-24
  */
-@Data
-@Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "FooBar分页参数")
-public class FooBarPageParam extends BasePageParam {
-    private static final long serialVersionUID = 1L;
+@Repository
+public interface FooBarMapper extends BaseMapper<FooBar> {
+
+
 }

@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -146,12 +149,11 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager,
                                                          LoginService loginService,
                                                          LoginRedisService loginRedisService,
-                                                         SpringBootPlusFilterProperties filterProperties,
                                                          ShiroProperties shiroProperties,
                                                          JwtProperties jwtProperties) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        Map<String, Filter> filterMap = getFilterMap(loginService, loginRedisService, filterProperties, jwtProperties);
+        Map<String, Filter> filterMap = getFilterMap(loginService, loginRedisService, jwtProperties);
         shiroFilterFactoryBean.setFilters(filterMap);
         Map<String, String> filterChainMap = getFilterChainDefinitionMap(shiroProperties);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainMap);
@@ -166,7 +168,6 @@ public class ShiroConfig {
      */
     private Map<String, Filter> getFilterMap(LoginService loginService,
                                              LoginRedisService loginRedisService,
-                                             SpringBootPlusFilterProperties filterProperties,
                                              JwtProperties jwtProperties) {
         Map<String, Filter> filterMap = new LinkedHashMap();
         filterMap.put(JWT_FILTER_NAME, new JwtFilter(loginService, loginRedisService, jwtProperties));

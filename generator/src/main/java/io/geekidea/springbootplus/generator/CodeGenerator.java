@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,7 +37,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * spring-boot-plus代码生成器
@@ -83,13 +89,13 @@ public class CodeGenerator {
         if (StringUtils.isBlank(mavenModuleName)) {
             throw new GeneratorException("mavenModuleName不能为空");
         }
-        if (StringUtils.isBlank(tableName)){
+        if (StringUtils.isBlank(tableName)) {
             throw new GeneratorException("tableName不能为空");
         }
 
         // 如果是单表操作，不生成QueryVo
         GeneratorConfig generatorConfig = generatorProperties.getGeneratorConfig();
-        if (GeneratorStrategy.SINGLE == generatorConfig.generatorStrategy){
+        if (GeneratorStrategy.SINGLE == generatorConfig.generatorStrategy) {
             generatorProperties.getGeneratorConfig().setGeneratorQueryVo(false);
         }
 
@@ -123,8 +129,6 @@ public class CodeGenerator {
         String javaOutputDir = null;
         String resourcesOutputDir = null;
         String mapperXmlOutputDir = null;
-
-
 
 
         if (StringUtils.isBlank(outputDir)) {
@@ -196,7 +200,7 @@ public class CodeGenerator {
         strategyConfig.setInclude(tableName);
         // 表前缀
         List<String> tablePrefixList = generatorProperties.getTablePrefix();
-        if (CollectionUtils.isNotEmpty(tablePrefixList)){
+        if (CollectionUtils.isNotEmpty(tablePrefixList)) {
             strategyConfig.setTablePrefix(tablePrefixList.toArray(new String[]{}));
         }
 
@@ -296,15 +300,17 @@ public class CodeGenerator {
                 map.put("validatorAddPackage", GeneratorConstant.VALIDATOR_ADD_PACKAGE);
                 map.put("validatorUpdatePackage", GeneratorConstant.VALIDATOR_UPDATE_PACKAGE);
                 // 如果是但表模式，queryVO值为null
-                if (GeneratorStrategy.SINGLE == generatorStrategy){
+                if (GeneratorStrategy.SINGLE == generatorStrategy) {
                     map.put("queryVo", "");
-                }else{
+                } else {
                     map.put("queryVo", GeneratorConstant.QUERY_VO);
                 }
-                map.put("generatorQueryVo",generatorConfig.isGeneratorQueryVo());
-                map.put("generatorPageParam",generatorConfig.isGeneratorPageParam());
-                map.put("pageListOrder",generatorConfig.isPageListOrder());
-                map.put("swaggerTags",generatorConfig.isSwaggerTags());
+                map.put("generatorQueryVo", generatorConfig.isGeneratorQueryVo());
+                map.put("generatorPageParam", generatorConfig.isGeneratorPageParam());
+                map.put("pageListOrder", generatorConfig.isPageListOrder());
+                map.put("swaggerTags", generatorConfig.isSwaggerTags());
+                map.put("operationLog", generatorConfig.isOperationLog());
+                map.put("module", moduleName);
                 this.setMap(map);
             }
         };

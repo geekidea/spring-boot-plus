@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,9 +28,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-
 /**
  * spring-boot-plus 项目启动入口
+ *
  * @author geekidea
  * @since 2018-11-08
  */
@@ -35,9 +38,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableScheduling
 @EnableTransactionManagement
 @EnableConfigurationProperties
-@MapperScan({"io.geekidea.springbootplus.**.mapper","com.example.**.mapper"})
 @ServletComponentScan
-@SpringBootApplication(scanBasePackages = {"io.geekidea.springbootplus","com.example"})
+@MapperScan({"io.geekidea.springbootplus.**.mapper", "com.example.**.mapper"})
+@SpringBootApplication(scanBasePackages = {"io.geekidea.springbootplus", "com.example"})
 public class SpringBootPlusApplication {
 
     public static void main(String[] args) {

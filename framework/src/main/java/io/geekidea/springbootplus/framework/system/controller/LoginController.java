@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,7 +18,10 @@ package io.geekidea.springbootplus.framework.system.controller;
 
 import com.alibaba.fastjson.JSON;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.log.annotation.Module;
+import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLogIgnore;
+import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
 import io.geekidea.springbootplus.framework.system.param.LoginParam;
 import io.geekidea.springbootplus.framework.system.service.LoginService;
 import io.geekidea.springbootplus.framework.system.service.SysUserService;
@@ -42,9 +48,10 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019-09-28
  * @since 1.3.0.RELEASE
  **/
-@Api(value = "系统登陆API", tags = {"系统登陆"})
 @Slf4j
 @RestController
+@Module("system")
+@Api(value = "系统登陆API", tags = {"系统登陆"})
 public class LoginController {
 
     @Autowired

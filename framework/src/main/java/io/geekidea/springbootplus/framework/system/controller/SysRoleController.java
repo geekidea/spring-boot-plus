@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,6 +21,9 @@ import io.geekidea.springbootplus.framework.common.controller.BaseController;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
 import io.geekidea.springbootplus.framework.core.validator.groups.Add;
 import io.geekidea.springbootplus.framework.core.validator.groups.Update;
+import io.geekidea.springbootplus.framework.log.annotation.Module;
+import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
+import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
 import io.geekidea.springbootplus.framework.system.entity.SysRole;
 import io.geekidea.springbootplus.framework.system.param.sysrole.SysRolePageParam;
 import io.geekidea.springbootplus.framework.system.param.sysrole.UpdateSysRolePermissionParam;
@@ -43,6 +49,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/sysRole")
+@Module("system")
 @Api(value = "系统角色API", tags = {"系统角色"})
 public class SysRoleController extends BaseController {
 
@@ -54,7 +61,8 @@ public class SysRoleController extends BaseController {
      */
     @PostMapping("/add")
     @RequiresPermissions("sys:role:add")
-    @ApiOperation(value = "添加SysRole对象", notes = "添加系统角色", response = ApiResult.class)
+    @OperationLog(name = "添加系统角色", type = OperationLogType.ADD)
+    @ApiOperation(value = "添加系统角色", response = ApiResult.class)
     public ApiResult<Boolean> addSysRole(@Validated(Add.class) @RequestBody SysRole sysRole) throws Exception {
         boolean flag = sysRoleService.saveSysRole(sysRole);
         return ApiResult.result(flag);
@@ -65,7 +73,8 @@ public class SysRoleController extends BaseController {
      */
     @PostMapping("/update")
     @RequiresPermissions("sys:role:update")
-    @ApiOperation(value = "修改SysRole对象", notes = "修改系统角色", response = ApiResult.class)
+    @OperationLog(name = "修改系统角色", type = OperationLogType.UPDATE)
+    @ApiOperation(value = "修改系统角色", response = ApiResult.class)
     public ApiResult<Boolean> updateSysRole(@Validated(Update.class) @RequestBody SysRole sysRole) throws Exception {
         boolean flag = sysRoleService.updateSysRole(sysRole);
         return ApiResult.result(flag);
@@ -76,7 +85,8 @@ public class SysRoleController extends BaseController {
      */
     @PostMapping("/delete/{id}")
     @RequiresPermissions("sys:role:delete")
-    @ApiOperation(value = "删除SysRole对象", notes = "删除系统角色", response = ApiResult.class)
+    @OperationLog(name = "删除系统角色", type = OperationLogType.DELETE)
+    @ApiOperation(value = "删除系统角色", response = ApiResult.class)
     public ApiResult<Boolean> deleteSysRole(@PathVariable("id") Long id) throws Exception {
         boolean flag = sysRoleService.deleteSysRole(id);
         return ApiResult.result(flag);
@@ -87,7 +97,8 @@ public class SysRoleController extends BaseController {
      */
     @GetMapping("/info/{id}")
     @RequiresPermissions("sys:role:info")
-    @ApiOperation(value = "获取SysRole对象详情", notes = "查看系统角色", response = SysRole.class)
+    @OperationLog(name = "系统角色详情", type = OperationLogType.INFO)
+    @ApiOperation(value = "系统角色详情", response = SysRole.class)
     public ApiResult<SysRole> getSysRole(@PathVariable("id") Long id) throws Exception {
         SysRole sysRole = sysRoleService.getById(id);
         return ApiResult.ok(sysRole);
@@ -98,7 +109,8 @@ public class SysRoleController extends BaseController {
      */
     @PostMapping("/getPageList")
     @RequiresPermissions("sys:role:page")
-    @ApiOperation(value = "获取SysRole分页列表", notes = "系统角色分页列表", response = SysRole.class)
+    @OperationLog(name = "系统角色分页列表", type = OperationLogType.PAGE)
+    @ApiOperation(value = "系统角色分页列表", response = SysRole.class)
     public ApiResult<Paging<SysRole>> getSysRolePageList(@Validated @RequestBody SysRolePageParam sysRolePageParam) throws Exception {
         Paging<SysRole> paging = sysRoleService.getSysRolePageList(sysRolePageParam);
         return ApiResult.ok(paging);
@@ -111,7 +123,8 @@ public class SysRoleController extends BaseController {
      */
     @PostMapping("/getList")
     @RequiresPermissions("sys:role:list")
-    @ApiOperation(value = "获取SysRole列表", notes = "系统角色列表", response = SysRole.class)
+    @OperationLog(name = "系统角色列表", type = OperationLogType.LIST)
+    @ApiOperation(value = "系统角色列表", response = SysRole.class)
     public ApiResult<List<SysRole>> getRoleList() {
         return ApiResult.ok(sysRoleService.list());
     }
@@ -120,7 +133,8 @@ public class SysRoleController extends BaseController {
      * 修改系统角色权限
      */
     @PostMapping("/updateSysRolePermission")
-//    @RequiresPermissions("sys:role-permission:update")
+    @RequiresPermissions("sys:role-permission:update")
+    @OperationLog(name = "修改系统角色权限", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改系统角色权限", response = ApiResult.class)
     public ApiResult<Boolean> updateSysRolePermission(@Validated @RequestBody UpdateSysRolePermissionParam param) throws Exception {
         boolean flag = sysRoleService.updateSysRolePermission(param);

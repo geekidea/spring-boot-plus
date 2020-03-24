@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,9 +16,12 @@
 
 package io.geekidea.springbootplus.framework.system.controller;
 
-import io.geekidea.springbootplus.framework.common.api.ApiResult;
-import io.geekidea.springbootplus.framework.util.UploadUtil;
 import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.log.annotation.Module;
+import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
+import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
+import io.geekidea.springbootplus.framework.util.UploadUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -43,6 +49,7 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @RestController
 @RequestMapping("/upload")
+@Module("system")
 @Api(value = "文件上传", tags = {"文件上传"})
 public class UploadController {
 
@@ -54,7 +61,8 @@ public class UploadController {
      * @return
      */
     @PostMapping
-    @ApiOperation(value = "上传单个文件", notes = "上传单个文件", response = ApiResult.class)
+    @OperationLog(name = "上传单个文件", type = OperationLogType.UPLOAD)
+    @ApiOperation(value = "上传单个文件", response = ApiResult.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "file", value = "文件", required = true,dataType = "__file"),
             @ApiImplicitParam(name = "type", value = "类型 head:头像",required = true)

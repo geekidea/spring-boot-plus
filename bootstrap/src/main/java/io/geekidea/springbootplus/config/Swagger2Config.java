@@ -1,9 +1,12 @@
 /*
  * Copyright 2019-2029 geekidea(https://github.com/geekidea)
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,6 +16,8 @@
 
 package io.geekidea.springbootplus.config;
 
+import com.fasterxml.jackson.databind.introspect.AnnotatedField;
+import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
@@ -20,6 +25,7 @@ import com.google.common.base.Predicate;
 import io.geekidea.springbootplus.config.properties.SwaggerProperties;
 import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusConfigException;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -29,6 +35,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.stereotype.Component;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.annotations.ApiIgnore;
@@ -41,8 +48,11 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.schema.ModelPropertyBuilderPlugin;
+import springfox.documentation.spi.schema.contexts.ModelPropertyContext;
 import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.common.SwaggerPluginSupport;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.ServletRequest;
@@ -50,9 +60,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static springfox.documentation.schema.Annotations.findPropertyAnnotation;
+import static springfox.documentation.swagger.schema.ApiModelProperties.findApiModePropertyAnnotation;
 
 /**
  * Swagger2全局配置
@@ -197,6 +214,56 @@ public class Swagger2Config {
 
     private static Optional<? extends Class<?>> declaringClass(RequestHandler input) {
         return Optional.fromNullable(input.declaringClass());
+    }
+
+    /**
+     * 按照类中字段顺序显示
+     */
+    @Component
+    public static class ApiModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugin {
+
+        @Override
+        public void apply(ModelPropertyContext context) {
+            try {
+                Optional<BeanPropertyDefinition> beanPropertyDefinitionOpt = context.getBeanPropertyDefinition();
+                Optional<ApiModelProperty> annotation = Optional.absent();
+                if (context.getAnnotatedElement().isPresent()) {
+                    annotation = annotation.or(findApiModePropertyAnnotation(context.getAnnotatedElement().get()));
+                }
+                if (context.getBeanPropertyDefinition().isPresent()) {
+                    annotation = annotation.or(findPropertyAnnotation(context.getBeanPropertyDefinition().get(), ApiModelProperty.class));
+                }
+                if (beanPropertyDefinitionOpt.isPresent()) {
+                    BeanPropertyDefinition beanPropertyDefinition = beanPropertyDefinitionOpt.get();
+                    if (annotation.isPresent() && annotation.get().position() != 0) {
+                        return;
+                    }
+                    AnnotatedField annotatedField = beanPropertyDefinition.getField();
+                    Class<?> clazz = annotatedField.getDeclaringClass();
+                    Field[] fields = clazz.getDeclaredFields();
+                    // 获取当前字段对象
+                    Field field = clazz.getDeclaredField(annotatedField.getName());
+                    boolean required = false;
+                    // 获取字段注解
+                    NotNull notNull = field.getDeclaredAnnotation(NotNull.class);
+                    NotBlank notBlank = field.getDeclaredAnnotation(NotBlank.class);
+                    if (notNull != null || notBlank != null) {
+                        required = true;
+                    }
+                    int position = ArrayUtils.indexOf(fields, field);
+                    if (position != -1) {
+                        context.getBuilder().position(position).required(required);
+                    }
+                }
+            } catch (Exception exception) {
+                log.error("Swagger ApiModelProperty预处理异常", exception);
+            }
+        }
+
+        @Override
+        public boolean supports(DocumentationType delimiter) {
+            return SwaggerPluginSupport.pluginDoesApply(delimiter);
+        }
     }
 
 }
