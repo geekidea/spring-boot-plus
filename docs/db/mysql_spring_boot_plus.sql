@@ -233,6 +233,36 @@ create index role_id
     on sys_user (role_id);
 
 
+create table if not exists sys_login_log
+(
+    id bigint(18) auto_increment comment '主键'
+        primary key,
+    username varchar(32) null comment '用户名称',
+    ip varchar(15) null comment 'IP',
+    area varchar(100) null comment '区域',
+    token varchar(32) null comment 'tokenMd5值',
+    type int null comment '1:登录，2：登出',
+    success tinyint(1) default 0 not null comment '是否成功 true:成功/false:失败',
+    code int null comment '响应码',
+    exception_message varchar(300) null comment '失败消息记录',
+    user_agent varchar(200) null comment '浏览器名称',
+    browser_name varchar(100) null comment '浏览器名称',
+    browser_version varchar(100) null comment '浏览器版本',
+    engine_name varchar(100) null comment '浏览器引擎名称',
+    engine_version varchar(100) null comment '浏览器引擎版本',
+    os_name varchar(100) null comment '系统名称',
+    platform_name varchar(100) null comment '平台名称',
+    mobile tinyint(1) null comment '是否是手机,0:否,1:是',
+    device_name varchar(100) null comment '移动端设备名称',
+    device_model varchar(100) null comment '移动端设备型号',
+    remark varchar(200) null comment '备注',
+    create_time datetime default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time datetime null comment '修改时间'
+)
+    comment '系统登录日志';
+
+
+
 INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) VALUES (1, 'admin', '管理员', '11a254dab80d52bc4a347e030e54d861a9d2cdb2af2185a9ca4a7318e830d04d', '666', '15888889900', 1, 'http://localhost:8888/api/resource/201908201013068.png', 'Administrator Account', 1, 1, 1, 0, 1, '2020-02-26 00:00:00', '2019-10-27 23:32:29');
 INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) VALUES (2, 'test', '测试人员1', '34783fb724b259beb71a1279f7cd93bdcfd92a273d566f926419a37825c500df', '087c2e9857f35f1e243367f3b89b81c1', '15888889901', 1, 'http://localhost:8888/api/resource/201908201013068.png', 'Tester Account', 1, 1, 2, 0, 1, '2020-02-26 00:00:01', '2020-02-15 19:31:50');
 INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) VALUES (3, 'admin1', '管理员1', '11a254dab80d52bc4a347e030e54d861a9d2cdb2af2185a9ca4a7318e830d04d', '666', '15888889902', 1, 'http://localhost:8888/api/resource/201908201013068.png', 'Administrator Account', 1, 1, 1, 0, 1, '2020-02-26 00:09:09', '2019-10-27 23:32:29');
@@ -375,3 +405,7 @@ INSERT INTO example_order (id, name, order_no, remark, state, version, create_ti
 INSERT INTO sys_operation_log (id, user_id, user_name, name, ip, area, path, module, class_name, method_name, request_method, content_type, request_body, param, token, type, success, code, message, exception_name, exception_message, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (1, null, null, '添加FooBar', '127.0.0.1', null, '/api/fooBar/add', 'foobar', 'com.example.foorbar.controller.FooBarController', 'addFooBar', 'POST', 'application/json', 1, '{"id":1192448910635892774,"name":"test add","foo":"hello","bar":"world","remark":"备注","state":1}', null, 1, 1, 200, '操作成功', null, null, 'Chrome', '80.0.3987.132', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, '', '2020-03-20 11:16:21', null);
 INSERT INTO sys_operation_log (id, user_id, user_name, name, ip, area, path, module, class_name, method_name, request_method, content_type, request_body, param, token, type, success, code, message, exception_name, exception_message, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (2, null, null, 'FooBar分页列表', '127.0.0.1', null, '/api/fooBar/getPageList', 'foobar', 'com.example.foorbar.controller.FooBarController', 'getFooBarPageList', 'POST', 'application/json', 1, '{"pageIndex":1,"pageSize":10,"keyword":"string","lastRowLimitValue":0}', null, 7, 1, 200, '操作成功', null, null, 'Chrome', '80.0.3987.132', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, '', '2020-03-20 11:17:27', null);
 INSERT INTO sys_operation_log (id, user_id, user_name, name, ip, area, path, module, class_name, method_name, request_method, content_type, request_body, param, token, type, success, code, message, exception_name, exception_message, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (3, null, null, 'FooBar分页列表', '127.0.0.1', null, '/api/fooBar/getPageList', 'foobar', 'com.example.foorbar.controller.FooBarController', 'getFooBarPageList', 'POST', 'application/json', 1, '{"pageIndex":1,"pageSize":10,"keyword":"string","lastRowLimitValue":0}', null, 7, 1, 200, '操作成功', null, null, 'Chrome', '80.0.3987.132', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, '', '2020-03-20 11:17:28', null);
+
+INSERT INTO sys_login_log (id, username, ip, area, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (3, null, '127.0.0.1', '本机地址', '5a9a504a5e1e967709f89c14d9692f4d', 2, 1, 200, null, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-24 20:12:40', null);
+INSERT INTO sys_login_log (id, username, ip, area, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (2, null, '127.0.0.1', '本机地址', null, 2, 0, null, 'token不能为空', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-24 20:11:54', null);
+INSERT INTO sys_login_log (id, username, ip, area, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (1, 'admin', '127.0.0.1', '本机地址', null, 1, 1, 200, null, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-24 20:11:37', null);

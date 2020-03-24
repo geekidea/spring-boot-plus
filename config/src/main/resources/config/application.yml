@@ -161,7 +161,7 @@ spring-boot-plus:
   ######################## Spring Shiro start ########################
   shiro:
     # 是否启用
-    enable: false
+    enable: true
     # 权限配置
     anon:
       # 排除登录登出
