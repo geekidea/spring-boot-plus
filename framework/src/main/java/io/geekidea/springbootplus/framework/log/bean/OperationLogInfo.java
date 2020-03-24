@@ -16,7 +16,6 @@
 
 package io.geekidea.springbootplus.framework.log.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

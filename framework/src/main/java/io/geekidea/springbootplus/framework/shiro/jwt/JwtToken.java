@@ -17,8 +17,8 @@
 package io.geekidea.springbootplus.framework.shiro.jwt;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.geekidea.springbootplus.framework.util.IpUtil;
 import io.geekidea.springbootplus.framework.shiro.util.JwtUtil;
+import io.geekidea.springbootplus.framework.util.IpUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.shiro.authc.HostAuthenticationToken;
@@ -36,19 +36,19 @@ import java.util.Date;
 @Accessors(chain = true)
 public class JwtToken implements HostAuthenticationToken {
     /**
-     * 登陆ip
+     * 登录ip
      */
     private String host;
     /**
-     * 登陆用户名称
+     * 登录用户名称
      */
     private String username;
     /**
-     * 登陆盐值
+     * 登录盐值
      */
     private String salt;
     /**
-     * 登陆token
+     * 登录token
      */
     private String token;
     /**

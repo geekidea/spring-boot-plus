@@ -18,16 +18,15 @@ package io.geekidea.springbootplus.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.geekidea.springbootplus.config.constant.CommonRedisKey;
-import io.geekidea.springbootplus.framework.util.PasswordUtil;
+import io.geekidea.springbootplus.config.properties.JwtProperties;
 import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
-import io.geekidea.springbootplus.config.properties.JwtProperties;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtToken;
-import io.geekidea.springbootplus.system.param.LoginParam;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.framework.shiro.util.JwtUtil;
 import io.geekidea.springbootplus.framework.shiro.util.SaltUtil;
 import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserVo;
+import io.geekidea.springbootplus.framework.util.PasswordUtil;
 import io.geekidea.springbootplus.system.convert.SysUserConvert;
 import io.geekidea.springbootplus.system.entity.SysDepartment;
 import io.geekidea.springbootplus.system.entity.SysRole;
@@ -35,6 +34,7 @@ import io.geekidea.springbootplus.system.entity.SysUser;
 import io.geekidea.springbootplus.system.enums.StateEnum;
 import io.geekidea.springbootplus.system.exception.VerificationCodeException;
 import io.geekidea.springbootplus.system.mapper.SysUserMapper;
+import io.geekidea.springbootplus.system.param.LoginParam;
 import io.geekidea.springbootplus.system.service.LoginService;
 import io.geekidea.springbootplus.system.service.SysDepartmentService;
 import io.geekidea.springbootplus.system.service.SysRolePermissionService;
@@ -111,10 +111,10 @@ public class LoginServiceImpl implements LoginService {
         checkVerifyCode(loginParam.getVerifyToken(), loginParam.getCode());
 
         String username = loginParam.getUsername();
-        // 从数据库中获取登陆用户信息
+        // 从数据库中获取登录用户信息
         SysUser sysUser = getSysUserByUsername(username);
         if (sysUser == null) {
-            log.error("登陆失败,loginParam:{}", loginParam);
+            log.error("登录失败,loginParam:{}", loginParam);
             throw new AuthenticationException("用户名或密码错误");
         }
         if (StateEnum.DISABLE.getCode().equals(sysUser.getState())) {
@@ -130,7 +130,7 @@ public class LoginServiceImpl implements LoginService {
             throw new AuthenticationException("用户名或密码错误");
         }
 
-        // 将系统用户对象转换成登陆用户对象
+        // 将系统用户对象转换成登录用户对象
         LoginSysUserVo loginSysUserVo = SysUserConvert.INSTANCE.sysUserToLoginSysUserVo(sysUser);
 
         // 获取部门
@@ -174,21 +174,26 @@ public class LoginServiceImpl implements LoginService {
 
         // 创建AuthenticationToken
         JwtToken jwtToken = JwtToken.build(token, username, newSalt, expireSecond);
-        // 从SecurityUtils里边创建一个 subject
-        Subject subject = SecurityUtils.getSubject();
-        // 执行认证登陆
-        subject.login(jwtToken);
 
-        // 缓存登陆信息到Redis
+        boolean enableShiro = springBootPlusProperties.getShiro().isEnable();
+        if (enableShiro) {
+            // 从SecurityUtils里边创建一个 subject
+            Subject subject = SecurityUtils.getSubject();
+            // 执行认证登录
+            subject.login(jwtToken);
+        } else {
+            log.warn("未启用Shiro");
+        }
+
+        // 缓存登录信息到Redis
         loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo);
-        log.debug("登陆成功,username:{}", username);
+        log.debug("登录成功,username:{}", username);
 
-
-        // 缓存登陆信息到redis
+        // 缓存登录信息到redis
         String tokenSha256 = DigestUtils.sha256Hex(token);
-        redisTemplate.opsForValue().set(tokenSha256,loginSysUserVo,1, TimeUnit.DAYS);
+        redisTemplate.opsForValue().set(tokenSha256, loginSysUserVo, 1, TimeUnit.DAYS);
 
-        // 返回token和登陆用户信息对象
+        // 返回token和登录用户信息对象
         LoginSysUserTokenVo loginSysUserTokenVo = new LoginSysUserTokenVo();
         loginSysUserTokenVo.setToken(token);
         loginSysUserTokenVo.setLoginSysUserVo(loginSysUserVo);

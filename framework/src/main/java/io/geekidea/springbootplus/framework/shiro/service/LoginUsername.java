@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.log.annotation;
-
-import java.lang.annotation.*;
+package io.geekidea.springbootplus.framework.shiro.service;
 
 /**
- * 忽略操作日志记录注解
- * 在controller上标注该方法后，将不会记录操作日志
- * 可以标注在类和方法上，如果标记在类上，则会忽略controller中的所有方法
+ * 获取登录用户名称
  *
  * @author geekidea
- * @date 2020/3/19
+ * @date 2020/3/24
  **/
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface OperationLogIgnore {
+public interface LoginUsername {
+
+    /**
+     * 获取用户名
+     *
+     * @return
+     */
+    String getUsername();
 
 }

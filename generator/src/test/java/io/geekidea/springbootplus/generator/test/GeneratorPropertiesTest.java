@@ -17,7 +17,6 @@
 package io.geekidea.springbootplus.generator.test;
 
 import io.geekidea.springbootplus.generator.CodeGenerator;
-import io.geekidea.springbootplus.generator.SpringBootPlusGenerator;
 import io.geekidea.springbootplus.generator.properties.GeneratorProperties;
 import org.junit.Test;
 import org.junit.runner.RunWith;

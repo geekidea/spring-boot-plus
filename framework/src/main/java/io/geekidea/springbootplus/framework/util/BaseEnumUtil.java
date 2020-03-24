@@ -20,7 +20,10 @@ import io.geekidea.springbootplus.framework.common.enums.BaseEnum;
 import io.geekidea.springbootplus.framework.common.vo.EnumVo;
 import org.apache.commons.collections4.MapUtils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * BaseEnum枚举工具类

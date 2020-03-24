@@ -75,9 +75,10 @@ public class LogAop extends BaseLogAop {
 
     @Override
     protected void finish(RequestInfo requestInfo, OperationLogInfo operationLogInfo, Object result, Exception exception) {
-        // 异步保存日志
+        // 异步保存操作日志
         super.saveSysOperationLog(requestInfo, operationLogInfo, result, exception);
+        // 异步保存登录日志
+        super.saveSysLoginLog(requestInfo, operationLogInfo, result, exception);
     }
-
 
 }

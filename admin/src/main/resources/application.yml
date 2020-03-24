@@ -16,7 +16,7 @@ spring:
             url: https://springboot.plus
             order: 2000
 
-# Spring Boot Admin 登陆账号密码
+# Spring Boot Admin 登录账号密码
 spring-boot-plus:
   admin:
     username: admin

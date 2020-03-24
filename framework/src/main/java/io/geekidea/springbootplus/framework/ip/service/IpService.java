@@ -16,9 +16,8 @@
 
 package io.geekidea.springbootplus.framework.ip.service;
 
-import io.geekidea.springbootplus.framework.ip.entity.Ip;
 import io.geekidea.springbootplus.framework.common.service.BaseService;
-import org.apache.ibatis.annotations.Param;
+import io.geekidea.springbootplus.framework.ip.entity.Ip;
 
 /**
  * IP地址 服务类
@@ -34,6 +33,14 @@ public interface IpService extends BaseService<Ip> {
      * @param ip
      * @return
      */
-    Ip getByIp(@Param("ip") String ip);
+    Ip getByIp(String ip);
+
+    /**
+     * 通过ip地址获取区域
+     *
+     * @param ip
+     * @return
+     */
+    String getAreaByIp(String ip);
 
 }

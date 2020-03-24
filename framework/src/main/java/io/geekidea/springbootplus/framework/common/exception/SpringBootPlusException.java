@@ -16,10 +16,8 @@
 
 package io.geekidea.springbootplus.framework.common.exception;
 
-import com.baomidou.mybatisplus.extension.enums.ApiErrorCode;
 import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * 自定义异常

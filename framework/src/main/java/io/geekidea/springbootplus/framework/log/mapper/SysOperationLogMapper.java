@@ -18,14 +18,7 @@ package io.geekidea.springbootplus.framework.log.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.geekidea.springbootplus.framework.log.entity.SysOperationLog;
-import io.geekidea.springbootplus.framework.log.param.SysOperationLogPageParam;
-
 import org.springframework.stereotype.Repository;
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.apache.ibatis.annotations.Param;
-import java.io.Serializable;
 
 /**
  * 系统操作日志 Mapper 接口

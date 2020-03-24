@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface LoginService {
 
     /**
-     * 登陆
+     * 登录
      *
      * @param loginParam
      * @return

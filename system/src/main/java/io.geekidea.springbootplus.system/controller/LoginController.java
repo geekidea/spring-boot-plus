@@ -21,6 +21,7 @@ import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.log.annotation.Module;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLogIgnore;
 import io.geekidea.springbootplus.system.service.LoginService;
+import io.geekidea.springbootplus.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 登陆控制器
+ * 登录控制器
  *
  * @author geekidea
  * @date 2019-09-28
@@ -45,36 +46,36 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @RestController
 @Module("system")
-@Api(value = "系统登陆API", tags = {"系统登陆"})
+@Api(value = "系统登录API", tags = {"系统登录"})
 public class LoginController {
 
     @Autowired
     private LoginService loginService;
 
     @Autowired
-    private io.geekidea.springbootplus.system.service.SysUserService sysUserService;
+    private SysUserService sysUserService;
 
     @Autowired
     private RedisTemplate redisTemplate;
 
     @PostMapping("/login")
     @OperationLogIgnore
-    @ApiOperation(value = "登陆", notes = "系统用户登陆", response = io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo.class)
+    @ApiOperation(value = "登录", notes = "系统用户登录", response = io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo.class)
     public ApiResult login(@Validated @RequestBody io.geekidea.springbootplus.system.param.LoginParam loginParam, HttpServletResponse response) throws Exception {
         io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo loginSysUserTokenVo = loginService.login(loginParam);
 //        // 设置token响应头
 //        response.setHeader(JwtTokenUtil.getTokenName(), loginSysUserTokenVo.getToken());
-//        return ApiResult.ok(loginSysUserTokenVo.getToken(), "登陆成功");
+//        return ApiResult.ok(loginSysUserTokenVo.getToken(), "登录成功");
         return ApiResult.okMap("token", loginSysUserTokenVo.getToken());
     }
 
 
     /**
-     * 根据token获取系统登陆用户信息
+     * 根据token获取系统登录用户信息
      * @return
      */
     @GetMapping("/getSysUserInfo")
-    @ApiOperation(value = "根据token获取系统登陆用户信息", response = io.geekidea.springbootplus.system.vo.SysUserQueryVo.class)
+    @ApiOperation(value = "根据token获取系统登录用户信息", response = io.geekidea.springbootplus.system.vo.SysUserQueryVo.class)
     public ApiResult<JSON> getSysUser() throws Exception {
 //        String token =  JwtTokenUtil.getToken();
 //        String tokenSha256 = DigestUtils.sha256Hex(token);
@@ -93,6 +94,7 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
+    @OperationLogIgnore
     public ApiResult logout(HttpServletRequest request) throws Exception {
         loginService.logout(request);
         return ApiResult.ok("退出成功");

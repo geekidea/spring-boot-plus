@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus.system.param;
 
+import io.geekidea.springbootplus.framework.shiro.service.LoginUsername;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,7 +31,7 @@ import javax.validation.constraints.NotBlank;
  **/
 @Data
 @ApiModel("登录参数")
-public class LoginParam {
+public class LoginParam implements LoginUsername {
 
     @NotBlank(message = "请输入账号")
     @ApiModelProperty("账号")

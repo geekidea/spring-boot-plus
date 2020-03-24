@@ -16,11 +16,10 @@
 
 package io.geekidea.springbootplus.framework.log.service;
 
-import io.geekidea.springbootplus.framework.log.entity.SysOperationLog;
 import io.geekidea.springbootplus.framework.common.service.BaseService;
-import io.geekidea.springbootplus.framework.log.param.SysOperationLogPageParam;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
-import java.io.Serializable;
+import io.geekidea.springbootplus.framework.log.entity.SysOperationLog;
+import io.geekidea.springbootplus.framework.log.param.SysOperationLogPageParam;
 
 /**
  * 系统操作日志 服务类

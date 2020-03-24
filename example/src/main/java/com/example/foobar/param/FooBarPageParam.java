@@ -16,11 +16,11 @@
 
 package com.example.foobar.param;
 
+import io.geekidea.springbootplus.framework.core.pagination.BasePageOrderParam;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import io.geekidea.springbootplus.framework.core.pagination.BasePageOrderParam;
 
 /**
  * <pre>

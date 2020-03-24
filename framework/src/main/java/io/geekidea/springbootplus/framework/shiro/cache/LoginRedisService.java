@@ -22,7 +22,7 @@ import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserRedisVo;
 import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserVo;
 
 /**
- * 登陆信息Redis缓存操作服务
+ * 登录信息Redis缓存操作服务
  *
  * @author geekidea
  * @date 2019-09-30
@@ -31,7 +31,7 @@ import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserVo;
 public interface LoginRedisService {
 
     /**
-     * 缓存登陆信息
+     * 缓存登录信息
      *
      * @param jwtToken
      * @param loginSysUserVo
@@ -40,7 +40,7 @@ public interface LoginRedisService {
 
 
     /**
-     * 刷新登陆信息
+     * 刷新登录信息
      *
      * @param oldToken
      * @param username
@@ -49,7 +49,7 @@ public interface LoginRedisService {
     void refreshLoginInfo(String oldToken, String username, JwtToken newJwtToken);
 
     /**
-     * 通过用户名，从缓存中获取登陆用户LoginSysUserRedisVo
+     * 通过用户名，从缓存中获取登录用户LoginSysUserRedisVo
      *
      * @param username
      * @return
@@ -57,7 +57,7 @@ public interface LoginRedisService {
     LoginSysUserRedisVo getLoginSysUserRedisVo(String username);
 
     /**
-     * 获取登陆用户对象
+     * 获取登录用户对象
      *
      * @param username
      * @return
@@ -89,7 +89,7 @@ public interface LoginRedisService {
     boolean exists(String token);
 
     /**
-     * 删除用户所有登陆缓存
+     * 删除用户所有登录缓存
      *
      * @param username
      */

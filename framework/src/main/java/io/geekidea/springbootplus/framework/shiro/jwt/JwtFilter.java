@@ -77,7 +77,7 @@ public class JwtFilter extends AuthenticatingFilter {
             throw new AuthenticationException("JWT Token已过期,token:" + token);
         }
 
-        // 如果开启redis二次校验，或者设置为单个用户token登陆，则先在redis中判断token是否存在
+        // 如果开启redis二次校验，或者设置为单个用户token登录，则先在redis中判断token是否存在
         if (jwtProperties.isRedisCheck() || jwtProperties.isSingleLogin()) {
             boolean redisExpired = loginRedisService.exists(token);
             if (!redisExpired) {
@@ -144,7 +144,7 @@ public class JwtFilter extends AuthenticatingFilter {
     }
 
     /**
-     * 登陆成功处理
+     * 登录成功处理
      *
      * @param token
      * @param subject
@@ -165,7 +165,7 @@ public class JwtFilter extends AuthenticatingFilter {
     }
 
     /**
-     * 登陆失败处理
+     * 登录失败处理
      *
      * @param token
      * @param e
@@ -175,7 +175,7 @@ public class JwtFilter extends AuthenticatingFilter {
      */
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-        log.error("登陆失败，token:" + token + ",error:" + e.getMessage(), e);
+        log.error("登录失败，token:" + token + ",error:" + e.getMessage(), e);
         return false;
     }
 }

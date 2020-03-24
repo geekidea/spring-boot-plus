@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * 获取登陆信息工具类
+ * 获取登录信息工具类
  *
  * @author geekidea
  * @date 2018-11-08
@@ -44,12 +44,12 @@ public class LoginUtil {
 
 
     /**
-     * 获取当前登陆用户对象
+     * 获取当前登录用户对象
      *
      * @return
      */
     public static LoginSysUserRedisVo getLoginSysUserRedisVo() {
-        // 获取当前登陆用户
+        // 获取当前登录用户
         String token = JwtTokenUtil.getToken();
         String username = JwtUtil.getUsername(token);
         if (StringUtils.isBlank(username)) {
@@ -59,7 +59,7 @@ public class LoginUtil {
     }
 
     /**
-     * 获取当前登陆用户的ID
+     * 获取当前登录用户的ID
      *
      * @return
      */
@@ -72,7 +72,7 @@ public class LoginUtil {
     }
 
     /**
-     * 获取当前登陆用户的账号
+     * 获取当前登录用户的账号
      *
      * @return
      */

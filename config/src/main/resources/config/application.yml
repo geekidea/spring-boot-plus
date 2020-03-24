@@ -58,8 +58,8 @@ spring-boot-plus:
   # 服务器IP地址
   server-ip: 127.0.0.1
   # 是否启用验证码
-  enable-verify-code: true
-  # 默认新建用户登陆初始化密码
+  enable-verify-code: false
+  # 默认新建用户登录初始化密码
   login-init-salt: 666666
   login-init-password: admin
   login-init-head: http://${spring-boot-plus.server-ip}:8888/api/resource/logo.png
@@ -104,6 +104,14 @@ spring-boot-plus:
       enable: true
       # 排除的路径
       exclude-paths:
+    # 登录日志配置
+    login-log:
+      # 是否启用
+      enable: true
+      # 登录地址
+      login-path: /login
+      # 登出地址
+      logout-path: /logout
 
   # 文件上传下载配置
   # 上传路径配置
@@ -156,8 +164,8 @@ spring-boot-plus:
     enable: false
     # 权限配置
     anon:
-      # 排除登陆登出
-      # 排除登陆登出
+      # 排除登录登出
+      # 排除登录登出
       - /login,/logout
       # 排除静态资源
       - /static/**,/templates/**
@@ -198,7 +206,7 @@ spring-boot-plus:
     refresh-token-countdown: 600
     # redis校验jwt token是否存在,可选
     redis-check: true
-    # true: 同一个账号只能是最后一次登陆token有效，false：同一个账号可多次登陆
+    # true: 同一个账号只能是最后一次登录token有效，false：同一个账号可多次登录
     single-login: false
     # 盐值校验，如果不加自定义盐值，则使用secret校验
     salt-check: true

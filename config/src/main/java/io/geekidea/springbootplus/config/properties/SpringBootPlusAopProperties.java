@@ -23,7 +23,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -48,6 +47,11 @@ public class SpringBootPlusAopProperties {
      */
     @NestedConfigurationProperty
     private OperationLogConfig operationLog;
+
+    /**
+     * 登录日志配置
+     */
+    private LoginLogConfig loginLog;
 
     @Data
     public static class AopConfig {
@@ -99,6 +103,29 @@ public class SpringBootPlusAopProperties {
          * 排除路径
          */
         private Set<String> excludePaths;
+
+    }
+
+    /**
+     * 登录日志配置
+     */
+    @Data
+    public static class LoginLogConfig {
+
+        /**
+         * 是否启用
+         */
+        private boolean enable = true;
+
+        /**
+         * 登录路径
+         */
+        private String loginPath = "/login";
+
+        /**
+         * 登出路径
+         */
+        private String logoutPath = "/logout";
 
     }
 

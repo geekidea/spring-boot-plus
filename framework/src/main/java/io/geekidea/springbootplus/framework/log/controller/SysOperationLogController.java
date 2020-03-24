@@ -16,22 +16,20 @@
 
 package io.geekidea.springbootplus.framework.log.controller;
 
+import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.common.controller.BaseController;
+import io.geekidea.springbootplus.framework.core.pagination.Paging;
+import io.geekidea.springbootplus.framework.core.validator.groups.Add;
+import io.geekidea.springbootplus.framework.core.validator.groups.Update;
 import io.geekidea.springbootplus.framework.log.entity.SysOperationLog;
+import io.geekidea.springbootplus.framework.log.param.SysOperationLogPageParam;
 import io.geekidea.springbootplus.framework.log.service.SysOperationLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import io.geekidea.springbootplus.framework.common.controller.BaseController;
-import io.geekidea.springbootplus.framework.log.param.SysOperationLogPageParam;
-import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import org.springframework.validation.annotation.Validated;
-import io.geekidea.springbootplus.framework.core.validator.groups.Add;
-import io.geekidea.springbootplus.framework.core.validator.groups.Update;
-import io.geekidea.springbootplus.framework.core.pagination.Paging;
-import io.geekidea.springbootplus.framework.common.param.IdParam;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 系统操作日志 控制器

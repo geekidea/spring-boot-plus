@@ -47,9 +47,9 @@ public enum ApiCode {
      **/
     FAIL(500, "操作失败"),
     /**
-     * 登陆失败
+     * 登录失败
      **/
-    LOGIN_EXCEPTION(4000, "登陆失败"),
+    LOGIN_EXCEPTION(4000, "登录失败"),
     /**
      * 系统异常
      **/
@@ -83,9 +83,9 @@ public enum ApiCode {
      **/
     VERIFICATION_CODE_EXCEPTION(5103, "验证码校验异常"),
     /**
-     * 登陆授权异常
+     * 登录授权异常
      **/
-    AUTHENTICATION_EXCEPTION(5104, "登陆授权异常"),
+    AUTHENTICATION_EXCEPTION(5104, "登录授权异常"),
     /**
      * 没有访问权限
      **/

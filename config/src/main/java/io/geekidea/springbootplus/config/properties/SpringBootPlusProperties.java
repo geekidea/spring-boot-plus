@@ -51,12 +51,12 @@ public class SpringBootPlusProperties {
     private boolean enableVerifyCode;
 
     /**
-     * 新建登陆用户初始化盐值
+     * 新建登录用户初始化盐值
      */
     private String loginInitSalt;
 
     /**
-     * 新建登陆用户初始化密码
+     * 新建登录用户初始化密码
      */
     private String loginInitPassword;
 

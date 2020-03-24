@@ -17,23 +17,22 @@
 package com.example.foobar.controller;
 
 import com.example.foobar.entity.FooBar;
-import com.example.foobar.service.FooBarService;
-import lombok.extern.slf4j.Slf4j;
 import com.example.foobar.param.FooBarPageParam;
-import io.geekidea.springbootplus.framework.common.controller.BaseController;
+import com.example.foobar.service.FooBarService;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
+import io.geekidea.springbootplus.framework.common.controller.BaseController;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
-import io.geekidea.springbootplus.framework.common.param.IdParam;
+import io.geekidea.springbootplus.framework.core.validator.groups.Add;
+import io.geekidea.springbootplus.framework.core.validator.groups.Update;
 import io.geekidea.springbootplus.framework.log.annotation.Module;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
 import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
-import io.geekidea.springbootplus.framework.core.validator.groups.Add;
-import io.geekidea.springbootplus.framework.core.validator.groups.Update;
-import org.springframework.validation.annotation.Validated;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -109,6 +108,7 @@ public class FooBarController extends BaseController {
     @ApiOperation(value = "FooBar分页列表", response = FooBar.class)
     public ApiResult<Paging<FooBar>> getFooBarPageList(@Validated @RequestBody FooBarPageParam fooBarPageParam) throws Exception {
         Paging<FooBar> paging = fooBarService.getFooBarPageList(fooBarPageParam);
+        System.out.println(1 / 0);
         return ApiResult.ok(paging);
     }
 

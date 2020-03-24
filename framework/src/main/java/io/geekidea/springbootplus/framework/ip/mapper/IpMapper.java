@@ -18,10 +18,8 @@ package io.geekidea.springbootplus.framework.ip.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.geekidea.springbootplus.framework.ip.entity.Ip;
-
-import org.springframework.stereotype.Repository;
-
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * IP地址 Mapper 接口

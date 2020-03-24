@@ -17,12 +17,9 @@
 package io.geekidea.springbootplus.framework.common.service.impl;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.springbootplus.framework.common.service.BaseService;
-import io.geekidea.springbootplus.framework.core.pagination.BasePageParam;
 import io.geekidea.springbootplus.framework.util.LambdaColumn;
 
 import java.lang.reflect.ParameterizedType;

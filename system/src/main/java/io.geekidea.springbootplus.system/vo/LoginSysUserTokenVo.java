@@ -30,7 +30,7 @@ import java.io.Serializable;
  **/
 @Data
 @Accessors(chain = true)
-@ApiModel("登陆用户信息TokenVO")
+@ApiModel("登录用户信息TokenVO")
 public class LoginSysUserTokenVo implements Serializable {
     private static final long serialVersionUID = -4650803752566647697L;
 
@@ -38,7 +38,7 @@ public class LoginSysUserTokenVo implements Serializable {
     private String token;
 
     /**
-     * 登陆用户对象
+     * 登录用户对象
      */
     private LoginSysUserVo loginSysUserVo;
 }

@@ -78,7 +78,7 @@ public class JwtProperties {
     private boolean redisCheck;
 
     /**
-     * 单用户登陆，一个用户只能又一个有效的token
+     * 单用户登录，一个用户只能又一个有效的token
      */
     private boolean singleLogin;
 

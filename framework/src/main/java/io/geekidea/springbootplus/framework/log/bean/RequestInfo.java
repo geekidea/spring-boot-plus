@@ -35,14 +35,30 @@ public class RequestInfo implements Serializable {
     private static final long serialVersionUID = 1421424612944015973L;
 
     /**
-     * 请求全路径
+     * 请求路径
+     * /api/foobar/add
      */
     private String path;
+
+    /**
+     * 请求实际路径
+     * /foobar/add
+     */
+    @JsonIgnore
+    @JSONField(serialize = false)
+    private String realPath;
 
     /**
      * 请求IP地址
      */
     private String ip;
+
+    /**
+     * 请求IP区域
+     */
+    @JsonIgnore
+    @JSONField(serialize = false)
+    private String area;
 
     /**
      * 请求方式，GET/POST
@@ -73,6 +89,13 @@ public class RequestInfo implements Serializable {
      * 请求token
      */
     private String token;
+
+    /**
+     * 请求token MD5值
+     */
+    @JsonIgnore
+    @JSONField(serialize = false)
+    private String tokenMd5;
 
     /**
      * 用户代理字符串

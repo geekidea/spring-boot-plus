@@ -87,7 +87,7 @@
 - Add `SpringBootPlusException`,`DaoException` 自定义异常类
 - Add `ShiroConfig`, `ShiroPermissionConfig`, `ShiroProperties` Shiro配置类
 - Add `JwtCredentialsMatcher`, `JwtFilter`, `JwtProperties`, `JwtRealm`, `JwtToken` JWT配置
-- Add `LoginRedisService`, `LoginRedisServiceImpl` Redis登陆缓存处理
+- Add `LoginRedisService`, `LoginRedisServiceImpl` Redis登录缓存处理
 
 ### 🐞  Bug Fixes
 - fix startup.sh启动jar指定logback.xml

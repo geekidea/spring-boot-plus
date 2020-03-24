@@ -25,15 +25,17 @@ import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.common.bean.ClientInfo;
 import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusException;
-import io.geekidea.springbootplus.framework.ip.entity.Ip;
 import io.geekidea.springbootplus.framework.ip.service.IpService;
 import io.geekidea.springbootplus.framework.log.annotation.Module;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLogIgnore;
 import io.geekidea.springbootplus.framework.log.bean.OperationLogInfo;
 import io.geekidea.springbootplus.framework.log.bean.RequestInfo;
+import io.geekidea.springbootplus.framework.log.entity.SysLoginLog;
 import io.geekidea.springbootplus.framework.log.entity.SysOperationLog;
+import io.geekidea.springbootplus.framework.log.service.SysLoginLogService;
 import io.geekidea.springbootplus.framework.log.service.SysOperationLogService;
+import io.geekidea.springbootplus.framework.shiro.service.LoginUsername;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.framework.util.*;
 import lombok.Data;
@@ -87,6 +89,9 @@ public abstract class BaseLogAop {
     @Autowired
     private IpService ipService;
 
+    @Autowired
+    private SysLoginLogService sysLoginLogService;
+
     /**
      * 本地线程变量，保存请求参数信息到当前线程中
      */
@@ -127,12 +132,19 @@ public abstract class BaseLogAop {
      */
     protected SpringBootPlusAopProperties.OperationLogConfig operationLogConfig;
 
+    /**
+     * Aop登录日志配置
+     */
+    protected SpringBootPlusAopProperties.LoginLogConfig loginLogConfig;
+
     @Autowired
     public void setSpringBootPlusAopProperties(SpringBootPlusAopProperties springBootPlusAopProperties) {
         logAopConfig = springBootPlusAopProperties.getLog();
         operationLogConfig = springBootPlusAopProperties.getOperationLog();
+        loginLogConfig = springBootPlusAopProperties.getLoginLog();
         log.debug("logAopConfig = " + logAopConfig);
         log.debug("operationLogConfig = " + operationLogConfig);
+        log.debug("loginLogConfig = " + loginLogConfig);
         log.debug("contextPath = " + contextPath);
     }
 
@@ -188,15 +200,17 @@ public abstract class BaseLogAop {
             // HTTP请求信息对象
             RequestInfo requestInfo = new RequestInfo();
 
-            // 请求全路径
+            // 请求路径 /api/foobar/add
             String path = request.getRequestURI();
             requestInfo.setPath(path);
+            // 获取实际路径 /foobar/add
+            String realPath = getRealPath(path);
+            requestInfo.setRealPath(realPath);
 
             // 排除路径
             Set<String> excludePaths = logAopConfig.getExcludePaths();
             // 请求路径
-            String requestPath = requestInfo.getPath();
-            if (handleExcludePaths(excludePaths, requestPath)) {
+            if (handleExcludePaths(excludePaths, realPath)) {
                 return joinPoint.proceed();
             }
 
@@ -238,7 +252,11 @@ public abstract class BaseLogAop {
             requestInfo.setTime(DateUtil.getDateTimeString(new Date()));
 
             // 获取请求头token
-            requestInfo.setToken(request.getHeader(JwtTokenUtil.getTokenName()));
+            String token = request.getHeader(JwtTokenUtil.getTokenName());
+            requestInfo.setToken(token);
+            if (StringUtils.isNotBlank(token)) {
+                requestInfo.setTokenMd5(DigestUtils.md5Hex(token));
+            }
 
             // 用户浏览器代理字符串
             requestInfo.setUserAgent(request.getHeader(CommonConstant.USER_AGENT));
@@ -327,7 +345,7 @@ public abstract class BaseLogAop {
         // 判断方法是否要过滤
         OperationLogIgnore operationLogIgnore = method.getAnnotation(OperationLogIgnore.class);
         if (operationLogIgnore != null) {
-            operationLogInfo.setIgnore(false);
+            operationLogInfo.setIgnore(true);
         }
         // 从方法上获取OperationLog注解
         OperationLog operationLog = method.getAnnotation(OperationLog.class);
@@ -626,20 +644,12 @@ public abstract class BaseLogAop {
      * 处理排除路径，匹配返回true，否则返回false
      *
      * @param excludePaths 排除路径
-     * @param requestPath  请求路径
+     * @param realPath     请求实际路径
      * @return
      */
-    protected boolean handleExcludePaths(Set<String> excludePaths, String requestPath) {
-        if (CollectionUtils.isEmpty(excludePaths) || StringUtils.isBlank(requestPath)) {
+    protected boolean handleExcludePaths(Set<String> excludePaths, String realPath) {
+        if (CollectionUtils.isEmpty(excludePaths) || StringUtils.isBlank(realPath)) {
             return false;
-        }
-        // 实际路径
-        String realPath = null;
-        // 如果项目路径不为空，则去掉项目路径，获取实际访问路径
-        if (StringUtils.isNotBlank(contextPath)) {
-            realPath = requestPath.substring(contextPath.length());
-        } else {
-            realPath = requestPath;
         }
         // 如果是排除路径，则跳过
         if (excludePaths.contains(realPath)) {
@@ -649,25 +659,38 @@ public abstract class BaseLogAop {
     }
 
     /**
+     * 获取实际路径
+     *
+     * @param requestPath
+     * @return
+     */
+    private String getRealPath(String requestPath) {
+        // 如果项目路径不为空，则去掉项目路径，获取实际访问路径
+        if (StringUtils.isNotBlank(contextPath)) {
+            return requestPath.substring(contextPath.length());
+        }
+        return requestPath;
+    }
+
+    /**
      * 异步保存系统操作日志
      *
-     * @param o
      * @param requestInfo
+     * @param operationLogInfo
      * @param result
      * @param exception
      */
     @Async
     protected void saveSysOperationLog(RequestInfo requestInfo, OperationLogInfo operationLogInfo, Object result, Exception exception) {
         try {
-            // 如果不记录日志，则跳过
+            // 如果不记录操作日志，则跳过
             if (!operationLogConfig.isEnable()) {
                 return;
             }
             // 排除路径
             Set<String> excludePaths = operationLogConfig.getExcludePaths();
             // 请求路径
-            String requestPath = requestInfo.getPath();
-            if (handleExcludePaths(excludePaths, requestPath)) {
+            if (handleExcludePaths(excludePaths, requestInfo.getRealPath())) {
                 return;
             }
 
@@ -693,16 +716,11 @@ public abstract class BaseLogAop {
                         .setRequestMethod(requestInfo.getRequestMethod())
                         .setContentType(requestInfo.getContentType())
                         .setRequestBody(requestInfo.getRequestBody())
-                        .setToken(requestInfo.getToken());
+                        .setToken(requestInfo.getTokenMd5());
 
                 // 设置参数字符串
                 sysOperationLog.setParam(Jackson.toJsonStringNonNull(requestInfo.getParam()));
-                // 设置tokenMD5值
-                String token = requestInfo.getToken();
-                if (StringUtils.isNotBlank(token)) {
-                    sysOperationLog.setToken(DigestUtils.md5Hex(token));
-                }
-                // User-Gent
+                // User-Agent
                 ClientInfo clientInfo = ClientInfoUtil.get(requestInfo.getUserAgent());
                 if (clientInfo != null) {
                     sysOperationLog.setBrowserName(clientInfo.getBrowserName())
@@ -716,10 +734,9 @@ public abstract class BaseLogAop {
                             .setDeviceModel(clientInfo.getDeviceModel());
                 }
                 // 设置IP区域
-                Ip ip = ipService.getByIp(requestInfo.getIp());
-                if (ip != null) {
-                    sysOperationLog.setArea(ip.getArea());
-                }
+                String ipArea = ipService.getAreaByIp(requestInfo.getIp());
+                requestInfo.setArea(ipArea);
+                sysOperationLog.setArea(ipArea);
             }
 
             // 设置响应结果
@@ -731,28 +748,30 @@ public abstract class BaseLogAop {
                         .setMessage(apiResult.getMessage());
             }
 
-            // 设置当前登陆信息
+            // 设置当前登录信息
             sysOperationLog.setUserId(LoginUtil.getUserId()).setUserName(LoginUtil.getUsername());
 
             // 设置异常信息
             if (exception != null) {
                 Integer errorCode = null;
-                String errorMessage = exception.getMessage();
-                if (StringUtils.isNotBlank(errorMessage)) {
-                    errorMessage = StringUtils.substring(errorMessage, 0, 300);
+                String exceptionMessage = exception.getMessage();
+                if (StringUtils.isNotBlank(exceptionMessage)) {
+                    exceptionMessage = StringUtils.substring(exceptionMessage, 0, 300);
                 }
                 if (exception instanceof SpringBootPlusException) {
                     SpringBootPlusException springBootPlusException = (SpringBootPlusException) exception;
                     errorCode = springBootPlusException.getErrorCode();
                 }
-                // 异常字符串长度截取，最多200
+                // 异常字符串长度截取
                 sysOperationLog.setSuccess(false)
                         .setCode(errorCode)
-                        .setExceptionMessage(errorMessage)
+                        .setExceptionMessage(exceptionMessage)
                         .setExceptionName(exception.getClass().getName());
             }
             // 保存日志到数据库
             sysOperationLogService.saveSysOperationLog(sysOperationLog);
+
+
         } catch (Exception e) {
             if (e instanceof JWTDecodeException) {
                 JWTDecodeException jwtDecodeException = (JWTDecodeException) e;
@@ -761,6 +780,107 @@ public abstract class BaseLogAop {
             log.error("保存系统操作日志失败", e);
         }
     }
+
+    /**
+     * 异步保存系统登录日志
+     *
+     * @param requestInfo
+     * @param operationLogInfo
+     * @param result
+     * @param exception
+     */
+    @Async
+    protected void saveSysLoginLog(RequestInfo requestInfo, OperationLogInfo operationLogInfo, Object result, Exception exception) {
+        try {
+            // 如果不记录登录日志，则跳过
+            if (!loginLogConfig.isEnable()) {
+                return;
+            }
+            String realPath = requestInfo.getRealPath();
+            if (StringUtils.isBlank(realPath)) {
+                return;
+            }
+
+            boolean flag = false;
+            Integer type = null;
+            // 判断是否是登录路径
+            if (realPath.equals(loginLogConfig.getLoginPath())) {
+                flag = true;
+                type = 1;
+            } else if (realPath.equals(loginLogConfig.getLogoutPath())) {
+                flag = true;
+                type = 2;
+            }
+
+            // 保存登录登出日志
+            if (flag) {
+                SysLoginLog sysLoginLog = new SysLoginLog();
+                sysLoginLog.setType(type);
+                // 设置异常信息
+                if (exception != null) {
+                    Integer errorCode = null;
+                    String exceptionMessage = exception.getMessage();
+                    if (StringUtils.isNotBlank(exceptionMessage)) {
+                        exceptionMessage = StringUtils.substring(exceptionMessage, 0, 300);
+                    }
+                    if (exception instanceof SpringBootPlusException) {
+                        SpringBootPlusException springBootPlusException = (SpringBootPlusException) exception;
+                        errorCode = springBootPlusException.getErrorCode();
+                    }
+                    // 异常字符串长度截取
+                    sysLoginLog.setCode(errorCode).setExceptionMessage(exceptionMessage);
+                }
+
+                // 判断登录登出成功，才记录
+                // 判断result success为true
+                if (result != null && result instanceof ApiResult) {
+                    ApiResult apiResult = (ApiResult) result;
+                    sysLoginLog.setSuccess(apiResult.isSuccess()).setCode(apiResult.getCode());
+                    if (!apiResult.isSuccess()) {
+                        sysLoginLog.setExceptionMessage(apiResult.getMessage());
+                    }
+                }
+
+                // 设置请求参数信息
+                if (requestInfo != null) {
+                    sysLoginLog.setIp(requestInfo.getIp()).setToken(requestInfo.getTokenMd5());
+                    // 设置登录用户名
+                    Object paramObject = requestInfo.getParam();
+                    if (paramObject != null && paramObject instanceof LoginUsername) {
+                        LoginUsername loginUsername = (LoginUsername) paramObject;
+                        String username = loginUsername.getUsername();
+                        sysLoginLog.setUsername(username);
+                    }
+                    // User-Agent
+                    String userAgent = requestInfo.getUserAgent();
+                    sysLoginLog.setUserAgent(userAgent);
+                    ClientInfo clientInfo = ClientInfoUtil.get(userAgent);
+                    if (clientInfo != null) {
+                        sysLoginLog.setBrowserName(clientInfo.getBrowserName())
+                                .setBrowserVersion(clientInfo.getBrowserversion())
+                                .setEngineName(clientInfo.getEngineName())
+                                .setEngineVersion(clientInfo.getEngineVersion())
+                                .setOsName(clientInfo.getOsName())
+                                .setPlatformName(clientInfo.getPlatformName())
+                                .setMobile(clientInfo.isMobile())
+                                .setDeviceName(clientInfo.getDeviceName())
+                                .setDeviceModel(clientInfo.getDeviceModel());
+                    }
+                    if (StringUtils.isBlank(requestInfo.getArea())) {
+                        // 设置IP区域
+                        String ipArea = ipService.getAreaByIp(requestInfo.getIp());
+                        sysLoginLog.setArea(ipArea);
+                    } else {
+                        sysLoginLog.setArea(requestInfo.getArea());
+                    }
+                    sysLoginLogService.saveSysLoginLog(sysLoginLog);
+                }
+            }
+        } catch (Exception e) {
+            log.error("保存系统登录日志失败", e);
+        }
+    }
+
 
     /**
      * 释放资源

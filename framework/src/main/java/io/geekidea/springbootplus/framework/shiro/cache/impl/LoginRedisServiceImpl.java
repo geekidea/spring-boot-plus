@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 登陆信息Redis缓存服务类
+ * 登录信息Redis缓存服务类
  *
  * @author geekidea
  * @date 2019-09-30
@@ -75,7 +75,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         String token = jwtToken.getToken();
         // 盐值
         String salt = jwtToken.getSalt();
-        // 登陆用户名称
+        // 登录用户名称
         String username = loginSysUserVo.getUsername();
         // token md5值
         String tokenMd5 = DigestUtils.md5Hex(token);
@@ -86,7 +86,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         // 用户客户端信息
         ClientInfo clientInfo = ClientInfoUtil.get(HttpServletRequestUtil.getRequest());
 
-        // Redis缓存登陆用户信息
+        // Redis缓存登录用户信息
         // 将LoginSysUserVo对象复制到LoginSysUserRedisVo，使用mapstruct进行对象属性复制
         LoginSysUserRedisVo loginSysUserRedisVo = LoginSysUserVoConvert.INSTANCE.voToRedisVo(loginSysUserVo);
         loginSysUserRedisVo.setSalt(salt);
@@ -95,7 +95,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         // Redis过期时间与JwtToken过期时间一致
         Duration expireDuration = Duration.ofSeconds(jwtToken.getExpireSecond());
 
-        // 判断是否启用单个用户登陆，如果是，这每个用户只有一个有效token
+        // 判断是否启用单个用户登录，如果是，这每个用户只有一个有效token
         boolean singleLogin = jwtProperties.isSingleLogin();
         if (singleLogin) {
             deleteUserAllCache(username);
@@ -114,11 +114,11 @@ public class LoginRedisServiceImpl implements LoginRedisService {
 
     @Override
     public void refreshLoginInfo(String oldToken, String username, JwtToken newJwtToken) {
-        // 获取缓存的登陆用户信息
+        // 获取缓存的登录用户信息
         LoginSysUserRedisVo loginSysUserRedisVo = getLoginSysUserRedisVo(username);
         // 删除之前的token信息
         deleteLoginInfo(oldToken, username);
-        // 缓存登陆信息
+        // 缓存登录信息
         cacheLoginInfo(newJwtToken, loginSysUserRedisVo);
     }
 
@@ -184,14 +184,14 @@ public class LoginRedisServiceImpl implements LoginRedisService {
             return;
         }
 
-        // 1. 删除登陆用户的所有token信息
+        // 1. 删除登录用户的所有token信息
         List<String> tokenMd5List = redisTemplate.opsForValue().multiGet(userTokenMd5Set);
         redisTemplate.delete(tokenMd5List);
-        // 2. 删除登陆用户的所有user:token信息
+        // 2. 删除登录用户的所有user:token信息
         redisTemplate.delete(userTokenMd5Set);
-        // 3. 删除登陆用户信息
+        // 3. 删除登录用户信息
         redisTemplate.delete(String.format(CommonRedisKey.LOGIN_USER, username));
-        // 4. 删除登陆用户盐值信息
+        // 4. 删除登录用户盐值信息
         redisTemplate.delete(String.format(CommonRedisKey.LOGIN_SALT, username));
     }
 

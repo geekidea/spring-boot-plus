@@ -16,10 +16,6 @@
 
 package io.geekidea.springbootplus.system.enums;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.geekidea.springbootplus.framework.common.enums.BaseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

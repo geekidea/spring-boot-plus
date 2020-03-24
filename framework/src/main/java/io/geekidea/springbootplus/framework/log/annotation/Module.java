@@ -16,7 +16,6 @@
 
 package io.geekidea.springbootplus.framework.log.annotation;
 
-import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;

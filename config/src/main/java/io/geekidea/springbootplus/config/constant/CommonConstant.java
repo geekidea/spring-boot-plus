@@ -40,7 +40,7 @@ public interface CommonConstant {
     String LOGIN_SYS_USER = "loginSysUser";
 
     /**
-     * 登陆token
+     * 登录token
      */
     String JWT_DEFAULT_TOKEN_NAME = "token";
 
@@ -113,7 +113,7 @@ public interface CommonConstant {
     String SPOT_SPOT_BACKSLASH = "../";
 
     /**
-     * SpringBootAdmin登陆信息
+     * SpringBootAdmin登录信息
      */
     String ADMIN_LOGIN_SESSION = "adminLoginSession";
 

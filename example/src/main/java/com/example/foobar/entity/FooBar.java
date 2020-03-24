@@ -16,13 +16,11 @@
 
 package com.example.foobar.entity;
 
-import io.geekidea.springbootplus.framework.common.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.IdType;
-
-import java.util.Date;
-
-import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.Version;
+import io.geekidea.springbootplus.framework.common.entity.BaseEntity;
+import io.geekidea.springbootplus.framework.core.validator.groups.Update;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,8 +29,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import io.geekidea.springbootplus.framework.core.validator.groups.Update;
+import java.util.Date;
 
 /**
  * FooBar

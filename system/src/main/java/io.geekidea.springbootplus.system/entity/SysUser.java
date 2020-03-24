@@ -21,7 +21,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
 import io.geekidea.springbootplus.framework.common.entity.BaseEntity;
-import io.geekidea.springbootplus.framework.core.validator.groups.Add;
 import io.geekidea.springbootplus.framework.core.validator.groups.Update;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

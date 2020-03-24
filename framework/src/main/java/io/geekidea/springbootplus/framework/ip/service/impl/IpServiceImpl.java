@@ -17,14 +17,14 @@
 package io.geekidea.springbootplus.framework.ip.service.impl;
 
 import io.geekidea.springbootplus.config.constant.CommonConstant;
+import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
 import io.geekidea.springbootplus.framework.ip.entity.Ip;
 import io.geekidea.springbootplus.framework.ip.mapper.IpMapper;
 import io.geekidea.springbootplus.framework.ip.service.IpService;
-import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * IP地址 服务实现类
@@ -52,5 +52,14 @@ public class IpServiceImpl extends BaseServiceImpl<IpMapper, Ip> implements IpSe
             return new Ip().setArea(CommonConstant.LAN_IP_NAME);
         }
         return ipMapper.getByIp(ip);
+    }
+
+    @Override
+    public String getAreaByIp(String ip) {
+        Ip ipObject = getByIp(ip);
+        if (ipObject != null) {
+            return ipObject.getArea();
+        }
+        return null;
     }
 }

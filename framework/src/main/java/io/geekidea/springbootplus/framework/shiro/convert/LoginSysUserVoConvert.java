@@ -22,7 +22,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
- * 登陆系统用户VO对象属性复制转换器
+ * 登录系统用户VO对象属性复制转换器
  *
  * @author geekidea
  * @date 2020/3/24

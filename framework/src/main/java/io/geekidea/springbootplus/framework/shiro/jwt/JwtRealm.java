@@ -64,7 +64,7 @@ public class JwtRealm extends AuthorizingRealm {
         JwtToken jwtToken = (JwtToken) principalCollection.getPrimaryPrincipal();
         // 获取username
         String username = jwtToken.getUsername();
-        // 获取登陆用户角色权限信息
+        // 获取登录用户角色权限信息
         LoginSysUserRedisVo loginSysUserRedisVo = loginRedisService.getLoginSysUserRedisVo(username);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         // 设置角色
@@ -75,7 +75,7 @@ public class JwtRealm extends AuthorizingRealm {
     }
 
     /**
-     * 登陆认证
+     * 登录认证
      *
      * @param authenticationToken
      * @return

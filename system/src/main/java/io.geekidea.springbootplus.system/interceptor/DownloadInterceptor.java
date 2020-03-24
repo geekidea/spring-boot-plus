@@ -17,10 +17,6 @@
 package io.geekidea.springbootplus.system.interceptor;
 
 import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
-import io.geekidea.springbootplus.framework.common.api.ApiResult;
-import io.geekidea.springbootplus.framework.shiro.jwt.JwtToken;
-import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
-import io.geekidea.springbootplus.framework.util.HttpServletResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

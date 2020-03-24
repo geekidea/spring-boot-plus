@@ -38,7 +38,7 @@ import java.time.Duration;
 import java.util.Date;
 
 /**
- * Shiro登陆服务
+ * Shiro登录服务
  *
  * @author geekidea
  * @date 2020/3/24

@@ -16,7 +16,6 @@
 
 package io.geekidea.springbootplus.system.convert;
 
-import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserRedisVo;
 import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -33,7 +32,7 @@ public interface SysUserConvert {
     SysUserConvert INSTANCE = Mappers.getMapper(SysUserConvert.class);
 
     /**
-     * 系统用户实体对象转换成登陆用户VO对象
+     * 系统用户实体对象转换成登录用户VO对象
      *
      * @param sysUser
      * @return

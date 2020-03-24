@@ -33,19 +33,19 @@ import java.util.Date;
 public class JwtTokenRedisVo implements Serializable {
     private static final long serialVersionUID = 1831633309466775223L;
     /**
-     * 登陆ip
+     * 登录ip
      */
     private String host;
     /**
-     * 登陆用户名称
+     * 登录用户名称
      */
     private String username;
     /**
-     * 登陆盐值
+     * 登录盐值
      */
     private String salt;
     /**
-     * 登陆token
+     * 登录token
      */
     private String token;
     /**

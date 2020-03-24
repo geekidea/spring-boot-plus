@@ -140,7 +140,7 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * 登陆授权异常处理
+     * 登录授权异常处理
      *
      * @param exception
      * @return
