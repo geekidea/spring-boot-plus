@@ -88,6 +88,7 @@ spring-boot-plus:
     log:
       # 是否启用
       enable: true
+      # NONE：不打印日志
       # ORDER：请求和响应日志，按照执行顺序分开打印
       # LINE：方法执行结束时，连续分开打印请求和响应日志
       # MERGE：方法执行结束时，合并请求和响应日志，同时打印
@@ -165,16 +166,13 @@ spring-boot-plus:
     # 权限配置
     anon:
       # 排除登录登出
-      # 排除登录登出
       - /login,/logout
       # 排除静态资源
       - /static/**,/templates/**
       # 排除Swagger
       - ${spring-boot-plus.swagger-paths}
-      # 排除SpringBootAdmin
-      - /,/favicon.ico,/actuator/**,/instances/**,/assets/**,/sba-settings.js,/applications/**
-      # 排除首页
-      - /index.html
+      - # 排除首页
+      - /,/index.html
       # 排除测试路径
       - /hello/world,/fooBar/**,/exampleOrder/**
     # 多行字符串权限配置
@@ -184,7 +182,6 @@ spring-boot-plus:
       /verificationCode/**=anon
       /enum=anon
       /getSysUserInfo=anon
-      /sysOperationLog/**=anon
 
   ######################## Spring Shiro end ##########################
 

@@ -25,6 +25,10 @@ package io.geekidea.springbootplus.config.enums;
 public enum LogPrintType {
 
     /**
+     * 不打印日志
+     */
+    NONE,
+    /**
      * 请求和响应日志，按照执行顺序分开打印
      */
     ORDER,

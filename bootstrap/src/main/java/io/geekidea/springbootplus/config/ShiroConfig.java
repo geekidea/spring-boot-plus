@@ -261,7 +261,6 @@ public class ShiroConfig {
             String definition;
             String[] strings = value.split(",");
             List<String> list = new ArrayList<>();
-            // 添加默认filter过滤
             list.addAll(Arrays.asList(strings));
             definition = String.join(",", list);
             map.put(key, definition);

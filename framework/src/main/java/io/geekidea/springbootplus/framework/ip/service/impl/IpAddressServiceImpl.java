@@ -18,9 +18,9 @@ package io.geekidea.springbootplus.framework.ip.service.impl;
 
 import io.geekidea.springbootplus.config.constant.CommonConstant;
 import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.framework.ip.entity.Ip;
-import io.geekidea.springbootplus.framework.ip.mapper.IpMapper;
-import io.geekidea.springbootplus.framework.ip.service.IpService;
+import io.geekidea.springbootplus.framework.ip.entity.IpAddress;
+import io.geekidea.springbootplus.framework.ip.mapper.IpAddressMapper;
+import io.geekidea.springbootplus.framework.ip.service.IpAddressService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,35 +30,44 @@ import org.springframework.stereotype.Service;
  * IP地址 服务实现类
  *
  * @author geekidea
- * @since 2020-03-21
+ * @since 2020-03-25
  */
 @Slf4j
 @Service
-public class IpServiceImpl extends BaseServiceImpl<IpMapper, Ip> implements IpService {
+public class IpAddressServiceImpl extends BaseServiceImpl<IpAddressMapper, IpAddress> implements IpAddressService {
 
     @Autowired
-    private IpMapper ipMapper;
+    private IpAddressMapper ipAddressMapper;
 
 
     @Override
-    public Ip getByIp(String ip) {
+    public IpAddress getByIp(String ip) {
         if (StringUtils.isBlank(ip)) {
             return null;
         }
         if (CommonConstant.LOCALHOST_IP.equals(ip)) {
-            return new Ip().setArea(CommonConstant.LOCALHOST_IP_NAME);
+            return new IpAddress().setArea(CommonConstant.LOCALHOST_IP_NAME);
         }
         if (CommonConstant.LAN_IP.equals(ip)) {
-            return new Ip().setArea(CommonConstant.LAN_IP_NAME);
+            return new IpAddress().setArea(CommonConstant.LAN_IP_NAME);
         }
-        return ipMapper.getByIp(ip);
+        return ipAddressMapper.getByIp(ip);
     }
 
     @Override
     public String getAreaByIp(String ip) {
-        Ip ipObject = getByIp(ip);
-        if (ipObject != null) {
-            return ipObject.getArea();
+        IpAddress ipAddress = getByIp(ip);
+        if (ipAddress != null) {
+            return ipAddress.getArea();
+        }
+        return null;
+    }
+
+    @Override
+    public String getOperatorByIp(String ip) {
+        IpAddress ipAddress = getByIp(ip);
+        if (ipAddress != null) {
+            return ipAddress.getOperator();
         }
         return null;
     }

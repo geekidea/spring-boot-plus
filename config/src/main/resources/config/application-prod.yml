@@ -10,22 +10,8 @@ spring-boot-plus:
   aop:
     log:
       enable: true
-      log-print-type: LINE
+      log-print-type: NONE
       request-log-format: false
-      response-log-format: false
-
-  # AOP配置
-  aop:
-    log:
-      # 是否启用
-      enabled: true
-      # ORDER：请求和响应日志，按照执行顺序分开打印
-      # LINE：方法执行结束时，连续分开打印请求和响应日志
-      # MERGE：方法执行结束时，合并请求和响应日志，同时打印
-      log-print-type: LINE
-      # 请求日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
-      request-log-format: false
-      # 响应日志在控制台是否格式化输出，local环境建议开启，服务器环境设置为false
       response-log-format: false
 
 spring:

@@ -25,7 +25,8 @@ import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.common.bean.ClientInfo;
 import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusException;
-import io.geekidea.springbootplus.framework.ip.service.IpService;
+import io.geekidea.springbootplus.framework.ip.entity.IpAddress;
+import io.geekidea.springbootplus.framework.ip.service.IpAddressService;
 import io.geekidea.springbootplus.framework.log.annotation.Module;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLogIgnore;
@@ -87,7 +88,7 @@ public abstract class BaseLogAop {
     protected SysOperationLogService sysOperationLogService;
 
     @Autowired
-    private IpService ipService;
+    private IpAddressService ipAddressService;
 
     @Autowired
     private SysLoginLogService sysLoginLogService;
@@ -128,6 +129,11 @@ public abstract class BaseLogAop {
     protected SpringBootPlusAopProperties.LogAopConfig logAopConfig;
 
     /**
+     * 日志打印类型
+     */
+    protected LogPrintType logPrintType;
+
+    /**
      * Aop操作日志配置
      */
     protected SpringBootPlusAopProperties.OperationLogConfig operationLogConfig;
@@ -140,9 +146,11 @@ public abstract class BaseLogAop {
     @Autowired
     public void setSpringBootPlusAopProperties(SpringBootPlusAopProperties springBootPlusAopProperties) {
         logAopConfig = springBootPlusAopProperties.getLog();
+        logPrintType = logAopConfig.getLogPrintType();
         operationLogConfig = springBootPlusAopProperties.getOperationLog();
         loginLogConfig = springBootPlusAopProperties.getLoginLog();
         log.debug("logAopConfig = " + logAopConfig);
+        log.debug("logPrintType = " + logPrintType);
         log.debug("operationLogConfig = " + operationLogConfig);
         log.debug("loginLogConfig = " + loginLogConfig);
         log.debug("contextPath = " + contextPath);
@@ -411,15 +419,18 @@ public abstract class BaseLogAop {
      * @param requestInfo
      */
     protected void handleRequestInfo(RequestInfo requestInfo) {
+        requestInfoThreadLocal.set(requestInfo);
+        if (LogPrintType.NONE == logPrintType) {
+            return;
+        }
         // 获取请求信息
         String requestInfoString = formatRequestInfo(requestInfo);
         // 如果打印方式为顺序打印，则直接打印，否则，保存的threadLocal中
-        if (logAopConfig.getLogPrintType() == LogPrintType.ORDER) {
+        if (LogPrintType.ORDER == logPrintType) {
             printRequestInfoString(requestInfoString);
         } else {
             threadLocal.set(requestInfoString);
         }
-        requestInfoThreadLocal.set(requestInfo);
     }
 
     /**
@@ -428,12 +439,14 @@ public abstract class BaseLogAop {
      * @param result
      */
     protected void handleResponseResult(Object result) {
+        if (LogPrintType.NONE == logPrintType) {
+            return;
+        }
         if (result != null && result instanceof ApiResult) {
             ApiResult apiResult = (ApiResult) result;
             int code = apiResult.getCode();
             // 获取格式化后的响应结果
             String responseResultString = formatResponseResult(apiResult);
-            LogPrintType logPrintType = logAopConfig.getLogPrintType();
             if (LogPrintType.ORDER == logPrintType) {
                 printResponseResult(code, responseResultString);
             } else {
@@ -734,9 +747,11 @@ public abstract class BaseLogAop {
                             .setDeviceModel(clientInfo.getDeviceModel());
                 }
                 // 设置IP区域
-                String ipArea = ipService.getAreaByIp(requestInfo.getIp());
-                requestInfo.setArea(ipArea);
-                sysOperationLog.setArea(ipArea);
+                IpAddress ipAddress = ipAddressService.getByIp(requestInfo.getIp());
+                if (ipAddress != null) {
+                    requestInfo.setIpAddress(ipAddress);
+                    sysOperationLog.setArea(ipAddress.getArea());
+                }
             }
 
             // 设置响应结果
@@ -865,13 +880,14 @@ public abstract class BaseLogAop {
                                 .setDeviceName(clientInfo.getDeviceName())
                                 .setDeviceModel(clientInfo.getDeviceModel());
                     }
-                    if (StringUtils.isBlank(requestInfo.getArea())) {
-                        // 设置IP区域
-                        String ipArea = ipService.getAreaByIp(requestInfo.getIp());
-                        sysLoginLog.setArea(ipArea);
-                    } else {
-                        sysLoginLog.setArea(requestInfo.getArea());
+                    IpAddress ipAddress = requestInfo.getIpAddress();
+                    if (ipAddress == null) {
+                        ipAddress = ipAddressService.getByIp(requestInfo.getIp());
                     }
+                    if (ipAddress != null) {
+                        sysLoginLog.setArea(ipAddress.getArea());
+                    }
+                    // 保存登录日志
                     sysLoginLogService.saveSysLoginLog(sysLoginLog);
                 }
             }

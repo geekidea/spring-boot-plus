@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.ip.service;
+package io.geekidea.springbootplus.framework.ip.mapper;
 
-import io.geekidea.springbootplus.framework.common.service.BaseService;
-import io.geekidea.springbootplus.framework.ip.entity.Ip;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.geekidea.springbootplus.framework.ip.entity.IpAddress;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
- * IP地址 服务类
+ * IP地址 Mapper 接口
  *
  * @author geekidea
- * @since 2020-03-21
+ * @since 2020-03-25
  */
-public interface IpService extends BaseService<Ip> {
+@Repository
+public interface IpAddressMapper extends BaseMapper<IpAddress> {
 
     /**
      * 通过ip地址获取IP对象
@@ -33,14 +36,6 @@ public interface IpService extends BaseService<Ip> {
      * @param ip
      * @return
      */
-    Ip getByIp(String ip);
-
-    /**
-     * 通过ip地址获取区域
-     *
-     * @param ip
-     * @return
-     */
-    String getAreaByIp(String ip);
+    IpAddress getByIp(@Param("ip") String ip);
 
 }

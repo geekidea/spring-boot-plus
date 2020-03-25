@@ -43,14 +43,14 @@ public class SpringBootPlusGenerator {
 
         // 设置基本信息
         generatorProperties
-                .setMavenModuleName("framework")
-                .setParentPackage("io.geekidea.springbootplus.framework")
-                .setModuleName("log")
+                .setMavenModuleName("example")
+                .setParentPackage("com.example")
+                .setModuleName("foobar")
                 .setAuthor("geekidea")
                 .setFileOverride(true);
 
         // 设置表信息
-        generatorProperties.addTable("sys_login_log","id");
+        generatorProperties.addTable("foo_bar","id");
 
         // 数据源配置
         generatorProperties.getDataSourceConfig()

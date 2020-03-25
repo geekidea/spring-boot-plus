@@ -18,9 +18,6 @@ import ${cfg.pagingClass};
  * @author ${author}
  * @since ${date}
  */
-#if(${kotlin})
-interface ${table.serviceName} : ${superServiceClass}<${entity}>
-#else
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 #if(${cfg.generatorStrategy} != 'SIMPLE')
 
@@ -51,7 +48,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      */
     boolean delete${entity}(Long id) throws Exception;
 
-#if(${cfg.generatorStrategy} != 'SINGLE')
+    #if(${cfg.generatorStrategy} != 'SINGLE')
     /**
      * 根据ID获取查询对象
      *
@@ -60,7 +57,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @throws Exception
      */
     ${entity}${cfg.queryVo} get${entity}ById(Serializable id) throws Exception;
-#end
+    #end
 
     /**
      * 获取分页对象
@@ -73,4 +70,3 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 #end
 
 }
-#end

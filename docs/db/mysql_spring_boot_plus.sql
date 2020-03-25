@@ -47,7 +47,7 @@ create table if not exists foo_bar
 )
     comment 'FooBar';
 
-create table if not exists ip
+create table if not exists ip_address
 (
     id bigint auto_increment
         primary key,

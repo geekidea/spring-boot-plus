@@ -18,6 +18,7 @@ package io.geekidea.springbootplus.framework.log.bean;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.geekidea.springbootplus.framework.ip.entity.IpAddress;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -54,11 +55,11 @@ public class RequestInfo implements Serializable {
     private String ip;
 
     /**
-     * 请求IP区域
+     * 请求IP对象
      */
     @JsonIgnore
     @JSONField(serialize = false)
-    private String area;
+    private IpAddress ipAddress;
 
     /**
      * 请求方式，GET/POST

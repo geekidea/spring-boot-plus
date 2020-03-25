@@ -33,11 +33,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Slf4j
 @Service
-#if(${kotlin})
-open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
-
-}
-#else
 public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
     @Autowired
@@ -62,25 +57,24 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
         return super.removeById(id);
     }
 
-#if(${cfg.generatorStrategy} != 'SINGLE')
+    #if(${cfg.generatorStrategy} != 'SINGLE')
     @Override
     public ${entity}${cfg.queryVo} get${entity}ById(Serializable id) throws Exception {
     return ${cfg.mapperObjectName}.get${entity}ById(id);
     }
 
-#end
+    #end
     @Override
     public Paging<${entity}${cfg.queryVo}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam}) throws Exception {
         Page page = PageUtil.getPage(${cfg.entityObjectName}${cfg.pageParam}, OrderItem.desc(getLambdaColumn(${entity}::getCreateTime)));
-#if(${cfg.generatorStrategy} != 'SINGLE')
+    #if(${cfg.generatorStrategy} != 'SINGLE')
         IPage<${entity}${cfg.queryVo}> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}${cfg.pageParam});
-#else
+    #else
         LambdaQueryWrapper wrapper = new LambdaQueryWrapper<${entity}>();
         IPage<${entity}${cfg.queryVo}> iPage = ${cfg.mapperObjectName}.selectPage(page, wrapper);
-#end
+    #end
         return new Paging<${entity}${cfg.queryVo}>(iPage);
     }
 #end
 
 }
-#end

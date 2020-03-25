@@ -30,7 +30,6 @@ import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +54,6 @@ public class FooBarController extends BaseController {
      * 添加FooBar
      */
     @PostMapping("/add")
-    @RequiresPermissions("foo:bar:add")
     @OperationLog(name = "添加FooBar", type = OperationLogType.ADD)
     @ApiOperation(value = "添加FooBar", response = ApiResult.class)
     public ApiResult<Boolean> addFooBar(@Validated(Add.class) @RequestBody FooBar fooBar) throws Exception {
@@ -67,7 +65,6 @@ public class FooBarController extends BaseController {
      * 修改FooBar
      */
     @PostMapping("/update")
-    @RequiresPermissions("foo:bar:update")
     @OperationLog(name = "修改FooBar", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改FooBar", response = ApiResult.class)
     public ApiResult<Boolean> updateFooBar(@Validated(Update.class) @RequestBody FooBar fooBar) throws Exception {
@@ -79,7 +76,6 @@ public class FooBarController extends BaseController {
      * 删除FooBar
      */
     @PostMapping("/delete/{id}")
-    @RequiresPermissions("foo:bar:delete")
     @OperationLog(name = "删除FooBar", type = OperationLogType.DELETE)
     @ApiOperation(value = "删除FooBar", response = ApiResult.class)
     public ApiResult<Boolean> deleteFooBar(@PathVariable("id") Long id) throws Exception {
@@ -91,7 +87,6 @@ public class FooBarController extends BaseController {
      * 获取FooBar详情
      */
     @GetMapping("/info/{id}")
-    @RequiresPermissions("foo:bar:info")
     @OperationLog(name = "FooBar详情", type = OperationLogType.INFO)
     @ApiOperation(value = "FooBar详情", response = FooBar.class)
     public ApiResult<FooBar> getFooBar(@PathVariable("id") Long id) throws Exception {
@@ -103,12 +98,10 @@ public class FooBarController extends BaseController {
      * FooBar分页列表
      */
     @PostMapping("/getPageList")
-    @RequiresPermissions("foo:bar:page")
     @OperationLog(name = "FooBar分页列表", type = OperationLogType.PAGE)
     @ApiOperation(value = "FooBar分页列表", response = FooBar.class)
     public ApiResult<Paging<FooBar>> getFooBarPageList(@Validated @RequestBody FooBarPageParam fooBarPageParam) throws Exception {
         Paging<FooBar> paging = fooBarService.getFooBarPageList(fooBarPageParam);
-        System.out.println(1 / 0);
         return ApiResult.ok(paging);
     }
 
