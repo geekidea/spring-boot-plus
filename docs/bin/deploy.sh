@@ -20,7 +20,7 @@
 # 3. 运行spring-boot-plus
 # 4. 访问项目
 # author: geekidea
-# date: 2019-9-6
+# date: 2020-3-25
 #======================================================================
 
 NOW=$(date --date='0 days ago' "+%Y-%m-%d-%H-%M-%S")
@@ -33,7 +33,7 @@ IS_UPDATE=0
 # 如果有，则执行git pull
 # 如果没有，则clone
 if [ ! -d "spring-boot-plus" ]; then
-  git clone https://github.com/geekidea/spring-boot-plus.git
+  git clone https://gitee.com/geekidea/spring-boot-plus.git
   cd spring-boot-plus
 else
   cd spring-boot-plus
@@ -50,9 +50,14 @@ fi
 
 pwd
 
+
+git checkout master
+
+git branch
+
 # 2. maven打包
-mvn clean install
-mvn clean package -Ptest
+mvn clean install -P release,test
+mvn clean package -P release,test
 
 pwd
 # 判断是否生成成功

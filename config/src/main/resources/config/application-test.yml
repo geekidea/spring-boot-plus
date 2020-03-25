@@ -5,6 +5,13 @@ spring-boot-plus:
   server-ip: 47.105.159.10
   # 文件上传下载配置
   upload-path: /opt/upload/
+  # AOP配置
+  aop:
+    log:
+      enable: true
+      log-print-type: LINE
+      request-log-format: false
+      response-log-format: false
 
 spring:
   datasource:

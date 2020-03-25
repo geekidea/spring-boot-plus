@@ -3,6 +3,13 @@ spring-boot-plus:
   enable-ansi: false
   # 当前环境服务IP地址
   server-ip:
+  # AOP配置
+  aop:
+    log:
+      enable: true
+      log-print-type: LINE
+      request-log-format: false
+      response-log-format: false
 
 spring:
   datasource:
