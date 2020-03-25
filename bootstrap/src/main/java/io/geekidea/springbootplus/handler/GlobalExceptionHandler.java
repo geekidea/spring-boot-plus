@@ -23,6 +23,8 @@ import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.common.exception.BusinessException;
 import io.geekidea.springbootplus.framework.common.exception.DaoException;
 import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusException;
+import io.geekidea.springbootplus.framework.core.filter.RequestDetail;
+import io.geekidea.springbootplus.framework.core.filter.RequestDetailThreadLocal;
 import io.geekidea.springbootplus.system.exception.SysLoginException;
 import io.geekidea.springbootplus.system.exception.VerificationCodeException;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +36,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -62,6 +65,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.OK)
     public ApiResult handleMethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
+        printRequestDetail();
         BindingResult bindingResult = ex.getBindingResult();
         List<String> list = new ArrayList<>();
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -69,7 +73,7 @@ public class GlobalExceptionHandler {
             list.add(fieldError.getDefaultMessage());
         }
         Collections.sort(list);
-        log.error("fieldErrors" + JSON.toJSONString(list));
+        log.error(getApiCodeString(ApiCode.PARAMETER_EXCEPTION) + ":" + JSON.toJSONString(list));
         return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, list);
     }
 
@@ -82,7 +86,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = SysLoginException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult sysLoginExceptionHandler(SysLoginException exception) {
-        log.error("系统登录异常:" + exception);
+        printRequestDetail();
+        printApiCodeException(ApiCode.LOGIN_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
     }
 
@@ -96,8 +101,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult httpMessageNotReadableException(HttpMessageNotReadableException exception) {
-        log.error("httpMessageNotReadableException:", exception);
-        return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, ApiCode.PARAMETER_PARSE_EXCEPTION);
+        printRequestDetail();
+        printApiCodeException(ApiCode.PARAMETER_EXCEPTION, exception);
+        return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION);
     }
 
     /**
@@ -109,8 +115,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = HttpMediaTypeException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult httpMediaTypeException(HttpMediaTypeException exception) {
-        log.error("httpMediaTypeException:", exception);
-        return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION, ApiCode.HTTP_MEDIA_TYPE_EXCEPTION);
+        printRequestDetail();
+        printApiCodeException(ApiCode.HTTP_MEDIA_TYPE_EXCEPTION, exception);
+        return ApiResult.fail(ApiCode.HTTP_MEDIA_TYPE_EXCEPTION);
     }
 
     /**
@@ -122,6 +129,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {SpringBootPlusException.class})
     @ResponseStatus(HttpStatus.OK)
     public ApiResult springBootPlusExceptionHandler(SpringBootPlusException exception) {
+        printRequestDetail();
         log.error("springBootPlusException:", exception);
         int errorCode;
         if (exception instanceof BusinessException) {
@@ -148,10 +156,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AuthenticationException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult authenticationExceptionHandler(AuthenticationException exception) {
-        log.error("authenticationException:", exception);
-        return new ApiResult()
-                .setCode(ApiCode.AUTHENTICATION_EXCEPTION.getCode())
-                .setMessage(exception.getMessage());
+        printRequestDetail();
+        printApiCodeException(ApiCode.AUTHENTICATION_EXCEPTION, exception);
+        return ApiResult.fail(ApiCode.AUTHENTICATION_EXCEPTION);
     }
 
 
@@ -164,7 +171,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = UnauthenticatedException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult unauthenticatedExceptionHandler(UnauthenticatedException exception) {
-        log.error("unauthenticatedException:", exception);
+        printRequestDetail();
+        printApiCodeException(ApiCode.UNAUTHENTICATED_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.UNAUTHENTICATED_EXCEPTION);
     }
 
@@ -178,7 +186,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = UnauthorizedException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult unauthorizedExceptionHandler(UnauthorizedException exception) {
-        log.error("unauthorizedException:", exception);
+        printRequestDetail();
+        printApiCodeException(ApiCode.UNAUTHORIZED_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.UNAUTHORIZED_EXCEPTION);
     }
 
@@ -192,8 +201,23 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = JWTDecodeException.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult jWTDecodeExceptionHandler(JWTDecodeException exception) {
-        log.error("JWTDecodeException:", exception);
+        printRequestDetail();
+        printApiCodeException(ApiCode.JWTDECODE_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.JWTDECODE_EXCEPTION);
+    }
+
+    /**
+     * 默认的异常处理
+     *
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResult httpRequestMethodNotSupportedExceptionHandler(Exception exception) {
+        printRequestDetail();
+        printApiCodeException(ApiCode.HTTP_REQUEST_METHOD_NOT_SUPPORTED_EXCEPTION, exception);
+        return ApiResult.fail(ApiCode.HTTP_REQUEST_METHOD_NOT_SUPPORTED_EXCEPTION.getCode(), exception.getMessage());
     }
 
     /**
@@ -205,8 +229,43 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.OK)
     public ApiResult exceptionHandler(Exception exception) {
-        log.error("exception:", exception);
+        printRequestDetail();
+        printApiCodeException(ApiCode.SYSTEM_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.SYSTEM_EXCEPTION);
+    }
+
+
+    /**
+     * 打印请求详情
+     */
+    private void printRequestDetail() {
+        RequestDetail requestDetail = RequestDetailThreadLocal.getRequestDetail();
+        if (requestDetail != null) {
+            log.error("异常来源：ip: {}, path: {}", requestDetail.getIp(), requestDetail.getPath());
+        }
+    }
+
+    /**
+     * 获取ApiCode格式化字符串
+     *
+     * @param apiCode
+     * @return
+     */
+    private String getApiCodeString(ApiCode apiCode) {
+        if (apiCode != null) {
+            return String.format("errorCode: %s, errorMessage: %s", apiCode.getCode(), apiCode.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 打印错误码及异常
+     *
+     * @param apiCode
+     * @param exception
+     */
+    private void printApiCodeException(ApiCode apiCode, Exception exception) {
+        log.error(getApiCodeString(apiCode), exception);
     }
 
 }

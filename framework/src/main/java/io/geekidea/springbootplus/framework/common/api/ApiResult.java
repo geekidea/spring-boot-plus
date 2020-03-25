@@ -141,6 +141,13 @@ public class ApiResult<T> implements Serializable {
 
     }
 
+    public static  ApiResult<String> fail(Integer errorCode,String message){
+        return new ApiResult<String>()
+                .setSuccess(false)
+                .setCode(errorCode)
+                .setMessage(message);
+    }
+
     public static ApiResult<Map> fail(String key,Object value){
         Map<String,Object> map = new HashMap<>(1);
         map.put(key,value);

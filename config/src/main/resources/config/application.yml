@@ -334,7 +334,10 @@ spring:
         password: admin
         # 当前项目实例名称
         instance:
+          # client名称
           name: ${spring.application.name}
+          # client ip端口
+          service-base-url: http://${spring-boot-plus.server-ip}:${server.port}
       monitor:
         period: 100000
         status-lifetime: 100000

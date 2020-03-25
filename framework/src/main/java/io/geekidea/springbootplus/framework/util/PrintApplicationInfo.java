@@ -110,7 +110,7 @@ public class PrintApplicationInfo {
         if ("dev".equals(profileActive)) {
             log.info("\n{}", AnsiUtil.getAnsi(Ansi.Color.BLUE, startSuccess));
         } else {
-            log.info(startSuccess);
+            log.info("\n{}", startSuccess);
         }
     }
 

@@ -99,6 +99,8 @@ public enum ApiCode {
      **/
     JWTDECODE_EXCEPTION(5107, "Token解析异常"),
 
+    HTTP_REQUEST_METHOD_NOT_SUPPORTED_EXCEPTION(5108, "METHOD NOT SUPPORTED"),
+
     ;
 
     private final int code;
