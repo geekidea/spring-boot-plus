@@ -175,6 +175,8 @@ spring-boot-plus:
       - /static/**,/templates/**
       # 排除Swagger
       - ${spring-boot-plus.swagger-paths}
+      # 排除actuator
+      - /actuator/**
       - # 排除首页
       - /,/index.html
       # 排除测试路径
