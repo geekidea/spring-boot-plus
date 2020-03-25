@@ -18,8 +18,8 @@ package io.geekidea.springbootplus.framework.log.aop;
 
 import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.geekidea.springbootplus.config.constant.CommonConstant;
-import io.geekidea.springbootplus.config.enums.LogPrintType;
 import io.geekidea.springbootplus.config.properties.SpringBootPlusAopProperties;
 import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
@@ -36,20 +36,25 @@ import io.geekidea.springbootplus.framework.log.entity.SysLoginLog;
 import io.geekidea.springbootplus.framework.log.entity.SysOperationLog;
 import io.geekidea.springbootplus.framework.log.service.SysLoginLogService;
 import io.geekidea.springbootplus.framework.log.service.SysOperationLogService;
+import io.geekidea.springbootplus.framework.shiro.jwt.JwtToken;
+import io.geekidea.springbootplus.framework.shiro.service.LoginToken;
 import io.geekidea.springbootplus.framework.shiro.service.LoginUsername;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
+import io.geekidea.springbootplus.framework.shiro.util.JwtUtil;
 import io.geekidea.springbootplus.framework.util.*;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.*;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.fusesource.jansi.Ansi;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -61,6 +66,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Method;
@@ -80,7 +86,6 @@ import java.util.*;
  * @author geekidea
  * @date 2018-11-08
  */
-@Data
 @Slf4j
 public abstract class BaseLogAop {
 
@@ -116,6 +121,26 @@ public abstract class BaseLogAop {
      * POST请求
      **/
     private static final String POST = "POST";
+    /**
+     * 请求ID
+     */
+    private static final String REQUEST_ID = "requestId";
+    /**
+     * 零
+     */
+    private static final int ZERO = 0;
+    /**
+     * 截取字符串的最多长度
+     */
+    private static final int MAX_LENGTH = 300;
+    /**
+     * 登录日志：登录类型
+     */
+    private static final int LOGIN_TYPE = 1;
+    /**
+     * 登录日志：登出类型
+     */
+    private static final int LOGOUT_TYPE = 2;
 
     /**
      * 项目上下文路径
@@ -131,7 +156,17 @@ public abstract class BaseLogAop {
     /**
      * 日志打印类型
      */
-    protected LogPrintType logPrintType;
+    protected SpringBootPlusAopProperties.LogPrintType logPrintType;
+
+    /**
+     * 是否启用请求ID
+     */
+    protected boolean enableRequestId;
+
+    /**
+     * requestId生成类型
+     */
+    protected SpringBootPlusAopProperties.RequestIdType requestIdType;
 
     /**
      * Aop操作日志配置
@@ -147,10 +182,14 @@ public abstract class BaseLogAop {
     public void setSpringBootPlusAopProperties(SpringBootPlusAopProperties springBootPlusAopProperties) {
         logAopConfig = springBootPlusAopProperties.getLog();
         logPrintType = logAopConfig.getLogPrintType();
+        enableRequestId = logAopConfig.isEnableRequestId();
+        requestIdType = logAopConfig.getRequestIdType();
         operationLogConfig = springBootPlusAopProperties.getOperationLog();
         loginLogConfig = springBootPlusAopProperties.getLoginLog();
         log.debug("logAopConfig = " + logAopConfig);
         log.debug("logPrintType = " + logPrintType);
+        log.debug("enableRequestId = " + enableRequestId);
+        log.debug("requestIdType = " + requestIdType);
         log.debug("operationLogConfig = " + operationLogConfig);
         log.debug("loginLogConfig = " + loginLogConfig);
         log.debug("contextPath = " + contextPath);
@@ -166,6 +205,21 @@ public abstract class BaseLogAop {
      * @throws Throwable
      */
     public abstract Object doAround(ProceedingJoinPoint joinPoint) throws Throwable;
+
+    /**
+     * 异常通知方法
+     *
+     * @param joinPoint
+     * @param exception
+     */
+    public abstract void afterThrowing(JoinPoint joinPoint, Exception exception);
+
+    /**
+     * 设置请求ID
+     *
+     * @param requestInfo
+     */
+    protected abstract void setRequestId(RequestInfo requestInfo);
 
     /**
      * 获取请求信息对象
@@ -269,9 +323,11 @@ public abstract class BaseLogAop {
             // 用户浏览器代理字符串
             requestInfo.setUserAgent(request.getHeader(CommonConstant.USER_AGENT));
 
+            // 记录请求ID
+            setRequestId(requestInfo);
+
             // 调用子类重写方法，控制请求信息日志处理
             getRequestInfo(requestInfo);
-
         } catch (Exception e) {
             log.error("请求日志AOP处理异常", e);
         }
@@ -289,7 +345,6 @@ public abstract class BaseLogAop {
         }
         return result;
     }
-
 
     /**
      * 正常调用返回或者异常结束后调用此方法
@@ -414,19 +469,39 @@ public abstract class BaseLogAop {
     }
 
     /**
+     * 处理请求ID
+     *
+     * @param requestInfo
+     */
+    protected void handleRequestId(RequestInfo requestInfo) {
+        if (!enableRequestId) {
+            return;
+        }
+        String requestId = null;
+        if (SpringBootPlusAopProperties.RequestIdType.IDWORK == requestIdType) {
+            requestId = IdWorker.getIdStr();
+        } else if (SpringBootPlusAopProperties.RequestIdType.UUID == requestIdType) {
+            requestId = UUIDUtil.getUuid();
+        }
+        // 设置请求ID
+        MDC.put(REQUEST_ID, requestId);
+        requestInfo.setRequestId(requestId);
+    }
+
+    /**
      * 处理请求参数
      *
      * @param requestInfo
      */
     protected void handleRequestInfo(RequestInfo requestInfo) {
         requestInfoThreadLocal.set(requestInfo);
-        if (LogPrintType.NONE == logPrintType) {
+        if (SpringBootPlusAopProperties.LogPrintType.NONE == logPrintType) {
             return;
         }
         // 获取请求信息
         String requestInfoString = formatRequestInfo(requestInfo);
         // 如果打印方式为顺序打印，则直接打印，否则，保存的threadLocal中
-        if (LogPrintType.ORDER == logPrintType) {
+        if (SpringBootPlusAopProperties.LogPrintType.ORDER == logPrintType) {
             printRequestInfoString(requestInfoString);
         } else {
             threadLocal.set(requestInfoString);
@@ -439,7 +514,7 @@ public abstract class BaseLogAop {
      * @param result
      */
     protected void handleResponseResult(Object result) {
-        if (LogPrintType.NONE == logPrintType) {
+        if (SpringBootPlusAopProperties.LogPrintType.NONE == logPrintType) {
             return;
         }
         if (result != null && result instanceof ApiResult) {
@@ -447,16 +522,16 @@ public abstract class BaseLogAop {
             int code = apiResult.getCode();
             // 获取格式化后的响应结果
             String responseResultString = formatResponseResult(apiResult);
-            if (LogPrintType.ORDER == logPrintType) {
+            if (SpringBootPlusAopProperties.LogPrintType.ORDER == logPrintType) {
                 printResponseResult(code, responseResultString);
             } else {
                 // 从threadLocal中获取线程请求信息
                 String requestInfoString = threadLocal.get();
                 // 如果是连续打印，则先打印请求参数，再打印响应结果
-                if (LogPrintType.LINE == logPrintType) {
+                if (SpringBootPlusAopProperties.LogPrintType.LINE == logPrintType) {
                     printRequestInfoString(requestInfoString);
                     printResponseResult(code, responseResultString);
-                } else if (LogPrintType.MERGE == logPrintType) {
+                } else if (SpringBootPlusAopProperties.LogPrintType.MERGE == logPrintType) {
                     printRequestResponseString(code, requestInfoString, responseResultString);
                 }
             }
@@ -631,8 +706,7 @@ public abstract class BaseLogAop {
      * @return
      */
     protected JSONObject getParamJSONObject(Map<String, String[]> paramsMap) {
-        int paramSize = paramsMap.size();
-        if (paramsMap == null || paramSize == 0) {
+        if (MapUtils.isEmpty(paramsMap)) {
             return null;
         }
         JSONObject jsonObject = new JSONObject();
@@ -726,6 +800,7 @@ public abstract class BaseLogAop {
             if (requestInfo != null) {
                 sysOperationLog.setIp(requestInfo.getIp())
                         .setPath(requestInfo.getPath())
+                        .setRequestId(requestInfo.getRequestId())
                         .setRequestMethod(requestInfo.getRequestMethod())
                         .setContentType(requestInfo.getContentType())
                         .setRequestBody(requestInfo.getRequestBody())
@@ -771,7 +846,7 @@ public abstract class BaseLogAop {
                 Integer errorCode = null;
                 String exceptionMessage = exception.getMessage();
                 if (StringUtils.isNotBlank(exceptionMessage)) {
-                    exceptionMessage = StringUtils.substring(exceptionMessage, 0, 300);
+                    exceptionMessage = StringUtils.substring(exceptionMessage, ZERO, MAX_LENGTH);
                 }
                 if (exception instanceof SpringBootPlusException) {
                     SpringBootPlusException springBootPlusException = (SpringBootPlusException) exception;
@@ -821,10 +896,10 @@ public abstract class BaseLogAop {
             // 判断是否是登录路径
             if (realPath.equals(loginLogConfig.getLoginPath())) {
                 flag = true;
-                type = 1;
+                type = LOGIN_TYPE;
             } else if (realPath.equals(loginLogConfig.getLogoutPath())) {
                 flag = true;
-                type = 2;
+                type = LOGOUT_TYPE;
             }
 
             // 保存登录登出日志
@@ -836,7 +911,7 @@ public abstract class BaseLogAop {
                     Integer errorCode = null;
                     String exceptionMessage = exception.getMessage();
                     if (StringUtils.isNotBlank(exceptionMessage)) {
-                        exceptionMessage = StringUtils.substring(exceptionMessage, 0, 300);
+                        exceptionMessage = StringUtils.substring(exceptionMessage, ZERO, MAX_LENGTH);
                     }
                     if (exception instanceof SpringBootPlusException) {
                         SpringBootPlusException springBootPlusException = (SpringBootPlusException) exception;
@@ -850,24 +925,47 @@ public abstract class BaseLogAop {
                 if (result != null && result instanceof ApiResult) {
                     ApiResult apiResult = (ApiResult) result;
                     sysLoginLog.setSuccess(apiResult.isSuccess()).setCode(apiResult.getCode());
-                    if (!apiResult.isSuccess()) {
+                    if (apiResult.isSuccess()) {
+                        if (LOGIN_TYPE == type) {
+                            Object object = apiResult.getData();
+                            if (object != null && object instanceof LoginToken) {
+                                LoginToken loginToken = (LoginToken) object;
+                                String token = loginToken.getToken();
+                                if (StringUtils.isNotBlank(token)) {
+                                    // 设置登录token
+                                    String tokenMd5 = DigestUtils.md5Hex(token);
+                                    sysLoginLog.setToken(tokenMd5);
+                                }
+                            }
+                        }
+                    } else {
                         sysLoginLog.setExceptionMessage(apiResult.getMessage());
                     }
                 }
 
                 // 设置请求参数信息
                 if (requestInfo != null) {
-                    sysLoginLog.setIp(requestInfo.getIp()).setToken(requestInfo.getTokenMd5());
+                    sysLoginLog.setIp(requestInfo.getIp()).setRequestId(requestInfo.getRequestId());
                     // 设置登录用户名
-                    Object paramObject = requestInfo.getParam();
-                    if (paramObject != null && paramObject instanceof LoginUsername) {
-                        LoginUsername loginUsername = (LoginUsername) paramObject;
-                        String username = loginUsername.getUsername();
+                    if (LOGIN_TYPE == type) {
+                        Object paramObject = requestInfo.getParam();
+                        if (paramObject != null && paramObject instanceof LoginUsername) {
+                            LoginUsername loginUsername = (LoginUsername) paramObject;
+                            String username = loginUsername.getUsername();
+                            sysLoginLog.setUsername(username);
+                        }
+                    } else if (LOGOUT_TYPE == type) {
+                        String username = JwtUtil.getUsername(requestInfo.getToken());
                         sysLoginLog.setUsername(username);
+                        // 设置登出token
+                        sysLoginLog.setToken(requestInfo.getTokenMd5());
                     }
+
                     // User-Agent
                     String userAgent = requestInfo.getUserAgent();
-                    sysLoginLog.setUserAgent(userAgent);
+                    if (StringUtils.isNotBlank(userAgent)) {
+                        sysLoginLog.setUserAgent(StringUtils.substring(userAgent, ZERO, MAX_LENGTH));
+                    }
                     ClientInfo clientInfo = ClientInfoUtil.get(userAgent);
                     if (clientInfo != null) {
                         sysLoginLog.setBrowserName(clientInfo.getBrowserName())
@@ -904,6 +1002,7 @@ public abstract class BaseLogAop {
         threadLocal.remove();
         requestInfoThreadLocal.remove();
         operationLogThreadLocal.remove();
+        MDC.clear();
     }
 
 }

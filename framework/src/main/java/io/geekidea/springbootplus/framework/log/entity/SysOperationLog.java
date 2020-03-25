@@ -47,6 +47,9 @@ public class SysOperationLog extends BaseEntity {
     @NotNull(message = "id不能为空", groups = {Update.class})
     private Long id;
 
+    @ApiModelProperty("请求ID")
+    private String requestId;
+
     @ApiModelProperty("用户ID")
     private Long userId;
 

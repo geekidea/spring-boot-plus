@@ -20,8 +20,11 @@ import com.alibaba.fastjson.JSON;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.log.annotation.Module;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLogIgnore;
+import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
 import io.geekidea.springbootplus.system.service.LoginService;
 import io.geekidea.springbootplus.system.service.SysUserService;
+import io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo;
+import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -62,20 +65,20 @@ public class LoginController {
     @OperationLogIgnore
     @ApiOperation(value = "登录", notes = "系统用户登录", response = io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo.class)
     public ApiResult login(@Validated @RequestBody io.geekidea.springbootplus.system.param.LoginParam loginParam, HttpServletResponse response) throws Exception {
-        io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo loginSysUserTokenVo = loginService.login(loginParam);
-//        // 设置token响应头
-//        response.setHeader(JwtTokenUtil.getTokenName(), loginSysUserTokenVo.getToken());
-//        return ApiResult.ok(loginSysUserTokenVo.getToken(), "登录成功");
-        return ApiResult.okMap("token", loginSysUserTokenVo.getToken());
+        LoginSysUserTokenVo loginSysUserTokenVo = loginService.login(loginParam);
+        // 设置token响应头
+        response.setHeader(JwtTokenUtil.getTokenName(), loginSysUserTokenVo.getToken());
+        return ApiResult.ok(loginSysUserTokenVo, "登录成功");
     }
 
 
     /**
      * 根据token获取系统登录用户信息
+     *
      * @return
      */
     @GetMapping("/getSysUserInfo")
-    @ApiOperation(value = "根据token获取系统登录用户信息", response = io.geekidea.springbootplus.system.vo.SysUserQueryVo.class)
+    @ApiOperation(value = "根据token获取系统登录用户信息", response = SysUserQueryVo.class)
     public ApiResult<JSON> getSysUser() throws Exception {
 //        String token =  JwtTokenUtil.getToken();
 //        String tokenSha256 = DigestUtils.sha256Hex(token);

@@ -57,8 +57,14 @@ public class LogAop extends BaseLogAop {
     }
 
     @AfterThrowing(pointcut = POINTCUT, throwing = "exception")
+    @Override
     public void afterThrowing(JoinPoint joinPoint, Exception exception) {
         super.handleAfterThrowing(exception);
+    }
+
+    @Override
+    protected void setRequestId(RequestInfo requestInfo) {
+        super.handleRequestId(requestInfo);
     }
 
     @Override

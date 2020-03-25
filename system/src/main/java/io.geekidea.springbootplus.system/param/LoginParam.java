@@ -34,11 +34,11 @@ import javax.validation.constraints.NotBlank;
 public class LoginParam implements LoginUsername {
 
     @NotBlank(message = "请输入账号")
-    @ApiModelProperty("账号")
+    @ApiModelProperty(value = "账号", example = "admin")
     private String username;
 
     @NotBlank(message = "请输入密码")
-    @ApiModelProperty("密码")
+    @ApiModelProperty(value = "密码", example = "123456")
     private String password;
 
     @ApiModelProperty("验证码Token")

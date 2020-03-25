@@ -16,6 +16,7 @@
 
 package io.geekidea.springbootplus.system.vo;
 
+import io.geekidea.springbootplus.framework.shiro.service.LoginToken;
 import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,8 +32,9 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @ApiModel("登录用户信息TokenVO")
-public class LoginSysUserTokenVo implements Serializable {
-    private static final long serialVersionUID = -4650803752566647697L;
+public class LoginSysUserTokenVo implements LoginToken {
+
+    private static final long serialVersionUID = -2138450422989081056L;
 
     @ApiModelProperty("token")
     private String token;

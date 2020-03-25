@@ -47,6 +47,9 @@ public class SysLoginLog extends BaseEntity {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    @ApiModelProperty("请求ID")
+    private String requestId;
+
     @ApiModelProperty("用户名称")
     private String username;
 

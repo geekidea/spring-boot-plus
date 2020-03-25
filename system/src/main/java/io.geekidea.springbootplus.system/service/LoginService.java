@@ -16,6 +16,10 @@
 
 package io.geekidea.springbootplus.system.service;
 
+import io.geekidea.springbootplus.system.entity.SysUser;
+import io.geekidea.springbootplus.system.param.LoginParam;
+import io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -35,7 +39,7 @@ public interface LoginService {
      * @return
      * @throws Exception
      */
-    io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo login(io.geekidea.springbootplus.system.param.LoginParam loginParam) throws Exception;
+    LoginSysUserTokenVo login(LoginParam loginParam) throws Exception;
 
 
     /**
@@ -52,7 +56,7 @@ public interface LoginService {
      * @return
      * @throws Exception
      */
-    io.geekidea.springbootplus.system.entity.SysUser getSysUserByUsername(String username) throws Exception;
+    SysUser getSysUserByUsername(String username) throws Exception;
 
     /**
      * 检查验证码是否正确

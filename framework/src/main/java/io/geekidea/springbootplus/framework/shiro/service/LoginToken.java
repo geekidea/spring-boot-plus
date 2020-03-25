@@ -14,31 +14,23 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.config.enums;
+package io.geekidea.springbootplus.framework.shiro.service;
+
+import java.io.Serializable;
 
 /**
- * 日志打印类型
+ * 获取登录token
  *
  * @author geekidea
- * @date 2020/3/19
+ * @date 2020/3/25
  **/
-public enum LogPrintType {
+public interface LoginToken extends Serializable {
 
     /**
-     * 不打印日志
+     * 获取登录token
+     *
+     * @return
      */
-    NONE,
-    /**
-     * 请求和响应日志，按照执行顺序分开打印
-     */
-    ORDER,
-    /**
-     * 方法执行结束时，连续分开打印请求和响应日志
-     */
-    LINE,
-    /**
-     * 方法执行结束时，合并请求和响应日志，同时打印
-     */
-    MERGE;
+    String getToken();
 
 }
