@@ -14,29 +14,30 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.mapper;
+package com.example.foobar.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.geekidea.springbootplus.system.entity.SysLog;
-import io.geekidea.springbootplus.system.param.SysLogPageParam;
-import io.geekidea.springbootplus.system.vo.SysLogQueryVo;
+import com.example.foobar.entity.FooBar;
+import io.geekidea.springbootplus.framework.pagination.Paging;
+import com.example.foobar.param.FooBarPageParam;
+import com.example.foobar.vo.FooBarQueryVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 
 /**
- * <p>
- * 系统日志 Mapper 接口
- * </p>
+ * <pre>
+ * FooBar Mapper 接口
+ * </pre>
  *
  * @author geekidea
- * @since 2019-10-11
+ * @since 2020-03-23
  */
 @Repository
-public interface SysLogMapper extends BaseMapper<SysLog> {
+public interface FooBarMapper extends BaseMapper<FooBar> {
 
     /**
      * 根据ID获取查询对象
@@ -44,15 +45,15 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
      * @param id
      * @return
      */
-    SysLogQueryVo getSysLogById(Serializable id);
+    FooBarQueryVo getFooBarById(Serializable id);
 
     /**
      * 获取分页对象
      *
      * @param page
-     * @param sysLogPageParam
+     * @param fooBarPageParam
      * @return
      */
-    IPage<SysLogQueryVo> getSysLogPageList(@Param("page") Page page, @Param("param") SysLogPageParam sysLogPageParam);
+    IPage<FooBarQueryVo> getFooBarPageList(@Param("page") Page page, @Param("param") FooBarPageParam fooBarPageParam);
 
 }

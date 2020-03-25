@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,6 +36,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
+@ConditionalOnProperty(value = {"spring-boot-plus.aop.log.enable"}, matchIfMissing = true)
 public class LogAspect extends AbstractLogAspect {
 
     /**

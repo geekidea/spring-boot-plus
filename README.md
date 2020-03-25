@@ -96,7 +96,7 @@ cd spring-boot-plus
 ### Maven Build
 > Local environment is used by default, The configuration file：application-local.yml
 ```bash
-mvn clean package -Plocal
+mvn clean package -Pdev
 ```
 
 

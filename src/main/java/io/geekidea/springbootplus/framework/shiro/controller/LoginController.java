@@ -20,12 +20,15 @@ import com.alibaba.fastjson.JSON;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.shiro.param.LoginParam;
 import io.geekidea.springbootplus.framework.shiro.service.LoginService;
+import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
+import io.geekidea.springbootplus.framework.shiro.vo.LoginSysUserVo;
 import io.geekidea.springbootplus.system.service.SysUserService;
 import io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo;
 import io.geekidea.springbootplus.system.vo.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
@@ -62,12 +65,10 @@ public class LoginController {
     @ApiOperation(value = "登陆", notes = "系统用户登陆", response = LoginSysUserTokenVo.class)
     public ApiResult login(@Validated @RequestBody LoginParam loginParam, HttpServletResponse response) throws Exception {
         LoginSysUserTokenVo loginSysUserTokenVo = loginService.login(loginParam);
-//        // 设置token响应头
-//        response.setHeader(JwtTokenUtil.getTokenName(), loginSysUserTokenVo.getToken());
-//        return ApiResult.ok(loginSysUserTokenVo.getToken(), "登陆成功");
-        return ApiResult.okMap("token",loginSysUserTokenVo.getToken());
+        // 设置token响应头
+        response.setHeader(JwtTokenUtil.getTokenName(), loginSysUserTokenVo.getToken());
+        return ApiResult.okMap(JwtTokenUtil.getTokenName(), loginSysUserTokenVo.getToken());
     }
-
 
     /**
      * 根据token获取系统登陆用户信息
@@ -75,20 +76,10 @@ public class LoginController {
     @GetMapping("/getSysUserInfo")
     @ApiOperation(value = "根据token获取系统登陆用户信息", response = SysUserQueryVo.class)
     public ApiResult<SysUserQueryVo> getSysUser() throws Exception {
-//        String token =  JwtTokenUtil.getToken();
-//        String tokenSha256 = DigestUtils.sha256Hex(token);
-//        LoginSysUserVo loginSysUserVo = (LoginSysUserVo) redisTemplate.opsForValue().get(tokenSha256);
-//        return ApiResult.ok(loginSysUserVo);
-
-        String json = "{\n" +
-                "    roles: ['admin'],\n" +
-                "    introduction: 'I am a super administrator',\n" +
-                "    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',\n" +
-                "    name: 'Super Admin'\n" +
-                "  }";
-        JSON array = JSON.parseObject(json);
-
-        return ApiResult.ok(array);
+        String token = JwtTokenUtil.getToken();
+        String tokenSha256 = DigestUtils.sha256Hex(token);
+        LoginSysUserVo loginSysUserVo = (LoginSysUserVo) redisTemplate.opsForValue().get(tokenSha256);
+        return ApiResult.ok(loginSysUserVo);
     }
 
     @PostMapping("/logout")

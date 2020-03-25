@@ -87,7 +87,7 @@ public class PrintApplicationInfo {
         log.info("home:{}",homeUrl);
         log.info("docs:{}",swaggerUrl);
         log.info("spring-boot-plus project start success...........");
-        if ("local".equals(profileActive)){
+        if ("dev".equals(profileActive)){
             log.info("\n{}",AnsiUtil.getAnsi(Ansi.Color.BLUE,startSuccess));
         }else{
             System.out.println(startSuccess);

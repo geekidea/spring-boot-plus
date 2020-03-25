@@ -17,8 +17,6 @@
 package io.geekidea.springbootplus.framework.shiro.config;
 
 import com.alibaba.fastjson.JSON;
-import io.geekidea.springbootplus.framework.core.properties.SpringBootPlusFilterProperties;
-import io.geekidea.springbootplus.framework.filter.RequestPathFilter;
 import io.geekidea.springbootplus.framework.shiro.cache.LoginRedisService;
 import io.geekidea.springbootplus.framework.shiro.exception.ShiroConfigException;
 import io.geekidea.springbootplus.framework.shiro.jwt.JwtCredentialsMatcher;
@@ -46,6 +44,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSessionStorageEvaluator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -67,9 +66,8 @@ import java.util.*;
  **/
 @Slf4j
 @Configuration
-@EnableConfigurationProperties({
-        ShiroProperties.class
-})
+@EnableConfigurationProperties({ShiroProperties.class})
+@ConditionalOnProperty(value = {"spring-boot-plus.shiro.enable"}, matchIfMissing = true)
 public class ShiroConfig {
 
     /**
@@ -146,12 +144,11 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager,
                                                          LoginService loginService,
                                                          LoginRedisService loginRedisService,
-                                                         SpringBootPlusFilterProperties filterProperties,
                                                          ShiroProperties shiroProperties,
                                                          JwtProperties jwtProperties) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        Map<String, Filter> filterMap = getFilterMap(loginService, loginRedisService, filterProperties, jwtProperties);
+        Map<String, Filter> filterMap = getFilterMap(loginService, loginRedisService, jwtProperties);
         shiroFilterFactoryBean.setFilters(filterMap);
         Map<String, String> filterChainMap = getFilterChainDefinitionMap(shiroProperties);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainMap);
@@ -166,10 +163,8 @@ public class ShiroConfig {
      */
     private Map<String, Filter> getFilterMap(LoginService loginService,
                                              LoginRedisService loginRedisService,
-                                             SpringBootPlusFilterProperties filterProperties,
                                              JwtProperties jwtProperties) {
         Map<String, Filter> filterMap = new LinkedHashMap();
-        filterMap.put(REQUEST_PATH_FILTER_NAME, new RequestPathFilter(filterProperties.getRequestPath()));
         filterMap.put(JWT_FILTER_NAME, new JwtFilter(loginService, loginRedisService, jwtProperties));
         return filterMap;
     }

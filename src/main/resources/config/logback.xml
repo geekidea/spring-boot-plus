@@ -88,7 +88,7 @@
     </appender>
 
     <!-- 不同环境的日志级别配置 -->
-    <springProfile name="local">
+    <springProfile name="dev">
         <logger name="io.geekidea.springbootplus" level="DEBUG"/>
     </springProfile>
 

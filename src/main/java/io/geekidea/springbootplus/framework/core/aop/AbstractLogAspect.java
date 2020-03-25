@@ -110,12 +110,6 @@ public abstract class AbstractLogAspect {
     public abstract Object doAround(ProceedingJoinPoint joinPoint) throws Throwable;
 
     public Object handle(ProceedingJoinPoint joinPoint) throws Throwable {
-
-        // 如果没有启用，则直接目标方法
-        if (!logAopConfig.isEnabled()) {
-            return joinPoint.proceed();
-        }
-
         // 获取请求相关信息
         try {
             // 获取当前的HttpServletRequest对象

@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.param;
+package com.example.foobar.param;
+
+import io.geekidea.springbootplus.framework.pagination.BasePageOrderParam;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import io.geekidea.springbootplus.framework.pagination.BasePageParam;
-
 /**
- * <p>
- * 系统日志 查询参数对象
- * </p>
+ * <pre>
+ * FooBar 查询参数对象
+ * </pre>
  *
  * @author geekidea
- * @date 2019-10-11
+ * @date 2020-03-23
  */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysLogPageParam对象", description = "系统日志查询参数")
-public class SysLogPageParam extends BasePageParam {
+@ApiModel(value = "FooBarPageParam对象", description = "FooBar查询参数")
+public class FooBarPageParam extends BasePageOrderParam {
     private static final long serialVersionUID = 1L;
 }

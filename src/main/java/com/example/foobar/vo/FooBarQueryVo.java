@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.vo;
+package com.example.foobar.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,35 +22,48 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * <p>
- * 系统日志 查询结果对象
- * </p>
+ * <pre>
+ * FooBar 查询结果对象
+ * </pre>
  *
  * @author geekidea
- * @date 2019-10-11
+ * @date 2020-03-23
  */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "SysLogQueryVo对象", description = "系统日志查询参数")
-public class SysLogQueryVo implements Serializable {
+@ApiModel(value = "FooBarQueryVo对象", description = "FooBar查询参数")
+public class FooBarQueryVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键")
-    private Long logId;
+    @ApiModelProperty("ID")
+    private Long id;
 
-    @ApiModelProperty("类型")
-    private Boolean type;
+    @ApiModelProperty("Name")
+    private String name;
 
-    @ApiModelProperty("内容")
-    private String content;
+    @ApiModelProperty("Foo")
+    private String foo;
 
-    @ApiModelProperty("创建人ID")
-    private Long createId;
+    @ApiModelProperty("Bar")
+    private String bar;
 
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty("Remark")
+    private String remark;
+
+    @ApiModelProperty("State，0：Disable，1：Enable")
+    private Integer state;
+
+    @ApiModelProperty("Version")
+    private Integer version;
+
+    @ApiModelProperty("Create Time")
     private Date createTime;
+
+    @ApiModelProperty("Update Time")
+    private Date updateTime;
 
 }

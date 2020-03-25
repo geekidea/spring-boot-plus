@@ -26,11 +26,11 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import io.geekidea.springbootplus.framework.generator.config.SpringBootPlusMySqlQuery;
-import io.geekidea.springbootplus.framework.generator.config.SpringBootPlusSqlServerQuery;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +45,11 @@ import java.util.Map;
 @Data
 @Accessors(chain = true)
 public class CodeGenerator {
+
+    /**
+     * 框架包
+     */
+    private static final String FRAMEWORK_PACKAGE = "io.geekidea.springbootplus.framework";
 
     /**
      * 用户名
@@ -158,11 +163,6 @@ public class CodeGenerator {
     // ############################ 自定义配置部分 end ############################
 
     /**
-     * 框架父包
-     */
-    private String frameworkParentPackage;
-
-    /**
      * 公共父包
      */
     private String commonParentPackage;
@@ -231,26 +231,35 @@ public class CodeGenerator {
     private boolean fileOverride;
 
     /**
+     * 是否生成baseResultMap
+     */
+    private boolean baseResultMap;
+
+    /**
      * 初始化变量
      */
     public void init() {
-        this.frameworkParentPackage = this.parentPackage + ".framework";
-        this.commonParentPackage = this.frameworkParentPackage + ".common";
+        this.commonParentPackage = FRAMEWORK_PACKAGE + ".common";
         // 父类包路径
         this.superEntity = this.commonParentPackage + ".entity.BaseEntity";
         this.superController = this.commonParentPackage + ".controller.BaseController";
         this.superService = this.commonParentPackage + ".service.BaseService";
         this.superServiceImpl = this.commonParentPackage + ".service.impl.BaseServiceImpl";
         this.superPageParam = this.commonParentPackage + ".pagination.BasePageParam";
-        this.superPageOrderParam = this.frameworkParentPackage + ".pagination.BasePageOrderParam";
+        this.superPageOrderParam = FRAMEWORK_PACKAGE + ".pagination.BasePageOrderParam";
         this.superEntityCommonColumns = new String[]{};
 
         // 公共类包路径
         this.commonIdParam = this.commonParentPackage + ".param.IdParam";
         this.commonApiResult = this.commonParentPackage + ".api.ApiResult";
         this.commonOrderEnum = this.commonParentPackage + ".enums.OrderEnum";
-        this.commonPaging = this.frameworkParentPackage + ".pagination.Paging";
-        this.commonPageUtil = this.frameworkParentPackage + ".pagination.PageUtil";
+        this.commonPaging = FRAMEWORK_PACKAGE + ".pagination.Paging";
+        this.commonPageUtil = FRAMEWORK_PACKAGE + ".pagination.PageUtil";
+
+        // 如果包路径为空，转换包名称路径
+        if (StringUtils.isNotBlank(parentPackage)) {
+            this.projectPackagePath = parentPackage.replaceAll("\\.", File.separator);
+        }
     }
 
     /**
@@ -271,26 +280,19 @@ public class CodeGenerator {
         gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
         gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date
+        gc.setBaseResultMap(baseResultMap);
 
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl(driverUrl);
-        // dsc.setSchemaName("public");
         dsc.setDriverName(driverName);
         dsc.setUsername(userName);
         dsc.setPassword(password);
         // 设置自定义查询
-//        dsc.setDbQuery(new SpringBootPlusSqlServerQuery());
         // MySQL
         dsc.setDbQuery(new SpringBootPlusMySqlQuery());
-        // SQLServer2005/2008
-//        dsc.setDbQuery(new SpringBootPlusSqlServerQuery());
-
-        // Oracle11G
-//        dsc.setDbType(DbType.ORACLE);
-//        dsc.setSchemaName("SPRING_BOOT_PLUS");
 
         mpg.setDataSource(dsc);
 
@@ -437,13 +439,9 @@ public class CodeGenerator {
         strategy.setInclude(tableName);
         strategy.setSuperEntityColumns(superEntityCommonColumns);
         strategy.setControllerMappingHyphenStyle(true);
-        /**
-         * 注意，根据实际情况，进行设置
-         * 当表名称的前缀和模块名称一样时，会去掉表的前缀
-         * 比如模块名称为user,表明为user_info,则生成的实体名称是Info.java,一定要注意
-         */
         //strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);
+
         mpg.execute();
     }
 

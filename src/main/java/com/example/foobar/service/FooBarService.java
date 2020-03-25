@@ -14,25 +14,52 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.service;
+package com.example.foobar.service;
 
-import io.geekidea.springbootplus.system.entity.SysLog;
+import com.example.foobar.entity.FooBar;
 import io.geekidea.springbootplus.framework.common.service.BaseService;
-import io.geekidea.springbootplus.system.param.SysLogPageParam;
-import io.geekidea.springbootplus.system.vo.SysLogQueryVo;
 import io.geekidea.springbootplus.framework.pagination.Paging;
+import com.example.foobar.param.FooBarPageParam;
+import com.example.foobar.vo.FooBarQueryVo;
 
 import java.io.Serializable;
 
 /**
- * <p>
- * 系统日志 服务类
- * </p>
+ * <pre>
+ * FooBar 服务类
+ * </pre>
  *
  * @author geekidea
- * @since 2019-10-11
+ * @since 2020-03-23
  */
-public interface SysLogService extends BaseService<SysLog> {
+public interface FooBarService extends BaseService<FooBar> {
+
+    /**
+     * 保存
+     *
+     * @param fooBar
+     * @return
+     * @throws Exception
+     */
+    boolean saveFooBar(FooBar fooBar) throws Exception;
+
+    /**
+     * 修改
+     *
+     * @param fooBar
+     * @return
+     * @throws Exception
+     */
+    boolean updateFooBar(FooBar fooBar) throws Exception;
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    boolean deleteFooBar(Long id) throws Exception;
 
     /**
      * 根据ID获取查询对象
@@ -41,15 +68,15 @@ public interface SysLogService extends BaseService<SysLog> {
      * @return
      * @throws Exception
      */
-    SysLogQueryVo getSysLogById(Serializable id) throws Exception;
+    FooBarQueryVo getFooBarById(Serializable id) throws Exception;
 
     /**
      * 获取分页对象
      *
-     * @param sysLogPageParam
+     * @param fooBarPageParam
      * @return
      * @throws Exception
      */
-    Paging<SysLogQueryVo> getSysLogPageList(SysLogPageParam sysLogPageParam) throws Exception;
+    Paging<FooBarQueryVo> getFooBarPageList(FooBarPageParam fooBarPageParam) throws Exception;
 
 }

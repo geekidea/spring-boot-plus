@@ -40,10 +40,6 @@ public class MybatisPlusConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        // SQLServer2005/2008配置
-//        paginationInterceptor.setDbType(DbType.SQL_SERVER2005);
-        // Oracle11G
-//        paginationInterceptor.setDbType(DbType.ORACLE);
         return paginationInterceptor;
     }
 
@@ -56,15 +52,5 @@ public class MybatisPlusConfig {
     public OptimisticLockerInterceptor optimisticLockerInterceptor() {
         return new OptimisticLockerInterceptor();
     }
-
-    /**
-     * Oracle自增主键配置
-     *
-     * @return
-     */
-//    @Bean
-//    public OracleKeyGenerator oracleKeyGenerator() {
-//        return new OracleKeyGenerator();
-//    }
 
 }

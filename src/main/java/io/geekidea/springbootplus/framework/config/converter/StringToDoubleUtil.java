@@ -16,7 +16,8 @@
 
 package io.geekidea.springbootplus.framework.config.converter;
 
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * <code>

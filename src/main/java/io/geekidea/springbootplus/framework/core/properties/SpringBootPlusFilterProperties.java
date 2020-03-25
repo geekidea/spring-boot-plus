@@ -31,19 +31,13 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 @ConfigurationProperties(prefix = "spring-boot-plus.filter")
 public class SpringBootPlusFilterProperties {
 
-    /**
-     * 请求路径Filter配置
-     */
-    @NestedConfigurationProperty
-    private FilterConfig requestPath = new FilterConfig();
-
     @Data
     public static class FilterConfig {
 
         /**
          * 是否启用
          */
-        private boolean enabled;
+        private boolean enable;
 
         /**
          * 包含的路径

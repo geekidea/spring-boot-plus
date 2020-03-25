@@ -14,49 +14,67 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.entity;
+package com.example.foobar.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.geekidea.springbootplus.framework.common.entity.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 
 /**
- * <p>
- * 系统日志
- * </p>
+ * <pre>
+ * FooBar
+ * </pre>
  *
  * @author geekidea
- * @since 2019-10-11
+ * @since 2020-03-23
  */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysLog对象", description = "系统日志")
-public class SysLog extends BaseEntity {
+@ApiModel(value = "FooBar对象", description = "FooBar")
+public class FooBar extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键")
-    @TableId(value = "log_id", type = IdType.AUTO)
-    private Long logId;
+    @ApiModelProperty("ID")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
-    @ApiModelProperty("类型")
-    private Boolean type;
+    @ApiModelProperty("Name")
+    @NotBlank(message = "Name不能为空")
+    private String name;
 
-    @ApiModelProperty("内容")
-    private String content;
+    @ApiModelProperty("Foo")
+    private String foo;
 
-    @ApiModelProperty("创建人ID")
-    private Long createId;
+    @ApiModelProperty("Bar")
+    @NotBlank(message = "Bar不能为空")
+    private String bar;
 
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty("Remark")
+    private String remark;
+
+    @ApiModelProperty("State，0：Disable，1：Enable")
+    private Integer state;
+
+    @ApiModelProperty("Version")
+    private Integer version;
+
+    @ApiModelProperty("Create Time")
     private Date createTime;
+
+    @ApiModelProperty("Update Time")
+    private Date updateTime;
 
 }

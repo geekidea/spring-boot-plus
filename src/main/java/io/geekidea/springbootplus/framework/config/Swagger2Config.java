@@ -21,13 +21,13 @@ import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -46,6 +46,7 @@ import java.util.List;
  */
 @Configuration
 @EnableSwagger2
+@ConditionalOnProperty(value = {"spring-boot-plus.swagger.enable"}, matchIfMissing = true)
 public class Swagger2Config {
 
     /**
