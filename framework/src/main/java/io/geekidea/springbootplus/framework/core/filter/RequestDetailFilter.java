@@ -16,11 +16,13 @@
 
 package io.geekidea.springbootplus.framework.core.filter;
 
+import io.geekidea.springbootplus.framework.core.bean.RequestDetail;
+import io.geekidea.springbootplus.framework.core.util.RequestDetailThreadLocal;
 import io.geekidea.springbootplus.framework.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -31,7 +33,6 @@ import java.io.IOException;
  * @date 2020/3/25
  **/
 @Slf4j
-@WebFilter(filterName = "requestFilter", urlPatterns = "/*", asyncSupported = true)
 public class RequestDetailFilter implements Filter {
 
     @Override

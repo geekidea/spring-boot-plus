@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.core.filter;
+package io.geekidea.springbootplus.framework.core.util;
+
+import io.geekidea.springbootplus.framework.core.bean.RequestDetail;
 
 /**
  * 记录请求详情信息到当前线程中，可在任何地方获取

@@ -17,9 +17,12 @@
 package io.geekidea.springbootplus.config;
 
 import com.alibaba.fastjson.JSON;
+import io.geekidea.springbootplus.config.properties.SpringBootPlusFilterProperties;
 import io.geekidea.springbootplus.config.properties.SpringBootPlusInterceptorProperties;
 import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
+import io.geekidea.springbootplus.framework.core.filter.RequestDetailFilter;
 import io.geekidea.springbootplus.framework.core.interceptor.PermissionInterceptor;
+import io.geekidea.springbootplus.framework.core.xss.XssFilter;
 import io.geekidea.springbootplus.framework.util.IniUtil;
 import io.geekidea.springbootplus.system.interceptor.DownloadInterceptor;
 import io.geekidea.springbootplus.system.interceptor.ResourceInterceptor;
@@ -27,6 +30,7 @@ import io.geekidea.springbootplus.system.interceptor.UploadInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -51,6 +55,51 @@ public class SpringBootPlusWebMvcConfig implements WebMvcConfigurer {
      */
     @Autowired
     private SpringBootPlusProperties springBootPlusProperties;
+
+    /**
+     * Filter配置
+     */
+    private SpringBootPlusFilterProperties filterConfig;
+
+    /**
+     * 拦截器配置
+     */
+    private SpringBootPlusInterceptorProperties interceptorConfig;
+
+    /**
+     * RequestDetailFilter配置
+     *
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean requestDetailFilter() {
+        SpringBootPlusFilterProperties.FilterConfig requestFilterConfig = filterConfig.getRequest();
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new RequestDetailFilter());
+        filterRegistrationBean.setEnabled(requestFilterConfig.isEnable());
+        filterRegistrationBean.addUrlPatterns(requestFilterConfig.getUrlPatterns());
+        filterRegistrationBean.setOrder(requestFilterConfig.getOrder());
+        filterRegistrationBean.setAsyncSupported(requestFilterConfig.isAsync());
+        return filterRegistrationBean;
+    }
+
+    /**
+     * XssFilter配置
+     *
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean xssFilter() {
+        SpringBootPlusFilterProperties.FilterConfig xssFilterConfig = filterConfig.getXss();
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new XssFilter());
+        filterRegistrationBean.setEnabled(xssFilterConfig.isEnable());
+        filterRegistrationBean.addUrlPatterns(xssFilterConfig.getUrlPatterns());
+        filterRegistrationBean.setOrder(xssFilterConfig.getOrder());
+        filterRegistrationBean.setAsyncSupported(xssFilterConfig.isAsync());
+        return filterRegistrationBean;
+    }
+
 
     /**
      * 自定义权限拦截器
@@ -95,14 +144,14 @@ public class SpringBootPlusWebMvcConfig implements WebMvcConfigurer {
 
     @PostConstruct
     public void init() {
+        filterConfig = springBootPlusProperties.getFilter();
+        interceptorConfig = springBootPlusProperties.getInterceptor();
         // 打印SpringBootPlusProperties配置信息
         log.debug("SpringBootPlusProperties：{}", JSON.toJSONString(springBootPlusProperties));
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        SpringBootPlusInterceptorProperties interceptorConfig = springBootPlusProperties.getInterceptor();
-
         // 上传拦截器
         if (interceptorConfig.getUpload().isEnable()) {
             registry.addInterceptor(uploadInterceptor())

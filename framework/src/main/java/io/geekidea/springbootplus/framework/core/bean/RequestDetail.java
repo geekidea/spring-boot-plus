@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.core.filter;
+package io.geekidea.springbootplus.framework.core.bean;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

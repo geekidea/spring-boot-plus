@@ -67,6 +67,19 @@ spring-boot-plus:
   enum-packages: com.example.foorbar.enums
   # Swagger路径
   swagger-paths: /swagger-ui.html,/docs,/doc.html,/swagger-resources/**,/webjars/**,/v2/api-docs,/csrf,/v2/api-docs-ext,/null/swagger-resources/**
+  # Filter配置
+  filter:
+    request:
+      enable: false
+      url-patterns: /*
+      order: 1
+      async: true
+    xss:
+      enable: true
+      url-patterns: /*
+      order: 1
+      async: true
+
   # 拦截器配置
   interceptor:
     permission:

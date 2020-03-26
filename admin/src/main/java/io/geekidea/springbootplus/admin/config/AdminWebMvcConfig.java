@@ -27,7 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2020/3/19
  */
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class AdminWebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -18,6 +18,7 @@ package io.geekidea.springbootplus.config.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,6 +32,19 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring-boot-plus.filter")
 public class SpringBootPlusFilterProperties {
 
+    /**
+     * RequestDetail Filter配置
+     */
+    @NestedConfigurationProperty
+    private FilterConfig xss = new FilterConfig();
+
+    /**
+     * XSS Filter配置
+     */
+    @NestedConfigurationProperty
+    private FilterConfig request = new FilterConfig();
+
+
     @Data
     public static class FilterConfig {
 
@@ -40,14 +54,19 @@ public class SpringBootPlusFilterProperties {
         private boolean enable;
 
         /**
-         * 包含的路径
+         * 过滤的路径
          */
-        private String[] includePaths;
+        private String[] urlPatterns;
 
         /**
-         * 排除路径
+         * 排序
          */
-        private String[] excludePaths;
+        private int order;
+
+        /**
+         * 是否支持异步
+         */
+        private boolean async;
 
     }
 }

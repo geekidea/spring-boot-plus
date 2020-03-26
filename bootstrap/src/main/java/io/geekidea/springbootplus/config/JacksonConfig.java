@@ -33,6 +33,9 @@ import io.geekidea.springbootplus.framework.config.jackson.deserializer.JacksonD
 import io.geekidea.springbootplus.framework.config.jackson.deserializer.JacksonDoubleDeserializer;
 import io.geekidea.springbootplus.framework.config.jackson.serializer.JacksonDateSerializer;
 import io.geekidea.springbootplus.framework.config.jackson.serializer.JacksonIntegerDeserializer;
+import io.geekidea.springbootplus.framework.core.xss.XssJacksonDeserializer;
+import io.geekidea.springbootplus.framework.core.xss.XssJacksonSerializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -52,6 +55,9 @@ import java.util.List;
 @Configuration
 public class JacksonConfig implements WebMvcConfigurer {
 
+    @Value("${spring-boot-plus.filter.xss.enable}")
+    private boolean enableXss;
+
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
@@ -66,8 +72,10 @@ public class JacksonConfig implements WebMvcConfigurer {
 //        simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
 
         // XSS序列化
-//        simpleModule.addSerializer(String.class, new XssJacksonSerializer());
-//        simpleModule.addDeserializer(String.class, new XssJacksonDeserializer());
+        if (enableXss){
+            simpleModule.addSerializer(String.class, new XssJacksonSerializer());
+            simpleModule.addDeserializer(String.class, new XssJacksonDeserializer());
+        }
 
         // Date
         simpleModule.addSerializer(Date.class, new JacksonDateSerializer());
