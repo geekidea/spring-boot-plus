@@ -36,14 +36,13 @@ public class SpringBootPlusFilterProperties {
      * RequestDetail Filter配置
      */
     @NestedConfigurationProperty
-    private FilterConfig xss = new FilterConfig();
+    private FilterConfig request = new FilterConfig();
 
     /**
      * XSS Filter配置
      */
     @NestedConfigurationProperty
-    private FilterConfig request = new FilterConfig();
-
+    private FilterConfig xss = new FilterConfig();
 
     @Data
     public static class FilterConfig {
