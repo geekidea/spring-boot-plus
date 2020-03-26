@@ -70,14 +70,14 @@ spring-boot-plus:
   # Filter配置
   filter:
     request:
-      enable: false
+      enable: true
       url-patterns: /*
       order: 1
       async: true
     xss:
       enable: true
       url-patterns: /*
-      order: 1
+      order: 2
       async: true
 
   # 拦截器配置
