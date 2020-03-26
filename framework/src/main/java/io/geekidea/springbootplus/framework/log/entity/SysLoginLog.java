@@ -59,6 +59,9 @@ public class SysLoginLog extends BaseEntity {
     @ApiModelProperty("区域")
     private String area;
 
+    @ApiModelProperty("运营商")
+    private String operator;
+
     @ApiModelProperty("tokenMd5值")
     private String token;
 

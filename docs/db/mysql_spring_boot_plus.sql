@@ -39,12 +39,18 @@ create table if not exists ip_address
         primary key,
     ip_start varchar(15) not null,
     ip_end varchar(15) not null,
-    area varchar(100) not null comment '区域',
-    operator varchar(200) not null comment '运营商',
-    ip_start_num bigint not null,
-    ip_end_num bigint not null
+    area varchar(45) null comment '区域',
+    operator varchar(6) null comment '运营商',
+    ip_start_num bigint(10) not null,
+    ip_end_num bigint(10) not null
 )
     comment 'IP地址';
+
+create index ip_address_ip_end_num_index
+    on ip_address (ip_end_num);
+
+create index ip_address_ip_start_num_index
+    on ip_address (ip_start_num);
 
 create table if not exists sys_department
 (
@@ -160,7 +166,8 @@ create table if not exists sys_login_log
     request_id varchar(32) null comment '请求ID',
     username varchar(32) null comment '用户名称',
     ip varchar(15) null comment 'IP',
-    area varchar(100) null comment '区域',
+    area varchar(45) null comment '区域',
+    operator varchar(6) null comment '运营商',
     token varchar(32) null comment 'tokenMd5值',
     type int null comment '1:登录，2：登出',
     success tinyint(1) default 0 not null comment '是否成功 true:成功/false:失败',
@@ -191,7 +198,8 @@ create table if not exists sys_operation_log
     user_name varchar(32) null comment '用户名称',
     name varchar(200) null comment '日志名称',
     ip varchar(15) null comment 'IP',
-    area varchar(100) null comment '区域',
+    area varchar(45) null comment '区域',
+    operator varchar(6) null comment '运营商',
     path varchar(500) null comment '全路径',
     module varchar(100) null comment '模块名称',
     class_name varchar(100) null comment '类名',
@@ -221,6 +229,7 @@ create table if not exists sys_operation_log
     update_time datetime null comment '修改时间'
 )
     comment '系统操作日志';
+
 
 
 INSERT INTO sys_user (id, username, nickname, password, salt, phone, gender, head, remark, state, department_id, role_id, deleted, version, create_time, update_time) VALUES (1, 'admin', '管理员', '11a254dab80d52bc4a347e030e54d861a9d2cdb2af2185a9ca4a7318e830d04d', '666', '15888889900', 1, 'http://localhost:8888/api/resource/201908201013068.png', 'Administrator Account', 1, 1, 1, 0, 1, '2020-02-26 00:00:00', '2019-10-27 23:32:29');
@@ -364,10 +373,10 @@ INSERT INTO sys_role_permission (id, role_id, permission_id, state, remark, vers
 
 INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time) VALUES (1, 'test add', 'hello', 'world', '备注', 1, 0, '2020-03-20 11:22:35', null);
 
-INSERT INTO sys_login_log (id, request_id, username, ip, area, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (1, '1242813712335691777', 'admin', '127.0.0.1', '本机地址', 'c87aaffa35dadafb066cf18679eab36e', 1, 1, 200, null, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-25 22:01:11', null);
-INSERT INTO sys_login_log (id, request_id, username, ip, area, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (2, '1242813887884091393', 'admin', '127.0.0.1', '本机地址', 'c87aaffa35dadafb066cf18679eab36e', 2, 1, 200, null, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-25 22:01:48', null);
-INSERT INTO sys_login_log (id, request_id, username, ip, area, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (3, '1242814069371625474', 'admin', '127.0.0.1', '本机地址', null, 1, 0, null, '用户名或密码错误', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-25 22:02:25', null);
-INSERT INTO sys_login_log (id, request_id, username, ip, area, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (4, '1242814192096960513', null, '127.0.0.1', '本机地址', null, 2, 0, null, 'token不能为空', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-25 22:02:54', null);
+INSERT INTO sys_login_log (id, request_id, username, ip, area, operator, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (1, '1242813712335691777', 'admin', '127.0.0.1', '本机地址', null, 'c87aaffa35dadafb066cf18679eab36e', 1, 1, 200, null, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-25 22:01:11', null);
+INSERT INTO sys_login_log (id, request_id, username, ip, area, operator, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (2, '1242813887884091393', 'admin', '127.0.0.1', '本机地址', null, 'c87aaffa35dadafb066cf18679eab36e', 2, 1, 200, null, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-25 22:01:48', null);
+INSERT INTO sys_login_log (id, request_id, username, ip, area, operator, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (3, '1242814069371625474', 'admin', '127.0.0.1', '本机地址', null, null, 1, 0, null, '用户名或密码错误', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-25 22:02:25', null);
+INSERT INTO sys_login_log (id, request_id, username, ip, area, operator, token, type, success, code, exception_message, user_agent, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (4, '1242814192096960513', null, '127.0.0.1', '本机地址', null, null, 2, 0, null, 'token不能为空', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36', 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, null, '2020-03-25 22:02:54', null);
 
-INSERT INTO sys_operation_log (id, request_id, user_id, user_name, name, ip, area, path, module, class_name, method_name, request_method, content_type, request_body, param, token, type, success, code, message, exception_name, exception_message, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (2, '1242820418688049153', null, null, 'FooBar分页列表', '127.0.0.1', '本机地址', '/api/fooBar/getPageList', 'foobar', 'com.example.foobar.controller.FooBarController', 'getFooBarPageList', 'POST', 'application/json', 1, '{"pageIndex":1,"pageSize":10}', null, 7, 1, 200, '操作成功', null, null, 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, '', '2020-03-25 22:27:33', null);
-INSERT INTO sys_operation_log (id, request_id, user_id, user_name, name, ip, area, path, module, class_name, method_name, request_method, content_type, request_body, param, token, type, success, code, message, exception_name, exception_message, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (1, '1242805276474634241', null, null, 'helloWorld', '127.0.0.1', '本机地址', '/api/hello/world', null, 'io.geekidea.springbootplus.system.controller.HelloWorldController', 'helloWorld', 'GET', null, 0, null, null, 0, 1, 200, '操作成功', null, null, 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, '', '2020-03-25 21:27:22', null);
+INSERT INTO sys_operation_log (id, request_id, user_id, user_name, name, ip, area, operator, path, module, class_name, method_name, request_method, content_type, request_body, param, token, type, success, code, message, exception_name, exception_message, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (1, '1242805276474634241', null, null, 'helloWorld', '127.0.0.1', '本机地址', null, '/api/hello/world', null, 'io.geekidea.springbootplus.system.controller.HelloWorldController', 'helloWorld', 'GET', null, 0, null, null, 0, 1, 200, '操作成功', null, null, 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, '', '2020-03-25 21:27:22', null);
+INSERT INTO sys_operation_log (id, request_id, user_id, user_name, name, ip, area, operator, path, module, class_name, method_name, request_method, content_type, request_body, param, token, type, success, code, message, exception_name, exception_message, browser_name, browser_version, engine_name, engine_version, os_name, platform_name, mobile, device_name, device_model, remark, create_time, update_time) VALUES (2, '1242820418688049153', null, null, 'FooBar分页列表', '127.0.0.1', '本机地址', null, '/api/fooBar/getPageList', 'foobar', 'com.example.foobar.controller.FooBarController', 'getFooBarPageList', 'POST', 'application/json', 1, '{"pageIndex":1,"pageSize":10}', null, 7, 1, 200, '操作成功', null, null, 'Chrome', '80.0.3987.149', 'Webkit', '537.36', 'OSX', 'Mac', 0, null, null, '', '2020-03-25 22:27:33', null);

@@ -825,7 +825,7 @@ public abstract class BaseLogAop {
                 IpAddress ipAddress = ipAddressService.getByIp(requestInfo.getIp());
                 if (ipAddress != null) {
                     requestInfo.setIpAddress(ipAddress);
-                    sysOperationLog.setArea(ipAddress.getArea());
+                    sysOperationLog.setArea(ipAddress.getArea()).setOperator(ipAddress.getOperator());
                 }
             }
 
@@ -983,7 +983,7 @@ public abstract class BaseLogAop {
                         ipAddress = ipAddressService.getByIp(requestInfo.getIp());
                     }
                     if (ipAddress != null) {
-                        sysLoginLog.setArea(ipAddress.getArea());
+                        sysLoginLog.setArea(ipAddress.getArea()).setOperator(ipAddress.getOperator());
                     }
                     // 保存登录日志
                     sysLoginLogService.saveSysLoginLog(sysLoginLog);

@@ -65,6 +65,9 @@ public class SysOperationLog extends BaseEntity {
     @ApiModelProperty("区域")
     private String area;
 
+    @ApiModelProperty("运营商")
+    private String operator;
+
     @ApiModelProperty("全路径")
     private String path;
 
