@@ -1,1 +1,1 @@
-# bootstrap 项目代码生成模块
+# generator 项目代码生成模块

@@ -1,1 +1,1 @@
-# bootstrap 项目配置模块
+# config 项目配置模块

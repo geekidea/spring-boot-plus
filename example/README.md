@@ -1,1 +1,1 @@
-# bootstrap 项目示例模块
+# example 项目示例模块

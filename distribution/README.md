@@ -1,1 +1,1 @@
-# bootstrap 项目打包模块
+# distribution 项目打包模块
