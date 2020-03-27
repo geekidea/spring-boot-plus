@@ -26,8 +26,9 @@ import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusExcep
  * @date 2020/3/12
  */
 public class GeneratorException extends SpringBootPlusException {
+	private static final long serialVersionUID = 2556853577480934761L;
 
-    public GeneratorException(String message) {
+	public GeneratorException(String message) {
         super(message);
     }
 

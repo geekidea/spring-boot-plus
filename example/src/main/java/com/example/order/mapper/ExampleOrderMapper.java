@@ -14,23 +14,27 @@
  * limitations under the License.
  */
 
-package io.geekidea;
+package com.example.order.mapper;
 
-import org.junit.Test;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.order.entity.ExampleOrder;
+import com.example.order.param.ExampleOrderPageParam;
 
-import static org.junit.Assert.assertTrue;
+import org.springframework.stereotype.Repository;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Param;
+import java.io.Serializable;
 
 /**
- * Unit test for simple App.
+ * 订单示例 Mapper 接口
+ *
+ * @author geekidea
+ * @since 2020-03-27
  */
-public class AppTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
-    @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
-    }
+@Repository
+public interface ExampleOrderMapper extends BaseMapper<ExampleOrder> {
+
+
 }

@@ -18,7 +18,7 @@ package io.geekidea.springbootplus.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -26,9 +26,10 @@ import io.geekidea.springbootplus.framework.common.exception.BusinessException;
 import io.geekidea.springbootplus.framework.common.exception.DaoException;
 import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusException;
 import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.framework.core.pagination.PageUtil;
+import io.geekidea.springbootplus.framework.core.pagination.PageInfo;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
 import io.geekidea.springbootplus.system.entity.SysRole;
+import io.geekidea.springbootplus.system.entity.SysRolePermission;
 import io.geekidea.springbootplus.system.enums.StateEnum;
 import io.geekidea.springbootplus.system.mapper.SysRoleMapper;
 import io.geekidea.springbootplus.system.param.sysrole.SysRolePageParam;
@@ -41,6 +42,7 @@ import io.geekidea.springbootplus.system.vo.SysRoleQueryVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.SetUtils;
+import org.apache.commons.collections4.SetUtils.SetView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,7 +100,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     public boolean updateSysRole(SysRole sysRole) throws Exception {
         Long roleId = sysRole.getId();
         // 校验角色是否存在
-        if (getById(roleId) == null){
+        if (getById(roleId) == null) {
             throw new BusinessException("该角色不存在");
         }
         // 修改角色
@@ -149,9 +151,9 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
 
     @Override
     public Paging<SysRole> getSysRolePageList(SysRolePageParam sysRolePageParam) throws Exception {
-        Page page = PageUtil.getPage(sysRolePageParam, OrderItem.desc(getLambdaColumn(SysRole::getCreateTime)));
+        Page<SysRole> page = new PageInfo<>(sysRolePageParam, OrderItem.desc(getLambdaColumn(SysRole::getCreateTime)));
         // 此处演示单表，使用mybatisplus自带方法进行分页
-        LambdaQueryWrapper<SysRole> lambdaQueryWrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<SysRole> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         String keyword = sysRolePageParam.getKeyword();
         String name = sysRolePageParam.getName();
         String code = sysRolePageParam.getCode();
@@ -172,7 +174,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
             lambdaQueryWrapper.eq(SysRole::getState, state);
         }
         IPage<SysRole> iPage = sysRoleMapper.selectPage(page, lambdaQueryWrapper);
-        return new Paging(iPage);
+        return new Paging<SysRole>(iPage);
     }
 
     @Override
@@ -214,16 +216,16 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
         // 此处真实删除，去掉deleted字段的@TableLogic注解
         Set<Long> beforeSet = new HashSet<>(beforeList);
         Set<Long> afterSet = new HashSet<>(permissionIds);
-        SetUtils.SetView deleteSet = SetUtils.difference(beforeSet, afterSet);
-        SetUtils.SetView addSet = SetUtils.difference(afterSet, beforeSet);
+        SetView<Long> deleteSet = SetUtils.difference(beforeSet, afterSet);
+        SetView<Long> addSet = SetUtils.difference(afterSet, beforeSet);
         log.debug("deleteSet = " + deleteSet);
         log.debug("addSet = " + addSet);
 
         if (CollectionUtils.isNotEmpty(deleteSet)) {
             // 删除权限关联
-            UpdateWrapper updateWrapper = new UpdateWrapper();
-            updateWrapper.eq("role_id", roleId);
-            updateWrapper.in("permission_id", deleteSet);
+            LambdaUpdateWrapper<SysRolePermission> updateWrapper = new LambdaUpdateWrapper<>();
+            updateWrapper.eq(SysRolePermission::getRoleId, roleId);
+            updateWrapper.in(SysRolePermission::getPermissionId, deleteSet);
             boolean deleteResult = sysRolePermissionService.remove(updateWrapper);
             if (!deleteResult) {
                 throw new DaoException("删除角色权限关系失败");

@@ -27,4 +27,6 @@ import java.io.Serializable;
  */
 @ApiModel("BaseEntity")
 public abstract class BaseEntity implements Serializable{
+	private static final long serialVersionUID = -7176390653391227433L;
+	
 }

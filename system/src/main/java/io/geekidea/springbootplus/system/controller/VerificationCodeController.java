@@ -61,7 +61,7 @@ import java.util.concurrent.TimeUnit;
 public class VerificationCodeController {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 获取验证码
@@ -92,7 +92,7 @@ public class VerificationCodeController {
     @ResponseBody
     @OperationLog(name = "获取图片Base64验证码", type = OperationLogType.OTHER)
     @ApiOperation(value = "获取图片Base64验证码", response = ApiResult.class)
-    public ApiResult getCode(HttpServletResponse response) throws Exception {
+    public ApiResult<Map<String, Object>> getCode(HttpServletResponse response) throws Exception {
         VerificationCode verificationCode = new VerificationCode();
         BufferedImage image = verificationCode.getImage();
         String code = verificationCode.getText();

@@ -25,7 +25,8 @@ import com.example.foobar.mapper.FooBarMapper;
 import com.example.foobar.param.FooBarPageParam;
 import com.example.foobar.service.FooBarService;
 import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.framework.core.pagination.PageUtil;
+import io.geekidea.springbootplus.framework.core.pagination.OrderMapping;
+import io.geekidea.springbootplus.framework.core.pagination.PageInfo;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +66,10 @@ public class FooBarServiceImpl extends BaseServiceImpl<FooBarMapper, FooBar> imp
 
     @Override
     public Paging<FooBar> getFooBarPageList(FooBarPageParam fooBarPageParam) throws Exception {
-        Page page = PageUtil.getPage(fooBarPageParam, OrderItem.desc(getLambdaColumn(FooBar::getCreateTime)));
-        LambdaQueryWrapper wrapper = new LambdaQueryWrapper<FooBar>();
+        OrderMapping orderMapping = new OrderMapping()
+                .mapping("updateTime", "update_time");
+        Page<FooBar> page = new PageInfo<>(fooBarPageParam, OrderItem.desc(getLambdaColumn(FooBar::getCreateTime)), orderMapping);
+        LambdaQueryWrapper<FooBar> wrapper = new LambdaQueryWrapper<>();
         IPage<FooBar> iPage = fooBarMapper.selectPage(page, wrapper);
         return new Paging<FooBar>(iPage);
     }

@@ -100,7 +100,7 @@ public class Swagger2Config {
     /**
      * Swagger忽略的参数类型
      */
-    private Class[] ignoredParameterTypes = new Class[]{
+    private Class<?>[] ignoredParameterTypes = new Class[]{
             ServletRequest.class,
             ServletResponse.class,
             HttpServletRequest.class,
@@ -211,6 +211,7 @@ public class Swagger2Config {
         };
     }
 
+    @SuppressWarnings("deprecation")
     private static Optional<? extends Class<?>> declaringClass(RequestHandler input) {
         return Optional.fromNullable(input.declaringClass());
     }
@@ -238,6 +239,9 @@ public class Swagger2Config {
                         return;
                     }
                     AnnotatedField annotatedField = beanPropertyDefinition.getField();
+                    if (annotatedField == null) {
+                        return;
+                    }
                     Class<?> clazz = annotatedField.getDeclaringClass();
                     Field[] fields = clazz.getDeclaredFields();
                     // 获取当前字段对象

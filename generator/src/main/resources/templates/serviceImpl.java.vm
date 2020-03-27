@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import ${superServiceImplClassPackage};
 #if(${cfg.generatorStrategy} != 'SIMPLE')
 import ${cfg.pagingClass};
-import ${cfg.pageUtilClass};
+import ${cfg.pageInfoClass};
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -66,11 +66,11 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     #end
     @Override
     public Paging<${entity}${cfg.queryVo}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam}) throws Exception {
-        Page page = PageUtil.getPage(${cfg.entityObjectName}${cfg.pageParam}, OrderItem.desc(getLambdaColumn(${entity}::getCreateTime)));
+        Page<${entity}${cfg.queryVo}> page = new PageInfo<>(${cfg.entityObjectName}${cfg.pageParam}, OrderItem.desc(getLambdaColumn(${entity}::getCreateTime)));
     #if(${cfg.generatorStrategy} != 'SINGLE')
         IPage<${entity}${cfg.queryVo}> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}${cfg.pageParam});
     #else
-        LambdaQueryWrapper wrapper = new LambdaQueryWrapper<${entity}>();
+        LambdaQueryWrapper<${entity}> wrapper = new LambdaQueryWrapper<>();
         IPage<${entity}${cfg.queryVo}> iPage = ${cfg.mapperObjectName}.selectPage(page, wrapper);
     #end
         return new Paging<${entity}${cfg.queryVo}>(iPage);

@@ -168,7 +168,7 @@ public class ShiroConfig {
     private Map<String, Filter> getFilterMap(ShiroLoginService shiroLoginService,
                                              LoginRedisService loginRedisService,
                                              JwtProperties jwtProperties) {
-        Map<String, Filter> filterMap = new LinkedHashMap();
+        Map<String, Filter> filterMap = new LinkedHashMap<>();
         filterMap.put(JWT_FILTER_NAME, new JwtFilter(shiroLoginService, loginRedisService, jwtProperties));
         return filterMap;
     }
@@ -180,7 +180,7 @@ public class ShiroConfig {
      * @return
      */
     private Map<String, String> getFilterChainDefinitionMap(ShiroProperties shiroProperties) {
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap();
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 获取排除的路径
         List<String[]> anonList = shiroProperties.getAnon();
         log.debug("anonList:{}", JSON.toJSONString(anonList));
@@ -254,7 +254,7 @@ public class ShiroConfig {
         if (MapUtils.isEmpty(filterChainDefinitionMap)) {
             return filterChainDefinitionMap;
         }
-        final Map<String, String> map = new LinkedHashMap();
+        final Map<String, String> map = new LinkedHashMap<>();
         for (Map.Entry<String, String> entry : filterChainDefinitionMap.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();

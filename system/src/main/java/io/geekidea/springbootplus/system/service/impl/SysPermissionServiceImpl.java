@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.geekidea.springbootplus.framework.common.exception.BusinessException;
 import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.framework.core.pagination.PageUtil;
+import io.geekidea.springbootplus.framework.core.pagination.PageInfo;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
 import io.geekidea.springbootplus.system.convert.SysPermissionConvert;
 import io.geekidea.springbootplus.system.entity.SysPermission;
@@ -99,14 +99,14 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
 
     @Override
     public Paging<SysPermissionQueryVo> getSysPermissionPageList(SysPermissionPageParam sysPermissionPageParam) throws Exception {
-        Page page = PageUtil.getPage(sysPermissionPageParam, OrderItem.desc(getLambdaColumn(SysPermission::getCreateTime)));
+        Page<SysPermissionQueryVo> page = new PageInfo<>(sysPermissionPageParam, OrderItem.desc(getLambdaColumn(SysPermission::getCreateTime)));
         IPage<SysPermissionQueryVo> iPage = sysPermissionMapper.getSysPermissionPageList(page, sysPermissionPageParam);
         return new Paging(iPage);
     }
 
     @Override
     public boolean isExistsByPermissionIds(List<Long> permissionIds) {
-        if (CollectionUtils.isEmpty(permissionIds)){
+        if (CollectionUtils.isEmpty(permissionIds)) {
             return false;
         }
         Wrapper wrapper = lambdaQuery().in(SysPermission::getId, permissionIds).getWrapper();
@@ -148,7 +148,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
                 for (SysPermission two : twoList) {
                     SysPermissionTreeVo twoVo = SysPermissionConvert.INSTANCE.permissionToTreeVo(two);
                     if (two.getParentId().equals(one.getId())) {
-                        if (oneVo.getChildren() == null){
+                        if (oneVo.getChildren() == null) {
                             oneVo.setChildren(new ArrayList<>());
                         }
                         oneVo.getChildren().add(twoVo);
@@ -158,7 +158,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
                         for (SysPermission three : threeList) {
                             if (three.getParentId().equals(two.getId())) {
                                 SysPermissionTreeVo threeVo = SysPermissionConvert.INSTANCE.permissionToTreeVo(three);
-                                if (twoVo.getChildren() == null){
+                                if (twoVo.getChildren() == null) {
                                     twoVo.setChildren(new ArrayList<>());
                                 }
                                 twoVo.getChildren().add(threeVo);
@@ -201,16 +201,16 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermissionMappe
 
     @Override
     public List<SysPermissionTreeVo> getNavMenuTree() throws Exception {
-        List<Integer> levels = Arrays.asList(MenuLevelEnum.ONE.getCode(),MenuLevelEnum.TWO.getCode());
+        List<Integer> levels = Arrays.asList(MenuLevelEnum.ONE.getCode(), MenuLevelEnum.TWO.getCode());
         Wrapper wrapper = lambdaQuery()
-                .in(SysPermission::getLevel,levels)
-                .eq(SysPermission::getState,StateEnum.ENABLE.getCode())
+                .in(SysPermission::getLevel, levels)
+                .eq(SysPermission::getState, StateEnum.ENABLE.getCode())
                 .getWrapper();
 
 
         List<SysPermission> list = sysPermissionMapper.selectList(wrapper);
 
-       return convertSysPermissionTreeVoList(list);
+        return convertSysPermissionTreeVoList(list);
 
     }
 }

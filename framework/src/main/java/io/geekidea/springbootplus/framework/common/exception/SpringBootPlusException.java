@@ -18,6 +18,7 @@ package io.geekidea.springbootplus.framework.common.exception;
 
 import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 自定义异常
@@ -25,7 +26,10 @@ import lombok.Data;
  * @date 2018-11-08
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SpringBootPlusException extends RuntimeException{
+
+    private static final long serialVersionUID = -2470461654663264392L;
 
     private Integer errorCode;
     private String message;

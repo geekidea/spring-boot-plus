@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.OK)
-    public ApiResult handleMethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
+    public ApiResult<List<String>> handleMethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
         printRequestDetail();
         BindingResult bindingResult = ex.getBindingResult();
         List<String> list = new ArrayList<>();
@@ -85,7 +85,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = SysLoginException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult sysLoginExceptionHandler(SysLoginException exception) {
+    public ApiResult<Boolean> sysLoginExceptionHandler(SysLoginException exception) {
         printRequestDetail();
         printApiCodeException(ApiCode.LOGIN_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.LOGIN_EXCEPTION);
@@ -100,7 +100,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult httpMessageNotReadableException(HttpMessageNotReadableException exception) {
+    public ApiResult<Boolean> httpMessageNotReadableException(HttpMessageNotReadableException exception) {
         printRequestDetail();
         printApiCodeException(ApiCode.PARAMETER_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.PARAMETER_EXCEPTION);
@@ -114,7 +114,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = HttpMediaTypeException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult httpMediaTypeException(HttpMediaTypeException exception) {
+    public ApiResult<Boolean> httpMediaTypeException(HttpMediaTypeException exception) {
         printRequestDetail();
         printApiCodeException(ApiCode.HTTP_MEDIA_TYPE_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.HTTP_MEDIA_TYPE_EXCEPTION);
@@ -128,7 +128,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = {SpringBootPlusException.class})
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult springBootPlusExceptionHandler(SpringBootPlusException exception) {
+    public ApiResult<Boolean> springBootPlusExceptionHandler(SpringBootPlusException exception) {
         printRequestDetail();
         log.error("springBootPlusException:", exception);
         int errorCode;
@@ -141,7 +141,7 @@ public class GlobalExceptionHandler {
         } else {
             errorCode = ApiCode.SPRING_BOOT_PLUS_EXCEPTION.getCode();
         }
-        return new ApiResult()
+        return new ApiResult<Boolean>()
                 .setCode(errorCode)
                 .setMessage(exception.getMessage());
     }
@@ -155,7 +155,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = AuthenticationException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult authenticationExceptionHandler(AuthenticationException exception) {
+    public ApiResult<Boolean> authenticationExceptionHandler(AuthenticationException exception) {
         printRequestDetail();
         printApiCodeException(ApiCode.AUTHENTICATION_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.AUTHENTICATION_EXCEPTION);
@@ -170,7 +170,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = UnauthenticatedException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult unauthenticatedExceptionHandler(UnauthenticatedException exception) {
+    public ApiResult<Boolean> unauthenticatedExceptionHandler(UnauthenticatedException exception) {
         printRequestDetail();
         printApiCodeException(ApiCode.UNAUTHENTICATED_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.UNAUTHENTICATED_EXCEPTION);
@@ -185,7 +185,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = UnauthorizedException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult unauthorizedExceptionHandler(UnauthorizedException exception) {
+    public ApiResult<Boolean> unauthorizedExceptionHandler(UnauthorizedException exception) {
         printRequestDetail();
         printApiCodeException(ApiCode.UNAUTHORIZED_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.UNAUTHORIZED_EXCEPTION);
@@ -200,7 +200,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = JWTDecodeException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult jWTDecodeExceptionHandler(JWTDecodeException exception) {
+    public ApiResult<Boolean> jWTDecodeExceptionHandler(JWTDecodeException exception) {
         printRequestDetail();
         printApiCodeException(ApiCode.JWTDECODE_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.JWTDECODE_EXCEPTION);
@@ -214,7 +214,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult httpRequestMethodNotSupportedExceptionHandler(Exception exception) {
+    public ApiResult<String> httpRequestMethodNotSupportedExceptionHandler(Exception exception) {
         printRequestDetail();
         printApiCodeException(ApiCode.HTTP_REQUEST_METHOD_NOT_SUPPORTED_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.HTTP_REQUEST_METHOD_NOT_SUPPORTED_EXCEPTION.getCode(), exception.getMessage());
@@ -228,7 +228,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.OK)
-    public ApiResult exceptionHandler(Exception exception) {
+    public ApiResult<Boolean> exceptionHandler(Exception exception) {
         printRequestDetail();
         printApiCodeException(ApiCode.SYSTEM_EXCEPTION, exception);
         return ApiResult.fail(ApiCode.SYSTEM_EXCEPTION);

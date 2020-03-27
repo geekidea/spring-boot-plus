@@ -64,7 +64,7 @@ public class LoginController {
     @PostMapping("/login")
     @OperationLogIgnore
     @ApiOperation(value = "登录", notes = "系统用户登录", response = io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo.class)
-    public ApiResult login(@Validated @RequestBody io.geekidea.springbootplus.system.param.LoginParam loginParam, HttpServletResponse response) throws Exception {
+    public ApiResult<LoginSysUserTokenVo> login(@Validated @RequestBody io.geekidea.springbootplus.system.param.LoginParam loginParam, HttpServletResponse response) throws Exception {
         LoginSysUserTokenVo loginSysUserTokenVo = loginService.login(loginParam);
         // 设置token响应头
         response.setHeader(JwtTokenUtil.getTokenName(), loginSysUserTokenVo.getToken());
@@ -98,7 +98,7 @@ public class LoginController {
 
     @PostMapping("/logout")
     @OperationLogIgnore
-    public ApiResult logout(HttpServletRequest request) throws Exception {
+    public ApiResult<String> logout(HttpServletRequest request) throws Exception {
         loginService.logout(request);
         return ApiResult.ok("退出成功");
     }

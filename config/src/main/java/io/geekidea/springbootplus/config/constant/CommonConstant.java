@@ -35,6 +35,26 @@ public interface CommonConstant {
     Long DEFAULT_PAGE_SIZE = 10L;
 
     /**
+     * 分页总行数名称
+     */
+    String PAGE_TOTAL_NAME = "total";
+
+    /**
+     * 分页数据列表名称
+     */
+    String PAGE_RECORDS_NAME = "records";
+
+    /**
+     * 分页当前页码名称
+     */
+    String PAGE_INDEX_NAME = "pageIndex";
+
+    /**
+     * 分页当前页大小名称
+     */
+    String PAGE_SIZE_NAME = "pageSize";
+
+    /**
      * 登录用户
      */
     String LOGIN_SYS_USER = "loginSysUser";

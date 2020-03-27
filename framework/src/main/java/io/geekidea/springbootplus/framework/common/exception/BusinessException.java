@@ -25,8 +25,9 @@ import io.geekidea.springbootplus.framework.common.api.ApiCode;
  * @date 2018-11-08
  */
 public class BusinessException extends SpringBootPlusException {
+	private static final long serialVersionUID = -2303357122330162359L;
 
-    public BusinessException(String message) {
+	public BusinessException(String message) {
         super(message);
     }
 

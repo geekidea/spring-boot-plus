@@ -18,6 +18,7 @@ package io.geekidea.springbootplus.framework.common.exception;
 
 import io.geekidea.springbootplus.framework.common.api.ApiCode;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * spring-boot-plus配置异常
@@ -26,7 +27,10 @@ import lombok.Data;
  * @date 2020/3/21
  */
 @Data
-public class SpringBootPlusConfigException extends RuntimeException {
+@EqualsAndHashCode(callSuper = true)
+public class SpringBootPlusConfigException extends SpringBootPlusException {
+
+    private static final long serialVersionUID = 8952028631871769425L;
 
     private Integer errorCode;
     private String message;

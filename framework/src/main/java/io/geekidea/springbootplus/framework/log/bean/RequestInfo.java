@@ -19,7 +19,6 @@ package io.geekidea.springbootplus.framework.log.bean;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.geekidea.springbootplus.framework.ip.entity.IpAddress;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

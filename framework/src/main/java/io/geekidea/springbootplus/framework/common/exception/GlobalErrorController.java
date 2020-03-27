@@ -41,7 +41,7 @@ public class GlobalErrorController implements ErrorController {
     private static final String ERROR_PATH = "/error";
 
     @RequestMapping(ERROR_PATH)
-    public ApiResult handleError(HttpServletRequest request,HttpServletResponse response){
+    public ApiResult<?> handleError(HttpServletRequest request,HttpServletResponse response){
         int status = response.getStatus();
         switch (status){
             case HttpServletResponse.SC_UNAUTHORIZED:

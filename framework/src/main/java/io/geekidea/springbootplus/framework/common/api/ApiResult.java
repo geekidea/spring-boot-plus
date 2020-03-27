@@ -42,7 +42,9 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 public class ApiResult<T> implements Serializable {
-    /**
+	private static final long serialVersionUID = 8004487252556526569L;
+
+	/**
      * 响应码
      */
     private int code;
@@ -67,10 +69,10 @@ public class ApiResult<T> implements Serializable {
      */
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date time  = new Date();
+    private Date time;
 
     public ApiResult() {
-
+        time  = new Date();
     }
 
     public static ApiResult<Boolean> result(boolean flag){
@@ -118,7 +120,7 @@ public class ApiResult<T> implements Serializable {
         return result(ApiCode.SUCCESS,message,data);
     }
 
-    public static ApiResult<Map> okMap(String key,Object value){
+    public static ApiResult<Map<String,Object>> okMap(String key,Object value){
         Map<String,Object> map = new HashMap<>(1);
         map.put(key,value);
         return ok(map);
@@ -148,7 +150,7 @@ public class ApiResult<T> implements Serializable {
                 .setMessage(message);
     }
 
-    public static ApiResult<Map> fail(String key,Object value){
+    public static ApiResult<Map<String,Object>> fail(String key,Object value){
         Map<String,Object> map = new HashMap<>(1);
         map.put(key,value);
         return result(ApiCode.FAIL,map);

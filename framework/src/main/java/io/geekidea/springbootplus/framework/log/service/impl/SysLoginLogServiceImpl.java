@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.framework.core.pagination.PageUtil;
+import io.geekidea.springbootplus.framework.core.pagination.PageInfo;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
 import io.geekidea.springbootplus.framework.log.entity.SysLoginLog;
 import io.geekidea.springbootplus.framework.log.mapper.SysLoginLogMapper;
@@ -65,8 +65,8 @@ public class SysLoginLogServiceImpl extends BaseServiceImpl<SysLoginLogMapper, S
 
     @Override
     public Paging<SysLoginLog> getSysLoginLogPageList(SysLoginLogPageParam sysLoginLogPageParam) throws Exception {
-        Page page = PageUtil.getPage(sysLoginLogPageParam, OrderItem.desc(getLambdaColumn(SysLoginLog::getCreateTime)));
-        LambdaQueryWrapper wrapper = new LambdaQueryWrapper<SysLoginLog>();
+        Page<SysLoginLog> page = new PageInfo<>(sysLoginLogPageParam,OrderItem.desc(getLambdaColumn(SysLoginLog::getCreateTime)));
+        LambdaQueryWrapper<SysLoginLog> wrapper = new LambdaQueryWrapper<>();
         IPage<SysLoginLog> iPage = sysLoginLogMapper.selectPage(page, wrapper);
         return new Paging<SysLoginLog>(iPage);
     }

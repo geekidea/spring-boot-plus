@@ -245,7 +245,7 @@ public class CodeGenerator {
                 String superPageParamClass = projectConfig.getSuperPageParamClass();
                 String idParamClass = projectConfig.getIdParamClass();
                 String pagingClass = projectConfig.getPagingClass();
-                String pageUtilClass = projectConfig.getPageUtilClass();
+                String pageInfoClass = projectConfig.getPageInfoClass();
                 String apiResultClass = projectConfig.getApiResultClass();
                 String superPageOrderParamClass = projectConfig.getSuperPageOrderParamClass();
 
@@ -284,7 +284,7 @@ public class CodeGenerator {
                 map.put("pkIdCamelName", underlineToCamel(pkIdName));
                 // 导入分页类
                 map.put("pagingClass", pagingClass);
-                map.put("pageUtilClass", pageUtilClass);
+                map.put("pageInfoClass", pageInfoClass);
                 // ApiResult
                 map.put("apiResultClass", apiResultClass);
                 // 代码生成策略

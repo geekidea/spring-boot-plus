@@ -52,7 +52,7 @@ public class LambdaColumn<T> {
             methodPropertyName = methodPropertyName.substring(0, 1).toLowerCase() + methodPropertyName.substring(1);
 
         }
-        Class cls = lambda.getImplClass();
+        Class<?> cls = lambda.getImplClass();
         String className = lambda.getImplClassName();
         if (ENTITY_COLUMN_MAP.containsKey(className)) {
             return ENTITY_COLUMN_MAP.get(className).get(methodPropertyName);
@@ -71,7 +71,7 @@ public class LambdaColumn<T> {
      * @param cls
      * @return
      */
-    private Map<String, String> getPropertyColumnMap(Class cls) {
+    private Map<String, String> getPropertyColumnMap(Class<?> cls) {
         TableInfo tableInfo = TableInfoHelper.getTableInfo(cls);
         List<TableFieldInfo> tableFieldInfos = tableInfo.getFieldList();
         if (CollectionUtils.isEmpty(tableFieldInfos)) {

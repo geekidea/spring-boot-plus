@@ -20,7 +20,6 @@ import io.geekidea.springbootplus.framework.core.bean.RequestDetail;
 import io.geekidea.springbootplus.framework.core.util.RequestDetailThreadLocal;
 import io.geekidea.springbootplus.framework.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

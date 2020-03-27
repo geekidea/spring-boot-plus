@@ -14,38 +14,34 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.system.param;
+package com.example.order.param;
 
-import io.geekidea.springbootplus.framework.shiro.service.LoginUsername;
+import io.geekidea.springbootplus.framework.core.pagination.BasePageOrderParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import javax.validation.constraints.NotBlank;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
- * 登录参数
+ * <pre>
+ * 订单示例 分页参数对象
+ * </pre>
  *
  * @author geekidea
- * @date 2019-05-15
- **/
+ * @date 2020-03-27
+ */
 @Data
-@ApiModel("登录参数")
-public class LoginParam implements LoginUsername {
-	private static final long serialVersionUID = 2854217576695117356L;
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "订单示例分页参数")
+public class ExampleOrderPageParam extends BasePageOrderParam {
+    private static final long serialVersionUID = 6092080418269664419L;
 
-	@NotBlank(message = "请输入账号")
-    @ApiModelProperty(value = "账号", example = "admin")
-    private String username;
+    @ApiModelProperty("订单名称")
+    private String name;
 
-    @NotBlank(message = "请输入密码")
-    @ApiModelProperty(value = "密码", example = "123456")
-    private String password;
-
-    @ApiModelProperty("验证码Token")
-    private String verifyToken;
-
-    @ApiModelProperty("验证码")
-    private String code;
+    @ApiModelProperty("订单编号")
+    private String orderNo;
 
 }

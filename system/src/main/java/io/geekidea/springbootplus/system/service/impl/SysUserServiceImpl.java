@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.framework.common.exception.BusinessException;
 import io.geekidea.springbootplus.framework.common.service.impl.BaseServiceImpl;
-import io.geekidea.springbootplus.framework.core.pagination.PageUtil;
+import io.geekidea.springbootplus.framework.core.pagination.PageInfo;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
 import io.geekidea.springbootplus.framework.shiro.util.SaltUtil;
 import io.geekidea.springbootplus.framework.util.PasswordUtil;
@@ -148,7 +148,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
 
     @Override
     public Paging<SysUserQueryVo> getSysUserPageList(SysUserPageParam sysUserPageParam) throws Exception {
-        Page page = PageUtil.getPage(sysUserPageParam, OrderItem.desc(getLambdaColumn(SysUser::getCreateTime)));
+        Page<SysUserQueryVo> page = new PageInfo<>(sysUserPageParam, OrderItem.desc(getLambdaColumn(SysUser::getCreateTime)));
         IPage<SysUserQueryVo> iPage = sysUserMapper.getSysUserPageList(page, sysUserPageParam);
 
         // 手机号码脱敏处理

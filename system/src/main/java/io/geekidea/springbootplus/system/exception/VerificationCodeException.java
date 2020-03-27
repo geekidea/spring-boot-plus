@@ -26,8 +26,9 @@ import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusExcep
  * @date 2018-11-08
  */
 public class VerificationCodeException extends SpringBootPlusException {
+	private static final long serialVersionUID = -2640690119865434398L;
 
-    public VerificationCodeException(String message) {
+	public VerificationCodeException(String message) {
         super(message);
     }
 

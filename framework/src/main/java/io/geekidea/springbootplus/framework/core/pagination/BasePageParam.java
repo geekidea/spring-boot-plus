@@ -43,30 +43,6 @@ public abstract class BasePageParam implements Serializable {
     @ApiModelProperty(value = "搜索字符串", example = "")
     private String keyword;
 
-    /**
-     * 每页显示3行数据
-     * <p>
-     * 根据id顺序排列
-     * 1,2,3 lastRowId：3
-     * <p>
-     * where id > 3 order by id limit 0,3
-     * 4,5,6 lastRowId：6
-     * <p>
-     * where id > 6 order by id limit 0,3
-     * 7,8,9
-     * <p>
-     * 根据id降序排列
-     * 9,8,7 lastRowId：7
-     * <p>
-     * where id < 7 order by id desc limit 0,3
-     * 6,5,4 lastRowId：4
-     * <p>
-     * where id < 4 order by id desc limit 0,3
-     * 3,2,1 lastRowId：1
-     */
-    @ApiModelProperty("当前页最后一行分页标识，需作为参数回传")
-    private Long lastRowLimitValue;
-
     public void setPageIndex(Long pageIndex) {
         if (pageIndex == null || pageIndex <= 0) {
             this.pageIndex = CommonConstant.DEFAULT_PAGE_INDEX;

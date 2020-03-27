@@ -35,7 +35,9 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 public class JwtToken implements HostAuthenticationToken {
-    /**
+	private static final long serialVersionUID = 5101247566043093405L;
+	
+	/**
      * 登录ip
      */
     private String host;

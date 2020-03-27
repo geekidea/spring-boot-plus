@@ -65,13 +65,13 @@ public class OrderMapping {
     }
 
 
-    public OrderMapping mapping(String property, Class clazz) {
+    public OrderMapping mapping(String property, Class<?> clazz) {
         String column = PropertyColumnUtil.getColumn(clazz, property);
         map.put(property, column);
         return this;
     }
 
-    public OrderMapping mapping(String property, String tablePrefix, Class clazz) {
+    public OrderMapping mapping(String property, String tablePrefix, Class<?> clazz) {
         String column = PropertyColumnUtil.getColumn(clazz, property);
         mapping(property, tablePrefix, column);
         return this;
@@ -96,9 +96,11 @@ public class OrderMapping {
         } else if (underLineMode) {
             // 如果开启下划线模式，自动转换成下划线
             orderItems.forEach(item -> {
-                // 驼峰转换成下划线
-                String column = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, item.getColumn());
-                item.setColumn(column);
+                String column = item.getColumn();
+                if (StringUtils.isNotBlank(column)) {
+                    // 驼峰转换成下划线
+                    item.setColumn(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, column));
+                }
             });
         }
     }

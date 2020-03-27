@@ -36,7 +36,6 @@ import io.geekidea.springbootplus.framework.log.entity.SysLoginLog;
 import io.geekidea.springbootplus.framework.log.entity.SysOperationLog;
 import io.geekidea.springbootplus.framework.log.service.SysLoginLogService;
 import io.geekidea.springbootplus.framework.log.service.SysOperationLogService;
-import io.geekidea.springbootplus.framework.shiro.jwt.JwtToken;
 import io.geekidea.springbootplus.framework.shiro.service.LoginToken;
 import io.geekidea.springbootplus.framework.shiro.service.LoginUsername;
 import io.geekidea.springbootplus.framework.shiro.util.JwtTokenUtil;
@@ -66,7 +65,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Method;
@@ -105,22 +103,6 @@ public abstract class BaseLogAop {
     protected static ThreadLocal<RequestInfo> requestInfoThreadLocal = new ThreadLocal<>();
     protected static ThreadLocal<OperationLogInfo> operationLogThreadLocal = new ThreadLocal<>();
 
-    /**
-     * 默认的请求内容类型,表单提交
-     **/
-    private static final String APPLICATION_X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
-    /**
-     * JSON请求内容类型
-     **/
-    private static final String APPLICATION_JSON = "application/json";
-    /**
-     * GET请求
-     **/
-    private static final String GET = "GET";
-    /**
-     * POST请求
-     **/
-    private static final String POST = "POST";
     /**
      * 请求ID
      */
@@ -518,7 +500,7 @@ public abstract class BaseLogAop {
             return;
         }
         if (result != null && result instanceof ApiResult) {
-            ApiResult apiResult = (ApiResult) result;
+            ApiResult<?> apiResult = (ApiResult<?>) result;
             int code = apiResult.getCode();
             // 获取格式化后的响应结果
             String responseResultString = formatResponseResult(apiResult);
@@ -589,7 +571,7 @@ public abstract class BaseLogAop {
      * @param apiResult
      * @return
      */
-    protected String formatResponseResult(ApiResult apiResult) {
+    protected String formatResponseResult(ApiResult<?> apiResult) {
         String responseResultString = "responseResult:";
         try {
             if (logAopConfig.isResponseLogFormat()) {
@@ -831,7 +813,7 @@ public abstract class BaseLogAop {
 
             // 设置响应结果
             if (result != null && result instanceof ApiResult) {
-                ApiResult apiResult = (ApiResult) result;
+                ApiResult<?> apiResult = (ApiResult<?>) result;
                 apiResult.getCode();
                 sysOperationLog.setSuccess(apiResult.isSuccess())
                         .setCode(apiResult.getCode())
@@ -923,7 +905,7 @@ public abstract class BaseLogAop {
 
                 // 判断登录登出结果
                 if (result != null && result instanceof ApiResult) {
-                    ApiResult apiResult = (ApiResult) result;
+                    ApiResult<?> apiResult = (ApiResult<?>) result;
                     sysLoginLog.setSuccess(apiResult.isSuccess()).setCode(apiResult.getCode());
                     if (apiResult.isSuccess()) {
                         if (LOGIN_TYPE == type) {

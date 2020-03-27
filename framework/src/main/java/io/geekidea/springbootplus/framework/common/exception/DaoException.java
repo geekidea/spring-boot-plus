@@ -25,8 +25,9 @@ import io.geekidea.springbootplus.framework.common.api.ApiCode;
  * @date 2018-11-08
  */
 public class DaoException extends SpringBootPlusException {
+	private static final long serialVersionUID = -6912618737345878854L;
 
-    public DaoException(String message) {
+	public DaoException(String message) {
         super(message);
     }
 

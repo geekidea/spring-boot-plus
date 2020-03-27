@@ -33,7 +33,7 @@ import java.util.Set;
  */
 public class BaseEnumUtil {
 
-    private static final Map<String, Map<Integer, EnumVo>> ENUM_MAP = new LinkedHashMap<>();
+    private static final Map<String, Map<Integer, EnumVo<? extends BaseEnum>>> ENUM_MAP = new LinkedHashMap<>();
 
     /**
      * 通过code获取描述
@@ -42,8 +42,8 @@ public class BaseEnumUtil {
      * @param code
      * @return
      */
-    public static <T> T getEnum(Class<? extends BaseEnum> baseEnumType, Integer code) {
-        EnumVo<T> enumVo = getEnumVo(baseEnumType, code);
+    public static BaseEnum getEnum(Class<? extends BaseEnum> baseEnumType, Integer code) {
+        EnumVo<? extends BaseEnum> enumVo = getEnumVo(baseEnumType, code);
         if (enumVo == null) {
             return null;
         }
@@ -57,8 +57,8 @@ public class BaseEnumUtil {
      * @param code
      * @return
      */
-    public static <T> EnumVo<T> getEnumVo(Class<? extends BaseEnum> baseEnumType, Integer code) {
-        Map<Integer, EnumVo> map = getMap(baseEnumType);
+    public static EnumVo<? extends BaseEnum> getEnumVo(Class<? extends BaseEnum> baseEnumType, Integer code) {
+        Map<Integer, EnumVo<? extends BaseEnum>> map = getMap(baseEnumType);
         if (MapUtils.isEmpty(map)) {
             return null;
         }
@@ -73,7 +73,7 @@ public class BaseEnumUtil {
      * @return
      */
     public static boolean exists(Class<? extends BaseEnum> baseEnumType, Integer code) {
-        EnumVo enumVo = getEnumVo(baseEnumType, code);
+        EnumVo<? extends BaseEnum> enumVo = getEnumVo(baseEnumType, code);
         if (enumVo == null) {
             return false;
         }
@@ -99,7 +99,7 @@ public class BaseEnumUtil {
      * @return
      */
     public static String getDesc(Class<? extends BaseEnum> baseEnumType, Integer code) {
-        EnumVo enumVo = getEnumVo(baseEnumType, code);
+        EnumVo<? extends BaseEnum> enumVo = getEnumVo(baseEnumType, code);
         if (enumVo == null) {
             return null;
         }
@@ -112,7 +112,7 @@ public class BaseEnumUtil {
      * @param baseEnumType
      * @return
      */
-    public static Map<Integer, EnumVo> getMap(Class<? extends BaseEnum> baseEnumType) {
+    public static Map<Integer, EnumVo<? extends BaseEnum>> getMap(Class<? extends BaseEnum> baseEnumType) {
         return ENUM_MAP.get(baseEnumType.getName());
     }
 
@@ -123,7 +123,7 @@ public class BaseEnumUtil {
      * @return
      */
     public static Set<Integer> getCodeSet(Class<? extends BaseEnum> baseEnumType) {
-        Map<Integer, EnumVo> map = getMap(baseEnumType);
+        Map<Integer, EnumVo<? extends BaseEnum>> map = getMap(baseEnumType);
         if (MapUtils.isEmpty(map)) {
             return null;
         }
@@ -136,15 +136,15 @@ public class BaseEnumUtil {
      * @param baseEnumType
      * @return
      */
-    public static Collection<EnumVo> getDescList(Class<? extends BaseEnum> baseEnumType) {
-        Map<Integer, EnumVo> map = getMap(baseEnumType);
+    public static Collection<EnumVo<? extends BaseEnum>> getDescList(Class<? extends BaseEnum> baseEnumType) {
+        Map<Integer, EnumVo<? extends BaseEnum>> map = getMap(baseEnumType);
         if (MapUtils.isEmpty(map)) {
             return null;
         }
         return map.values();
     }
 
-    public static Map<String, Map<Integer, EnumVo>> getEnumMap() {
+    public static Map<String, Map<Integer, EnumVo<? extends BaseEnum>>> getEnumMap() {
         return ENUM_MAP;
     }
 

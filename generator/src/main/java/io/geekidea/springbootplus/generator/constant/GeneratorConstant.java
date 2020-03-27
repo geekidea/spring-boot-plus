@@ -123,9 +123,9 @@ public interface GeneratorConstant {
      */
     String PAGING_CLASS = "io.geekidea.springbootplus.framework.core.pagination.Paging";
     /**
-     * 分页工具类全称，带包名
+     * 分页信息类全称，带包名
      */
-    String PAGE_UTIL_CLASS = "io.geekidea.springbootplus.framework.core.pagination.PageUtil";
+    String PAGE_INFO_CLASS = "io.geekidea.springbootplus.framework.core.pagination.PageInfo";
     /**
      * 公共结果类全称，带包名
      */

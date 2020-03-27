@@ -19,6 +19,7 @@ package io.geekidea.springbootplus.framework.core.pagination;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.geekidea.springbootplus.config.constant.CommonConstant;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -39,39 +40,37 @@ import java.util.List;
 @Data
 @ApiModel("分页结果对象")
 public class Paging<T> implements Serializable {
-    private static final long serialVersionUID = -1683800405530086022L;
+    private static final long serialVersionUID = 4784961132604516495L;
 
     @ApiModelProperty("总行数")
-    @JSONField(name = "total")
-    @JsonProperty("total")
+    @JSONField(name = CommonConstant.PAGE_TOTAL_NAME)
+    @JsonProperty(CommonConstant.PAGE_TOTAL_NAME)
     private long total = 0;
 
     @ApiModelProperty("数据列表")
-    @JSONField(name = "records")
-    @JsonProperty("records")
+    @JSONField(name = CommonConstant.PAGE_RECORDS_NAME)
+    @JsonProperty(CommonConstant.PAGE_RECORDS_NAME)
     private List<T> records = Collections.emptyList();
 
-    @ApiModelProperty("当前页最后一行分页标识，需作为参数回传")
-    private Long lastRowLimitValue;
+    @ApiModelProperty(value = "页码")
+    @JSONField(name = CommonConstant.PAGE_INDEX_NAME)
+    @JsonProperty(CommonConstant.PAGE_INDEX_NAME)
+    private Long pageIndex;
+
+    @ApiModelProperty(value = "页大小")
+    @JSONField(name = CommonConstant.PAGE_SIZE_NAME)
+    @JsonProperty(CommonConstant.PAGE_SIZE_NAME)
+    private Long pageSize;
 
     public Paging() {
+
     }
 
-    public Paging(IPage page) {
+    public Paging(IPage<T> page) {
         this.total = page.getTotal();
         this.records = page.getRecords();
+        this.pageIndex = page.getCurrent();
+        this.pageSize = page.getSize();
     }
-
-    public Paging(IPage page, boolean optimizeLimit) {
-        this(page, optimizeLimit, null);
-    }
-
-    public Paging(IPage page, boolean optimizeLimit, String optimizeLimitColumn) {
-        this(page);
-        if (optimizeLimit) {
-            this.lastRowLimitValue = PageUtil.getLastRowLimitValue(page, optimizeLimitColumn);
-        }
-    }
-
 
 }

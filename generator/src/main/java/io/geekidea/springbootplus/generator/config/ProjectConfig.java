@@ -46,9 +46,9 @@ public class ProjectConfig {
      */
     private String pagingClass = GeneratorConstant.PAGING_CLASS;
     /**
-     * 分页工具类全称，带包名
+     * 分页信息类全称，带包名
      */
-    private String pageUtilClass = GeneratorConstant.PAGE_UTIL_CLASS;
+    private String pageInfoClass = GeneratorConstant.PAGE_INFO_CLASS;
     /**
      * 分页排序参数父类全称，带包名
      */

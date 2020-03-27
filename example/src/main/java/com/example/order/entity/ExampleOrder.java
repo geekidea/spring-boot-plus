@@ -14,45 +14,61 @@
  * limitations under the License.
  */
 
-package io.geekidea.springbootplus.framework.ip.entity;
+package com.example.order.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.geekidea.springbootplus.framework.common.entity.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import io.geekidea.springbootplus.framework.core.validator.groups.Update;
 
 /**
- * IP地址
+ * 订单示例
  *
  * @author geekidea
- * @since 2020-03-25
+ * @since 2020-03-27
  */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "IpAddress对象")
-public class IpAddress extends BaseEntity {
+@ApiModel(value = "ExampleOrder对象")
+public class ExampleOrder extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
+    @NotNull(message = "id不能为空", groups = {Update.class})
+    @ApiModelProperty("主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String ipStart;
+    @NotBlank(message = "订单名称不能为空")
+    @ApiModelProperty("订单名称")
+    private String name;
 
-    private String ipEnd;
+    @ApiModelProperty("订单编号")
+    private String orderNo;
 
-    @ApiModelProperty("区域")
-    private String area;
+    @ApiModelProperty("备注")
+    private String remark;
 
-    @ApiModelProperty("运营商")
-    private String operator;
+    @ApiModelProperty("状态，0：禁用，1：启用")
+    private Integer state;
 
-    private Long ipStartNum;
+    @ApiModelProperty("版本")
+    @Version
+    private Integer version;
 
-    private Long ipEndNum;
+    @ApiModelProperty("创建时间")
+    private Date createTime;
+
+    @ApiModelProperty("修改时间")
+    private Date updateTime;
 
 }

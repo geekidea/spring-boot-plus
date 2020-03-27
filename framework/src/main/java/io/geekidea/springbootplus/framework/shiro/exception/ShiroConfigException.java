@@ -27,8 +27,9 @@ import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusExcep
  * @since 1.3.0.RELEASE
  **/
 public class ShiroConfigException extends SpringBootPlusException {
+	private static final long serialVersionUID = -4573955712491628431L;
 
-    public ShiroConfigException(String message) {
+	public ShiroConfigException(String message) {
         super(message);
     }
 

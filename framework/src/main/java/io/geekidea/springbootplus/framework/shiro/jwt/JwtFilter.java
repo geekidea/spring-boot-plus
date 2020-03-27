@@ -112,7 +112,7 @@ public class JwtFilter extends AuthenticatingFilter {
         // 设置响应码为401或者直接输出消息
         String url = httpServletRequest.getRequestURI();
         log.error("onAccessDenied url：{}", url);
-        ApiResult apiResult = ApiResult.fail(ApiCode.UNAUTHORIZED);
+        ApiResult<Boolean> apiResult = ApiResult.fail(ApiCode.UNAUTHORIZED);
         HttpServletResponseUtil.printJson(httpServletResponse, apiResult);
         return false;
     }

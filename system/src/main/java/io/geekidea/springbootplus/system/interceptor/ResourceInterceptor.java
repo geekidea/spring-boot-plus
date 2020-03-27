@@ -16,9 +16,7 @@
 
 package io.geekidea.springbootplus.system.interceptor;
 
-import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,9 +34,6 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @ConditionalOnProperty(value = {"spring-boot-plus.interceptor.resource.enable"}, matchIfMissing = true)
 public class ResourceInterceptor extends HandlerInterceptorAdapter {
-
-    @Autowired
-    private SpringBootPlusProperties springBootPlusProperties;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

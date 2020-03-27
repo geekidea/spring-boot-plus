@@ -58,7 +58,7 @@ public class EnumController {
     private List<String> enumPackages;
 
     @GetMapping("/enum")
-    public ApiResult<Map<String, Map<Integer, EnumVo>>> enumList() {
+    public ApiResult<Map<String, Map<Integer, EnumVo<? extends BaseEnum>>>> enumList() {
         log.debug("enumList...");
         return ApiResult.ok(BaseEnumUtil.getEnumMap());
     }
@@ -81,11 +81,11 @@ public class EnumController {
             // 循环获取BaseEnum枚举
             for (Class<? extends BaseEnum> clazz : set) {
                 BaseEnum[] enumConstants = clazz.getEnumConstants();
-                Map<Integer, EnumVo> enumVoMap = new ConcurrentHashMap<>(enumConstants.length);
+                Map<Integer, EnumVo<? extends BaseEnum>> enumVoMap = new ConcurrentHashMap<>(enumConstants.length);
                 for (BaseEnum baseEnum : enumConstants) {
                     Integer code = baseEnum.getCode();
                     String desc = baseEnum.getDesc();
-                    EnumVo enumVo = new EnumVo()
+                    EnumVo<BaseEnum> enumVo = new EnumVo<BaseEnum>()
                             .setCode(code)
                             .setDesc(desc)
                             .setBaseEnum(baseEnum);

@@ -26,8 +26,9 @@ import io.geekidea.springbootplus.framework.common.exception.SpringBootPlusExcep
  * @date 2019-08-04
  */
 public class SysLoginException extends SpringBootPlusException {
+	private static final long serialVersionUID = -3157438982569715170L;
 
-    public SysLoginException(String message) {
+	public SysLoginException(String message) {
         super(message);
     }
 
