@@ -63,7 +63,7 @@
         <commons-text.version>1.8</commons-text.version>
         <fastjson.version>1.2.67</fastjson.version>
         <mysql.version>5.1.47</mysql.version>
-        <reflections.version>0.9.12</reflections.version>
+        <reflections.version>0.9.9</reflections.version>
         <jansi.version>1.18</jansi.version>
         <lombok.version>1.18.12</lombok.version>
         <hutool.version>5.2.4</hutool.version>
