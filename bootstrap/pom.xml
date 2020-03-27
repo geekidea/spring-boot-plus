@@ -25,9 +25,7 @@
         <version>2.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>io.geekidea.springbootplus</groupId>
     <artifactId>bootstrap</artifactId>
-    <version>2.0-SNAPSHOT</version>
     <name>bootstrap</name>
     <description>项目启动模块</description>
 
