@@ -276,8 +276,39 @@ spring-boot-plus/generator/src/main/resources
                     └── FooBarMapper.xml
 ```
 
-### 3. 启动项目
-> 项目入口类，在bootstrap模块中
+### 3. 启动SpringBootAdmin
+> SpringBootAdmin Server启动类，在admin模块中  [http://localhost:8000](http://localhost:8000)
+
+```text
+spring-boot-plus/admin/src/main/java/io/geekidea/springbootplus/admin/SpringBootPlusAdminApplication
+```
+
+```java
+/**
+ * Spring Boot Admin Bootstrap Main Class
+ *
+ * @author geekidea
+ * @date 2020/3/20
+ **/
+@Slf4j
+@Configuration
+@EnableAutoConfiguration
+@EnableAdminServer
+@SpringBootApplication
+public class SpringBootPlusAdminApplication {
+
+    public static void main(String[] args) {
+        ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusAdminApplication.class, args);
+        ConfigurableEnvironment environment = context.getEnvironment();
+        String serverPort = environment.getProperty("server.port");
+        log.info("SpringBootAdmin: http://localhost:" + serverPort);
+    }
+
+}
+```
+
+### 4. 启动项目
+> 项目入口类，在bootstrap模块中  [http://localhost:8888](http://localhost:8888)
 
 ```text
 spring-boot-plus/bootstrap/src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
@@ -311,12 +342,12 @@ public class SpringBootPlusApplication {
 }
 ```
 
-### 4. 访问项目swagger文档
+### 5. 访问项目swagger文档
 [http://47.105.159.10:8888/api/swagger-ui.html](http://47.105.159.10:8888/api/swagger-ui.html)
 ![swagger-ui.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui.png)
 ![swagger-ui-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui-1.png)
 
-### 5. 访问nife4j文档
+### 6. 访问nife4j文档
 [http://47.105.159.10:8888/api/doc.html](http://47.105.159.10:8888/api/doc.html)
 ![knife4j.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j.png)
 ![knife4j-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j-1.png)
