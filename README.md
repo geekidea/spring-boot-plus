@@ -305,7 +305,7 @@ public class SpringBootPlusApplication {
         // Print Project Info
         PrintApplicationInfo.print(context);
         // Print Project Tip
-        PrintApplicationInfo.printTip();
+        PrintApplicationInfo.printTip(context);
     }
 
 }

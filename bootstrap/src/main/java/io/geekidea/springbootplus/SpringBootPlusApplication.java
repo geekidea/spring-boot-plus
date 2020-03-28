@@ -48,7 +48,7 @@ public class SpringBootPlusApplication {
         // 打印项目信息
         PrintApplicationInfo.print(context);
         // 打印项目提示
-        PrintApplicationInfo.printTip();
+        PrintApplicationInfo.printTip(context);
     }
 
 }
