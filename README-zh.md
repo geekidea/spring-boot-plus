@@ -49,7 +49,7 @@
 ```text
 └── spring-boot-plus
     ├── admin               SpringBootAdmin Server模块
-    ├── bootstrap           项目启动模块
+    ├── bootstrap           spring-boot-plus 启动模块
     ├── config              配置模块
     ├── distribution        打包模块
     ├── docs                文档目录

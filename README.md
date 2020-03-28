@@ -51,7 +51,7 @@
 ```text
 └── spring-boot-plus
     ├── admin           SpringBootAdmin Server Module          
-    ├── bootstrap       Project Bootstrap Module    
+    ├── bootstrap       spring-boot-plus Bootstrap Module    
     ├── config          Config Module
     ├── distribution    Maven assembly Module        
     ├── docs            Document
