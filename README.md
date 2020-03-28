@@ -356,7 +356,7 @@ public class SpringBootPlusGenerator {
 ### 3. Startup Project
 > Project Main Class
 ```text
-src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
+spring-boot-plus/bootstrap/src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
 ```
 
 ```java
@@ -503,7 +503,10 @@ tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
 ![VUE HOME](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue.png)
 #### System User List
 ![System User List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-1.png)
-
+#### System Role List
+![System Role List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-2.png)
+#### System Menu List
+![System Menu List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-3.png)
 
 ## spring-boot-plus Videos  :movie_camera: 
 - [5-Minutes-Finish-CRUD](https://www.bilibili.com/video/av67401204)

@@ -399,6 +399,10 @@ tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
 ![VUE主页](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue.png)
 #### 系统用户列表
 ![系统用户列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-1.png)
+#### 系统角色列表
+![系统角色模块](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-2.png)
+#### 系统菜单列表
+![系统菜单列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-3.png)
 
 ## spring-boot-plus 视频  :movie_camera:
 - [5分钟完成增删改查](https://www.bilibili.com/video/av67401204)
