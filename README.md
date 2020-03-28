@@ -163,7 +163,7 @@ spring-boot-plus/generator/src/main/java/io/geekidea/springbootplus/generator/Sp
 public class SpringBootPlusGenerator {
 
     /**
-     * 生成代码
+     * Generator Code
      * @param args
      */
     public static void main(String[] args) {
