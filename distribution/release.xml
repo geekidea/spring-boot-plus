@@ -17,6 +17,7 @@
 
 <assembly>
     <id>server</id>
+    <includeBaseDirectory>true</includeBaseDirectory>
 
     <formats>
         <format>dir</format>
@@ -24,14 +25,11 @@
         <format>zip</format>
     </formats>
 
-    <includeBaseDirectory>true</includeBaseDirectory>
-
     <fileSets>
         <!--
             0755->即用户具有读/写/执行权限，组用户和其它用户具有读写权限；
             0644->即用户具有读写权限，组用户和其它用户具有只读权限；
         -->
-
         <fileSet>
             <directory>target/classes/bin</directory>
             <outputDirectory>bin</outputDirectory>

@@ -91,11 +91,11 @@ echo ${STARTUP_LOG} >> ${LOG_STARTUP_PATH}
 #==========================================================================================
 # JVM Configuration
 # -Xmx1g:设置JVM最大可用内存为1G。
-# -Xms1g:设置JVM初始内存41。此值可以设置与-Xmx相同,以避免每次垃圾回收完成后JVM重新分配内存
+# -Xms1g:设置JVM初始内存1g。此值可以设置与-Xmx相同,以避免每次垃圾回收完成后JVM重新分配内存
 # -Xmn512m:设置年轻代大小为512m。整个JVM内存大小=年轻代大小 + 年老代大小 + 持久代大小。
 #          持久代一般固定大小为64m,所以增大年轻代,将会减小年老代大小。此值对系统性能影响较大,Sun官方推荐配置为整个堆的3/8
 # -XX:MetaspaceSize=64m:存储class的内存大小,该值越大触发Metaspace GC的时机就越晚
-# -XX:MaxMetaspaceSize=320m:限制Metaspace增长的上限，防止因为某些情况导致Metaspace无限的使用本地内存，影响到其他程序
+# -XX:MaxMetaspaceSize=256m:限制Metaspace增长的上限，防止因为某些情况导致Metaspace无限的使用本地内存，影响到其他程序
 # -XX:-OmitStackTraceInFastThrow:解决重复异常不打印堆栈信息问题
 #==========================================================================================
 JAVA_OPT="-server -Xms1g -Xmx1g -Xmn512m -XX:MetaspaceSize=64m -XX:MaxMetaspaceSize=256m"
@@ -140,11 +140,3 @@ echo -e ${STARTUP_LOG}
 
 # 打印项目日志
 tail -f ${LOG_PATH}
-
-
-
-nohup java  -jar
-/Users/mrliu/github/spring-boot-plus/distribution/target/spring-boot-plus-server/spring-boot-plus/lib/bootstrap-2.0-SNAPSHOT.jar
- --spring.config.location=/Users/mrliu/github/spring-boot-plus/distribution/target/spring-boot-plus-server/spring-boot-plus/config/
-  --logging.config=/Users/mrliu/github/spring-boot-plus/distribution/target/spring-boot-plus-server/spring-boot-plus/config/logback.xml >
- /Users/mrliu/github/spring-boot-plus/distribution/target/spring-boot-plus-server/spring-boot-plus/logs/bootstrap-2.0-SNAPSHOT.log 2>&1 &
