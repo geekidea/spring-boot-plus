@@ -96,11 +96,8 @@ mapstruct | 1.3.1.Final | Object property replication tool |
 ## CHANGELOG
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
-## Java Docs
-#### [Java Api Docs](http://geekidea.io/spring-boot-plus-apidocs/)
 
-
-## Getting started
+## Quick Start
 ### Clone spring-boot-plus
 ```bash
 git clone https://github.com/geekidea/spring-boot-plus.git
@@ -110,7 +107,7 @@ cd spring-boot-plus
 ### Maven Build
 > dev environment is used by default, The configuration file：application-dev.yml
 ```bash
-mvn clean package -Plocal
+mvn clean package -Pdev
 ```
 
 
@@ -149,14 +146,10 @@ INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, up
 ```
 
 ### 2. Generator CRUD CODE
-> Modify database info
-
-> Modify module name / author / table name / primary key id
-
-#### generator Module
+> Code generation entry class, in the generator module
 
 ```text
-SpringBootPlusGenerator.java
+spring-boot-plus/generator/src/main/java/io/geekidea/springbootplus/generator/SpringBootPlusGenerator.java
 ```
 
 ```java
@@ -236,9 +229,27 @@ public class SpringBootPlusGenerator {
 }
 ```
 
+#### Code Generator Templates
+> Use Velocity template to generate code, you can customize and modify the code to generate template
+
+```text
+spring-boot-plus/generator/src/main/resources
+```
+```text
+└── templates
+    ├── controller.java.vm      controller generator template
+    ├── entity.java.vm          entity generator template
+    ├── mapper.java.vm          mapper  generator template
+    ├── mapper.xml.vm           mapper xml  generator template
+    ├── pageParam.java.vm       page param  generator template
+    ├── queryVo.java.vm         query vo  generator template
+    ├── service.java.vm         service  generator template
+    └── serviceImpl.java.vm     service implement  generator template
+```
+
 ```java
 /**
- * spring-boot-plus代码生成器入口类
+ * spring-boot-plus Code Generator Main Class
  *
  * @author geekidea
  * @date 2019-10-22

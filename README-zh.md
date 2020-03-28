@@ -94,9 +94,6 @@ mapstruct | 1.3.1.Final | 对象属性复制工具 |
 ## CHANGELOG
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
-## Java Docs
-#### [Java Api Docs](https://apidoc.gitee.com/geekidea/spring-boot-plus/)
-
 ## 使用
 ### 克隆 spring-boot-plus
 ```bash
@@ -148,11 +145,10 @@ INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, up
 
 
 ### 2.使用代码生成器生成增删改查代码
-
-#### generator模块中
+> 代码生成入口类，在generator模块中
 
 ```text
-SpringBootPlusGenerator.java
+spring-boot-plus/generator/src/main/java/io/geekidea/springbootplus/generator/SpringBootPlusGenerator.java
 ```
 
 ```java
@@ -232,6 +228,24 @@ public class SpringBootPlusGenerator {
 }
 ```
 
+#### Code Generator Templates
+> 使用Velocity模版生成代码，可自定义修改代码生成模版
+
+```text
+spring-boot-plus/generator/src/main/resources
+```
+```text
+└── templates
+    ├── controller.java.vm      控制器代码生成模版
+    ├── entity.java.vm          实体类代码生成模版
+    ├── mapper.java.vm          mapper代码生成模版
+    ├── mapper.xml.vm           mapper xml 代码生成模版
+    ├── pageParam.java.vm       分页参数代码生成模版
+    ├── queryVo.java.vm         查询结果代码生成模版
+    ├── service.java.vm         服务接口代码生成模版
+    └── serviceImpl.java.vm     服务实现代码生成模版
+```
+
 > 生成的代码结构
 
 ```text
@@ -263,8 +277,9 @@ public class SpringBootPlusGenerator {
 
 ### 3. 启动项目
 > 项目入口类，在bootstrap模块中
+
 ```text
-src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
+spring-boot-plus/bootstrap/src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
 ```
 
 ```java
