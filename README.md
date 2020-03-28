@@ -40,8 +40,8 @@
 - Maven Module Project
 - Integrated mybatis-plus fast dao operation
 - Quickly generate background code:entity/param/vo/controller/service/mapper/xml
-- Integrated swagger2, automatic generation of api documents
-- Integrated JWT,Shiro/Spring security permission control
+- Integrated Swagger/Knife4j, automatic generation of api documents
+- Integrated JWT,Shiro permission control
 - Integrated Redis Cache
 - Integration HikariCP connection pool, A solid, high-performance, JDBC connection pool at last.
 - Integrated Spring Boot Admin, real-time detection of project operation
@@ -276,8 +276,39 @@ spring-boot-plus/generator/src/main/resources
                     └── FooBarMapper.xml
 ```
 
-### 3. Startup Project
-> Project Main Class
+### 3. Bootstrap SpringBootAdmin Server
+> SpringBootAdmin Server Main Class，admin module  [http://localhost:8000](http://localhost:8000)
+
+```text
+spring-boot-plus/admin/src/main/java/io/geekidea/springbootplus/admin/SpringBootPlusAdminApplication
+```
+
+```java
+/**
+ * Spring Boot Admin Bootstrap Main Class
+ *
+ * @author geekidea
+ * @date 2020/3/20
+ **/
+@Slf4j
+@Configuration
+@EnableAutoConfiguration
+@EnableAdminServer
+@SpringBootApplication
+public class SpringBootPlusAdminApplication {
+
+    public static void main(String[] args) {
+        ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusAdminApplication.class, args);
+        ConfigurableEnvironment environment = context.getEnvironment();
+        String serverPort = environment.getProperty("server.port");
+        log.info("SpringBootAdmin: http://localhost:" + serverPort);
+    }
+
+}
+```
+
+### 4. Startup Project
+> Project Main Class，bootstrap module  [http://localhost:8888](http://localhost:8888)
 
 ```text
 spring-boot-plus/bootstrap/src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
