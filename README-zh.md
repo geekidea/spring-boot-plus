@@ -94,7 +94,7 @@ mapstruct | 1.3.1.Final | 对象属性复制工具 |
 ## CHANGELOG
 #### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
-## 使用
+## 快速开始
 ### 克隆 spring-boot-plus
 ```bash
 git clone https://gitee.com/geekidea/spring-boot-plus.git
@@ -234,6 +234,7 @@ public class SpringBootPlusGenerator {
 ```text
 spring-boot-plus/generator/src/main/resources
 ```
+
 ```text
 └── templates
     ├── controller.java.vm      控制器代码生成模版
@@ -246,7 +247,7 @@ spring-boot-plus/generator/src/main/resources
     └── serviceImpl.java.vm     服务实现代码生成模版
 ```
 
-> 生成的代码结构
+#### 生成的代码结构
 
 ```text
 └── src
