@@ -154,101 +154,6 @@ spring-boot-plus/generator/src/main/java/io/geekidea/springbootplus/generator/Sp
 
 ```java
 /**
- * spring-boot-plus Code Generator
- *
- * @author geekidea
- * @date 2019-10-22
- **/
-public class SpringBootPlusGenerator {
-
-    public static void main(String[] args) {
-        CodeGenerator codeGenerator = new CodeGenerator();
-        // Common configuration
-        // Database configuration
-        codeGenerator
-                .setUserName("root")
-                .setPassword("root")
-                .setDriverName("com.mysql.jdbc.Driver")
-                .setDriverUrl("jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
-
-        // Configuration package information
-        codeGenerator
-                .setProjectPackagePath("io/geekidea/springbootplus")
-                .setParentPackage("io.geekidea.springbootplus");
-
-        // Configuration of component author, etc.
-        codeGenerator
-                .setModuleName("foobar")
-                .setAuthor("geekidea")
-                .setPkIdColumnName("id");
-
-        // Generation strategy
-        codeGenerator
-                .setGeneratorStrategy(CodeGenerator.GeneratorStrategy.ALL)
-                .setPageListOrder(true)
-                .setParamValidation(true);
-
-        // Customize which files are generated automatically
-        codeGenerator
-                .setGeneratorEntity(true)
-                .setGeneratorPageParam(true)
-                .setGeneratorQueryVo(true);
-
-        // Generate business related codes
-        codeGenerator
-                .setGeneratorController(true)
-                .setGeneratorService(true)
-                .setGeneratorServiceImpl(true)
-                .setGeneratorMapper(true)
-                .setGeneratorMapperXml(true);
-
-        // Generated RequiresPermissions Annotation
-        codeGenerator.setRequiresPermissions(false);
-
-        // Overwrite existing file or not
-        codeGenerator.setFileOverride(true);
-
-        // Initialize common variables
-        codeGenerator.init();
-
-        // Table array to be generated
-        String[] tables = {
-                "foo_bar"
-        };
-
-        // Cycle generation
-        for (String table : tables) {
-            // Set the name of the table to be generated
-            codeGenerator.setTableName(table);
-            // Generate code
-            codeGenerator.generator();
-        }
-
-    }
-
-}
-```
-
-#### Code Generator Templates
-> Use Velocity template to generate code, you can customize and modify the code to generate template
-
-```text
-spring-boot-plus/generator/src/main/resources
-```
-```text
-└── templates
-    ├── controller.java.vm      controller generator template
-    ├── entity.java.vm          entity generator template
-    ├── mapper.java.vm          mapper  generator template
-    ├── mapper.xml.vm           mapper xml  generator template
-    ├── pageParam.java.vm       page param  generator template
-    ├── queryVo.java.vm         query vo  generator template
-    ├── service.java.vm         service  generator template
-    └── serviceImpl.java.vm     service implement  generator template
-```
-
-```java
-/**
  * spring-boot-plus Code Generator Main Class
  *
  * @author geekidea
@@ -324,7 +229,25 @@ public class SpringBootPlusGenerator {
 }
 ```
 
-> Generated code structure
+#### Code Generator Templates
+> Use Velocity template to generate code, you can customize and modify the code to generate template
+
+```text
+spring-boot-plus/generator/src/main/resources
+```
+```text
+└── templates
+    ├── controller.java.vm      controller generator template
+    ├── entity.java.vm          entity generator template
+    ├── mapper.java.vm          mapper  generator template
+    ├── mapper.xml.vm           mapper xml  generator template
+    ├── pageParam.java.vm       page param  generator template
+    ├── queryVo.java.vm         query vo  generator template
+    ├── service.java.vm         service  generator template
+    └── serviceImpl.java.vm     service implement  generator template
+```
+
+#### Generated code structure
 
 ```text
 └── src
@@ -355,35 +278,12 @@ public class SpringBootPlusGenerator {
 
 ### 3. Startup Project
 > Project Main Class
+
 ```text
 spring-boot-plus/bootstrap/src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
 ```
 
 ```java
-/**
- * spring-boot-plus Project Main Class
- * @author geekidea
- * @since 2018-11-08
- */
-@EnableAsync
-@EnableScheduling
-@EnableTransactionManagement
-@EnableConfigurationProperties
-@EnableAdminServer
-@MapperScan({"io.geekidea.springbootplus.**.mapper"})
-@SpringBootApplication
-public class SpringBootPlusApplication {
-
-    public static void main(String[] args) {
-        // Run spring-boot-plus
-        ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusApplication.class, args);
-        // Print Project Info
-        PrintApplicationInfo.print(context);
-    }
-
-}
-
-
 /**
  * spring-boot-plus Project Main Class
  *
@@ -409,7 +309,6 @@ public class SpringBootPlusApplication {
     }
 
 }
-
 ```
 
 ### 4. Access Swagger Docs
