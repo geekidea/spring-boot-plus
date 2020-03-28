@@ -35,7 +35,10 @@ public class PrintApplicationInfo {
     /**
      * 执行之前，打印前置条件提示
      */
-    public static void printTip() {
+    public static void printTip(ConfigurableApplicationContext context) {
+        ConfigurableEnvironment environment = context.getEnvironment();
+        // 项目profile
+        String profileActive = environment.getProperty("spring.profiles.active");
         StringBuffer tip = new StringBuffer();
         tip.append("===========================================================================================\n");
         tip.append("                                                                                  \n");
@@ -59,7 +62,9 @@ public class PrintApplicationInfo {
         tip.append(" 8.QQ：625301326，进群答案：springboot.plus\n");
         tip.append("                                                                                  \n");
         tip.append("===========================================================================================\n");
-        log.info("\n{}", Ansi.ansi().eraseScreen().fg(Ansi.Color.YELLOW).a(tip.toString()).reset().toString());
+        if ("dev".equals(profileActive)) {
+            log.info("\n{}", Ansi.ansi().eraseScreen().fg(Ansi.Color.YELLOW).a(tip.toString()).reset().toString());
+        }
     }
 
     /**
