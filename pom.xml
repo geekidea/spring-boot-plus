@@ -47,6 +47,8 @@
         <utf8>UTF-8</utf8>
         <boot.artifact.name>bootstrap-${project.version}</boot.artifact.name>
         <assembly.name>spring-boot-plus-server-${project.version}</assembly.name>
+        <admin.artifact.name>admin-${project.version}</admin.artifact.name>
+        <admin.assembly.name>admin-${project.version}</admin.assembly.name>
         <project.build.sourceEncoding>${utf8}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${utf8}</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -82,6 +84,7 @@
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-versions-plugin.version>2.2</maven-versions-plugin.version>
+        <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
     </properties>
 
     <modules>
@@ -293,6 +296,11 @@
             </dependency>
 
             <!-- 项目模块start -->
+            <dependency>
+                <groupId>io.geekidea.springbootplus</groupId>
+                <artifactId>admin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.geekidea.springbootplus</groupId>
                 <artifactId>bootstrap</artifactId>

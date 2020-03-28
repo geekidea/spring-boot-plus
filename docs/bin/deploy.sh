@@ -87,12 +87,11 @@ fi
 
 # 4. 复制spring-boot-plus-server-assembly.tar.gz到项目同级目录下
 # 备份之前的server
-
 if [ ! -d "${SERVER_DIR}-back" ]; then
   mkdir ${SERVER_DIR}-back
 fi
 
-if [[ $IS_UPDATE == 1 ]]
+if [[ -d "${SERVER_DIR}" ]]
 then
 	echo "back ${SERVER_DIR}..."
   mv ${SERVER_DIR} ${SERVER_DIR}-back/${SERVER_DIR}-back-"${NOW}"
