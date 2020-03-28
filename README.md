@@ -37,18 +37,30 @@
 
 ## Features
 - Integrated spring boot common development component set, common configuration, AOP log, etc
+- Maven Module Project
 - Integrated mybatis-plus fast dao operation
 - Quickly generate background code:entity/param/vo/controller/service/mapper/xml
 - Integrated swagger2, automatic generation of api documents
 - Integrated JWT,Shiro/Spring security permission control
-- Integrated Redis、spring cache、ehcache,etc
-- Integrated Rabbit/Rocket/Kafka MQ
+- Integrated Redis Cache
 - Integration HikariCP connection pool, A solid, high-performance, JDBC connection pool at last.
 - Integrated Spring Boot Admin, real-time detection of project operation
 - Integrate maven-assembly-plugin for different environment package deployment, including startup and restart commands, and extract configuration files to external config directory
 
-## Architecture
-![spring-boot-plus-architecture.jpg](https://springboot.plus/img/spring-boot-plus-architecture.jpg)
+## Project structure
+```text
+└── spring-boot-plus
+    ├── admin           SpringBootAdmin Server Module          
+    ├── bootstrap       Project Bootstrap Module    
+    ├── config          Config Module
+    ├── distribution    Maven assembly Module        
+    ├── docs            Document
+    ├── example         Example Module
+    ├── framework       Framework Core Module    
+    ├── generator       Code Generator Module    
+    ├── scheduled       Scheduled Module
+    └── system          System Manager Module
+```
 
 ### Project Environment 
 Middleware | Version |  Remark
@@ -400,10 +412,6 @@ public class SpringBootPlusApplication {
 ![knife4j-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j-1.png)
 
 
-## Quick Start
-[Quick Start](https://springboot.plus/guide/quick-start.html)
-
-
 ## CentOS Quick Installation Environment / Build / Deploy / Launch Spring-boot-plus Project
 
 ### 1. Download the installation script
@@ -479,7 +487,7 @@ tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
 
 ## spring-boot-plus-vue Front-end Project
 ### [GITHUB-REPO](https://github.com/geekidea/spring-boot-plus-vue)
-### [VUE演示地址](http://47.105.159.10/)
+### [VUE WebSite](http://47.105.159.10/)
 #### VUE HOME
 ![VUE HOME](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue.png)
 #### System User List

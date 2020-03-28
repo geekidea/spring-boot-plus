@@ -34,19 +34,31 @@
 #### [springboot.plus](http://springboot.plus)
 
 ### 主要特性
-1. 集成spring boot 常用开发组件集、公共配置、AOP日志等
-2. 集成mybatis plus快速dao操作
-3. 快速生成后台代码: entity/param/vo/controller/service/mapper/xml
-4. 集成swagger2，可自动生成api文档
-5. 集成jwt、shiro/spring security权限控制
-6. 集成redis、spring cache、ehcache缓存
-7. 集成rabbit/rocket/kafka mq消息队列
-8. 集成druid连接池，JDBC性能和慢查询检测
-9. 集成spring boot admin，实时检测项目运行情况
-10. 使用assembly maven插件进行不同环境打包部署,包含启动、重启命令，配置文件提取到外部config目录
+- 集成spring boot 常用开发组件集、公共配置、AOP日志等
+- Maven多模块架构
+- 集成mybatis plus快速dao操作
+- 快速生成后台代码: entity/param/vo/controller/service/mapper/xml
+- 集成Swagger/Knife4j，可自动生成api文档
+- 集成jwt、shiro权限控制
+- 集成Redis缓存
+- 集成HikariCP连接池，JDBC性能和慢查询检测
+- 集成spring boot admin，实时检测项目运行情况
+- 使用assembly maven插件进行不同环境打包部署,包含启动、重启命令，配置文件提取到外部config目录
 
-## 项目架构
-![spring-boot-plus-architecture.jpg](https://spring-boot-plus.gitee.io/img/spring-boot-plus-architecture.jpg)
+## 项目结构
+```text
+└── spring-boot-plus
+    ├── admin               SpringBootAdmin Server模块
+    ├── bootstrap           项目启动模块
+    ├── config              配置模块
+    ├── distribution        打包模块
+    ├── docs                文档目录
+    ├── example             示例模块，自己的业务可新建多个模块处理
+    ├── framework           框架核心模块
+    ├── generator           代码生成模块
+    ├── scheduled           任务调度模块
+    └── system              系统模块
+```
 
 ### 项目环境 
 中间件 | 版本 |  备注
@@ -292,9 +304,6 @@ public class SpringBootPlusApplication {
 [http://47.105.159.10:8888/api/doc.html](http://47.105.159.10:8888/api/doc.html)
 ![knife4j.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j.png)
 ![knife4j-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j-1.png)
-
-## 快速开始
-[快速开始](https://springboot.plus/guide/quick-start.html)
 
 ## CentOS快速安装环境/构建/部署/启动spring-boot-plus项目
 ### 1. 下载安装脚本
