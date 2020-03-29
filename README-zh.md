@@ -342,12 +342,12 @@ public class SpringBootPlusApplication {
 }
 ```
 
-### 5. 访问项目swagger文档
+### 5. 访问项目Swagger文档
 [http://47.105.159.10:8888/api/swagger-ui.html](http://47.105.159.10:8888/api/swagger-ui.html)
 ![swagger-ui.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui.png)
 ![swagger-ui-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui-1.png)
 
-### 6. 访问nife4j文档
+### 6. 访问Knife4j文档
 [http://47.105.159.10:8888/api/doc.html](http://47.105.159.10:8888/api/doc.html)
 ![knife4j.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j.png)
 ![knife4j-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j-1.png)

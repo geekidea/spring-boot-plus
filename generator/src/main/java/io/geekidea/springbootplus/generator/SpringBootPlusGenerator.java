@@ -71,7 +71,7 @@ public class SpringBootPlusGenerator {
                 .setGeneratorMapperXml(true)
                 .setGeneratorPageParam(true)
                 .setGeneratorQueryVo(true)
-                .setRequiresPermissions(true)
+                .setRequiresPermissions(false)
                 .setPageListOrder(true)
                 .setParamValidation(true)
                 .setSwaggerTags(true)
