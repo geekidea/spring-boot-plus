@@ -20,6 +20,8 @@ import io.geekidea.springbootplus.config.properties.SpringBootPlusProperties;
 import io.geekidea.springbootplus.framework.common.api.ApiResult;
 import io.geekidea.springbootplus.framework.common.controller.BaseController;
 import io.geekidea.springbootplus.framework.core.pagination.Paging;
+import io.geekidea.springbootplus.framework.core.validator.groups.Add;
+import io.geekidea.springbootplus.framework.core.validator.groups.Update;
 import io.geekidea.springbootplus.framework.log.annotation.Module;
 import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
 import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
@@ -66,7 +68,7 @@ public class SysUserController extends BaseController {
     @RequiresPermissions("sys:user:add")
     @OperationLog(name = "添加系统用户", type = OperationLogType.ADD)
     @ApiOperation(value = "添加系统用户", response = ApiResult.class)
-    public ApiResult<Boolean> addSysUser(@Validated @RequestBody SysUser sysUser) throws Exception {
+    public ApiResult<Boolean> addSysUser(@Validated(Add.class) @RequestBody SysUser sysUser) throws Exception {
         boolean flag = sysUserService.saveSysUser(sysUser);
         return ApiResult.result(flag);
     }
@@ -78,7 +80,7 @@ public class SysUserController extends BaseController {
     @RequiresPermissions("sys:user:update")
     @OperationLog(name = "修改系统用户", type = OperationLogType.UPDATE)
     @ApiOperation(value = "修改系统用户", response = ApiResult.class)
-    public ApiResult<Boolean> updateSysUser(@Validated @RequestBody SysUser sysUser) throws Exception {
+    public ApiResult<Boolean> updateSysUser(@Validated(Update.class) @RequestBody SysUser sysUser) throws Exception {
         boolean flag = sysUserService.updateSysUser(sysUser);
         return ApiResult.result(flag);
     }

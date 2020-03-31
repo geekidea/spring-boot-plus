@@ -90,18 +90,16 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         // 生成盐值
         String salt = null;
         String password = sysUser.getPassword();
-        String encryptPassword = null;
         // 如果密码为空，则设置默认密码
         if (StringUtils.isBlank(password)) {
             salt = springBootPlusProperties.getLoginInitSalt();
-            encryptPassword = springBootPlusProperties.getLoginInitPassword();
+            password = springBootPlusProperties.getLoginInitPassword();
         } else {
             salt = SaltUtil.generateSalt();
         }
         // 密码加密
-        encryptPassword = PasswordUtil.encrypt(password, salt);
         sysUser.setSalt(salt);
-        sysUser.setPassword(encryptPassword);
+        sysUser.setPassword(PasswordUtil.encrypt(password, salt));
 
         // 如果头像为空，则设置默认头像
         if (StringUtils.isBlank(sysUser.getHead())) {
