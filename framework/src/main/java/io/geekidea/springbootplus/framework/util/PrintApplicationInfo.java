@@ -57,7 +57,7 @@ public class PrintApplicationInfo {
         tip.append("    generator：   代码生成模块，启动类：SpringBootPlusGenerator，请根据实际情况进行配置\n");
         tip.append("    scheduled：   任务调度模块\n");
         tip.append("    system：      系统管理模块\n");
-        tip.append(" 6.FAQ：https://springboot.plus/faq.html\n");
+        tip.append(" 6.FAQ：https://springboot.plus/faq\n");
         tip.append(" 7.如开发中遇到bug及问题，欢迎提交ISSUES：https://github.com/geekidea/spring-boot-plus/issues\n");
         tip.append(" 8.QQ：625301326，进群答案：springboot.plus\n");
         tip.append("                                                                                  \n");

@@ -25,6 +25,8 @@ import io.geekidea.springbootplus.generator.constant.GeneratorConstant;
 import io.geekidea.springbootplus.generator.properties.GeneratorProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 /**
  * spring-boot-plus代码生成器入口类
  *
@@ -51,6 +53,8 @@ public class SpringBootPlusGenerator {
 
         // 设置表信息
         generatorProperties.addTable("foo_bar","id");
+        // 设置表前缀
+        // generatorProperties.setTablePrefix(Arrays.asList("tb_"));
 
         // 数据源配置
         generatorProperties.getDataSourceConfig()

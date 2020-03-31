@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 /**
  * spring-boot-plus代码生成器
@@ -82,7 +83,7 @@ public class CodeGenerator {
         }
         // 如果包路径为空，转换包名称路径
         if (StringUtils.isNotBlank(parentPackage)) {
-            generatorProperties.setParentPackagePath(parentPackage.replaceAll("\\.", File.separator));
+            generatorProperties.setParentPackagePath(parentPackage.replaceAll("\\.", Matcher.quoteReplacement(File.separator)));
         }
 
         String mavenModuleName = generatorProperties.getMavenModuleName();
@@ -130,17 +131,9 @@ public class CodeGenerator {
         String resourcesOutputDir = null;
         String mapperXmlOutputDir = null;
 
-
         if (StringUtils.isBlank(outputDir)) {
-            // 使用application.yml配置时，默认路径设置
-//            String currentProjectPath = System.getProperty(GeneratorConstant.USER_DIR);
-//            File rootProjectFile = new File(currentProjectPath);
-//            String rootProjectPath = rootProjectFile.getParent();
-            // 从java启动时，默认路径设置
-            String currentClassPath = this.getClass().getClassLoader().getResource("").getFile();
-            File file = new File(currentClassPath);
-            String rootProjectPath = file.getParentFile().getParentFile().getParentFile().getAbsolutePath();
-            outputDir = rootProjectPath + File.separator + mavenModuleName;
+            String rootProjectFile = System.getProperty(GeneratorConstant.USER_DIR);
+            outputDir = rootProjectFile + File.separator + mavenModuleName;
         }
         log.info("outputDir: {}", outputDir);
         javaOutputDir = outputDir + GeneratorConstant.JAVA_DIR;
