@@ -27,10 +27,8 @@
 ## 目标
 > 每个人都可以独立、快速、高效地开发项目！
 
-## 版本库
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
-## 官网
 #### [springboot.plus](http://springboot.plus)
 
 ### 主要特性
@@ -45,9 +43,16 @@
 - 集成spring boot admin，实时检测项目运行情况
 - 使用assembly maven插件进行不同环境打包部署,包含启动、重启命令，配置文件提取到外部config目录
 
+## [V2.0视频介绍](https://www.bilibili.com/video/BV16A41187XE/)
+<p align="center">
+  <a href="https://www.bilibili.com/video/BV16A41187XE/">
+   <img alt="spring-boot-plus videos" src="https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/videos-acfun-ui.png">
+  </a>
+</p>
+
 ## 项目结构
 ```text
-└── spring-boot-plus
+    └── spring-boot-plus
     ├── admin               SpringBootAdmin Server模块
     ├── bootstrap           spring-boot-plus 启动模块
     ├── config              配置模块
@@ -91,8 +96,10 @@ hutool-all | 5.2.4 | 常用工具集 |
 lombok | 1.18.12 | 注解生成Java Bean等工具 |
 mapstruct | 1.3.1.Final | 对象属性复制工具 |
 
-## CHANGELOG
-#### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
+### 项目链路图
+![项目调用链路图](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/spring-boot-plus-link-diagram.jpg)
+
+### [CHANGELOG](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
 ## 快速开始
 ### 克隆 spring-boot-plus
@@ -437,15 +444,16 @@ tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
 ![系统菜单列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-3.png)
 
 ## spring-boot-plus 视频  :movie_camera:
-- [5分钟完成增删改查](https://www.bilibili.com/video/av67401204)
+- [V2.x 视频介绍慢放版](https://www.bilibili.com/video/BV1HQ4y1M73i/)
+- [V1.x 5分钟完成增删改查](https://www.bilibili.com/video/av67401204)
 - [CentOS 快速安装 JDK/Git/Maven/Redis/MySQL](https://www.bilibili.com/video/av67218836/)
 - [CentOS 快速部署/构建/打包/运行项目](https://www.bilibili.com/video/av67218970/)
 
 
 ## 联系
-- spring-boot-plus技术交流群
+![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png) | ![Wechat Official Account](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-official.jpg)
 
-![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spring-boot-plus技术交流群&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spring-boot-plus 微信公众号
 
 ## 赞赏
 请作者喝咖啡，让代码飞一会儿！
