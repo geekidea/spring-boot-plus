@@ -29,10 +29,10 @@
 ## Purpose
 > Everyone can develop projects independently, quickly and efficiently！
 
-## Repository
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
-## Website
+#### [中文文档](https://github.com/geekidea/spring-boot-plus/blob/master/README-zh.md)
+
 #### [springboot.plus](http://springboot.plus)
 
 ## Features
@@ -47,9 +47,16 @@
 - Integrated Spring Boot Admin, real-time detection of project operation
 - Integrate maven-assembly-plugin for different environment package deployment, including startup and restart commands, and extract configuration files to external config directory
 
+## [V2.0 Video Introduction](https://www.bilibili.com/video/BV16A41187XE/)
+<p align="center">
+  <a href="https://www.bilibili.com/video/BV16A41187XE/">
+   <img alt="spring-boot-plus videos" src="https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/videos-acfun-ui.png">
+  </a>
+</p>
+
 ## Project structure
 ```text
-└── spring-boot-plus
+  spring-boot-plus
     ├── admin           SpringBootAdmin Server Module          
     ├── bootstrap       spring-boot-plus Bootstrap Module    
     ├── config          Config Module
@@ -93,8 +100,10 @@ hutool-all | 5.2.4 | Common toolset |
 lombok | 1.18.12 | Automatically plugs |
 mapstruct | 1.3.1.Final | Object property replication tool |
 
-## CHANGELOG
-#### [CHANGELOG.md](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
+### Project Link Diagram
+![项目调用链路图](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/spring-boot-plus-link-diagram.jpg)
+
+### [CHANGELOG](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
 
 ## Quick Start
@@ -439,16 +448,16 @@ tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
 ![System Menu List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-3.png)
 
 ## spring-boot-plus Videos  :movie_camera: 
-- [5-Minutes-Finish-CRUD](https://www.bilibili.com/video/av67401204)
+- [V2.x Video Introduction](https://www.bilibili.com/video/BV1HQ4y1M73i/)
+- [V1.x 5-Minutes-Finish-CRUD](https://www.bilibili.com/video/av67401204)
 - [CentOS Quick Installation JDK/Git/Maven/Redis/MySQL](https://www.bilibili.com/video/av67218836/)
 - [CentOS Quick Build / Deploy / Launch Spring-boot-plus Project](https://www.bilibili.com/video/av67218970/)
 
 
 ## Contact
-- spring-boot-plus QQ Group
+![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png) | ![Wechat Official Account](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-official.jpg)
 
-![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png)
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spring-boot-plus QQ Group&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| spring-boot-plus Wechat Official Account
 
 ## Donate
 Ask the author to drink coffee and let the code fly for a while! 
