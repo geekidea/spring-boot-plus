@@ -236,7 +236,7 @@ mybatis-plus:
   # 启动时是否检查MyBatis XML文件是否存在
   check-config-location: true
   # 支持统配符 * 或者 ; 分割
-  typeEnumsPackage: io.geekidea.springbootplus.*.enums
+  typeEnumsPackage: io.geekidea.boot.*.enums
   # MyBatis原生配置
   configuration:
     # 字段名称下划线转驼峰命名
@@ -302,7 +302,7 @@ spring-boot-plus:
     enable: true
     base:
       # 扫描的包，多个包使用逗号隔开
-      package: io.geekidea.springbootplus,com.example
+      package: io.geekidea.boot,com.example
     contact:
       email: geekidea@qq.com
       name: springboot.plus

@@ -16,9 +16,9 @@
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.geekidea.springbootplus.framework.ip.mapper.IpAddressMapper">
+<mapper namespace="io.geekidea.boot.framework.ip.mapper.IpAddressMapper">
 
-    <select id="getByIp" resultType="io.geekidea.springbootplus.framework.ip.entity.IpAddress">
+    <select id="getByIp" resultType="io.geekidea.boot.framework.ip.entity.IpAddress">
         select area, operator
         from ip_address
         where INET_ATON(#{ip}) > ip_start_num

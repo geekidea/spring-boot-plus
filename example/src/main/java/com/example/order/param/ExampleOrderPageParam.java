@@ -16,7 +16,7 @@
 
 package com.example.order.param;
 
-import io.geekidea.springbootplus.framework.core.pagination.BasePageOrderParam;
+import io.geekidea.boot.framework.core.pagination.BasePageOrderParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

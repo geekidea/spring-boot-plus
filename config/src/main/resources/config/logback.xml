@@ -89,7 +89,7 @@
 
     <!-- 不同环境的日志级别配置 -->
     <springProfile name="dev">
-        <logger name="io.geekidea.springbootplus" level="DEBUG"/>
+        <logger name="io.geekidea.boot" level="DEBUG"/>
     </springProfile>
 
     <!-- 解决SpringBootAdmin错误日志问题 -->

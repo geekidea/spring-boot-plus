@@ -18,8 +18,8 @@ package com.example.order.service;
 
 import com.example.order.entity.ExampleOrder;
 import com.example.order.param.ExampleOrderPageParam;
-import io.geekidea.springbootplus.framework.common.service.BaseService;
-import io.geekidea.springbootplus.framework.core.pagination.Paging;
+import io.geekidea.boot.framework.common.service.BaseService;
+import io.geekidea.boot.framework.core.pagination.Paging;
 
 /**
  * 订单示例 服务类

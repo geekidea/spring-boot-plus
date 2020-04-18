@@ -16,14 +16,14 @@
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.geekidea.springbootplus.system.mapper.SysRoleMapper">
+<mapper namespace="io.geekidea.boot.system.mapper.SysRoleMapper">
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, code, type, state, remark, version, create_time, update_time
     </sql>
 
-    <select id="getSysRoleById" resultType="io.geekidea.springbootplus.system.vo.SysRoleQueryVo">
+    <select id="getSysRoleById" resultType="io.geekidea.boot.system.vo.SysRoleQueryVo">
         select
         <include refid="Base_Column_List"/>
         from sys_role where id = #{id}

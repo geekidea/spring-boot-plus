@@ -17,9 +17,9 @@ import ${cfg.apiResultClass};
 import ${cfg.pagingClass};
 import ${cfg.idParamClass};
 #if(${cfg.operationLog})
-import io.geekidea.springbootplus.framework.log.annotation.Module;
-import io.geekidea.springbootplus.framework.log.annotation.OperationLog;
-import io.geekidea.springbootplus.framework.log.enums.OperationLogType;
+import io.geekidea.boot.framework.log.annotation.Module;
+import io.geekidea.boot.framework.log.annotation.OperationLog;
+import io.geekidea.boot.framework.log.enums.OperationLogType;
 #end
 #if(${cfg.paramValidation})
 import ${cfg.validatorAddPackage};

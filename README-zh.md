@@ -333,8 +333,8 @@ spring-boot-plus/bootstrap/src/main/java/io/geekidea/springbootplus/SpringBootPl
 @EnableTransactionManagement
 @EnableConfigurationProperties
 @ServletComponentScan
-@MapperScan({"io.geekidea.springbootplus.**.mapper", "com.example.**.mapper"})
-@SpringBootApplication(scanBasePackages = {"io.geekidea.springbootplus", "com.example"})
+@MapperScan({"io.geekidea.boot.**.mapper", "com.example.**.mapper"})
+@SpringBootApplication(scanBasePackages = {"io.geekidea.boot", "com.example"})
 public class SpringBootPlusApplication {
 
     public static void main(String[] args) {

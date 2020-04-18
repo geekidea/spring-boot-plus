@@ -21,9 +21,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.geekidea.springbootplus</groupId>
-        <artifactId>parent</artifactId>
-        <version>2.0</version>
+        <groupId>io.geekidea.boot</groupId>
+        <artifactId>spring-boot-plus</artifactId>
+        <version>2.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>framework</artifactId>
@@ -93,7 +93,7 @@
         <!-- Shiro+JWT end -->
 
         <dependency>
-            <groupId>io.geekidea.springbootplus</groupId>
+            <groupId>io.geekidea.boot</groupId>
             <artifactId>config</artifactId>
         </dependency>
 

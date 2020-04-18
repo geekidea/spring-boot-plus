@@ -16,7 +16,7 @@
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.geekidea.springbootplus.system.mapper.SysUserMapper">
+<mapper namespace="io.geekidea.boot.system.mapper.SysUserMapper">
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -35,12 +35,12 @@
         where u.deleted = 0
     </sql>
 
-    <select id="getSysUserById" resultType="io.geekidea.springbootplus.system.vo.SysUserQueryVo">
+    <select id="getSysUserById" resultType="io.geekidea.boot.system.vo.SysUserQueryVo">
         <include refid="BaseQuerySelect"/>
         and u.id = #{id}
     </select>
 
-    <select id="getSysUserPageList" resultType="io.geekidea.springbootplus.system.vo.SysUserQueryVo">
+    <select id="getSysUserPageList" resultType="io.geekidea.boot.system.vo.SysUserQueryVo">
         <include refid="BaseQuerySelect"/>
         <if test="param.departmentId != null">
             and u.department_id = #{param.departmentId}

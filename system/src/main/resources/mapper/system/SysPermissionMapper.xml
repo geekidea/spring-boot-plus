@@ -16,20 +16,20 @@
   -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.geekidea.springbootplus.system.mapper.SysPermissionMapper">
+<mapper namespace="io.geekidea.boot.system.mapper.SysPermissionMapper">
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, parent_id, url, code, icon, type, level, state, sort, remark, version, create_time, update_time
     </sql>
 
-    <select id="getSysPermissionById" resultType="io.geekidea.springbootplus.system.vo.SysPermissionQueryVo">
+    <select id="getSysPermissionById" resultType="io.geekidea.boot.system.vo.SysPermissionQueryVo">
         select
         <include refid="Base_Column_List"/>
         from sys_permission where id = #{id}
     </select>
 
-    <select id="getSysPermissionPageList" resultType="io.geekidea.springbootplus.system.vo.SysPermissionQueryVo">
+    <select id="getSysPermissionPageList" resultType="io.geekidea.boot.system.vo.SysPermissionQueryVo">
         select
         <include refid="Base_Column_List"/>
         from sys_permission
@@ -52,7 +52,7 @@
           and u.id = #{userId};
     </select>
 
-    <select id="getMenuListByUserId" resultType="io.geekidea.springbootplus.system.entity.SysPermission">
+    <select id="getMenuListByUserId" resultType="io.geekidea.boot.system.entity.SysPermission">
         select p.*
         from sys_user u
                  inner join sys_role r

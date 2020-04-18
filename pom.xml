@@ -19,9 +19,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.geekidea.springbootplus</groupId>
-    <artifactId>parent</artifactId>
-    <version>2.0</version>
+    <groupId>io.geekidea.boot</groupId>
+    <artifactId>spring-boot-plus</artifactId>
+    <version>2.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>spring-boot-plus</name>
@@ -108,59 +108,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- spring-boot start -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-aop</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-tomcat</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-jdbc</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-redis</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-json</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-validation</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-configuration-processor</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring-boot.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- spring-boot end -->
 
             <!-- mybatis-plus begin -->
             <dependency>
@@ -195,7 +142,6 @@
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
-
 
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -297,37 +243,37 @@
 
             <!-- 项目模块start -->
             <dependency>
-                <groupId>io.geekidea.springbootplus</groupId>
+                <groupId>io.geekidea.boot</groupId>
                 <artifactId>admin</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.geekidea.springbootplus</groupId>
+                <groupId>io.geekidea.boot</groupId>
                 <artifactId>bootstrap</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.geekidea.springbootplus</groupId>
+                <groupId>io.geekidea.boot</groupId>
                 <artifactId>config</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.geekidea.springbootplus</groupId>
+                <groupId>io.geekidea.boot</groupId>
                 <artifactId>example</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.geekidea.springbootplus</groupId>
+                <groupId>io.geekidea.boot</groupId>
                 <artifactId>framework</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.geekidea.springbootplus</groupId>
+                <groupId>io.geekidea.boot</groupId>
                 <artifactId>system</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.geekidea.springbootplus</groupId>
+                <groupId>io.geekidea.boot</groupId>
                 <artifactId>scheduled</artifactId>
                 <version>${project.version}</version>
             </dependency>
