@@ -55,6 +55,11 @@ import java.util.regex.Matcher;
 @Accessors(chain = true)
 public class CodeGenerator {
 
+    private String javaOutputDir = null;
+    private String resourcesOutputDir = null;
+    private String mapperXmlOutputDir = null;
+    private String moduleName = null;
+
     public void generator(GeneratorProperties generatorProperties) {
         if (generatorProperties == null) {
             throw new GeneratorException("generatorProperties不能为空");
@@ -68,6 +73,10 @@ public class CodeGenerator {
         for (TableConfig generatorTable : tableConfig) {
             String tableName = generatorTable.getTableName();
             String pkIdName = generatorTable.getPkIdName();
+
+            if (StringUtils.isBlank(tableName)) {
+                throw new GeneratorException("tableName不能为空");
+            }
             // 生成代码
             generator(tableName, pkIdName, generatorProperties);
         }
@@ -76,60 +85,28 @@ public class CodeGenerator {
     /**
      * 初始化变量
      */
-    public void init(String tableName, GeneratorProperties generatorProperties) {
+    private void init(GeneratorProperties generatorProperties) {
         String parentPackage = generatorProperties.getParentPackage();
         if (StringUtils.isBlank(parentPackage)) {
             throw new GeneratorException("项目父包不能为空");
         }
-        // 如果包路径为空，转换包名称路径
+        // 如果包路径不为空，转换包名称路径
         if (StringUtils.isNotBlank(parentPackage)) {
             generatorProperties.setParentPackagePath(parentPackage.replaceAll("\\.", Matcher.quoteReplacement(File.separator)));
         }
-
-        String mavenModuleName = generatorProperties.getMavenModuleName();
-        if (StringUtils.isBlank(mavenModuleName)) {
-            throw new GeneratorException("mavenModuleName不能为空");
-        }
-        if (StringUtils.isBlank(tableName)) {
-            throw new GeneratorException("tableName不能为空");
-        }
-
         // 如果是单表操作，不生成QueryVo
         GeneratorConfig generatorConfig = generatorProperties.getGeneratorConfig();
         if (GeneratorStrategy.SINGLE == generatorConfig.generatorStrategy) {
             generatorProperties.getGeneratorConfig().setGeneratorQueryVo(false);
         }
 
-    }
-
-
-    /**
-     * 生成代码
-     */
-    public void generator(String tableName, String pkIdName, GeneratorProperties generatorProperties) {
-        // 初始化变量
-        init(tableName, generatorProperties);
-
-        // 代码生成器
-        AutoGenerator autoGenerator = new AutoGenerator();
-
-        MybatisPlusGeneratorConfig mybatisPlusGeneratorConfig = generatorProperties.getMybatisPlusGeneratorConfig();
-        if (mybatisPlusGeneratorConfig == null) {
-            throw new GeneratorException("mybatisPlusGeneratorConfig不能为空");
-        }
-
-        // 全局配置
-        GlobalConfig globalConfig = mybatisPlusGeneratorConfig.getGlobalConfig();
-        if (globalConfig == null) {
-            throw new GeneratorException("globalConfig不能为空");
-        }
-
         String mavenModuleName = generatorProperties.getMavenModuleName();
-        String moduleName = generatorProperties.getModuleName();
+        if (StringUtils.isBlank(mavenModuleName)) {
+            throw new GeneratorException("mavenModuleName不能为空");
+        }
+
+        moduleName = generatorProperties.getModuleName();
         String outputDir = generatorProperties.getOutputDir();
-        String javaOutputDir = null;
-        String resourcesOutputDir = null;
-        String mapperXmlOutputDir = null;
 
         if (StringUtils.isBlank(outputDir)) {
             String rootProjectFile = System.getProperty(GeneratorConstant.USER_DIR);
@@ -139,7 +116,63 @@ public class CodeGenerator {
         javaOutputDir = outputDir + GeneratorConstant.JAVA_DIR;
         resourcesOutputDir = outputDir + GeneratorConstant.RESOURCES_DIR;
         mapperXmlOutputDir = outputDir + GeneratorConstant.MAPPER_DIR;
+    }
 
+    /**
+     * 生成代码
+     */
+    public void generator(String tableName, String pkIdName, GeneratorProperties generatorProperties) {
+        // 初始化变量
+        init(generatorProperties);
+
+        // 代码生成器
+        AutoGenerator autoGenerator = new AutoGenerator();
+
+        MybatisPlusGeneratorConfig mybatisPlusGeneratorConfig = generatorProperties.getMybatisPlusGeneratorConfig();
+        if (mybatisPlusGeneratorConfig == null) {
+            throw new GeneratorException("mybatisPlusGeneratorConfig不能为空");
+        }
+
+        // 设置全局配置
+        GlobalConfig globalConfig = obtainGlobalConfig(generatorProperties, mybatisPlusGeneratorConfig);
+        autoGenerator.setGlobalConfig(globalConfig);
+
+        // 设置数据源
+        DataSourceConfig dataSourceConfig = obtainDataSourceConfig(generatorProperties);
+        autoGenerator.setDataSource(dataSourceConfig);
+
+        // 设置包信息
+        PackageConfig packageConfig = obtainPackageConfig(generatorProperties, mybatisPlusGeneratorConfig);
+        autoGenerator.setPackageInfo(packageConfig);
+
+        // 设置策略
+        StrategyConfig strategyConfig = obtainStrategyConfig(generatorProperties, mybatisPlusGeneratorConfig, tableName);
+        autoGenerator.setStrategy(strategyConfig);
+
+        List<FileOutConfig> focList = new ArrayList<>();
+
+        GeneratorConfig generatorConfig = obtainGeneratorConfig(generatorProperties, focList);
+
+        // 设置自定义配置
+        InjectionConfig injectionConfig = obtainInjectionConfig(generatorProperties, tableName, pkIdName);
+        injectionConfig.setFileOutConfigList(focList);
+        autoGenerator.setCfg(injectionConfig);
+
+        // 设置模板引擎
+        TemplateConfig templateConfig = obtainTemplateConfig(generatorConfig);
+        autoGenerator.setTemplate(templateConfig);
+
+        // 执行代码生成
+        autoGenerator.execute();
+    }
+
+    private GlobalConfig obtainGlobalConfig(GeneratorProperties generatorProperties,
+                                            MybatisPlusGeneratorConfig mybatisPlusGeneratorConfig) {
+        // 全局配置
+        GlobalConfig globalConfig = mybatisPlusGeneratorConfig.getGlobalConfig();
+        if (globalConfig == null) {
+            throw new GeneratorException("globalConfig不能为空");
+        }
         // 设置java代码输出目录绝对路径
         globalConfig.setOutputDir(javaOutputDir);
 
@@ -153,10 +186,10 @@ public class CodeGenerator {
             //  %sService 生成 UserService,%s 为占位符
             globalConfig.setServiceName(GeneratorConstant.SERVICE_NAME);
         }
+        return globalConfig;
+    }
 
-        // 设置全局配置
-        autoGenerator.setGlobalConfig(globalConfig);
-
+    private DataSourceConfig obtainDataSourceConfig(GeneratorProperties generatorProperties) {
         // 数据源配置
         DataSourceConfig dataSourceConfig = generatorProperties.getDataSourceConfig();
         if (dataSourceConfig == null) {
@@ -172,18 +205,21 @@ public class CodeGenerator {
             // 设置SQLServer元数据自定义查询
             dataSourceConfig.setDbQuery(new SpringBootPlusSqlServerQuery());
         }
+        return dataSourceConfig;
+    }
 
-        // 设置数据源
-        autoGenerator.setDataSource(dataSourceConfig);
-
+    private PackageConfig obtainPackageConfig(GeneratorProperties generatorProperties,
+                                              MybatisPlusGeneratorConfig mybatisPlusGeneratorConfig) {
         // 包配置
         PackageConfig packageConfig = mybatisPlusGeneratorConfig.getPackageConfig();
         packageConfig.setModuleName(moduleName);
         packageConfig.setParent(generatorProperties.getParentPackage());
+        return packageConfig;
+    }
 
-        // 设置包信息
-        autoGenerator.setPackageInfo(packageConfig);
-
+    private StrategyConfig obtainStrategyConfig(GeneratorProperties generatorProperties,
+                                                MybatisPlusGeneratorConfig mybatisPlusGeneratorConfig,
+                                                String tableName) {
         // 策略配置
         StrategyConfig strategyConfig = mybatisPlusGeneratorConfig.getStrategyConfig();
         if (strategyConfig == null) {
@@ -197,7 +233,6 @@ public class CodeGenerator {
             strategyConfig.setTablePrefix(tablePrefixList.toArray(new String[]{}));
         }
 
-
         if (StringUtils.isBlank(strategyConfig.getSuperEntityClass())) {
             // 自定义继承的Entity类全称，带包名
             strategyConfig.setSuperEntityClass(GeneratorConstant.SUPER_ENTITY_CLASS);
@@ -210,12 +245,63 @@ public class CodeGenerator {
         strategyConfig.setSuperServiceClass(GeneratorConstant.SUPER_SERVICE_CLASS);
         // 自定义继承的ServiceImpl类全称，带包名
         strategyConfig.setSuperServiceImplClass(GeneratorConstant.SUPER_SERVICE_IMPL_CLASS);
+        return strategyConfig;
+    }
 
-        // 设置策略
-        autoGenerator.setStrategy(strategyConfig);
+    private GeneratorConfig obtainGeneratorConfig(GeneratorProperties generatorProperties,
+                                                  List<FileOutConfig> focList) {
+        GeneratorConfig generatorConfig = generatorProperties.getGeneratorConfig();
 
+        String parentPackagePath = generatorProperties.getParentPackagePath();
+        String finalJavaOutputDir = javaOutputDir;
+        String finalMapperXmlOutputDir = mapperXmlOutputDir;
+
+        String modulePath = "";
+        if (StringUtils.isNotBlank(moduleName)) {
+            modulePath = File.separator + moduleName;
+        }
+        final String finalModulePath = modulePath;
+
+        // 生成Mapper XML
+        if (generatorConfig.isGeneratorMapperXml()) {
+            focList.add(new FileOutConfig(GeneratorConstant.MAPPER_XML_TEMPLATE_PATH) {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    // 指定Mapper XML文件路径
+                    return finalMapperXmlOutputDir + finalModulePath + File.separator
+                            + tableInfo.getEntityName() + GeneratorConstant.MAPPER + StringPool.DOT_XML;
+                }
+            });
+        }
+
+        // 自定义pageParam模板
+        if (generatorConfig.isGeneratorPageParam()) {
+            focList.add(new FileOutConfig(GeneratorConstant.PAGE_PARAM_TEMPLATE_PATH) {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return finalJavaOutputDir + File.separator + parentPackagePath + finalModulePath + File.separator + GeneratorConstant.PARAM +
+                            File.separator + tableInfo.getEntityName() + GeneratorConstant.PAGE_PARAM + StringPool.DOT_JAVA;
+                }
+            });
+        }
+
+        // 自定义queryVo模板
+        if (generatorConfig.isGeneratorQueryVo()) {
+            focList.add(new FileOutConfig(GeneratorConstant.QUERY_VO_TEMPLATE_PATH) {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return finalJavaOutputDir + File.separator + parentPackagePath + finalModulePath + File.separator + GeneratorConstant.VO +
+                            File.separator + tableInfo.getEntityName() + GeneratorConstant.QUERY_VO + StringPool.DOT_JAVA;
+                }
+            });
+        }
+        return generatorConfig;
+    }
+
+    private InjectionConfig obtainInjectionConfig(GeneratorProperties generatorProperties,
+                                                  String tableName, String pkIdName) {
         // 自定义配置
-        InjectionConfig injectionConfig = new InjectionConfig() {
+        return new InjectionConfig() {
             @Override
             public void initMap() {
                 List<TableInfo> tableInfos = this.getConfig().getTableInfoList();
@@ -307,60 +393,9 @@ public class CodeGenerator {
                 this.setMap(map);
             }
         };
-        List<FileOutConfig> focList = new ArrayList<>();
+    }
 
-
-        GeneratorConfig generatorConfig = generatorProperties.getGeneratorConfig();
-
-        String parentPackagePath = generatorProperties.getParentPackagePath();
-        String finalJavaOutputDir = javaOutputDir;
-        String finalMapperXmlOutputDir = mapperXmlOutputDir;
-
-        String modulePath = "";
-        if (StringUtils.isNotBlank(moduleName)) {
-            modulePath = File.separator + moduleName;
-        }
-        final String finalModulePath = modulePath;
-
-        // 生成Mapper XML
-        if (generatorConfig.isGeneratorMapperXml()) {
-            focList.add(new FileOutConfig(GeneratorConstant.MAPPER_XML_TEMPLATE_PATH) {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    // 指定Mapper XML文件路径
-                    return finalMapperXmlOutputDir + finalModulePath + File.separator
-                            + tableInfo.getEntityName() + GeneratorConstant.MAPPER + StringPool.DOT_XML;
-                }
-            });
-        }
-
-        // 自定义pageParam模板
-        if (generatorConfig.isGeneratorPageParam()) {
-            focList.add(new FileOutConfig(GeneratorConstant.PAGE_PARAM_TEMPLATE_PATH) {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return finalJavaOutputDir + File.separator + parentPackagePath + finalModulePath + File.separator + GeneratorConstant.PARAM +
-                            File.separator + tableInfo.getEntityName() + GeneratorConstant.PAGE_PARAM + StringPool.DOT_JAVA;
-                }
-            });
-        }
-
-        // 自定义queryVo模板
-        if (generatorConfig.isGeneratorQueryVo()) {
-            focList.add(new FileOutConfig(GeneratorConstant.QUERY_VO_TEMPLATE_PATH) {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return finalJavaOutputDir + File.separator + parentPackagePath + finalModulePath + File.separator + GeneratorConstant.VO +
-                            File.separator + tableInfo.getEntityName() + GeneratorConstant.QUERY_VO + StringPool.DOT_JAVA;
-                }
-            });
-        }
-
-        injectionConfig.setFileOutConfigList(focList);
-
-        // 设置自定义配置
-        autoGenerator.setCfg(injectionConfig);
-
+    private TemplateConfig obtainTemplateConfig(GeneratorConfig generatorConfig) {
         // 模版生成配置，设置为空，表示不生成
         TemplateConfig templateConfig = new TemplateConfig();
         // xml使用自定义输出
@@ -386,11 +421,7 @@ public class CodeGenerator {
             templateConfig.setMapper(null);
         }
 
-        // 设置模板引擎
-        autoGenerator.setTemplate(templateConfig);
-
-        // 执行代码生成
-        autoGenerator.execute();
+        return templateConfig;
     }
 
     /**
@@ -400,7 +431,7 @@ public class CodeGenerator {
      * @param underline
      * @return
      */
-    public static String underlineToCamel(String underline) {
+    private static String underlineToCamel(String underline) {
         if (StringUtils.isNotBlank(underline)) {
             return NamingStrategy.underlineToCamel(underline);
         }
@@ -414,7 +445,7 @@ public class CodeGenerator {
      * @param underline
      * @return
      */
-    public static String underlineToPascal(String underline) {
+    private static String underlineToPascal(String underline) {
         if (StringUtils.isNotBlank(underline)) {
             return NamingStrategy.capitalFirst(NamingStrategy.underlineToCamel(underline));
         }
@@ -428,7 +459,7 @@ public class CodeGenerator {
      * @param underline
      * @return
      */
-    public static String underlineToColon(String underline) {
+    private static String underlineToColon(String underline) {
         if (StringUtils.isBlank(underline)) {
             return null;
         }
@@ -442,7 +473,7 @@ public class CodeGenerator {
      * @param name
      * @return
      */
-    public static String toCamel(String name) {
+    private static String toCamel(String name) {
         if (StringUtils.isBlank(name)) {
             return null;
         }

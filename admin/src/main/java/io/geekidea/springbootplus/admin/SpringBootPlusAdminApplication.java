@@ -19,7 +19,6 @@ package io.geekidea.springbootplus.admin;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +32,6 @@ import org.springframework.core.env.ConfigurableEnvironment;
  **/
 @Slf4j
 @Configuration
-@EnableAutoConfiguration
 @EnableAdminServer
 @SpringBootApplication
 public class SpringBootPlusAdminApplication {

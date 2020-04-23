@@ -76,16 +76,11 @@ public class StringToDateUtil {
         }
         source = source.trim();
 
-        try {
-            int timeLength = source.length();
-            Long time = Long.parseLong(source);
-            if (timeLength == TIMESTAMP_LENGTH) {
-                time = time * 1000;
-            }
-            Date date = new Date(time);
-            return date;
-        } catch (Exception e) {
-
+        int timeLength = source.length();
+        if (timeLength == TIMESTAMP_LENGTH) {
+            long time = Long.parseLong(source);
+            time = time * 1000;
+            return new Date(time);
         }
 
         Date date = null;

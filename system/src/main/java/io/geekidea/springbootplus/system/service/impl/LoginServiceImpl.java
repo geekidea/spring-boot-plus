@@ -42,7 +42,6 @@ import io.geekidea.springbootplus.system.service.SysRoleService;
 import io.geekidea.springbootplus.system.vo.LoginSysUserTokenVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -57,7 +56,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -188,10 +186,6 @@ public class LoginServiceImpl implements LoginService {
         // 缓存登录信息到Redis
         loginRedisService.cacheLoginInfo(jwtToken, loginSysUserVo);
         log.debug("登录成功,username:{}", username);
-
-        // 缓存登录信息到redis
-        String tokenSha256 = DigestUtils.sha256Hex(token);
-        redisTemplate.opsForValue().set(tokenSha256, loginSysUserVo, 1, TimeUnit.DAYS);
 
         // 返回token和登录用户信息对象
         LoginSysUserTokenVo loginSysUserTokenVo = new LoginSysUserTokenVo();

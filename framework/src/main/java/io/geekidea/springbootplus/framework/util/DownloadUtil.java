@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -43,10 +44,10 @@ public final class DownloadUtil {
     /**
      * 下载文件，使用默认下载处理器
      *
-     * @param downloadDir
-     * @param downloadFileName
-     * @param allowFileExtensions
-     * @param response
+     * @param downloadDir   文件目录
+     * @param downloadFileName  文件名称
+     * @param allowFileExtensions   允许下载的扩展名
+     * @param response  响应
      * @throws Exception
      */
     public static void download(String downloadDir, String downloadFileName, List<String> allowFileExtensions, HttpServletResponse response) throws Exception {
@@ -81,6 +82,11 @@ public final class DownloadUtil {
         // 获取文件名称
         String fileExtension = FilenameUtils.getExtension(downloadFileName);
 
+        // 要下载的文件后缀是否允许下载
+        if (!allowFileExtensions.contains(fileExtension)) {
+            throw new IllegalArgumentException("不允许下载该文件");
+        }
+
         // 从服务器读取文件，然后输出
         File downloadFile = new File(downloadDir, downloadFileName);
         if (!downloadFile.exists()) {
@@ -112,7 +118,7 @@ public final class DownloadUtil {
 
         String browser = BrowserUtil.getCurrent(request);
         if (BrowserUtil.FIREFOX.equals(browser)) {
-            encodeDownFileName = "=?UTF-8?B?" + (new String(Base64Utils.encodeToString(downloadFileName.getBytes("UTF-8")))) + "?=";
+            encodeDownFileName = "=?UTF-8?B?" + (Base64Utils.encodeToString(downloadFileName.getBytes(StandardCharsets.UTF_8))) + "?=";
         } else {
             encodeDownFileName = URLEncoder.encode(downloadFileName, "utf-8").replaceAll("\\+", "%20");
         }
@@ -133,7 +139,7 @@ public final class DownloadUtil {
         FileCopyUtils.copy(in, response.getOutputStream());
     }
 
-    public static interface DownloadHandler {
+    public interface DownloadHandler {
         /**
          * 下载自定义处理
          *
