@@ -451,9 +451,8 @@ tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
 
 
 ## 联系
-QQ | Wechat |  toutiao
+QQ 625301326| 微信公众号 geekideaio|  今日头条 GeekIdea
 -|-|-
-625301326 | geekideaio | GeekIdea |
 ![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png) | ![Wechat Official Account](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-official.jpg) | ![toutiao](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-toutiao.jpeg) |
 
 ## 赞赏
