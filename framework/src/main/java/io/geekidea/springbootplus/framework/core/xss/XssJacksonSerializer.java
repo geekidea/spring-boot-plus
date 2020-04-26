@@ -36,7 +36,7 @@ public class XssJacksonSerializer extends JsonSerializer<String> {
 
     @Override
     public void serialize(String s, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeString(StringEscapeUtils.escapeHtml4(s));
+        jsonGenerator.writeString(StringEscapeUtils.unescapeHtml4(s));
     }
 
 }
