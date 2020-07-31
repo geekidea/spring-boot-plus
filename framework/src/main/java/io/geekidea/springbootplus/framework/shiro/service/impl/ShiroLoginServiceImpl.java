@@ -36,6 +36,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Shiro登录服务
@@ -97,19 +98,27 @@ public class ShiroLoginServiceImpl implements ShiroLoginService {
             httpServletResponse.setStatus(CommonConstant.JWT_INVALID_TOKEN_CODE);
             throw new AuthenticationException("token已无效，请使用已刷新的token");
         }
+
         String username = jwtToken.getUsername();
-        String salt = jwtToken.getSalt();
-        Long expireSecond = jwtProperties.getExpireSecond();
-        // 生成新token字符串
-        String newToken = JwtUtil.generateToken(username, salt, Duration.ofSeconds(expireSecond));
-        // 生成新JwtToken对象
-        JwtToken newJwtToken = JwtToken.build(newToken, username, salt, expireSecond);
-        // 更新redis缓存
-        loginRedisService.refreshLoginInfo(token, username, newJwtToken);
-        log.debug("刷新token成功，原token:{}，新token:{}", token, newToken);
-        // 设置响应头
-        // 刷新token
-        httpServletResponse.setStatus(CommonConstant.JWT_REFRESH_TOKEN_CODE);
-        httpServletResponse.setHeader(JwtTokenUtil.getTokenName(), newToken);
+
+        // 添加redis锁，避免并发请求，重复更新token
+        Boolean lock = redisTemplate.opsForValue().setIfAbsent(username, token, 10 * 1000, TimeUnit.MILLISECONDS);
+        if (lock != null && lock) {
+            String salt = jwtToken.getSalt();
+            Long expireSecond = jwtProperties.getExpireSecond();
+            // 生成新token字符串
+            String newToken = JwtUtil.generateToken(username, salt, Duration.ofSeconds(expireSecond));
+            // 生成新JwtToken对象
+            JwtToken newJwtToken = JwtToken.build(newToken, username, salt, expireSecond);
+            // 更新redis缓存
+            loginRedisService.refreshLoginInfo(token, username, newJwtToken);
+            log.debug("刷新token成功，原token:{}，新token:{}", token, newToken);
+            // 设置响应头
+            // 刷新token
+            httpServletResponse.setStatus(CommonConstant.JWT_REFRESH_TOKEN_CODE);
+            httpServletResponse.setHeader(JwtTokenUtil.getTokenName(), newToken);
+            //释放锁
+            redisTemplate.delete(username);
+        }
     }
 }
