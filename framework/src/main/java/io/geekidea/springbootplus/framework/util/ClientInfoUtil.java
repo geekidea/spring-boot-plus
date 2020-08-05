@@ -21,6 +21,7 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import io.geekidea.springbootplus.config.constant.CommonConstant;
 import io.geekidea.springbootplus.framework.common.bean.ClientInfo;
 import io.geekidea.springbootplus.framework.common.bean.DeviceInfo;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
@@ -54,6 +55,10 @@ public class ClientInfoUtil {
      * @return
      */
     public static ClientInfo get(String userAgentString){
+        if (StringUtils.isEmpty(userAgentString)) {
+            return null;
+        }
+
         ClientInfo clientInfo = new ClientInfo();
 
         UserAgent userAgent = UserAgentUtil.parse(userAgentString);
