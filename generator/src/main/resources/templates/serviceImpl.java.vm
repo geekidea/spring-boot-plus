@@ -66,7 +66,11 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     #end
     @Override
     public Paging<${entity}${cfg.queryVo}> get${entity}PageList(${entity}${cfg.pageParam} ${cfg.entityObjectName}${cfg.pageParam}) throws Exception {
+    #if(${cfg.pageListOrder})
         Page<${entity}${cfg.queryVo}> page = new PageInfo<>(${cfg.entityObjectName}${cfg.pageParam}, OrderItem.desc(getLambdaColumn(${entity}::getCreateTime)));
+    #else
+        Page<${entity}${cfg.queryVo}> page = new PageInfo<>(${cfg.entityObjectName}${cfg.pageParam});
+    #end
     #if(${cfg.generatorStrategy} != 'SINGLE')
         IPage<${entity}${cfg.queryVo}> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}${cfg.pageParam});
     #else
