@@ -1,3 +1,4 @@
+import org.apache.tools.ant.filters.ReplaceTokens
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 /*
@@ -8,6 +9,7 @@ allprojects {
     group = 'io.geekidea.boot'
     version = '2.1-SNAPSHOT'
 }
+def profileActive = System.getProperty("profile") ?: "dev"
 
 
 
@@ -41,6 +43,9 @@ subprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'io.spring.dependency-management'
 
+    processResources {
+        filter ReplaceTokens, tokens: [profileActive: profileActive]
+    }
 
     dependencyManagement {
         imports {
