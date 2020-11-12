@@ -40,7 +40,7 @@ spring:
 ---
 spring:
   profiles:
-    active: @profileActive@
+    active: dev
 
 # logback.xml中有详细的日志配置
 logging:
