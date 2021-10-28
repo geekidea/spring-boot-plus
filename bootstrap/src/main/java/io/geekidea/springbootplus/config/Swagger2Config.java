@@ -162,6 +162,8 @@ public class Swagger2Config {
             basePackages = basePackage.split(SPLIT_COMMA);
         } else if (basePackage.contains(SPLIT_SEMICOLON)) {
             basePackages = basePackage.split(SPLIT_SEMICOLON);
+        } else{
+            basePackages = new String[]{basePackage};
         }
         log.info("swagger scan basePackages:" + Arrays.toString(basePackages));
         return basePackages;
