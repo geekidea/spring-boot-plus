@@ -33,15 +33,12 @@
 
 ### 主要特性
 - 集成spring boot 常用开发组件集、公共配置、AOP日志等
-- Maven多模块架构
+- Maven单模块架构，更快更简单
 - 集成mybatis plus快速dao操作
-- 快速生成后台代码: entity/param/vo/controller/service/mapper/xml
+- 快速生成后台代码: entity/dto/query/vo/controller/service/mapper/xml
 - 集成Swagger/Knife4j，可自动生成api文档
-- 集成jwt、shiro权限控制
 - 集成Redis缓存
 - 集成HikariCP连接池，JDBC性能和慢查询检测
-- 集成spring boot admin，实时检测项目运行情况
-- 使用assembly maven插件进行不同环境打包部署,包含启动、重启命令，配置文件提取到外部config目录
 
 ## [V2.0视频介绍](https://www.bilibili.com/video/BV16A41187XE/)
 <p align="center">
@@ -52,17 +49,33 @@
 
 ## 项目结构
 ```text
-    └── spring-boot-plus
-    ├── admin               SpringBootAdmin Server模块
-    ├── bootstrap           spring-boot-plus 启动模块
-    ├── config              配置模块
-    ├── distribution        打包模块
-    ├── docs                文档目录
-    ├── example             示例模块，自己的业务可新建多个模块处理
-    ├── framework           框架核心模块
-    ├── generator           代码生成模块
-    ├── scheduled           任务调度模块
-    └── system              系统模块
+spring-boot-plus
+├── main
+│ ├── java
+│ │ └── io
+│ └── resources
+│     ├── application-dev.yml
+│     ├── application-prod.yml
+│     ├── application-test.yml
+│     ├── application.yml
+│     ├── banner.txt
+│     ├── mapper
+│     └── static
+└── test
+    ├── java
+    │ └── io
+    └── resources
+        └── templates
+```
+
+## 源代码目录结构
+```text
+src/main/java/io/geekidea/boot
+├── SpringBootPlusApplication.java
+├── auth
+├── config
+├── framework
+└── system
 ```
 
 ### 项目环境 
@@ -75,26 +88,21 @@ Redis | 3.2+ |  |
 ### 技术选型 
 技术 | 版本 |  备注
 -|-|-
-Spring Boot | 2.2.0.RELEASE | 最新发布稳定版 |
-Spring Framework | 5.2.0.RELEASE | 最新发布稳定版 |
-Spring Boot Admin| 2.2.2 | 管理和监控SpringBoot应用程序 |
-Mybatis | 3.5.3 | 持久层框架 |
-Mybatis Plus | 3.3.1 | mybatis增强框架 |
-HikariCP | 3.4.2 | 数据源 |
-Fastjson | 1.2.67 | JSON处理工具集 |
+Spring Boot | 2.7.10 | 最新发布稳定版 |
+Spring Framework | 5.3.26 | 最新发布稳定版 |
+Mybatis | 3.5.9 | 持久层框架 |
+Mybatis Plus | 3.5.3.1 | mybatis增强框架 |
+HikariCP | 4.0.3 | 数据源 |
+Fastjson | 1.2.83 | JSON处理工具集 |
 Swagger2 | 2.9.2 | api文档生成工具 |
-Knife4j | 2.0.2 | api文档生成工具 |
-commons-lang3 | 3.9 | 常用工具包 |
-commons-io | 2.6 | IO工具包 |
-commons-codec | 1.14 | 加密解密等工具包 |
-commons-collections4 | 4.4 | 集合工具包 |
-reflections | 0.9.9 | 反射工具包 |
-hibernate-validator | 6.0.18.Final | 后台参数校验注解 |
-Shiro | 1.5.1 | 权限控制 |
-JWT | 3.10.1 | JSON WEB TOKEN |
-hutool-all | 5.2.4 | 常用工具集 |
-lombok | 1.18.12 | 注解生成Java Bean等工具 |
-mapstruct | 1.3.1.Final | 对象属性复制工具 |
+Knife4j | 4.1.0 | api文档生成工具 |
+commons-lang3 | 3.12.0 | 常用工具包 |
+commons-io | 2.11.0 | IO工具包 |
+commons-codec | 1.15 | 加密解密等工具包 |
+commons-collections4 | 4.4.4 | 集合工具包 |
+hibernate-validator | 6.2.5.Final | 后台参数校验注解 |
+hutool-all | 5.8.16 | 常用工具集 |
+lombok | 1.18.26 | 注解生成Java Bean等工具 |
 
 ### 项目链路图
 ![项目调用链路图](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/spring-boot-plus-link-diagram.jpg)
