@@ -1,0 +1,65 @@
+package $!{package.Service};
+
+import $!{cfg.paging};
+import $!{superServiceClassPackage};
+import $!{cfg.addDtoPath};
+import $!{cfg.updateDtoPath};
+import $!{package.Entity}.$!{entity};
+import $!{cfg.queryPath};
+import $!{cfg.infoVoPath};
+import $!{cfg.voPath};
+
+/**
+ * $!{table.comment} 服务接口
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}> {
+
+    /**
+     * 添加$!{table.comment}
+     *
+     * @param $!{cfg.entityObjectName}AddDto
+     * @return
+     * @throws Exception
+     */
+    boolean add$!{entity}($!{entity}AddDto $!{cfg.entityObjectName}AddDto) throws Exception;
+
+    /**
+     * 修改$!{table.comment}
+     *
+     * @param $!{cfg.entityObjectName}UpdateDto
+     * @return
+     * @throws Exception
+     */
+    boolean update$!{entity}($!{entity}UpdateDto $!{cfg.entityObjectName}UpdateDto) throws Exception;
+
+    /**
+     * 删除$!{table.comment}
+     *
+     * @param $!{cfg.pkIdName}
+     * @return
+     * @throws Exception
+     */
+    boolean delete$!{entity}(Long $!{cfg.pkIdName}) throws Exception;
+
+    /**
+     * $!{table.comment}详情
+     *
+     * @param $!{cfg.pkIdName}
+     * @return
+     * @throws Exception
+     */
+    $!{entity}InfoVo get$!{entity}ById(Long $!{cfg.pkIdName}) throws Exception;
+
+    /**
+     * $!{table.comment}分页列表
+     *
+     * @param $!{cfg.entityObjectName}Query
+     * @return
+     * @throws Exception
+     */
+    Paging<$!{entity}Vo> get$!{entity}List($!{entity}Query $!{cfg.entityObjectName}Query) throws Exception;
+
+}

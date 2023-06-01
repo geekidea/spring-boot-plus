@@ -1,0 +1,120 @@
+package $!{package.Controller};
+
+import io.geekidea.boot.auth.annotation.Permission;
+import $!{cfg.paging};
+import $!{cfg.apiResult};
+import $!{cfg.addDtoPath};
+import $!{cfg.updateDtoPath};
+import $!{cfg.queryPath};
+import $!{package.Service}.$!{table.serviceName};
+import $!{cfg.infoVoPath};
+import $!{cfg.voPath};
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+/**
+ * $!{table.comment} 控制器
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Slf4j
+@RestController
+@RequestMapping("/$!{cfg.entityObjectName}")
+@Tag(name = "$!{table.comment}")
+public class $!{table.controllerName} {
+
+    @Autowired
+    private $!{table.serviceName} $!{cfg.serviceObjectName};
+
+    /**
+     * 添加$!{table.comment}
+     *
+     * @param $!{cfg.entityObjectName}AddDto
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/add$!{entity}")
+    @Operation(summary = "添加$!{table.comment}")
+    #if($!{cfg.permission})
+    @Permission("$!{cfg.colonTableName}:add")
+    #end
+    public ApiResult add$!{entity}(@Valid @RequestBody $!{entity}AddDto $!{cfg.entityObjectName}AddDto) throws Exception {
+        boolean flag = $!{cfg.entityObjectName}Service.add$!{entity}($!{cfg.entityObjectName}AddDto);
+        return ApiResult.result(flag);
+    }
+
+    /**
+     * 修改$!{table.comment}
+     *
+     * @param $!{cfg.entityObjectName}UpdateDto
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/update$!{entity}")
+    @Operation(summary = "修改$!{table.comment}")
+    #if($!{cfg.permission})
+    @Permission("$!{cfg.colonTableName}:update")
+    #end
+    public ApiResult update$!{entity}(@Valid @RequestBody $!{entity}UpdateDto $!{cfg.entityObjectName}UpdateDto) throws Exception {
+        boolean flag = $!{cfg.entityObjectName}Service.update$!{entity}($!{cfg.entityObjectName}UpdateDto);
+        return ApiResult.result(flag);
+    }
+
+    /**
+     * 删除$!{table.comment}
+     *
+     * @param $!{cfg.pkIdName}
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/delete$!{entity}/{$!{cfg.pkIdName}}")
+    @Operation(summary = "删除$!{table.comment}")
+    #if($!{cfg.permission})
+    @Permission("$!{cfg.colonTableName}:delete")
+    #end
+    public ApiResult delete$!{entity}(@PathVariable Long $!{cfg.pkIdName}) throws Exception {
+        boolean flag = $!{cfg.entityObjectName}Service.delete$!{entity}($!{cfg.pkIdName});
+        return ApiResult.result(flag);
+    }
+
+    /**
+     * 获取$!{table.comment}详情
+     *
+     * @param $!{cfg.pkIdName}
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/get$!{entity}/{$!{cfg.pkIdName}}")
+    @Operation(summary = "$!{table.comment}详情")
+    #if($!{cfg.permission})
+    @Permission("$!{cfg.colonTableName}:info")
+    #end
+    public ApiResult<$!{entity}InfoVo> get$!{entity}(@PathVariable Long $!{cfg.pkIdName}) throws Exception {
+        $!{entity}InfoVo $!{cfg.entityObjectName}InfoVo = $!{cfg.entityObjectName}Service.get$!{entity}ById($!{cfg.pkIdName});
+        return ApiResult.success($!{cfg.entityObjectName}InfoVo);
+    }
+
+    /**
+     * $!{table.comment}分页列表
+     *
+     * @param $!{cfg.entityObjectName}Query
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/get$!{entity}List")
+    @Operation(summary = "$!{table.comment}分页列表")
+    #if($!{cfg.permission})
+    @Permission("$!{cfg.colonTableName}:list")
+    #end
+    public ApiResult<$!{entity}Vo> get$!{entity}List(@Valid @RequestBody $!{entity}Query $!{cfg.entityObjectName}Query) throws Exception {
+        Paging<$!{entity}Vo> paging = $!{cfg.entityObjectName}Service.get$!{entity}List($!{cfg.entityObjectName}Query);
+        return ApiResult.success(paging);
+    }
+
+}

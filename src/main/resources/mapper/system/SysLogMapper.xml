@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.system.mapper.SysLogMapper">
+
+    <select id="getSysLogById" resultType="io.geekidea.boot.system.vo.SysLogInfoVo">
+        select *
+        from sys_log
+        where id = #{id}
+    </select>
+
+    <select id="getSysLogList" parameterType="io.geekidea.boot.system.query.SysLogQuery"
+            resultType="io.geekidea.boot.system.vo.SysLogVo">
+        select *
+        from sys_log
+    </select>
+
+</mapper>

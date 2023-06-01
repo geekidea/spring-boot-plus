@@ -1,0 +1,39 @@
+package $!{cfg.voPackage};
+
+#if($!{cfg.existsBigDecimalType})
+import java.math.BigDecimal;
+#end
+#if($!{cfg.existsDateType})
+import java.util.Date;
+#end
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import java.io.Serializable;
+
+/**
+ * $!{table.comment}详情VO
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Data
+@Schema(description = "$!{table.comment}详情VO")
+public class $!{entity}InfoVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in $!{table.fields})
+#if(!$!{cfg.voExcludeFields.contains($!{field.propertyName})})
+
+#if("$!field.comment" != "")
+    @Schema(description = "$!{field.comment}")
+#end
+    private $!{field.propertyType} $!{field.propertyName};
+#end
+#end
+## ----------  END 字段循环遍历  ----------
+
+}
+

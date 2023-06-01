@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.system.mapper.SysDeptMapper">
+
+    <select id="getSysDeptById" resultType="io.geekidea.boot.system.vo.SysDeptInfoVo">
+        select *
+        from sys_dept
+        where status = 1
+          and id = #{id}
+    </select>
+
+    <select id="getSysDeptList" parameterType="io.geekidea.boot.system.query.SysDeptQuery"
+            resultType="io.geekidea.boot.system.vo.SysDeptVo">
+        select *
+        from sys_dept
+    </select>
+
+</mapper>

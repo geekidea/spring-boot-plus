@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.system.mapper.SysUserMapper">
+
+    <select id="getSysUserById" resultType="io.geekidea.boot.system.vo.SysUserInfoVo">
+        select *
+        from sys_user
+        where id = #{id}
+    </select>
+
+    <select id="getSysUserList" parameterType="io.geekidea.boot.system.query.SysUserQuery"
+            resultType="io.geekidea.boot.system.vo.SysUserVo">
+        select *
+        from sys_user
+    </select>
+
+    <select id="getLoginVoByUsername" resultType="io.geekidea.boot.auth.vo.LoginUserVo">
+        select u.id as userId,
+               u.username,
+               u.nickname,
+               u.password,
+               u.password,
+               u.salt,
+               u.status
+        from sys_user u
+        where u.username = #{username}
+    </select>
+
+</mapper>

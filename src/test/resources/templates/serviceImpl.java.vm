@@ -1,0 +1,81 @@
+package $!{package.ServiceImpl};
+
+import $!{cfg.businessException};
+import $!{cfg.orderByItem};
+import $!{cfg.paging};
+import $!{superServiceImplClassPackage};
+import $!{cfg.addDtoPath};
+import $!{cfg.updateDtoPath};
+import $!{package.Entity}.$!{entity};
+import $!{package.Mapper}.$!{table.mapperName};
+import $!{cfg.queryPath};
+import $!{package.Service}.$!{table.serviceName};
+import $!{cfg.infoVoPath};
+import $!{cfg.voPath};
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * $!{table.comment} 服务实现类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Service
+public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{table.mapperName}, $!{entity}> implements $!{table.serviceName} {
+
+    @Autowired
+    private $!{table.mapperName} $!{cfg.mapperObjectName};
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean add$!{entity}($!{entity}AddDto $!{cfg.entityObjectName}AddDto) throws Exception {
+        $!{entity} $!{cfg.entityObjectName} = new $!{entity}();
+        BeanUtils.copyProperties($!{cfg.entityObjectName}AddDto, $!{cfg.entityObjectName});
+        return save($!{cfg.entityObjectName});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean update$!{entity}($!{entity}UpdateDto $!{cfg.entityObjectName}UpdateDto) throws Exception {
+        Long $!{cfg.pkIdName} = $!{cfg.entityObjectName}UpdateDto.get$!{cfg.pascalPkIdName}();
+        $!{entity} $!{cfg.entityObjectName} = getById($!{cfg.pkIdName});
+        if ($!{cfg.entityObjectName} == null) {
+            throw new BusinessException("$!{table.comment}不存在");
+        }
+        BeanUtils.copyProperties($!{cfg.entityObjectName}UpdateDto, $!{cfg.entityObjectName});
+    #if($!{cfg.pascalUpdateTimeColumnName})
+        $!{cfg.entityObjectName}.set$!{cfg.pascalUpdateTimeColumnName}(new Date());
+    #end
+        return updateById($!{cfg.entityObjectName});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean delete$!{entity}(Long $!{cfg.pkIdName}) throws Exception {
+        return removeById($!{cfg.pkIdName});
+    }
+
+    @Override
+    public $!{entity}InfoVo get$!{entity}ById(Long $!{cfg.pkIdName}) throws Exception {
+        return $!{cfg.entityObjectName}Mapper.get$!{entity}ById($!{cfg.pkIdName});
+    }
+
+    @Override
+    public Paging<$!{entity}Vo> get$!{entity}List($!{entity}Query $!{cfg.entityObjectName}Query) throws Exception {
+        #if($!{cfg.defaultOrderColumnName})
+        handlePage($!{cfg.entityObjectName}Query, OrderByItem.desc("$!{cfg.defaultOrderColumnName}"));
+        #else
+        handlePage($!{cfg.entityObjectName}Query);
+        #end
+        List<$!{entity}Vo> list = $!{cfg.entityObjectName}Mapper.get$!{entity}List($!{cfg.entityObjectName}Query);
+        Paging<$!{entity}Vo> paging = new Paging<>(list);
+        return paging;
+    }
+
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.system.mapper.SysRoleMapper">
+
+    <select id="getSysRoleById" resultType="io.geekidea.boot.system.vo.SysRoleInfoVo">
+        select *
+        from sys_role
+        where id = #{id}
+    </select>
+
+    <select id="getSysRoleList" parameterType="io.geekidea.boot.system.query.SysRoleQuery"
+            resultType="io.geekidea.boot.system.vo.SysRoleVo">
+        select *
+        from sys_role
+    </select>
+
+    <select id="getSysRolesByUserId" resultType="io.geekidea.boot.system.entity.SysRole">
+        select r.*
+        from sys_role r
+                 inner join sys_user_role ur
+                            on r.id = ur.role_id
+                 inner join sys_user u
+                            on u.id = ur.user_id
+        where u.status = 1
+          and r.status = 1
+          and u.id = #{userId}
+    </select>
+
+</mapper>

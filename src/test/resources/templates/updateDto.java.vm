@@ -1,0 +1,58 @@
+package $!{cfg.dtoPackage};
+
+#if($!{cfg.existsBigDecimalType})
+import java.math.BigDecimal;
+#end
+#if($!{cfg.existsDateType})
+import java.util.Date;
+#end
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
+/**
+ * 修改$!{table.comment}参数
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Data
+#if($!{chainModel})
+@Accessors(chain = true)
+#end
+@Schema(description = "修改$!{table.comment}参数")
+public class $!{entity}UpdateDto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in $!{table.fields})
+#if(!$!{cfg.commonFields.contains($!{field.propertyName})})
+
+#if("$!field.comment" != "")
+    @Schema(description = "$!{field.comment}")
+#end
+## 必填且没有默认值
+#if(($!{field.metaInfo.nullable}==false && !$!{field.metaInfo.defaultValue}) || ($!{field.keyFlag} && !$null.isNull($!{idType}) &&
+    "$!idType" != ""))
+#if($!{field.columnType} == 'STRING')
+    @NotBlank(message = "$!{field.comment}不能为空")
+#else
+    @NotNull(message = "$!{field.comment}不能为空")
+#end
+#end
+#if($!{field.columnType} == 'STRING' && $!{field.metaInfo.length})
+    @Length(max = $!{field.metaInfo.length}, message = "$!{field.comment}长度超过限制")
+#end
+    private $!{field.propertyType} $!{field.propertyName};
+#end
+#end
+## ----------  END 字段循环遍历  ----------
+
+}
+
+

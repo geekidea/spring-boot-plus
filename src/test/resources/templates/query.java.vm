@@ -1,0 +1,29 @@
+package $!{cfg.queryPackage};
+
+import $!{cfg.superQueryPath};
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+#if($!{chainModel});
+import lombok.experimental.Accessors;
+#end
+
+/**
+ * $!{table.comment}查询参数
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Data
+@Schema(description = "$!{table.comment}查询参数")
+#if($!{entitySerialVersionUID})
+public class $!{entity}Query extends BasePageOrderQuery {
+#else
+public class $!{entity}Query {
+#end
+#if($!{entitySerialVersionUID})
+    private static final long serialVersionUID = 1L;
+#end
+
+}
+

@@ -1,0 +1,65 @@
+package $!{package.Entity};
+
+#foreach($pkg in $!{table.importPackages})
+import $!{pkg};
+#end
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import java.io.Serializable;
+
+/**
+ * $!{table.comment}
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Data
+#if($!{table.convert})
+@TableName("$!{table.name}")
+#end
+@Schema(description = "$!{table.comment}")
+public class $!{entity} implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in $!{table.fields})
+
+#if($!{field.keyFlag})
+    #set($keyPropertyName=$!{field.propertyName})
+#end
+#if("$!field.comment" != "")
+    @Schema(description = "$!{field.comment}")
+#end
+#if($!{field.keyFlag})
+## 主键
+#if($!{field.keyFlag} && !$null.isNull($!{idType}) && "$!idType" != "")
+    @TableId(value = "$!{field.annotationColumnName}", type = IdType.$!{idType})
+#elseif($!{field.convert})
+    @TableId("$!{field.annotationColumnName}")
+#end
+## 普通字段
+#elseif($!{field.fill})
+## -----   存在字段填充设置   -----
+#if($!{field.convert})
+    @TableField(value = "$!{field.annotationColumnName}", fill = FieldFill.$!{field.fill})
+#else
+    @TableField(fill = FieldFill.$!{field.fill})
+#end
+#elseif($!{field.convert})
+    @TableField("$!{field.annotationColumnName}")
+#end
+## 乐观锁注解
+#if($!{field.versionField})
+    @Version
+#end
+## 逻辑删除注解
+#if($!{field.logicDeleteField})
+    @TableLogic
+#end
+    private $!{field.propertyType} $!{field.propertyName};
+#end
+## ----------  END 字段循环遍历  ----------
+
+}
+
