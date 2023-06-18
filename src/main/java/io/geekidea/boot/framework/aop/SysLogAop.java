@@ -2,9 +2,8 @@ package io.geekidea.boot.framework.aop;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.config.properties.LogAopProperties;
@@ -207,7 +206,7 @@ public class SysLogAop {
                     sysLog.setResponseMessage(apiResult.getMsg());
                     Object responseData = apiResult.getData();
                     if (responseData != null) {
-                        String responseDataString = JSON.toJSONString(responseData, SerializerFeature.WriteDateUseDateFormat);
+                        String responseDataString = JSON.toJSONString(responseData);
                         sysLog.setResponseData(responseDataString);
                     }
                 }

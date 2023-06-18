@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
         } else if (exception instanceof DuplicateKeyException) {
             return ApiResult.fail("数据违反唯一约束");
         } else if (exception instanceof DataIntegrityViolationException) {
-            return ApiResult.fail("数据内容长度超出限制");
+            return ApiResult.fail("数据完整性异常");
         }
         return ApiResult.fail();
     }

@@ -12,3 +12,12 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# spring-boot-plus框架配置
+spring-boot-plus:
+  # 文件上传相关配置
+  file:
+    # 上传文件访问路径
+    access-path: /file/**
+    # 上传文件保存路径
+    upload-path: /home/upload/

@@ -1,6 +1,6 @@
 package io.geekidea.boot.framework.util;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import io.geekidea.boot.framework.response.ApiResult;
 
 import javax.servlet.http.HttpServletResponse;

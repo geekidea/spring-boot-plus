@@ -44,7 +44,7 @@ public class SysUser implements Serializable {
     @Schema(description = "电子邮件")
     private String email;
 
-    @Schema(description = "性别，0：女，1：男，默认1")
+    @Schema(description = "性别，0：未知，1：男，2：女，默认0")
     private Integer gender;
 
     @Schema(description = "头像")
@@ -55,6 +55,9 @@ public class SysUser implements Serializable {
 
     @Schema(description = "部门id")
     private Long deptId;
+
+    @Schema(description = "是否是超管 0：否，1：是")
+    private Boolean isAdmin;
 
     @Schema(description = "创建时间")
     private Date createTime;

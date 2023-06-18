@@ -39,8 +39,8 @@ public class SysMenuUpdateDto implements Serializable {
     @Length(max = 100, message = "菜单图标长度超过限制")
     private String icon;
 
-    @Schema(description = "菜单类型，1：菜单，2：按钮")
-    @NotNull(message = "菜单类型，1：菜单，2：按钮不能为空")
+    @Schema(description = "菜单类型，1：导航菜单，2：菜单，3：权限")
+    @NotNull(message = "菜单类型不能为空")
     private Integer type;
 
     @Schema(description = "状态，0：禁用，1：启用")
@@ -60,10 +60,6 @@ public class SysMenuUpdateDto implements Serializable {
     @Schema(description = "重定向")
     @Length(max = 100, message = "重定向长度超过限制")
     private String routeRedirect;
-
-    @Schema(description = "后端请求地址")
-    @Length(max = 200, message = "后端请求地址长度超过限制")
-    private String requestUrl;
 
     @Schema(description = "组件路径")
     @Length(max = 100, message = "组件路径长度超过限制")

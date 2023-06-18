@@ -27,16 +27,13 @@ public class SysUserVo implements Serializable {
     @Schema(description = "昵称")
     private String nickname;
 
-    @Schema(description = "盐值")
-    private String salt;
-
     @Schema(description = "手机号码")
     private String phone;
 
     @Schema(description = "电子邮件")
     private String email;
 
-    @Schema(description = "性别，0：女，1：男，默认1")
+    @Schema(description = "性别，0：未知，1：男，2：女，默认0")
     private Integer gender;
 
     @Schema(description = "头像")
@@ -47,6 +44,15 @@ public class SysUserVo implements Serializable {
 
     @Schema(description = "部门id")
     private Long deptId;
+
+    @Schema(description = "部门名称")
+    private String deptName;
+
+    @Schema(description = "角色名称")
+    private String roleName;
+
+    @Schema(description = "是否是超管 0：否，1：是")
+    private Boolean isAdmin;
 
     @Schema(description = "创建时间")
     private Date createTime;

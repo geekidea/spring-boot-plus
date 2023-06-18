@@ -88,14 +88,10 @@ Redis | 3.2+ |  |
 ### 技术选型 
 技术 | 版本 |  备注
 -|-|-
-Spring Boot | 2.7.10 | 最新发布稳定版 |
-Spring Framework | 5.3.26 | 最新发布稳定版 |
-Mybatis | 3.5.9 | 持久层框架 |
-Mybatis Plus | 3.5.3.1 | mybatis增强框架 |
-HikariCP | 4.0.3 | 数据源 |
-Fastjson | 1.2.83 | JSON处理工具集 |
-Swagger2 | 2.9.2 | api文档生成工具 |
-Knife4j | 4.1.0 | api文档生成工具 |
+spring boot | 2.7.12 | 最新发布稳定版 |
+mybatis-plus | 3.5.3.1 | mybatis增强框架 |
+fastjson2 | 2.0.33 | JSON处理工具集 |
+knife4j | 4.1.0 | api文档生成工具 |
 commons-lang3 | 3.12.0 | 常用工具包 |
 commons-io | 2.11.0 | IO工具包 |
 commons-codec | 1.15 | 加密解密等工具包 |

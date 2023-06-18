@@ -1,11 +1,11 @@
 package io.geekidea.boot.auth.service.impl;
 
 import io.geekidea.boot.auth.exception.LoginException;
-import io.geekidea.boot.config.properties.LoginProperties;
 import io.geekidea.boot.auth.service.LoginRedisService;
 import io.geekidea.boot.auth.util.TokenUtil;
 import io.geekidea.boot.auth.vo.LoginRedisVo;
 import io.geekidea.boot.auth.vo.LoginVo;
+import io.geekidea.boot.config.properties.LoginProperties;
 import io.geekidea.boot.framework.constant.RedisKey;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

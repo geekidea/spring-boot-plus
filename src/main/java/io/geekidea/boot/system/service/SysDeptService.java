@@ -7,7 +7,10 @@ import io.geekidea.boot.system.dto.SysDeptUpdateDto;
 import io.geekidea.boot.system.entity.SysDept;
 import io.geekidea.boot.system.query.SysDeptQuery;
 import io.geekidea.boot.system.vo.SysDeptInfoVo;
+import io.geekidea.boot.system.vo.SysDeptTreeVo;
 import io.geekidea.boot.system.vo.SysDeptVo;
+
+import java.util.List;
 
 /**
  * 部门 服务接口
@@ -61,5 +64,13 @@ public interface SysDeptService extends BaseService<SysDept> {
      * @throws Exception
      */
     Paging<SysDeptVo> getSysDeptList(SysDeptQuery sysDeptQuery) throws Exception;
+
+    /**
+     * 所有部门树形列表
+     *
+     * @return
+     * @throws Exception
+     */
+    List<SysDeptTreeVo> getSysDeptTreeList() throws Exception;
 
 }

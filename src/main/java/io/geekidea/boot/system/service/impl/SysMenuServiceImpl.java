@@ -1,17 +1,15 @@
 package io.geekidea.boot.system.service.impl;
 
+import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.framework.exception.BusinessException;
-import io.geekidea.boot.framework.page.OrderByItem;
-import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
 import io.geekidea.boot.system.dto.SysMenuAddDto;
 import io.geekidea.boot.system.dto.SysMenuUpdateDto;
 import io.geekidea.boot.system.entity.SysMenu;
 import io.geekidea.boot.system.mapper.SysMenuMapper;
-import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.service.SysMenuService;
 import io.geekidea.boot.system.vo.SysMenuInfoVo;
-import io.geekidea.boot.system.vo.SysMenuVo;
+import io.geekidea.boot.system.vo.SysMenuTreeVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 系统菜单 服务实现类
@@ -65,11 +64,43 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
     }
 
     @Override
-    public Paging<SysMenuVo> getSysMenuList(SysMenuQuery sysMenuQuery) throws Exception {
-        handlePage(sysMenuQuery, OrderByItem.desc("id"));
-        List<SysMenuVo> list = sysMenuMapper.getSysMenuList(sysMenuQuery);
-        Paging<SysMenuVo> paging = new Paging<>(list);
-        return paging;
+    public List<SysMenuTreeVo> getSysMenuTreeList() throws Exception {
+        List<SysMenuTreeVo> list = sysMenuMapper.getSysMenuTreeList();
+        return recursionSysMenuTreeList(0L, list);
+    }
+
+    @Override
+    public List<SysMenuTreeVo> getNavMenuTreeList() throws Exception {
+        Long userId = LoginUtil.getUserId();
+        if (userId == null) {
+            throw new BusinessException("用户ID不能为空");
+        }
+        boolean isAdmin = LoginUtil.isAdmin();
+        List<SysMenuTreeVo> list;
+        if (isAdmin) {
+            list = sysMenuMapper.getNavMenuTreeAllList();
+        } else {
+            list = sysMenuMapper.getNavMenuTreeList(userId);
+        }
+        return recursionSysMenuTreeList(0L, list);
+    }
+
+
+    /**
+     * 递归设置树形菜单
+     *
+     * @param parentId
+     * @param list
+     * @return
+     */
+    private List<SysMenuTreeVo> recursionSysMenuTreeList(Long parentId, List<SysMenuTreeVo> list) {
+        return list.stream()
+                .filter(vo -> vo.getParentId().equals(parentId))
+                .map(item -> {
+                    item.setChildren(recursionSysMenuTreeList(item.getId(), list));
+                    return item;
+                })
+                .collect(Collectors.toList());
     }
 
 }

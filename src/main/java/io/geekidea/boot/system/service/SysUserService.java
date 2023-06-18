@@ -2,6 +2,7 @@ package io.geekidea.boot.system.service;
 
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.service.BaseService;
+import io.geekidea.boot.system.dto.ResetSysUserPasswordDto;
 import io.geekidea.boot.system.dto.SysUserAddDto;
 import io.geekidea.boot.system.dto.SysUserUpdateDto;
 import io.geekidea.boot.system.entity.SysUser;
@@ -61,5 +62,14 @@ public interface SysUserService extends BaseService<SysUser> {
      * @throws Exception
      */
     Paging<SysUserVo> getSysUserList(SysUserQuery sysUserQuery) throws Exception;
+
+    /**
+     * 重置系统用户密码
+     *
+     * @param resetSysUserPasswordDto
+     * @return
+     * @throws Exception
+     */
+    boolean resetSysUserPassword(ResetSysUserPasswordDto resetSysUserPasswordDto) throws Exception;
 
 }

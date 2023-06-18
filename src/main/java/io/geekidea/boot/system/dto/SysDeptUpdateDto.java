@@ -29,10 +29,11 @@ public class SysDeptUpdateDto implements Serializable {
     private String name;
 
     @Schema(description = "父id")
+    @NotNull(message = "父id不能为空")
     private Long parentId;
 
     @Schema(description = "状态，0：禁用，1：启用")
-    private Integer status;
+    private Boolean status;
 
     @Schema(description = "排序")
     private Integer sort;

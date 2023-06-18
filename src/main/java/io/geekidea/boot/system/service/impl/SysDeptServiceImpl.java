@@ -11,7 +11,9 @@ import io.geekidea.boot.system.mapper.SysDeptMapper;
 import io.geekidea.boot.system.query.SysDeptQuery;
 import io.geekidea.boot.system.service.SysDeptService;
 import io.geekidea.boot.system.vo.SysDeptInfoVo;
+import io.geekidea.boot.system.vo.SysDeptTreeVo;
 import io.geekidea.boot.system.vo.SysDeptVo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 部门 服务实现类
@@ -70,6 +73,32 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDept> 
         List<SysDeptVo> list = sysDeptMapper.getSysDeptList(sysDeptQuery);
         Paging<SysDeptVo> paging = new Paging<>(list);
         return paging;
+    }
+
+    @Override
+    public List<SysDeptTreeVo> getSysDeptTreeList() throws Exception {
+        List<SysDeptTreeVo> list = sysDeptMapper.getSysDeptAllList();
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
+        return recursionSysDeptTreeList(0L, list);
+    }
+
+    /**
+     * 递归设置部门树形菜单
+     *
+     * @param parentId
+     * @param list
+     * @return
+     */
+    private List<SysDeptTreeVo> recursionSysDeptTreeList(Long parentId, List<SysDeptTreeVo> list) {
+        return list.stream()
+                .filter(vo -> vo.getParentId().equals(parentId))
+                .map(item -> {
+                    item.setChildren(recursionSysDeptTreeList(item.getId(), list));
+                    return item;
+                })
+                .collect(Collectors.toList());
     }
 
 }

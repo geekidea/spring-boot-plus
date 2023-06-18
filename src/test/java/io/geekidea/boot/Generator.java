@@ -18,7 +18,7 @@ public class Generator {
                 .setModuleName("hello")
                 .setAuthor("geekidea");
         // 表名称和需要去掉的表前缀
-        config.setTableNames("hello_world")
+        config.setTableNames("sys_user")
                 .setTablePrefix("");
         // 是否只更新实体类
          config.setOnlyOverrideEntity(true);

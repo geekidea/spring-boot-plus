@@ -94,6 +94,7 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
+# spring-boot-plus框架配置
 spring-boot-plus:
   openapi:
     title: Spring-Boot-Plus
@@ -122,6 +123,8 @@ spring-boot-plus:
       - /swagger-resources/**,/swagger-ui/**,/doc.html
       - /login
       - /index.html
+      - /file/**
+      - /upload/**
 
   # 日志AOP配置
   log-aop:
@@ -133,6 +136,8 @@ spring-boot-plus:
     print-head-log: false
     # 登录页面路径
     login-url: /login
+
+
 
 
 # swagger配置

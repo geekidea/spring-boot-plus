@@ -8,6 +8,7 @@ import io.geekidea.boot.system.dto.SysDeptUpdateDto;
 import io.geekidea.boot.system.query.SysDeptQuery;
 import io.geekidea.boot.system.service.SysDeptService;
 import io.geekidea.boot.system.vo.SysDeptInfoVo;
+import io.geekidea.boot.system.vo.SysDeptTreeVo;
 import io.geekidea.boot.system.vo.SysDeptVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 部门 控制器
@@ -105,6 +107,20 @@ public class SysDeptController {
     public ApiResult<SysDeptVo> getSysDeptList(@Valid @RequestBody SysDeptQuery sysDeptQuery) throws Exception {
         Paging<SysDeptVo> paging = sysDeptService.getSysDeptList(sysDeptQuery);
         return ApiResult.success(paging);
+    }
+
+    /**
+     * 部门树形列表
+     *
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/getSysDeptTreeList")
+    @Operation(summary = "部门树形列表")
+    @Permission("sys:dept:tree-list")
+    public ApiResult<SysDeptTreeVo> getSysDeptTreeList() throws Exception {
+        List<SysDeptTreeVo> list = sysDeptService.getSysDeptTreeList();
+        return ApiResult.success(list);
     }
 
 }

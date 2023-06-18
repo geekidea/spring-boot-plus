@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/spring_boot_plus?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://42.193.249.218:3306/spring_boot_plus?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
-    password: root
+    password: MySQL6789!@#$12340o
   redis:
     host: 127.0.0.1
     port: 6379
@@ -12,3 +12,12 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# spring-boot-plus框架配置
+spring-boot-plus:
+  # 文件上传相关配置
+  file:
+    # 上传文件访问路径
+    access-path: /file/**
+    # 上传文件保存路径
+    upload-path: /Users/mrliu/upload/

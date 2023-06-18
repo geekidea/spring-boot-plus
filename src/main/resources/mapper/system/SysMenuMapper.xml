@@ -32,4 +32,35 @@
           and u.id = #{userId}
     </select>
 
+    <select id="getSysMenuTreeList" resultType="io.geekidea.boot.system.vo.SysMenuTreeVo">
+        select *
+        from sys_menu
+    </select>
+
+    <select id="getNavMenuTreeAllList" resultType="io.geekidea.boot.system.vo.SysMenuTreeVo">
+        select *
+        from sys_menu
+        where status = 1
+          and is_show = 1
+    </select>
+
+    <select id="getNavMenuTreeList" resultType="io.geekidea.boot.system.vo.SysMenuTreeVo">
+        select distinct m.*
+        from sys_user u
+                 inner join sys_user_role ur
+                            on u.id = ur.user_id
+                 inner join sys_role r
+                            on r.id = ur.role_id
+                 inner join sys_role_menu rm
+                            on r.id = rm.role_id
+                 inner join sys_menu m
+                            on m.id = rm.menu_id
+        where u.status = 1
+          and r.status = 1
+          and m.status = 1
+          and m.is_show = 1
+          and u.id = #{userId}
+    </select>
+
+
 </mapper>

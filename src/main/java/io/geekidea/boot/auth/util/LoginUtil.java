@@ -1,10 +1,10 @@
 package io.geekidea.boot.auth.util;
 
 import io.geekidea.boot.auth.constant.LoginConstant;
-import io.geekidea.boot.config.properties.LoginProperties;
 import io.geekidea.boot.auth.service.LoginRedisService;
 import io.geekidea.boot.auth.vo.LoginRedisVo;
 import io.geekidea.boot.auth.vo.LoginVo;
+import io.geekidea.boot.config.properties.LoginProperties;
 import io.geekidea.boot.framework.exception.BusinessException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -46,20 +46,6 @@ public class LoginUtil {
      *
      * @return
      */
-    public static Long getLoginUserId() throws Exception {
-        String token = TokenUtil.getToken();
-        if (StringUtils.isBlank(token)) {
-            return null;
-        }
-        Long userId = loginRedisService.getLoginUserId(token);
-        return userId;
-    }
-
-    /**
-     * 获取登录信息
-     *
-     * @return
-     */
     public static LoginVo getLoginVo() throws Exception {
         LoginRedisVo loginRedisVo = getLoginRedisVo();
         if (loginRedisVo != null) {
@@ -88,11 +74,12 @@ public class LoginUtil {
      * @return
      */
     public static Long getUserId() throws Exception {
-        LoginVo loginVo = getLoginVo();
-        if (loginVo != null) {
-            return loginVo.getUserId();
+        String token = TokenUtil.getToken();
+        if (StringUtils.isBlank(token)) {
+            return null;
         }
-        return null;
+        Long userId = loginRedisService.getLoginUserId(token);
+        return userId;
     }
 
     /**

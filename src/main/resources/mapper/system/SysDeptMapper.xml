@@ -5,14 +5,20 @@
     <select id="getSysDeptById" resultType="io.geekidea.boot.system.vo.SysDeptInfoVo">
         select *
         from sys_dept
-        where status = 1
-          and id = #{id}
+        where id = #{id}
     </select>
 
     <select id="getSysDeptList" parameterType="io.geekidea.boot.system.query.SysDeptQuery"
             resultType="io.geekidea.boot.system.vo.SysDeptVo">
         select *
         from sys_dept
+    </select>
+
+    <select id="getSysDeptAllList" resultType="io.geekidea.boot.system.vo.SysDeptTreeVo">
+        select *
+        from sys_dept
+        where status = 1
+        order by sort
     </select>
 
 </mapper>

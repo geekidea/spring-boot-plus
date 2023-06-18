@@ -33,7 +33,7 @@ public class SysMenuVo implements Serializable {
     @Schema(description = "菜单图标")
     private String icon;
 
-    @Schema(description = "菜单类型，1：菜单，2：按钮")
+    @Schema(description = "菜单类型，1：导航菜单，2：菜单，3：权限")
     private Integer type;
 
     @Schema(description = "状态，0：禁用，1：启用")
@@ -51,9 +51,6 @@ public class SysMenuVo implements Serializable {
     @Schema(description = "重定向")
     private String routeRedirect;
 
-    @Schema(description = "后端请求地址")
-    private String requestUrl;
-
     @Schema(description = "组件路径")
     private String componentPath;
 
@@ -65,6 +62,9 @@ public class SysMenuVo implements Serializable {
 
     @Schema(description = "是否外链，0：否 1：是")
     private Boolean isLink;
+
+    @Schema(description = "是否首页 0：否，1：是")
+    private Boolean isHome;
 
     @Schema(description = "链接地址")
     private String linkUrl;

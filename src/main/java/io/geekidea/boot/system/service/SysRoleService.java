@@ -2,12 +2,15 @@ package io.geekidea.boot.system.service;
 
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.service.BaseService;
+import io.geekidea.boot.system.dto.RoleMenusDto;
 import io.geekidea.boot.system.dto.SysRoleAddDto;
 import io.geekidea.boot.system.dto.SysRoleUpdateDto;
 import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.query.SysRoleQuery;
 import io.geekidea.boot.system.vo.SysRoleInfoVo;
 import io.geekidea.boot.system.vo.SysRoleVo;
+
+import java.util.List;
 
 /**
  * 系统角色 服务接口
@@ -61,5 +64,22 @@ public interface SysRoleService extends BaseService<SysRole> {
      * @throws Exception
      */
     Paging<SysRoleVo> getSysRoleList(SysRoleQuery sysRoleQuery) throws Exception;
+
+    /**
+     * 获取所有角色列表
+     *
+     * @return
+     * @throws Exception
+     */
+    List<SysRole> getSysRoleAllList() throws Exception;
+
+    /**
+     * 设置角色权限
+     *
+     * @param roleMenusDto
+     * @return
+     * @throws Exception
+     */
+    boolean setRoleMenus(RoleMenusDto roleMenusDto) throws Exception;
 
 }

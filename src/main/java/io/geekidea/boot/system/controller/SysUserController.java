@@ -3,6 +3,7 @@ package io.geekidea.boot.system.controller;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
+import io.geekidea.boot.system.dto.ResetSysUserPasswordDto;
 import io.geekidea.boot.system.dto.SysUserAddDto;
 import io.geekidea.boot.system.dto.SysUserUpdateDto;
 import io.geekidea.boot.system.query.SysUserQuery;
@@ -105,6 +106,21 @@ public class SysUserController {
     public ApiResult<SysUserVo> getSysUserList(@Valid @RequestBody SysUserQuery sysUserQuery) throws Exception {
         Paging<SysUserVo> paging = sysUserService.getSysUserList(sysUserQuery);
         return ApiResult.success(paging);
+    }
+
+    /**
+     * 重置系统用户密码
+     *
+     * @param resetSysUserPasswordDto
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/resetSysUserPassword")
+    @Operation(summary = "重置系统用户密码")
+    @Permission("sys:user:reset-password")
+    public ApiResult resetSysUserPassword(@Valid @RequestBody ResetSysUserPasswordDto resetSysUserPasswordDto) throws Exception {
+        boolean flag = sysUserService.resetSysUserPassword(resetSysUserPasswordDto);
+        return ApiResult.result(flag);
     }
 
 }

@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.10</version>
+        <version>2.7.12</version>
         <relativePath/>
     </parent>
 
     <groupId>io.geekidea.boot</groupId>
     <artifactId>spring-boot-plus</artifactId>
-    <version>2.7.10-SNAPSHOT</version>
+    <version>2.7.12-SNAPSHOT</version>
 
     <name>spring-boot-plus</name>
     <description>spring-boot-plus</description>
@@ -132,7 +132,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
+            <version>2.12.0</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -141,10 +141,11 @@
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.83</version>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>2.0.33</version>
         </dependency>
+
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -155,13 +156,13 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.16</version>
+            <version>5.8.19</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
-            <version>3.2.1</version>
+            <version>3.3.2</version>
         </dependency>
 
 

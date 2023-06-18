@@ -35,6 +35,9 @@ public class SysRole implements Serializable {
     @Schema(description = "角色状态，0：禁用，1：启用")
     private Boolean status;
 
+    @Schema(description = "角色备注")
+    private String remark;
+
     @Schema(description = "创建时间")
     private Date createTime;
 

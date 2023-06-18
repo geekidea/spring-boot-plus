@@ -1,13 +1,9 @@
 package io.geekidea.boot.system.service;
 
-import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.service.BaseService;
-import io.geekidea.boot.system.dto.SysUserRoleAddDto;
-import io.geekidea.boot.system.dto.SysUserRoleUpdateDto;
 import io.geekidea.boot.system.entity.SysUserRole;
-import io.geekidea.boot.system.query.SysUserRoleQuery;
-import io.geekidea.boot.system.vo.SysUserRoleInfoVo;
-import io.geekidea.boot.system.vo.SysUserRoleVo;
+
+import java.util.List;
 
 /**
  * 用户角色关系表 服务接口
@@ -18,48 +14,23 @@ import io.geekidea.boot.system.vo.SysUserRoleVo;
 public interface SysUserRoleService extends BaseService<SysUserRole> {
 
     /**
-     * 添加用户角色关系表
+     * 批量保存系统用户角色关系
      *
-     * @param sysUserRoleAddDto
+     * @param userId
+     * @param roleIds
      * @return
      * @throws Exception
      */
-    boolean addSysUserRole(SysUserRoleAddDto sysUserRoleAddDto) throws Exception;
+    boolean batchSaveSysUserRole(Long userId, List<Long> roleIds) throws Exception;
 
     /**
-     * 修改用户角色关系表
+     * 根据用户ID删除用户角色关系
      *
-     * @param sysUserRoleUpdateDto
+     * @param userId
      * @return
      * @throws Exception
      */
-    boolean updateSysUserRole(SysUserRoleUpdateDto sysUserRoleUpdateDto) throws Exception;
+    boolean deleteSysUserRoleByUserId(Long userId) throws Exception;
 
-    /**
-     * 删除用户角色关系表
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    boolean deleteSysUserRole(Long id) throws Exception;
-
-    /**
-     * 用户角色关系表详情
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    SysUserRoleInfoVo getSysUserRoleById(Long id) throws Exception;
-
-    /**
-     * 用户角色关系表分页列表
-     *
-     * @param sysUserRoleQuery
-     * @return
-     * @throws Exception
-     */
-    Paging<SysUserRoleVo> getSysUserRoleList(SysUserRoleQuery sysUserRoleQuery) throws Exception;
 
 }

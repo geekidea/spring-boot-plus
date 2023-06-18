@@ -2,11 +2,13 @@ package io.geekidea.boot.config;
 
 import io.geekidea.boot.auth.interceptor.LoginInterceptor;
 import io.geekidea.boot.auth.interceptor.RefreshTokenInterceptor;
+import io.geekidea.boot.config.properties.FileProperties;
 import io.geekidea.boot.config.properties.LoginProperties;
 import io.geekidea.boot.framework.filter.JsonRequestBodyFilter;
 import io.geekidea.boot.framework.interceptor.PageHelperClearInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +26,14 @@ import java.util.List;
  **/
 @Slf4j
 @Configuration
+@EnableConfigurationProperties(FileProperties.class)
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private LoginProperties loginProperties;
+
+    @Autowired
+    private FileProperties fileProperties;
 
     @Bean
     public LoginInterceptor loginInterceptor() {
@@ -57,13 +63,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-
-    }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-
+        // 虚拟目录文件映射
+        registry.addResourceHandler(fileProperties.getAccessPath())
+                .addResourceLocations("file:" + fileProperties.getUploadPath());
     }
 
     @Override

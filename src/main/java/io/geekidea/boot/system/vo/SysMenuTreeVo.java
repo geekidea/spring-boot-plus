@@ -3,18 +3,16 @@ package io.geekidea.boot.system.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
- * 系统菜单详情VO
- *
  * @author geekidea
- * @since 2022-12-26
- */
+ * @date 2023/6/18
+ **/
 @Data
-@Schema(description = "系统菜单详情VO")
-public class SysMenuInfoVo implements Serializable {
+@Schema(description = "菜单树形列表VO")
+public class SysMenuTreeVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,35 +43,10 @@ public class SysMenuInfoVo implements Serializable {
     @Schema(description = "前端路由地址")
     private String routeUrl;
 
-    @Schema(description = "路由名称")
-    private String routeName;
-
-    @Schema(description = "重定向")
-    private String routeRedirect;
-
-    @Schema(description = "组件路径")
-    private String componentPath;
-
-    @Schema(description = "是否显示,0：不显示，1：显示")
-    private Boolean isShow;
-
-    @Schema(description = "是否缓存，0：否 1：是")
-    private Boolean isCache;
-
-    @Schema(description = "是否外链，0：否 1：是")
-    private Boolean isLink;
-
-    @Schema(description = "是否首页 0：否，1：是")
-    private Boolean isHome;
-
-    @Schema(description = "链接地址")
-    private String linkUrl;
-
     @Schema(description = "创建时间")
     private Date createTime;
 
-    @Schema(description = "修改时间")
-    private Date updateTime;
+    @Schema(description = "子菜单集合")
+    private List<SysMenuTreeVo> children;
 
 }
-

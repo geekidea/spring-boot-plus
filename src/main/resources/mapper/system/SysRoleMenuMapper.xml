@@ -2,16 +2,4 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.geekidea.boot.system.mapper.SysRoleMenuMapper">
 
-    <select id="getSysRoleMenuById" resultType="io.geekidea.boot.system.vo.SysRoleMenuInfoVo">
-        select *
-        from sys_role_menu
-        where id = #{id}
-    </select>
-
-    <select id="getSysRoleMenuList" parameterType="io.geekidea.boot.system.query.SysRoleMenuQuery"
-            resultType="io.geekidea.boot.system.vo.SysRoleMenuVo">
-        select *
-        from sys_role_menu
-    </select>
-
 </mapper>

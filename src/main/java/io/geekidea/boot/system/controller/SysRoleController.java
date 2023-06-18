@@ -3,8 +3,10 @@ package io.geekidea.boot.system.controller;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
+import io.geekidea.boot.system.dto.RoleMenusDto;
 import io.geekidea.boot.system.dto.SysRoleAddDto;
 import io.geekidea.boot.system.dto.SysRoleUpdateDto;
+import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.query.SysRoleQuery;
 import io.geekidea.boot.system.service.SysRoleService;
 import io.geekidea.boot.system.vo.SysRoleInfoVo;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 系统角色 控制器
@@ -105,6 +108,34 @@ public class SysRoleController {
     public ApiResult<SysRoleVo> getSysRoleList(@Valid @RequestBody SysRoleQuery sysRoleQuery) throws Exception {
         Paging<SysRoleVo> paging = sysRoleService.getSysRoleList(sysRoleQuery);
         return ApiResult.success(paging);
+    }
+
+    /**
+     * 系统所有角色列表
+     *
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/getSysRoleAllList")
+    @Operation(summary = "系统所有角色列表")
+    @Permission("sys:role:all-list")
+    public ApiResult<SysRole> getSysRoleAllList() throws Exception {
+        List<SysRole> list = sysRoleService.getSysRoleAllList();
+        return ApiResult.success(list);
+    }
+
+    /**
+     * 设置角色权限
+     *
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/setRoleMenus")
+    @Operation(summary = "设置角色权限")
+    @Permission("sys:role:set-role-menus")
+    public ApiResult<SysRole> setRoleMenus(@Valid @RequestBody RoleMenusDto roleMenusDto) throws Exception {
+        boolean flag = sysRoleService.setRoleMenus(roleMenusDto);
+        return ApiResult.success(flag);
     }
 
 }

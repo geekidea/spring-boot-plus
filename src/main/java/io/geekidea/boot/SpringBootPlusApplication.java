@@ -18,7 +18,9 @@ public class SpringBootPlusApplication {
         SpringApplication.run(SpringBootPlusApplication.class, args);
         System.out.println("http://localhost:8888/doc.html");
         System.out.println("http://localhost:8888/swagger-ui/index.html");
-        System.out.println("admin/123456");
+        System.out.println("账号：admin");
+        System.out.println("密码：123456");
+        System.out.println("swagger密码：e10adc3949ba59abbe56e057f20f883e");
         System.out.println("  _____ _______       _____ _______    _____ _    _  _____ _____ ______  _____ _____ \n" +
                 " / ____|__   __|/\\   |  __ \\__   __|  / ____| |  | |/ ____/ ____|  ____|/ ____/ ____|\n" +
                 "| (___    | |  /  \\  | |__) | | |    | (___ | |  | | |   | |    | |__  | (___| (___  \n" +
