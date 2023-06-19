@@ -3,13 +3,16 @@ package io.geekidea.boot.system.service.impl;
 import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
+import io.geekidea.boot.framework.util.ObjectValueUtil;
 import io.geekidea.boot.system.dto.SysMenuAddDto;
 import io.geekidea.boot.system.dto.SysMenuUpdateDto;
 import io.geekidea.boot.system.entity.SysMenu;
 import io.geekidea.boot.system.mapper.SysMenuMapper;
+import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.service.SysMenuService;
 import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,8 +67,29 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
     }
 
     @Override
-    public List<SysMenuTreeVo> getSysMenuTreeList() throws Exception {
-        List<SysMenuTreeVo> list = sysMenuMapper.getSysMenuTreeList();
+    public List<SysMenuTreeVo> getSysMenuTreeList(SysMenuQuery sysMenuQuery) throws Exception {
+        List<SysMenuTreeVo> list = sysMenuMapper.getSysMenuTreeList(sysMenuQuery);
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
+        // 如果搜索条件有值，则直接返回普通列表
+        boolean flag = ObjectValueUtil.isHaveValue(sysMenuQuery);
+        if (flag) {
+            return list;
+        }
+        // 递归返回树形列表
+        return recursionSysMenuTreeList(0L, list);
+    }
+
+    @Override
+    public List<SysMenuTreeVo> getEnableSysMenuTreeList() throws Exception {
+        SysMenuQuery sysMenuQuery = new SysMenuQuery();
+        sysMenuQuery.setStatus(true);
+        List<SysMenuTreeVo> list = sysMenuMapper.getSysMenuTreeList(sysMenuQuery);
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
+        // 递归返回树形列表
         return recursionSysMenuTreeList(0L, list);
     }
 
@@ -75,6 +99,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
         if (userId == null) {
             throw new BusinessException("用户ID不能为空");
         }
+        // 如果是管理员，则查询所有可用菜单，否则获取当前用户所有可用的菜单
         boolean isAdmin = LoginUtil.isAdmin();
         List<SysMenuTreeVo> list;
         if (isAdmin) {
@@ -82,6 +107,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
         } else {
             list = sysMenuMapper.getNavMenuTreeList(userId);
         }
+        // 递归返回树形列表
         return recursionSysMenuTreeList(0L, list);
     }
 

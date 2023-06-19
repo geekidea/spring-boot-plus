@@ -1,7 +1,10 @@
 package io.geekidea.boot;
 
+import io.geekidea.boot.framework.util.IpUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -14,13 +17,23 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 public class SpringBootPlusApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootPlusApplication.class, args);
-        System.out.println("http://localhost:8888/doc.html");
-        System.out.println("http://localhost:8888/swagger-ui/index.html");
+    private static final String BACKSLASH = "/";
+
+    public static void main(String[] args) throws Exception {
+        ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusApplication.class, args);
+        ConfigurableEnvironment environment = context.getEnvironment();
+        String serverPort = environment.getProperty("server.port");
+        String contextPath = environment.getProperty("server.servlet.context-path");
+        if (!BACKSLASH.equals(contextPath)) {
+            contextPath = contextPath + BACKSLASH;
+        }
+        String localhostUrl = "\nhttp://localhost:" + serverPort + contextPath + "doc.html";
+        String ipUrl = "http://" + IpUtil.getLocalhostIp() + ":" + serverPort + contextPath + "doc.html";
+        System.out.println(localhostUrl);
+        System.out.println(ipUrl);
         System.out.println("账号：admin");
         System.out.println("密码：123456");
-        System.out.println("swagger密码：e10adc3949ba59abbe56e057f20f883e");
+        System.out.println("swagger密码：e10adc3949ba59abbe56e057f20f883e\n");
         System.out.println("  _____ _______       _____ _______    _____ _    _  _____ _____ ______  _____ _____ \n" +
                 " / ____|__   __|/\\   |  __ \\__   __|  / ____| |  | |/ ____/ ____|  ____|/ ____/ ____|\n" +
                 "| (___    | |  /  \\  | |__) | | |    | (___ | |  | | |   | |    | |__  | (___| (___  \n" +

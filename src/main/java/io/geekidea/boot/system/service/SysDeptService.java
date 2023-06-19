@@ -1,6 +1,5 @@
 package io.geekidea.boot.system.service;
 
-import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.service.BaseService;
 import io.geekidea.boot.system.dto.SysDeptAddDto;
 import io.geekidea.boot.system.dto.SysDeptUpdateDto;
@@ -8,7 +7,6 @@ import io.geekidea.boot.system.entity.SysDept;
 import io.geekidea.boot.system.query.SysDeptQuery;
 import io.geekidea.boot.system.vo.SysDeptInfoVo;
 import io.geekidea.boot.system.vo.SysDeptTreeVo;
-import io.geekidea.boot.system.vo.SysDeptVo;
 
 import java.util.List;
 
@@ -57,20 +55,20 @@ public interface SysDeptService extends BaseService<SysDept> {
     SysDeptInfoVo getSysDeptById(Long id) throws Exception;
 
     /**
-     * 部门分页列表
+     * 获取所有的部门树形列表
      *
      * @param sysDeptQuery
      * @return
      * @throws Exception
      */
-    Paging<SysDeptVo> getSysDeptList(SysDeptQuery sysDeptQuery) throws Exception;
+    List<SysDeptTreeVo> getSysDeptTreeList(SysDeptQuery sysDeptQuery) throws Exception;
 
     /**
-     * 所有部门树形列表
+     * 获取启用的部门树形列表
      *
      * @return
      * @throws Exception
      */
-    List<SysDeptTreeVo> getSysDeptTreeList() throws Exception;
+    List<SysDeptTreeVo> getEnableSysDeptTreeList() throws Exception;
 
 }

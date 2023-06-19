@@ -8,16 +8,18 @@
         where id = #{id}
     </select>
 
-    <select id="getSysDeptList" parameterType="io.geekidea.boot.system.query.SysDeptQuery"
-            resultType="io.geekidea.boot.system.vo.SysDeptVo">
+    <select id="getSysDeptTreeList" parameterType="io.geekidea.boot.system.query.SysDeptQuery"
+            resultType="io.geekidea.boot.system.vo.SysDeptTreeVo">
         select *
         from sys_dept
-    </select>
-
-    <select id="getSysDeptAllList" resultType="io.geekidea.boot.system.vo.SysDeptTreeVo">
-        select *
-        from sys_dept
-        where status = 1
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%',#{name},'%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
         order by sort
     </select>
 

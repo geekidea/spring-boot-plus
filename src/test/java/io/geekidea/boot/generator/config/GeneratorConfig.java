@@ -4,7 +4,7 @@ import cn.hutool.core.lang.Dict;
 import cn.hutool.setting.yaml.YamlUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import io.geekidea.boot.framework.exception.BusinessException;
-import io.geekidea.boot.framework.page.BasePageOrderQuery;
+import io.geekidea.boot.framework.page.BasePageQuery;
 import io.geekidea.boot.framework.page.OrderByItem;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
@@ -309,7 +309,7 @@ public class GeneratorConfig {
         this.commonIdParam = commonParentPackage + ".param.IdParam";
         this.commonApiResult = ApiResult.class.getName();
         this.commonOrderEnum = commonParentPackage + ".enums.OrderEnum";
-        this.superQuery = BasePageOrderQuery.class.getName();
+        this.superQuery = BasePageQuery.class.getName();
         this.commonPaging = Paging.class.getName();
         this.commonBusinessException = BusinessException.class.getName();
         this.commonOrderByItem = OrderByItem.class.getName();

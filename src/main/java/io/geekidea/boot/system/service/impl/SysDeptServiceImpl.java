@@ -1,9 +1,8 @@
 package io.geekidea.boot.system.service.impl;
 
 import io.geekidea.boot.framework.exception.BusinessException;
-import io.geekidea.boot.framework.page.OrderByItem;
-import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
+import io.geekidea.boot.framework.util.ObjectValueUtil;
 import io.geekidea.boot.system.dto.SysDeptAddDto;
 import io.geekidea.boot.system.dto.SysDeptUpdateDto;
 import io.geekidea.boot.system.entity.SysDept;
@@ -12,7 +11,6 @@ import io.geekidea.boot.system.query.SysDeptQuery;
 import io.geekidea.boot.system.service.SysDeptService;
 import io.geekidea.boot.system.vo.SysDeptInfoVo;
 import io.geekidea.boot.system.vo.SysDeptTreeVo;
-import io.geekidea.boot.system.vo.SysDeptVo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,21 +66,32 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDept> 
     }
 
     @Override
-    public Paging<SysDeptVo> getSysDeptList(SysDeptQuery sysDeptQuery) throws Exception {
-        handlePage(sysDeptQuery, OrderByItem.desc("id"));
-        List<SysDeptVo> list = sysDeptMapper.getSysDeptList(sysDeptQuery);
-        Paging<SysDeptVo> paging = new Paging<>(list);
-        return paging;
-    }
-
-    @Override
-    public List<SysDeptTreeVo> getSysDeptTreeList() throws Exception {
-        List<SysDeptTreeVo> list = sysDeptMapper.getSysDeptAllList();
+    public List<SysDeptTreeVo> getSysDeptTreeList(SysDeptQuery sysDeptQuery) throws Exception {
+        List<SysDeptTreeVo> list = sysDeptMapper.getSysDeptTreeList(sysDeptQuery);
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
+        // 如果搜索条件有值，则直接返回普通列表
+        boolean flag = ObjectValueUtil.isHaveValue(sysDeptQuery);
+        if (flag) {
+            return list;
+        }
+        // 递归返回树形列表
         return recursionSysDeptTreeList(0L, list);
     }
+
+    @Override
+    public List<SysDeptTreeVo> getEnableSysDeptTreeList() throws Exception {
+        SysDeptQuery sysDeptQuery = new SysDeptQuery();
+        sysDeptQuery.setStatus(true);
+        List<SysDeptTreeVo> list = sysDeptMapper.getSysDeptTreeList(sysDeptQuery);
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
+        // 递归返回树形列表
+        return recursionSysDeptTreeList(0L, list);
+    }
+
 
     /**
      * 递归设置部门树形菜单

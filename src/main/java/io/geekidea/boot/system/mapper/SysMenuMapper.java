@@ -5,7 +5,6 @@ import io.geekidea.boot.system.entity.SysMenu;
 import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
-import io.geekidea.boot.system.vo.SysMenuVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -28,14 +27,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     SysMenuInfoVo getSysMenuById(Long id);
 
     /**
-     * 系统菜单分页列表
-     *
-     * @param sysMenuQuery
-     * @return
-     */
-    List<SysMenuVo> getSysMenuList(SysMenuQuery sysMenuQuery);
-
-    /**
      * 根据用户ID获取权限编码集合
      *
      * @param userId
@@ -46,9 +37,10 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     /**
      * 获取系统菜单树形列表
      *
+     * @param sysMenuQuery
      * @return
      */
-    List<SysMenuTreeVo> getSysMenuTreeList();
+    List<SysMenuTreeVo> getSysMenuTreeList(SysMenuQuery sysMenuQuery);
 
     /**
      * 管理员获取所有导航菜单树形列表

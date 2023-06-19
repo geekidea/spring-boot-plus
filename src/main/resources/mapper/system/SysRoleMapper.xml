@@ -12,6 +12,17 @@
             resultType="io.geekidea.boot.system.vo.SysRoleVo">
         select *
         from sys_role
+        <where>
+            <if test="name!=null and name !=''">
+                name like concat('%',#{name},'%')
+            </if>
+            <if test="code!=null and code !=''">
+                and code like concat('%',#{code},'%')
+            </if>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+        </where>
     </select>
 
     <select id="getSysRolesByUserId" resultType="io.geekidea.boot.system.entity.SysRole">

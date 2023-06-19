@@ -1,7 +1,6 @@
 package io.geekidea.boot.framework.page;
 
 import io.geekidea.boot.framework.constant.CommonConstant;
-import io.geekidea.boot.framework.query.DataRangeQuery;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -13,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @Schema(description = "分页查询参数")
-public abstract class BasePageQuery extends DataRangeQuery {
+public abstract class BasePageQuery extends BaseOrderQuery {
     private static final long serialVersionUID = -6831815750258997473L;
 
     @Schema(description = "页码,默认为1", example = "1")

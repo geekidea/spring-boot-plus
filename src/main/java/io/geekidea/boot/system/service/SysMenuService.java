@@ -4,6 +4,7 @@ import io.geekidea.boot.framework.service.BaseService;
 import io.geekidea.boot.system.dto.SysMenuAddDto;
 import io.geekidea.boot.system.dto.SysMenuUpdateDto;
 import io.geekidea.boot.system.entity.SysMenu;
+import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
 
@@ -56,10 +57,18 @@ public interface SysMenuService extends BaseService<SysMenu> {
     /**
      * 获取系统菜单树形列表
      *
+     * @param sysMenuQuery
      * @return
      * @throws Exception
      */
-    List<SysMenuTreeVo> getSysMenuTreeList() throws Exception;
+    List<SysMenuTreeVo> getSysMenuTreeList(SysMenuQuery sysMenuQuery) throws Exception;
+
+    /**
+     * 获取启用的系统菜单树形列表
+     *
+     * @return
+     */
+    List<SysMenuTreeVo> getEnableSysMenuTreeList() throws Exception;
 
     /**
      * 获取当前登录用户导航菜单树形列表
@@ -68,6 +77,5 @@ public interface SysMenuService extends BaseService<SysMenu> {
      * @throws Exception
      */
     List<SysMenuTreeVo> getNavMenuTreeList() throws Exception;
-
 
 }

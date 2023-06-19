@@ -8,12 +8,6 @@
         where id = #{id}
     </select>
 
-    <select id="getSysMenuList" parameterType="io.geekidea.boot.system.query.SysMenuQuery"
-            resultType="io.geekidea.boot.system.vo.SysMenuVo">
-        select *
-        from sys_menu
-    </select>
-
     <select id="getPermissionCodesByUserId" resultType="java.lang.String">
         select distinct m.code
         from sys_user u
@@ -32,9 +26,28 @@
           and u.id = #{userId}
     </select>
 
-    <select id="getSysMenuTreeList" resultType="io.geekidea.boot.system.vo.SysMenuTreeVo">
+    <select id="getSysMenuTreeList" parameterType="io.geekidea.boot.system.query.SysMenuQuery"
+            resultType="io.geekidea.boot.system.vo.SysMenuTreeVo">
         select *
         from sys_menu
+        <where>
+            <if test="name != null and name != ''">
+                name like concat('%',#{name},'%')
+            </if>
+            <if test="code != null and code != ''">
+                and code like concat('%',#{code},'%')
+            </if>
+            <if test="routeUrl != null and routeUrl != ''">
+                and route_url like concat('%',#{routeUrl},'%')
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by sort
     </select>
 
     <select id="getNavMenuTreeAllList" resultType="io.geekidea.boot.system.vo.SysMenuTreeVo">
@@ -42,6 +55,7 @@
         from sys_menu
         where status = 1
           and is_show = 1
+        order by sort
     </select>
 
     <select id="getNavMenuTreeList" resultType="io.geekidea.boot.system.vo.SysMenuTreeVo">
@@ -60,7 +74,7 @@
           and m.status = 1
           and m.is_show = 1
           and u.id = #{userId}
+        order by sort
     </select>
-
 
 </mapper>

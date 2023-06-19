@@ -5,7 +5,6 @@ import io.geekidea.boot.system.entity.SysDept;
 import io.geekidea.boot.system.query.SysDeptQuery;
 import io.geekidea.boot.system.vo.SysDeptInfoVo;
 import io.geekidea.boot.system.vo.SysDeptTreeVo;
-import io.geekidea.boot.system.vo.SysDeptVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -28,18 +27,11 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
     SysDeptInfoVo getSysDeptById(Long id);
 
     /**
-     * 部门分页列表
+     * 获取部门树形列表
      *
      * @param sysDeptQuery
      * @return
      */
-    List<SysDeptVo> getSysDeptList(SysDeptQuery sysDeptQuery);
-
-    /**
-     * 获取所有部门列表
-     *
-     * @return
-     */
-    List<SysDeptTreeVo> getSysDeptAllList();
+    List<SysDeptTreeVo> getSysDeptTreeList(SysDeptQuery sysDeptQuery);
 
 }

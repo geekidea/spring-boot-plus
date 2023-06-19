@@ -4,6 +4,7 @@ import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.system.dto.SysMenuAddDto;
 import io.geekidea.boot.system.dto.SysMenuUpdateDto;
+import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.service.SysMenuService;
 import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
@@ -100,8 +101,22 @@ public class SysMenuController {
     @PostMapping("/getSysMenuTreeList")
     @Operation(summary = "获取系统菜单树形列表")
     @Permission("sys:menu:tree-list")
-    public ApiResult<SysMenuTreeVo> getSysMenuTreeList() throws Exception {
-        List<SysMenuTreeVo> list = sysMenuService.getSysMenuTreeList();
+    public ApiResult<SysMenuTreeVo> getSysMenuTreeList(@Valid @RequestBody SysMenuQuery sysMenuQuery) throws Exception {
+        List<SysMenuTreeVo> list = sysMenuService.getSysMenuTreeList(sysMenuQuery);
+        return ApiResult.success(list);
+    }
+
+    /**
+     * 获取启用的系统菜单树形列表
+     *
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/getEnableSysMenuTreeList")
+    @Operation(summary = "获取启用的系统菜单树形列表")
+    @Permission("sys:menu:enable-tree-list")
+    public ApiResult<SysMenuTreeVo> getEnableSysMenuTreeList() throws Exception {
+        List<SysMenuTreeVo> list = sysMenuService.getEnableSysMenuTreeList();
         return ApiResult.success(list);
     }
 

@@ -1,6 +1,6 @@
 package io.geekidea.boot.system.query;
 
-import io.geekidea.boot.framework.page.BasePageOrderQuery;
+import io.geekidea.boot.framework.page.BasePageQuery;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @Schema(description = "系统登录日志查询参数")
-public class SysLoginLogQuery extends BasePageOrderQuery {
+public class SysLoginLogQuery extends BasePageQuery {
     private static final long serialVersionUID = 1L;
 
 

@@ -1,7 +1,6 @@
 package io.geekidea.boot.system.controller;
 
 import io.geekidea.boot.auth.annotation.Permission;
-import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.system.dto.SysDeptAddDto;
 import io.geekidea.boot.system.dto.SysDeptUpdateDto;
@@ -9,7 +8,6 @@ import io.geekidea.boot.system.query.SysDeptQuery;
 import io.geekidea.boot.system.service.SysDeptService;
 import io.geekidea.boot.system.vo.SysDeptInfoVo;
 import io.geekidea.boot.system.vo.SysDeptTreeVo;
-import io.geekidea.boot.system.vo.SysDeptVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -95,31 +93,31 @@ public class SysDeptController {
     }
 
     /**
-     * 部门分页列表
+     * 获取所有的部门树形列表
      *
      * @param sysDeptQuery
      * @return
      * @throws Exception
      */
-    @PostMapping("/getSysDeptList")
-    @Operation(summary = "部门分页列表")
-    @Permission("sys:dept:list")
-    public ApiResult<SysDeptVo> getSysDeptList(@Valid @RequestBody SysDeptQuery sysDeptQuery) throws Exception {
-        Paging<SysDeptVo> paging = sysDeptService.getSysDeptList(sysDeptQuery);
-        return ApiResult.success(paging);
+    @PostMapping("/getSysDeptTreeList")
+    @Operation(summary = "获取所有的部门树形列表")
+    @Permission("sys:dept:tree-list")
+    public ApiResult<SysDeptTreeVo> getSysDeptTreeList(@Valid @RequestBody SysDeptQuery sysDeptQuery) throws Exception {
+        List<SysDeptTreeVo> list = sysDeptService.getSysDeptTreeList(sysDeptQuery);
+        return ApiResult.success(list);
     }
 
     /**
-     * 部门树形列表
+     * 获取启用的部门树形列表
      *
      * @return
      * @throws Exception
      */
-    @PostMapping("/getSysDeptTreeList")
-    @Operation(summary = "部门树形列表")
-    @Permission("sys:dept:tree-list")
-    public ApiResult<SysDeptTreeVo> getSysDeptTreeList() throws Exception {
-        List<SysDeptTreeVo> list = sysDeptService.getSysDeptTreeList();
+    @PostMapping("/getEnableSysDeptTreeList")
+    @Operation(summary = "获取启用的部门树形列表")
+    @Permission("sys:dept:enable-tree-list")
+    public ApiResult<SysDeptTreeVo> getEnableSysDeptTreeList() throws Exception {
+        List<SysDeptTreeVo> list = sysDeptService.getEnableSysDeptTreeList();
         return ApiResult.success(list);
     }
 
