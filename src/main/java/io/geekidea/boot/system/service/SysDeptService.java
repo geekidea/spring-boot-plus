@@ -61,7 +61,7 @@ public interface SysDeptService extends BaseService<SysDept> {
      * @return
      * @throws Exception
      */
-    List<SysDeptTreeVo> getSysDeptTreeList(SysDeptQuery sysDeptQuery) throws Exception;
+    List<SysDeptTreeVo> getAllSysDeptTreeList(SysDeptQuery sysDeptQuery) throws Exception;
 
     /**
      * 获取启用的部门树形列表
@@ -69,6 +69,6 @@ public interface SysDeptService extends BaseService<SysDept> {
      * @return
      * @throws Exception
      */
-    List<SysDeptTreeVo> getEnableSysDeptTreeList() throws Exception;
+    List<SysDeptTreeVo> getSysDeptTreeList() throws Exception;
 
 }

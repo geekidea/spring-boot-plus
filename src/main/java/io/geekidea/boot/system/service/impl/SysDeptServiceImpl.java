@@ -66,7 +66,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDept> 
     }
 
     @Override
-    public List<SysDeptTreeVo> getSysDeptTreeList(SysDeptQuery sysDeptQuery) throws Exception {
+    public List<SysDeptTreeVo> getAllSysDeptTreeList(SysDeptQuery sysDeptQuery) throws Exception {
         List<SysDeptTreeVo> list = sysDeptMapper.getSysDeptTreeList(sysDeptQuery);
         if (CollectionUtils.isEmpty(list)) {
             return null;
@@ -81,7 +81,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDept> 
     }
 
     @Override
-    public List<SysDeptTreeVo> getEnableSysDeptTreeList() throws Exception {
+    public List<SysDeptTreeVo> getSysDeptTreeList() throws Exception {
         SysDeptQuery sysDeptQuery = new SysDeptQuery();
         sysDeptQuery.setStatus(true);
         List<SysDeptTreeVo> list = sysDeptMapper.getSysDeptTreeList(sysDeptQuery);

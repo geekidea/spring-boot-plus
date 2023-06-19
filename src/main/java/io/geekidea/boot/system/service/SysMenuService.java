@@ -55,20 +55,21 @@ public interface SysMenuService extends BaseService<SysMenu> {
     SysMenuInfoVo getSysMenuById(Long id) throws Exception;
 
     /**
-     * 获取系统菜单树形列表
+     * 获取所有的系统菜单树形列表
      *
      * @param sysMenuQuery
      * @return
      * @throws Exception
      */
-    List<SysMenuTreeVo> getSysMenuTreeList(SysMenuQuery sysMenuQuery) throws Exception;
+    List<SysMenuTreeVo> getAllSysMenuTreeList(SysMenuQuery sysMenuQuery) throws Exception;
 
     /**
      * 获取启用的系统菜单树形列表
      *
      * @return
+     * @throws Exception
      */
-    List<SysMenuTreeVo> getEnableSysMenuTreeList() throws Exception;
+    List<SysMenuTreeVo> getSysMenuTreeList() throws Exception;
 
     /**
      * 获取当前登录用户导航菜单树形列表

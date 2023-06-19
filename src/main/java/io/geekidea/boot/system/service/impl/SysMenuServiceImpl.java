@@ -67,7 +67,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
     }
 
     @Override
-    public List<SysMenuTreeVo> getSysMenuTreeList(SysMenuQuery sysMenuQuery) throws Exception {
+    public List<SysMenuTreeVo> getAllSysMenuTreeList(SysMenuQuery sysMenuQuery) throws Exception {
         List<SysMenuTreeVo> list = sysMenuMapper.getSysMenuTreeList(sysMenuQuery);
         if (CollectionUtils.isEmpty(list)) {
             return null;
@@ -82,7 +82,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
     }
 
     @Override
-    public List<SysMenuTreeVo> getEnableSysMenuTreeList() throws Exception {
+    public List<SysMenuTreeVo> getSysMenuTreeList() throws Exception {
         SysMenuQuery sysMenuQuery = new SysMenuQuery();
         sysMenuQuery.setStatus(true);
         List<SysMenuTreeVo> list = sysMenuMapper.getSysMenuTreeList(sysMenuQuery);
