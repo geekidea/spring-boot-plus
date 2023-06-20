@@ -33,7 +33,7 @@ public class SysDept implements Serializable {
     private Long parentId;
 
     @Schema(description = "状态，0：禁用，1：启用")
-    private Integer status;
+    private Boolean status;
 
     @Schema(description = "排序")
     private Integer sort;

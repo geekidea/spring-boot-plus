@@ -9,19 +9,23 @@ import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
 import io.geekidea.boot.system.dto.ResetSysUserPasswordDto;
 import io.geekidea.boot.system.dto.SysUserAddDto;
 import io.geekidea.boot.system.dto.SysUserUpdateDto;
+import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.entity.SysUser;
+import io.geekidea.boot.system.mapper.SysRoleMapper;
 import io.geekidea.boot.system.mapper.SysUserMapper;
 import io.geekidea.boot.system.query.SysUserQuery;
 import io.geekidea.boot.system.service.SysUserRoleService;
 import io.geekidea.boot.system.service.SysUserService;
 import io.geekidea.boot.system.vo.SysUserInfoVo;
 import io.geekidea.boot.system.vo.SysUserVo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +44,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
     @Autowired
     private SysUserRoleService sysUserRoleService;
 
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean addSysUser(SysUserAddDto sysUserAddDto) throws Exception {
@@ -47,6 +54,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         BeanUtils.copyProperties(sysUserAddDto, sysUser);
         // 密码加盐
         String salt = RandomStringUtils.randomNumeric(6);
+        sysUser.setSalt(salt);
         String password = PasswordUtil.encrypt(sysUser.getPassword(), salt);
         sysUser.setPassword(password);
         // 保存用户
@@ -115,7 +123,24 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
 
     @Override
     public SysUserInfoVo getSysUserById(Long id) throws Exception {
-        return sysUserMapper.getSysUserById(id);
+        SysUserInfoVo sysUserInfoVo = sysUserMapper.getSysUserById(id);
+        if (sysUserInfoVo == null) {
+            throw new BusinessException("用户信息不存在");
+        }
+        // 根据用户ID获取角色列表
+        List<SysRole> sysRoles = sysRoleMapper.getSysRolesByUserId(id);
+        List<Long> roleIds = new ArrayList<>();
+        List<String> roleNames = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(sysRoles)) {
+            for (SysRole sysRole : sysRoles) {
+                roleIds.add(sysRole.getId());
+                roleNames.add(sysRole.getName());
+            }
+            sysUserInfoVo.setRoleIds(roleIds);
+            sysUserInfoVo.setRoleNames(roleNames);
+            sysUserInfoVo.setSysRoles(sysRoles);
+        }
+        return sysUserInfoVo;
     }
 
     @Override

@@ -3,9 +3,12 @@
 <mapper namespace="io.geekidea.boot.system.mapper.SysUserMapper">
 
     <select id="getSysUserById" resultType="io.geekidea.boot.system.vo.SysUserInfoVo">
-        select *
-        from sys_user
-        where id = #{id}
+        select distinct u.*,
+                        d.name deptName
+        from sys_user u
+                 left join sys_dept d
+                           on u.dept_id = d.id
+        where u.id = #{id}
     </select>
 
     <select id="getSysUserList" parameterType="io.geekidea.boot.system.query.SysUserQuery"
@@ -43,11 +46,11 @@
             <if test="status != null">
                 and u.status = #{status}
             </if>
-            <if test="createStartTime != null and createStartTime != ''">
-                and u.create_time >= #{createStartTime}
+            <if test="createStartTime != null">
+                and date(u.create_time) >= date(#{createStartTime})
             </if>
-            <if test="createEndTime != null and createEndTime != ''">
-                and u.create_time &lt;= #{createEndTime}
+            <if test="createEndTime != null">
+                and date(u.create_time) &lt;= date(#{createEndTime})
             </if>
         </where>
     </select>

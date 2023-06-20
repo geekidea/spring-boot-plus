@@ -1,10 +1,12 @@
 package io.geekidea.boot.system.vo;
 
+import io.geekidea.boot.system.entity.SysRole;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统用户详情VO
@@ -48,8 +50,14 @@ public class SysUserInfoVo implements Serializable {
     @Schema(description = "部门名称")
     private String deptName;
 
-    @Schema(description = "角色名称")
-    private String roleName;
+    @Schema(description = "角色Id集合")
+    private List<Long> roleIds;
+
+    @Schema(description = "角色名称集合")
+    private List<String> roleNames;
+
+    @Schema(description = "角色集合")
+    private List<SysRole> sysRoles;
 
     @Schema(description = "是否是超管 0：否，1：是")
     private Boolean isAdmin;
