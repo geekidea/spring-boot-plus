@@ -8,6 +8,7 @@ import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.service.SysMenuService;
 import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
+import io.geekidea.boot.system.vo.SysNavMenuTreeVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -129,8 +130,8 @@ public class SysMenuController {
     @PostMapping("/getNavMenuTreeList")
     @Operation(summary = "获取当前用户的导航菜单")
     @Permission("sys:menu:nav-tree-list")
-    public ApiResult<SysMenuTreeVo> getNavMenuTreeList() throws Exception {
-        List<SysMenuTreeVo> list = sysMenuService.getNavMenuTreeList();
+    public ApiResult<SysNavMenuTreeVo> getNavMenuTreeList() throws Exception {
+        List<SysNavMenuTreeVo> list = sysMenuService.getNavMenuTreeList();
         return ApiResult.success(list);
     }
 

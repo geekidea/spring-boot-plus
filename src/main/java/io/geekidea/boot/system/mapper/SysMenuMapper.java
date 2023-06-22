@@ -5,6 +5,7 @@ import io.geekidea.boot.system.entity.SysMenu;
 import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
+import io.geekidea.boot.system.vo.SysNavMenuTreeVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      *
      * @return
      */
-    List<SysMenuTreeVo> getNavMenuTreeAllList();
+    List<SysNavMenuTreeVo> getNavMenuTreeAllList();
 
     /**
      * 获取当前登录用户导航菜单树形列表
@@ -55,7 +56,12 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @param userId
      * @return
      */
-    List<SysMenuTreeVo> getNavMenuTreeList(Long userId);
+    List<SysNavMenuTreeVo> getNavMenuTreeList(Long userId);
 
-
+    /**
+     * 获取角色权限ID集合
+     * @param roleId
+     * @return
+     */
+    List<Long> getMenuIdsByRoleId(Long roleId);
 }

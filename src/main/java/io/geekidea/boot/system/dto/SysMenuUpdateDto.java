@@ -39,7 +39,7 @@ public class SysMenuUpdateDto implements Serializable {
     @Length(max = 100, message = "菜单图标长度超过限制")
     private String icon;
 
-    @Schema(description = "菜单类型，1：导航菜单，2：菜单，3：权限")
+    @Schema(description = "菜单类型，1：菜单，2：外链，3：权限")
     @NotNull(message = "菜单类型不能为空")
     private Integer type;
 

@@ -8,7 +8,9 @@ import io.geekidea.boot.system.dto.SysRoleAddDto;
 import io.geekidea.boot.system.dto.SysRoleUpdateDto;
 import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.query.SysRoleQuery;
+import io.geekidea.boot.system.service.SysMenuService;
 import io.geekidea.boot.system.service.SysRoleService;
+import io.geekidea.boot.system.vo.SysMenuTreeVo;
 import io.geekidea.boot.system.vo.SysRoleInfoVo;
 import io.geekidea.boot.system.vo.SysRoleVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,6 +36,9 @@ public class SysRoleController {
 
     @Autowired
     private SysRoleService sysRoleService;
+
+    @Autowired
+    private SysMenuService sysMenuService;
 
     /**
      * 添加系统角色
@@ -133,9 +138,23 @@ public class SysRoleController {
     @PostMapping("/setRoleMenus")
     @Operation(summary = "设置角色权限")
     @Permission("sys:role:set-role-menus")
-    public ApiResult<SysRole> setRoleMenus(@Valid @RequestBody RoleMenusDto roleMenusDto) throws Exception {
+    public ApiResult setRoleMenus(@Valid @RequestBody RoleMenusDto roleMenusDto) throws Exception {
         boolean flag = sysRoleService.setRoleMenus(roleMenusDto);
         return ApiResult.success(flag);
+    }
+
+    /**
+     * 获取角色权限ID集合
+     *
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/getMenuIdsByRoleId/{roleId}")
+    @Operation(summary = "获取角色权限ID集合")
+    @Permission("sys:role:menu-ids")
+    public ApiResult getMenuIdsByRoleId(@PathVariable Long roleId) throws Exception {
+        List<Long> list = sysMenuService.getMenuIdsByRoleId(roleId);
+        return ApiResult.success(list);
     }
 
 }

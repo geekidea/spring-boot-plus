@@ -21,7 +21,7 @@ public class SysMenuQuery extends DataRangeQuery {
     @Schema(description = "权限编码")
     private String code;
 
-    @Schema(description = "菜单类型，1：导航菜单，2：菜单，3：权限")
+    @Schema(description = "菜单类型，1：菜单，2：外链，3：权限")
     private Integer type;
 
     @Schema(description = "前端路由地址")

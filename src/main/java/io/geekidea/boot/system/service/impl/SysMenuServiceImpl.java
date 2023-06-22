@@ -12,6 +12,7 @@ import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.service.SysMenuService;
 import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
+import io.geekidea.boot.system.vo.SysNavMenuTreeVo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,23 +95,27 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
     }
 
     @Override
-    public List<SysMenuTreeVo> getNavMenuTreeList() throws Exception {
+    public List<SysNavMenuTreeVo> getNavMenuTreeList() throws Exception {
         Long userId = LoginUtil.getUserId();
         if (userId == null) {
             throw new BusinessException("用户ID不能为空");
         }
         // 如果是管理员，则查询所有可用菜单，否则获取当前用户所有可用的菜单
         boolean isAdmin = LoginUtil.isAdmin();
-        List<SysMenuTreeVo> list;
+        List<SysNavMenuTreeVo> list;
         if (isAdmin) {
             list = sysMenuMapper.getNavMenuTreeAllList();
         } else {
             list = sysMenuMapper.getNavMenuTreeList(userId);
         }
         // 递归返回树形列表
-        return recursionSysMenuTreeList(0L, list);
+        return recursionSysNavMenuTreeList(0L, list);
     }
 
+    @Override
+    public List<Long> getMenuIdsByRoleId(Long roleId) throws Exception {
+        return sysMenuMapper.getMenuIdsByRoleId(roleId);
+    }
 
     /**
      * 递归设置树形菜单
@@ -124,6 +129,23 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
                 .filter(vo -> vo.getParentId().equals(parentId))
                 .map(item -> {
                     item.setChildren(recursionSysMenuTreeList(item.getId(), list));
+                    return item;
+                })
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 递归设置树形导航菜单
+     *
+     * @param parentId
+     * @param list
+     * @return
+     */
+    private List<SysNavMenuTreeVo> recursionSysNavMenuTreeList(Long parentId, List<SysNavMenuTreeVo> list) {
+        return list.stream()
+                .filter(vo -> vo.getParentId().equals(parentId))
+                .map(item -> {
+                    item.setChildren(recursionSysNavMenuTreeList(item.getId(), list));
                     return item;
                 })
                 .collect(Collectors.toList());

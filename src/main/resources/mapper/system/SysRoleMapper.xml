@@ -32,8 +32,7 @@
                             on r.id = ur.role_id
                  inner join sys_user u
                             on u.id = ur.user_id
-        where u.status = 1
-          and r.status = 1
+        where r.status = 1
           and u.id = #{userId}
     </select>
 

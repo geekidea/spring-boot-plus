@@ -7,6 +7,7 @@ import io.geekidea.boot.system.entity.SysMenu;
 import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
+import io.geekidea.boot.system.vo.SysNavMenuTreeVo;
 
 import java.util.List;
 
@@ -77,6 +78,14 @@ public interface SysMenuService extends BaseService<SysMenu> {
      * @return
      * @throws Exception
      */
-    List<SysMenuTreeVo> getNavMenuTreeList() throws Exception;
+    List<SysNavMenuTreeVo> getNavMenuTreeList() throws Exception;
+
+    /**
+     * 获取角色权限ID集合
+     * @param roleId
+     * @return
+     * @throws Exception
+     */
+    List<Long> getMenuIdsByRoleId(Long roleId) throws Exception;
 
 }

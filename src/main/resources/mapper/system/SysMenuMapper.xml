@@ -50,15 +50,15 @@
         order by sort
     </select>
 
-    <select id="getNavMenuTreeAllList" resultType="io.geekidea.boot.system.vo.SysMenuTreeVo">
+    <select id="getNavMenuTreeAllList" resultType="io.geekidea.boot.system.vo.SysNavMenuTreeVo">
         select *
         from sys_menu
         where status = 1
-          and is_show = 1
+          and type in (1, 2)
         order by sort
     </select>
 
-    <select id="getNavMenuTreeList" resultType="io.geekidea.boot.system.vo.SysMenuTreeVo">
+    <select id="getNavMenuTreeList" resultType="io.geekidea.boot.system.vo.SysNavMenuTreeVo">
         select distinct m.*
         from sys_user u
                  inner join sys_user_role ur
@@ -72,9 +72,20 @@
         where u.status = 1
           and r.status = 1
           and m.status = 1
-          and m.is_show = 1
+          and type in (1, 2)
           and u.id = #{userId}
-        order by sort
+        order by m.sort
+    </select>
+
+    <select id="getMenuIdsByRoleId" resultType="java.lang.Long">
+        select distinct m.id
+        from sys_role r
+                 inner join sys_role_menu rm
+                            on r.id = rm.role_id
+                 inner join sys_menu m
+                            on m.id = rm.menu_id
+        where m.status = 1
+          and r.id = #{roleId}
     </select>
 
 </mapper>
