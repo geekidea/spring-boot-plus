@@ -5,6 +5,7 @@ import io.geekidea.boot.auth.interceptor.RefreshTokenInterceptor;
 import io.geekidea.boot.config.properties.FileProperties;
 import io.geekidea.boot.config.properties.LoginProperties;
 import io.geekidea.boot.framework.filter.JsonRequestBodyFilter;
+import io.geekidea.boot.framework.filter.TraceIdLogFilter;
 import io.geekidea.boot.framework.interceptor.PageHelperClearInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -47,6 +49,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public PageHelperClearInterceptor pageHelperClearInterceptor() {
         return new PageHelperClearInterceptor();
+    }
+
+
+    @Bean
+    public FilterRegistrationBean traceIdLogFilter() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        TraceIdLogFilter traceIdLogFilter = new TraceIdLogFilter();
+        filterRegistrationBean.setFilter(traceIdLogFilter);
+        filterRegistrationBean.setUrlPatterns(Arrays.asList("/*"));
+        return filterRegistrationBean;
     }
 
     @Bean

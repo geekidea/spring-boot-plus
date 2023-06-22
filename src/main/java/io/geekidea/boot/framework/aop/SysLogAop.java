@@ -2,10 +2,16 @@ package io.geekidea.boot.framework.aop;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.NumberUtil;
+import cn.hutool.http.useragent.Browser;
+import cn.hutool.http.useragent.Platform;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.auth.util.LoginUtil;
+import io.geekidea.boot.auth.util.TokenUtil;
 import io.geekidea.boot.config.properties.LogAopProperties;
 import io.geekidea.boot.framework.annotation.Log;
 import io.geekidea.boot.framework.constant.AspectConstant;
@@ -40,6 +46,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
@@ -60,13 +67,13 @@ import java.util.Map;
 @ConditionalOnProperty(name = "log-aop.enable", havingValue = "true", matchIfMissing = true)
 public class SysLogAop {
 
-    private static final String LOG_ID = "logId";
     private static final String USERNAME = "username";
     private static final String REFERER = "Referer";
     private static final String USER_AGENT = "User-Agent";
-    private static final String REQUEST_ORIGION = "Request-Origion";
+    private static final String ORIGIN = "Origin";
     private static final String SWAGGER_UI = "swagger-ui";
     private static final String POSTMAN = "postman";
+
     /**
      * 本地线程变量，保存操作日志到当前线程中
      */
@@ -121,12 +128,14 @@ public class SysLogAop {
             LOCAL_LOG.set(sysLog);
             String requestTime = DateUtil.format(new Date(), DatePattern.NORM_DATETIME_MS_PATTERN);
             sysLog.setRequestTime(requestTime);
-            Long logId = IdWorker.getId();
             // 设置日志链路ID
-            MDC.put(LOG_ID, String.valueOf(logId));
-            sysLog.setId(logId);
+            String traceId = MDC.get(CommonConstant.TRACE_ID);
+            MDC.put(CommonConstant.TRACE_ID, traceId);
+            sysLog.setTraceId(traceId);
+            // 设置IP
             String ip = IpUtil.getRequestIp();
             sysLog.setRequestIp(ip);
+            // TODO 设置IP归属地
             String contextPath = request.getContextPath();
             // 请求全路径
             String requestUrl = request.getRequestURI();
@@ -136,18 +145,23 @@ public class SysLogAop {
             }
             String contentType = request.getContentType();
             sysLog.setContentType(contentType);
-            // 日志名称 获取ApiOperation的value
-            Operation apiOperation = method.getAnnotation(Operation.class);
-            String apiOperationName = null;
-            if (apiOperation != null) {
-                apiOperationName = apiOperation.summary();
-                sysLog.setLogName(apiOperationName);
+            // 日志名称 获取@Operation的value
+            Operation operation = method.getAnnotation(Operation.class);
+            if (operation != null) {
+                String summary = operation.summary();
+                sysLog.setLogName(summary);
             }
-            // 日志类型
+            // 日志类型 获取@Log的code
             Log log = method.getAnnotation(Log.class);
             if (log != null) {
                 Integer logType = log.type().getCode();
                 sysLog.setLogType(logType);
+            }
+            // 权限编码 获取@Permission的value
+            Permission permission = method.getAnnotation(Permission.class);
+            if (permission != null) {
+                String permissionCode = permission.value();
+                sysLog.setPermissionCode(permissionCode);
             }
             // 请求方式，GET/POST
             sysLog.setRequestMethod(request.getMethod());
@@ -157,24 +171,66 @@ public class SysLogAop {
             // 是否是JSON请求映射参数
             sysLog.setIsRequestBody(isRequestBody);
             String requestBodyString = handleRequestParam(request, sysLog, isRequestBody);
+            try {
+                // 设置token
+                String token = TokenUtil.getToken(request);
+                sysLog.setToken(token);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // 设置类名称
+            String className = method.getDeclaringClass().getName();
+            sysLog.setClassName(className);
+            // 模块名称
+            try {
+                String packName = method.getDeclaringClass().getPackage().getName();
+                int lastIndexOf = packName.lastIndexOf(".");
+                packName = packName.substring(0, lastIndexOf);
+                String moduleName = packName.substring(packName.lastIndexOf(".") + 1);
+                sysLog.setModuleName(moduleName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // 设置方法名称
+            String methodName = method.getName();
+            sysLog.setMethodName(methodName);
             // 来源地址
             String referer = request.getHeader(REFERER);
             sysLog.setReferer(referer);
             // 用户环境
-            String userAgent = request.getHeader(USER_AGENT);
-            sysLog.setUserAgent(userAgent);
+            String userAgentString = request.getHeader(USER_AGENT);
+            sysLog.setUserAgent(userAgentString);
+            UserAgent userAgent;
+            try {
+                userAgent = UserAgentUtil.parse(userAgentString);
+                if (userAgent != null) {
+                    // 是否是手机
+                    boolean isMobile = userAgent.isMobile();
+                    sysLog.setIsMobile(isMobile);
+                    // 操作系统平台名称
+                    Platform platform = userAgent.getPlatform();
+                    String platformName = platform.getName();
+                    sysLog.setPlatformName(platformName);
+                    // 浏览器名称
+                    Browser browser = userAgent.getBrowser();
+                    String browserName = browser.getName();
+                    sysLog.setBrowserName(browserName);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             // 用户来源
-            String requestOrigion = request.getHeader(REQUEST_ORIGION);
-            if (StringUtils.isBlank(requestOrigion)) {
+            String origin = request.getHeader(ORIGIN);
+            if (StringUtils.isBlank(origin)) {
                 if (StringUtils.isNotBlank(referer) && referer.contains(SWAGGER_UI)) {
-                    sysLog.setRequestSource(SWAGGER_UI);
+                    sysLog.setOrigin(SWAGGER_UI);
                 }
             } else {
-                sysLog.setRequestSource(requestOrigion);
+                sysLog.setOrigin(origin);
             }
-            if (StringUtils.isNotBlank(userAgent)) {
-                if (userAgent.toLowerCase().contains(POSTMAN)) {
-                    sysLog.setRequestSource(POSTMAN);
+            if (StringUtils.isNotBlank(userAgentString)) {
+                if (userAgentString.toLowerCase().contains(POSTMAN)) {
+                    sysLog.setOrigin(POSTMAN);
                 }
             }
             // 处理登录人信息
@@ -254,6 +310,14 @@ public class SysLogAop {
             Date responseDate = new Date();
             long nowTime = responseDate.getTime();
             long diffTime = nowTime - startTime;
+            String diffTimeDesc;
+            if (diffTime > CommonConstant.ONE_THOUSAND) {
+                BigDecimal second = NumberUtil.div(new BigDecimal(diffTime), CommonConstant.ONE_THOUSAND, 2);
+                diffTimeDesc = second + "s";
+            } else {
+                diffTimeDesc = diffTime + "ms";
+            }
+            sysLog.setDiffTimeDesc(diffTimeDesc);
             String responseTime = DateUtil.format(responseDate, DatePattern.NORM_DATETIME_MS_PATTERN);
             sysLog.setResponseTime(responseTime);
             sysLog.setDiffTime(diffTime);
@@ -261,6 +325,9 @@ public class SysLogAop {
             saveSysLog(sysLog);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            // 移除日志链路ID
+            MDC.remove(CommonConstant.TRACE_ID);
         }
     }
 
@@ -341,12 +408,12 @@ public class SysLogAop {
         try {
             if (sysLog != null) {
                 Integer logType = sysLog.getLogType();
-                if (logType != null) {
-                    int result = sysLogMapper.insert(sysLog);
-                    if (result != 1) {
-                        log.error("保存操作日志错误" + sysLog);
-                    }
+//                if (logType != null) {
+                int result = sysLogMapper.insert(sysLog);
+                if (result != 1) {
+                    log.error("保存操作日志错误" + sysLog);
                 }
+//                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -2,12 +2,14 @@ package io.geekidea.boot.framework.response;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.geekidea.boot.framework.constant.CommonConstant;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -45,6 +47,9 @@ public class ApiResult<T> implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
+    @Schema(description = "日志链路ID")
+    private String traceId;
+
     public ApiResult() {
         time = new Date();
     }
@@ -75,12 +80,14 @@ public class ApiResult<T> implements Serializable {
         } else {
             outErrorMessage = message;
         }
+        String traceId = MDC.get(CommonConstant.TRACE_ID);
         return ApiResult.builder()
                 .code(apiCode.getCode())
                 .msg(outErrorMessage)
                 .data(data)
                 .success(success)
                 .time(new Date())
+                .traceId(traceId)
                 .build();
     }
 
@@ -94,12 +101,6 @@ public class ApiResult<T> implements Serializable {
 
     public static ApiResult success(Object data, String message) {
         return result(ApiCode.SUCCESS, message, data);
-    }
-
-    public static ApiResult okMap(String key, Object value) {
-        Map<String, Object> map = new HashMap<>(1);
-        map.put(key, value);
-        return success(map);
     }
 
     public static ApiResult fail(ApiCode apiCode) {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -33,6 +34,9 @@ public class JacksonDateDeserializer extends JsonDeserializer<Date> {
             return null;
         }
         dateString = dateString.trim();
+        if (StringUtils.isBlank(dateString)) {
+            return null;
+        }
         Date date = null;
         boolean flag = false;
         for (int i = 0; i < DATE_PATTERNS.length; i++) {

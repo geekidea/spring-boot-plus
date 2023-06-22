@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class TokenUtil {
 
-    private static String TOKEN_PREFIX = "scp.auth.";
+    private static String TOKEN_PREFIX = "boot.auth.";
 
     /**
      * 生成 Token
@@ -63,6 +63,9 @@ public class TokenUtil {
         if (StringUtils.isBlank(token)) {
             // 从cookie中获取token
             token = getTokenByCookie(request);
+            if (StringUtils.isNotBlank(token) && !token.startsWith(TOKEN_PREFIX)) {
+                token = null;
+            }
         }
         if (StringUtils.isBlank(token)) {
             return null;

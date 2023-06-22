@@ -33,51 +33,6 @@ public class SysLogController {
     private SysLogService sysLogService;
 
     /**
-     * 添加系统日志
-     *
-     * @param sysLogAddDto
-     * @return
-     * @throws Exception
-     */
-    @PostMapping("/addSysLog")
-    @Operation(summary = "添加系统日志")
-    @Permission("sys:log:add")
-    public ApiResult addSysLog(@Valid @RequestBody SysLogAddDto sysLogAddDto) throws Exception {
-        boolean flag = sysLogService.addSysLog(sysLogAddDto);
-        return ApiResult.result(flag);
-    }
-
-    /**
-     * 修改系统日志
-     *
-     * @param sysLogUpdateDto
-     * @return
-     * @throws Exception
-     */
-    @PostMapping("/updateSysLog")
-    @Operation(summary = "修改系统日志")
-    @Permission("sys:log:update")
-    public ApiResult updateSysLog(@Valid @RequestBody SysLogUpdateDto sysLogUpdateDto) throws Exception {
-        boolean flag = sysLogService.updateSysLog(sysLogUpdateDto);
-        return ApiResult.result(flag);
-    }
-
-    /**
-     * 删除系统日志
-     *
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    @PostMapping("/deleteSysLog/{id}")
-    @Operation(summary = "删除系统日志")
-    @Permission("sys:log:delete")
-    public ApiResult deleteSysLog(@PathVariable Long id) throws Exception {
-        boolean flag = sysLogService.deleteSysLog(id);
-        return ApiResult.result(flag);
-    }
-
-    /**
      * 获取系统日志详情
      *
      * @param id

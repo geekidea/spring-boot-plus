@@ -15,7 +15,7 @@ spring:
     name: spring-boot-plus
   # 当前项目maven激活环境，例如：dev/test/prod，对应pom.xml中profile设置值
   profiles:
-    active: dev
+    active: @profileActive@
   jackson:
     date-format: yyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
@@ -62,13 +62,6 @@ spring:
         # 连接池中的最小空闲连接
         min-idle: 10
       shutdown-timeout: 3s
-
-# logback.xml中有详细的日志配置
-#logging:
-#  config: classpath:logback.xml
-logging:
-  level:
-    root: info
 
 mybatis-plus:
   # 启动时是否检查MyBatis XML文件是否存在

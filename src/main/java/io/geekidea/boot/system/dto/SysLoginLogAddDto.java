@@ -17,9 +17,9 @@ import java.io.Serializable;
 public class SysLoginLogAddDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "请求ID")
-    @Length(max = 32, message = "请求ID长度超过限制")
-    private String requestId;
+    @Schema(description = "日志链路ID")
+    @Length(max = 32, message = "日志链路ID长度超过限制")
+    private String traceId;
 
     @Schema(description = "用户名称")
     @Length(max = 32, message = "用户名称长度超过限制")

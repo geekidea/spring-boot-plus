@@ -26,8 +26,8 @@ public class SysLoginLog implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @Schema(description = "请求ID")
-    private String requestId;
+    @Schema(description = "日志链路ID")
+    private String traceId;
 
     @Schema(description = "用户名称")
     private String username;

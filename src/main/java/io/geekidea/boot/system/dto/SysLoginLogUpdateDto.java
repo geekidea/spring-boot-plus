@@ -22,9 +22,9 @@ public class SysLoginLogUpdateDto implements Serializable {
     @NotNull(message = "主键不能为空")
     private Long id;
 
-    @Schema(description = "请求ID")
-    @Length(max = 32, message = "请求ID长度超过限制")
-    private String requestId;
+    @Schema(description = "日志链路ID")
+    @Length(max = 32, message = "日志链路ID长度超过限制")
+    private String traceId;
 
     @Schema(description = "用户名称")
     @Length(max = 32, message = "用户名称长度超过限制")

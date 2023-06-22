@@ -46,4 +46,15 @@ public interface CommonConstant {
      * 请求的原始字符串
      */
     String REQUEST_PARAM_BODY_STRING = "REQUEST_PARAM_BODY_STRING";
+
+    /**
+     * 日志链路ID
+     */
+    String TRACE_ID = "traceId";
+
+    /**
+     * 1000
+     */
+    int ONE_THOUSAND = 1000;
+
 }

@@ -21,8 +21,8 @@ public class SysLoginLogVo implements Serializable {
     @Schema(description = "主键")
     private Long id;
 
-    @Schema(description = "请求ID")
-    private String requestId;
+    @Schema(description = "日志链路ID")
+    private String traceId;
 
     @Schema(description = "用户名称")
     private String username;
