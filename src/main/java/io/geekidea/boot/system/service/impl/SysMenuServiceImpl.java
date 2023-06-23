@@ -97,9 +97,6 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
     @Override
     public List<SysNavMenuTreeVo> getNavMenuTreeList() throws Exception {
         Long userId = LoginUtil.getUserId();
-        if (userId == null) {
-            throw new BusinessException("用户ID不能为空");
-        }
         // 如果是管理员，则查询所有可用菜单，否则获取当前用户所有可用的菜单
         boolean isAdmin = LoginUtil.isAdmin();
         List<SysNavMenuTreeVo> list;

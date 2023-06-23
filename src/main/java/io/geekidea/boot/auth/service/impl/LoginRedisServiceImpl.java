@@ -1,6 +1,7 @@
 package io.geekidea.boot.auth.service.impl;
 
 import io.geekidea.boot.auth.exception.LoginException;
+import io.geekidea.boot.auth.exception.LoginTokenException;
 import io.geekidea.boot.auth.service.LoginRedisService;
 import io.geekidea.boot.auth.util.TokenUtil;
 import io.geekidea.boot.auth.vo.LoginRedisVo;
@@ -79,7 +80,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
     @Override
     public LoginRedisVo getLoginRedisVo(String token) throws Exception {
         if (StringUtils.isBlank(token)) {
-            throw new LoginException("token不能为空");
+            throw new LoginTokenException("token不能为空");
         }
         String loginRedisKey = getLoginRedisKey(token);
         LoginRedisVo loginRedisVo = (LoginRedisVo) redisTemplate.opsForValue().get(loginRedisKey);
@@ -89,7 +90,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
     @Override
     public void deleteLoginRedisVo(String token) throws Exception {
         if (StringUtils.isBlank(token)) {
-            throw new LoginException("token不能为空");
+            throw new LoginTokenException("token不能为空");
         }
         String loginTokenRedisKey = getLoginRedisKey(token);
         String loginUserIdRedisKey = String.format(RedisKey.LOGIN_USER_ID, token);

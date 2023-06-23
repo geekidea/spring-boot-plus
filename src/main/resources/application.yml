@@ -103,9 +103,9 @@ spring-boot-plus:
   # 登录权限配置
   login:
     # 是否启用登录权限校验
-    enable: false
+    enable: true
     # 是否单次登录
-    single-login: true
+    single-login: false
     # token过期时间，单位为分钟
     token-expire-minutes: 60
     # 是否校验目标方法权限

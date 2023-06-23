@@ -13,8 +13,6 @@ import org.slf4j.MDC;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * REST API 返回结果
@@ -28,7 +26,8 @@ import java.util.Map;
 @AllArgsConstructor
 @Schema(description = "响应结果")
 public class ApiResult<T> implements Serializable {
-    private static final long serialVersionUID = 8004487252556526569L;
+
+    private static final long serialVersionUID = 7594052194764993562L;
 
     @Schema(description = "响应编码 200：成功，500：失败")
     private int code;
@@ -50,8 +49,31 @@ public class ApiResult<T> implements Serializable {
     @Schema(description = "日志链路ID")
     private String traceId;
 
-    public ApiResult() {
-        time = new Date();
+    public static ApiResult success() {
+        return success(null);
+    }
+
+    public static ApiResult success(Object data) {
+        return result(ApiCode.SUCCESS, data);
+    }
+
+    public static ApiResult fail() {
+        return fail(ApiCode.FAIL);
+    }
+
+    public static ApiResult fail(String message) {
+        return fail(ApiCode.FAIL, message);
+    }
+
+    public static ApiResult fail(ApiCode apiCode) {
+        return fail(apiCode, null);
+    }
+
+    public static ApiResult fail(ApiCode apiCode, String message) {
+        if (ApiCode.SUCCESS == apiCode) {
+            throw new RuntimeException("失败结果状态码不能为" + ApiCode.SUCCESS.getCode());
+        }
+        return result(apiCode, message, null);
     }
 
     public static ApiResult result(boolean flag) {
@@ -70,20 +92,24 @@ public class ApiResult<T> implements Serializable {
     }
 
     public static ApiResult result(ApiCode apiCode, String message, Object data) {
+        if (apiCode == null) {
+            throw new RuntimeException("结果状态码不能为空");
+        }
         boolean success = false;
-        if (apiCode.getCode() == ApiCode.SUCCESS.getCode()) {
+        int code = apiCode.getCode();
+        if (ApiCode.SUCCESS.getCode() == code) {
             success = true;
         }
-        String outErrorMessage;
+        String outMessage;
         if (StringUtils.isBlank(message)) {
-            outErrorMessage = apiCode.getMsg();
+            outMessage = apiCode.getMsg();
         } else {
-            outErrorMessage = message;
+            outMessage = message;
         }
         String traceId = MDC.get(CommonConstant.TRACE_ID);
         return ApiResult.builder()
-                .code(apiCode.getCode())
-                .msg(outErrorMessage)
+                .code(code)
+                .msg(outMessage)
                 .data(data)
                 .success(success)
                 .time(new Date())
@@ -91,53 +117,4 @@ public class ApiResult<T> implements Serializable {
                 .build();
     }
 
-    public static ApiResult success() {
-        return success(null);
-    }
-
-    public static ApiResult success(Object data) {
-        return result(ApiCode.SUCCESS, data);
-    }
-
-    public static ApiResult success(Object data, String message) {
-        return result(ApiCode.SUCCESS, message, data);
-    }
-
-    public static ApiResult fail(ApiCode apiCode) {
-        return result(apiCode, null);
-    }
-
-    public static ApiResult fail(String message) {
-        return result(ApiCode.FAIL, message, null);
-
-    }
-
-    public static ApiResult fail(ApiCode apiCode, Object data) {
-        if (ApiCode.SUCCESS == apiCode) {
-            throw new RuntimeException("失败结果状态码不能为" + ApiCode.SUCCESS.getCode());
-        }
-        return result(apiCode, data);
-
-    }
-
-    public static ApiResult fail(Integer errorCode, String message) {
-        return new ApiResult()
-                .setSuccess(false)
-                .setCode(errorCode)
-                .setMsg(message);
-    }
-
-    public static ApiResult fail(String key, Object value) {
-        Map<String, Object> map = new HashMap<>(1);
-        map.put(key, value);
-        return result(ApiCode.FAIL, map);
-    }
-
-    public static ApiResult fail() {
-        return fail(ApiCode.FAIL);
-    }
-
-    public static ApiResult fail(Object t) {
-        return new ApiResult().setCode(ApiCode.FAIL.getCode()).setMsg(ApiCode.FAIL.getMsg());
-    }
 }

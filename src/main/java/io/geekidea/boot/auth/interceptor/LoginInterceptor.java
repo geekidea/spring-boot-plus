@@ -2,6 +2,7 @@ package io.geekidea.boot.auth.interceptor;
 
 import io.geekidea.boot.auth.annotation.IgnoreLogin;
 import io.geekidea.boot.auth.annotation.Permission;
+import io.geekidea.boot.auth.exception.LoginTokenException;
 import io.geekidea.boot.auth.exception.LoginException;
 import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.auth.util.TokenUtil;
@@ -48,12 +49,12 @@ public class LoginInterceptor implements HandlerInterceptor {
             }
             String token = TokenUtil.getToken(request);
             if (StringUtils.isBlank(token)) {
-                throw new LoginException("token不能为空");
+                throw new LoginTokenException("token不能为空");
             }
             // 获取登录用户信息
             LoginRedisVo loginRedisVo = LoginUtil.getLoginRedisVo();
             if (loginRedisVo == null) {
-                throw new LoginException("登录已过期或登录信息不存在，请重新登录");
+                throw new LoginTokenException("登录已过期或登录信息不存在，请重新登录");
             }
             LoginVo loginVo = loginRedisVo.getLoginVo();
             List<String> roleCodes = loginVo.getRoleCodes();
@@ -64,7 +65,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                     // 从redis中获取权限列表
                     List<String> permissions = loginRedisVo.getPermissions();
                     if (CollectionUtils.isEmpty(permissions)) {
-                        throw new LoginException("当前用户为设置权限");
+                        throw new LoginException("当前用户未设置权限");
                     }
                     String value = permission.value();
                     String role = permission.role();
@@ -97,12 +98,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         } else {
             String token = TokenUtil.getToken(request);
             if (StringUtils.isBlank(token)) {
-                throw new LoginException("token不能为空");
+                throw new LoginTokenException("token不能为空");
             }
             // 获取登录用户信息
             LoginVo loginVo = LoginUtil.getLoginVo();
             if (loginVo == null) {
-                throw new LoginException("登录已过期或登录信息不存在，请重新登录");
+                throw new LoginTokenException("登录已过期或登录信息不存在，请重新登录");
             }
         }
         return true;

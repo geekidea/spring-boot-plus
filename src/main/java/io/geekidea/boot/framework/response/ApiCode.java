@@ -15,7 +15,11 @@ public enum ApiCode {
     /**
      * 操作失败
      **/
-    FAIL(500, "操作失败");
+    FAIL(500, "操作失败"),
+    /**
+     * token已过期
+     */
+    TOKEN_EXCEPTION(5001, "Token为空或已过期，请重新登录");
 
     private final int code;
     private final String msg;

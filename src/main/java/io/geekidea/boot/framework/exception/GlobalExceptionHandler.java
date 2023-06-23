@@ -1,6 +1,8 @@
 package io.geekidea.boot.framework.exception;
 
 import io.geekidea.boot.auth.exception.LoginException;
+import io.geekidea.boot.auth.exception.LoginTokenException;
+import io.geekidea.boot.framework.response.ApiCode;
 import io.geekidea.boot.framework.response.ApiResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -36,6 +38,8 @@ public class GlobalExceptionHandler {
     public static ApiResult handle(Throwable exception) {
         if (exception instanceof BusinessException || exception instanceof LoginException) {
             return ApiResult.fail(exception.getMessage());
+        } else if (exception instanceof LoginTokenException) {
+            return ApiResult.fail(ApiCode.TOKEN_EXCEPTION, exception.getMessage());
         } else if (exception instanceof MethodArgumentNotValidException) {
             MethodArgumentNotValidException ex = (MethodArgumentNotValidException) exception;
             BindingResult bindingResult = ex.getBindingResult();

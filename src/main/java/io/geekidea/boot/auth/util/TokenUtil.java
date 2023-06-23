@@ -2,6 +2,7 @@ package io.geekidea.boot.auth.util;
 
 import io.geekidea.boot.auth.constant.LoginConstant;
 import io.geekidea.boot.auth.exception.LoginException;
+import io.geekidea.boot.auth.exception.LoginTokenException;
 import io.geekidea.boot.framework.util.HttpRequestUtil;
 import io.geekidea.boot.framework.util.UUIDUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -73,7 +74,7 @@ public class TokenUtil {
         // 校验token
         if (!token.startsWith(TOKEN_PREFIX)) {
             log.error("token错误:" + token);
-            throw new LoginException("token错误");
+            throw new LoginTokenException("token错误");
         }
         return token;
     }
