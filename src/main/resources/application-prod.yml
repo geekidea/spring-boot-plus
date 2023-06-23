@@ -16,3 +16,10 @@ spring-boot-plus:
     access-path: /file/**
     # 上传文件保存路径
     upload-path: /home/upload/
+
+knife4j:
+  # 启用账号密码登录
+  basic:
+    enable: true
+    username: admin
+    password: 123456

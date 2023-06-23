@@ -46,7 +46,6 @@ public class LoginProperties {
      */
     private List<String> excludePaths;
 
-
     public void setExcludePaths(List<String> excludePaths) {
         if (CollectionUtils.isNotEmpty(excludePaths)) {
             List<String> excludePathList = new ArrayList<>();
@@ -65,8 +64,6 @@ public class LoginProperties {
         } else {
             this.excludePaths = excludePaths;
         }
-        System.out.println(this.excludePaths);
-
     }
 
     public Integer getTokenExpireMinutes() {

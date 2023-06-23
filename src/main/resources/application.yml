@@ -10,6 +10,7 @@ server:
     accept-count: 1000
     max-connections: 10000
 
+# spring配置
 spring:
   application:
     name: spring-boot-plus
@@ -26,6 +27,7 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 200MB
+  # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
@@ -45,6 +47,7 @@ spring:
       idle-timeout: 10000
       max-lifetime: 1800000
       connection-timeout: 10000
+  # redis配置
   redis:
     host: 127.0.0.1
     port: 6379
@@ -63,6 +66,7 @@ spring:
         min-idle: 10
       shutdown-timeout: 3s
 
+# mybatis-plus配置
 mybatis-plus:
   # 启动时是否检查MyBatis XML文件是否存在
   check-config-location: true
@@ -89,17 +93,17 @@ pagehelper:
 
 # spring-boot-plus框架配置
 spring-boot-plus:
+  # swagger配置
   openapi:
-    title: Spring-Boot-Plus
-    description: Spring-Boot-Plus API Docs
+    title: spring-boot-plus API Docs
+    description: spring-boot-plus后台接口文档
     terms-of-service: https://github.com/geekidea
     contact-name: geekidea
     contact-url: https://geekidea.io
     contact-email: geekidea@qq.com
-    version: 2.7.10-SNAPSHOT
+    version: @project.version@
     external-description: spring-boot-plus
     external-url: https://springboot.plus
-
   # 登录权限配置
   login:
     # 是否启用登录权限校验
@@ -114,11 +118,11 @@ spring-boot-plus:
     exclude-paths:
       - /v3/api-docs/**
       - /swagger-resources/**,/swagger-ui/**,/doc.html
+      - /webjars/**
+      - /favicon.ico
       - /login
       - /index.html
       - /file/**
-      - /upload/**
-
   # 日志AOP配置
   log-aop:
     # 是否启用
@@ -131,31 +135,22 @@ spring-boot-plus:
     login-url: /login
 
 
-
-
 # swagger配置
 springdoc:
   swagger-ui:
     enabled: true
 
 
-#knife4j:
-#  enable: true
-#  openapi:
-#    title: Knife4j官方文档
-#    description: "`我是测试`,**你知道吗**
-#    # aaa"
-#    email: xiaoymin@foxmail.com
-#    concat: 八一菜刀
-#    url: https://docs.xiaominfo.com
-#    version: v4.0
-#    license: Apache 2.0
-#    license-url: https://stackoverflow.com/
-#    terms-of-service-url: https://stackoverflow.com/
-#    group:
-#      test1:
-#        group-name: 分组名称
-#        api-rule: package
-#        api-rule-resources:
-#          - com.knife4j.demo.new3
+knife4j:
+  enable: true
+  # 启用账号密码登录
+  basic:
+    enable: false
+    username: admin
+    password: 123456
+  setting:
+    # 自定义底部
+    enable-footer: false
+    enable-footer-custom: true
+    footer-custom-content: MIT License | Copyright © 2019-2023 [geekidea](https://geekidea.io)
 

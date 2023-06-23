@@ -2,8 +2,8 @@ package io.geekidea.boot.auth.interceptor;
 
 import io.geekidea.boot.auth.annotation.IgnoreLogin;
 import io.geekidea.boot.auth.annotation.Permission;
-import io.geekidea.boot.auth.exception.LoginTokenException;
 import io.geekidea.boot.auth.exception.LoginException;
+import io.geekidea.boot.auth.exception.LoginTokenException;
 import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.auth.util.TokenUtil;
 import io.geekidea.boot.auth.vo.LoginRedisVo;
