@@ -74,6 +74,21 @@ public class SysLog implements Serializable {
     @Schema(description = "请求ip")
     private String requestIp;
 
+    @Schema(description = "IP国家")
+    private String ipCountry;
+
+    @Schema(description = "IP省份")
+    private String ipProvince;
+
+    @Schema(description = "IP城市")
+    private String ipCity;
+
+    @Schema(description = "IP区域描述")
+    private String ipAreaDesc;
+
+    @Schema(description = "IP运营商")
+    private String ipIsp;
+
     @Schema(description = "0:其它,1:新增,2:修改,3:删除,4:详情查询,5:所有列表,6:分页列表,7:其它查询,8:上传文件")
     private Integer logType;
 

@@ -19,7 +19,9 @@ import io.geekidea.boot.framework.constant.CommonConstant;
 import io.geekidea.boot.framework.exception.GlobalExceptionHandler;
 import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.framework.util.HttpRequestUtil;
+import io.geekidea.boot.framework.util.IpRegionUtil;
 import io.geekidea.boot.framework.util.IpUtil;
+import io.geekidea.boot.framework.vo.IpRegion;
 import io.geekidea.boot.system.entity.SysLog;
 import io.geekidea.boot.system.mapper.SysLogMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -135,7 +137,19 @@ public class SysLogAop {
             // 设置IP
             String ip = IpUtil.getRequestIp();
             sysLog.setRequestIp(ip);
-            // TODO 设置IP归属地
+            try {
+                // 设置IP归属地信息
+                IpRegion ipRegion = IpRegionUtil.getIpRegion(ip);
+                if (ipRegion != null) {
+                    sysLog.setIpCountry(ipRegion.getCountry());
+                    sysLog.setIpProvince(ipRegion.getProvince());
+                    sysLog.setIpCity(ipRegion.getCity());
+                    sysLog.setIpAreaDesc(ipRegion.getAreaDesc());
+                    sysLog.setIpIsp(ipRegion.getIsp());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             String contextPath = request.getContextPath();
             // 请求全路径
             String requestUrl = request.getRequestURI();

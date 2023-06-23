@@ -3,8 +3,6 @@ package io.geekidea.boot.system.controller;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
-import io.geekidea.boot.system.dto.SysLogAddDto;
-import io.geekidea.boot.system.dto.SysLogUpdateDto;
 import io.geekidea.boot.system.query.SysLogQuery;
 import io.geekidea.boot.system.service.SysLogService;
 import io.geekidea.boot.system.vo.SysLogInfoVo;

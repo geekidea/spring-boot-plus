@@ -72,6 +72,7 @@ public class TokenUtil {
         }
         // 校验token
         if (!token.startsWith(TOKEN_PREFIX)) {
+            log.error("token错误:" + token);
             throw new LoginException("token错误");
         }
         return token;
