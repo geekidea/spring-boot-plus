@@ -44,23 +44,12 @@ public class LoginRedisServiceImpl implements LoginRedisService {
     @Override
     public void setLoginRedisVo(String token, LoginVo loginVo, List<String> permissions) throws Exception {
         if (loginVo == null) {
-            throw new LoginException("登录用户信息不能为空");
+            throw new LoginException("登录用户信息不能为空" );
         }
         Long userId = loginVo.getUserId();
         if (loginProperties.isSingleLogin()) {
-            // 单点登录，则删除之前改用户的key
-            String loginUserAllTokenRedisKey = String.format(RedisKey.LOGIN_USER, userId, "*");
-            Set<String> set = redisTemplate.keys(loginUserAllTokenRedisKey);
-            if (CollectionUtils.isNotEmpty(set)) {
-                for (String key : set) {
-                    String beforeToken = (String) redisTemplate.opsForValue().get(key);
-                    String userTokenKey = getLoginRedisKey(beforeToken);
-                    String loginUserIdRedisKey = String.format(RedisKey.LOGIN_USER_ID, beforeToken);
-                    redisTemplate.delete(key);
-                    redisTemplate.delete(userTokenKey);
-                    redisTemplate.delete(loginUserIdRedisKey);
-                }
-            }
+            // 单点登录，则删除之前该用户的key
+            deleteLoginInfoByUserId(userId);
         }
         // 用户token
         String loginUserRedisKey = String.format(RedisKey.LOGIN_USER, userId, token);
@@ -74,13 +63,12 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         // 用户ID
         String loginUserIdRedisKey = String.format(RedisKey.LOGIN_USER_ID, token);
         redisTemplate.opsForValue().set(loginUserIdRedisKey, userId, loginProperties.getTokenExpireMinutes(), TOKEN_TIME_UNIT);
-
     }
 
     @Override
     public LoginRedisVo getLoginRedisVo(String token) throws Exception {
         if (StringUtils.isBlank(token)) {
-            throw new LoginTokenException("token不能为空");
+            throw new LoginTokenException("token不能为空" );
         }
         String loginRedisKey = getLoginRedisKey(token);
         LoginRedisVo loginRedisVo = (LoginRedisVo) redisTemplate.opsForValue().get(loginRedisKey);
@@ -90,7 +78,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
     @Override
     public void deleteLoginRedisVo(String token) throws Exception {
         if (StringUtils.isBlank(token)) {
-            throw new LoginTokenException("token不能为空");
+            throw new LoginTokenException("token不能为空" );
         }
         String loginTokenRedisKey = getLoginRedisKey(token);
         String loginUserIdRedisKey = String.format(RedisKey.LOGIN_USER_ID, token);
@@ -135,6 +123,25 @@ public class LoginRedisServiceImpl implements LoginRedisService {
         }
         Long userId = Long.parseLong(userIdObject.toString());
         return userId;
+    }
+
+    @Override
+    public void deleteLoginInfoByUserId(Long userId) throws Exception {
+        log.info("清除用户的所有redis登录信息：" + userId);
+        // 删除之前该用户的key
+        String loginUserAllTokenRedisKey = String.format(RedisKey.LOGIN_USER, userId, "*" );
+        Set<String> set = redisTemplate.keys(loginUserAllTokenRedisKey);
+        if (CollectionUtils.isNotEmpty(set)) {
+            for (String key : set) {
+                String beforeToken = (String) redisTemplate.opsForValue().get(key);
+                String userTokenKey = getLoginRedisKey(beforeToken);
+                String loginUserIdRedisKey = String.format(RedisKey.LOGIN_USER_ID, beforeToken);
+                redisTemplate.delete(key);
+                redisTemplate.delete(userTokenKey);
+                redisTemplate.delete(loginUserIdRedisKey);
+
+            }
+        }
     }
 
 

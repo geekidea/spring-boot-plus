@@ -29,7 +29,7 @@ public class IpRegionUtil {
 
     private static final String CITY = "市";
 
-    private static final String INTRANET = "内容IP";
+    private static final String INTRANET = "内网IP";
 
     private static Searcher searcher;
 
@@ -97,7 +97,11 @@ public class IpRegionUtil {
             } else {
                 province = array[2];
                 isp = array[4];
-                areaDesc = country + " " + province;
+                if (StringUtils.isBlank(province)) {
+                    areaDesc = country;
+                } else {
+                    areaDesc = country + " " + province;
+                }
             }
             IpRegion ipRegion = new IpRegion();
             ipRegion.setCountry(country);

@@ -1,7 +1,5 @@
 package io.geekidea.boot.generator.config;
 
-import cn.hutool.core.lang.Dict;
-import cn.hutool.setting.yaml.YamlUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.BasePageQuery;
@@ -10,7 +8,6 @@ import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.framework.service.BaseService;
 import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
-import io.geekidea.boot.generator.enums.DatabaseType;
 import io.geekidea.boot.generator.enums.DefaultOrderType;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -29,15 +28,6 @@ import java.util.*;
 @Accessors(chain = true)
 public class GeneratorConfig {
 
-    private static final String MYSQL = "mysql";
-    private static final String ORACLE = "oracle";
-    private static final String POSTGRESQL = "postgresql";
-    private static final String MARIADB = "mariadb";
-    private static final String SQLSERVER = "sqlserver";
-    /**
-     * 数据库类型
-     */
-    private DatabaseType databaseType = DatabaseType.MYSQL;
     /**
      * 用户名
      */
@@ -49,7 +39,7 @@ public class GeneratorConfig {
     /**
      * 驱动名称
      */
-    private String driverName;
+    private String driver;
     /**
      * 驱动URL
      */
@@ -257,39 +247,33 @@ public class GeneratorConfig {
      */
     private boolean simple = false;
 
-    public GeneratorConfig() {
-        try {
-            String projectPath = System.getProperty("user.dir");
-            String applicationDevYml = projectPath + "/src/main/resources/application-dev.yml";
-            Dict dict = YamlUtil.loadByPath(applicationDevYml);
-            Map<String, Object> spring = (Map<String, Object>) dict.get("spring");
-            Map<String, Object> datasource = (Map<String, Object>) spring.get("datasource");
-            String applicationYml = projectPath + "/src/main/resources/application.yml";
-            Dict applicationDict = YamlUtil.loadByPath(applicationYml);
-            Map<String, Object> applicationSpring = (Map<String, Object>) applicationDict.get("spring");
-            Map<String, Object> applicationDatasource = (Map<String, Object>) applicationSpring.get("datasource");
-            String driverClassName = (String) applicationDatasource.get("driver-class-name");
-            String url = (String) datasource.get("url");
-            String username = (String) datasource.get("username");
-            String password = (String) datasource.get("password");
-            log.info("driverClassName = " + driverClassName);
-            log.info("url = " + url);
-            log.info("username = " + username);
-            log.info("password = " + password);
-            if (StringUtils.isNotBlank(driverClassName) &&
-                    StringUtils.isNotBlank(url) &&
-                    StringUtils.isNotBlank(username) &&
-                    StringUtils.isNotBlank(password)
-            ) {
-                log.info("使用application-dev.yml中的数据源");
-                this.setDriverName(driverClassName);
-                this.url = url;
-                this.username = username;
-                this.password = password;
-            }
-        } catch (Exception e) {
-
+    public GeneratorConfig() throws Exception {
+        String projectPath = System.getProperty("user.dir" );
+        String configFilePath = projectPath + "/src/test/resources/generator.properties";
+        InputStream inputStream = new FileInputStream(configFilePath);
+        Properties properties = new Properties();
+        properties.load(inputStream);
+        String driver = properties.getProperty("driver" );
+        String url = properties.getProperty("url" );
+        String username = properties.getProperty("username" );
+        String password = properties.getProperty("password" );
+        log.info("生成代码JDBC配置信息：" );
+        log.info("配置文件路径：" + configFilePath);
+        log.info("driver = " + driver);
+        log.info("url = " + url);
+        log.info("username = " + username);
+        log.info("password = " + password);
+        if (StringUtils.isBlank(driver) ||
+                StringUtils.isBlank(url) ||
+                StringUtils.isBlank(username) ||
+                StringUtils.isBlank(password)
+        ) {
+            throw new RuntimeException("JDBC配置异常，请检查generator.properties配置文件" );
         }
+        this.driver = driver;
+        this.url = url;
+        this.username = username;
+        this.password = password;
     }
 
     /**
@@ -297,9 +281,9 @@ public class GeneratorConfig {
      */
     public void init() {
         if (StringUtils.isBlank(this.parentPackage)) {
-            throw new BusinessException("parentPackage不能为空");
+            throw new BusinessException("parentPackage不能为空" );
         }
-        this.projectPackagePath = this.parentPackage.replaceAll("\\.", "/");
+        this.projectPackagePath = this.parentPackage.replaceAll("\\.", "/" );
         this.commonParentPackage = parentPackage + ".framework";
         this.superService = BaseService.class.getName();
         this.superServiceImpl = BaseServiceImpl.class.getName();
@@ -313,8 +297,8 @@ public class GeneratorConfig {
         this.commonPaging = Paging.class.getName();
         this.commonBusinessException = BusinessException.class.getName();
         this.commonOrderByItem = OrderByItem.class.getName();
-        this.commonFields = Arrays.asList("remark", "version", "deleted", "createTime", "updateTime");
-        this.voExcludeFields = Arrays.asList("password", "version", "deleted");
+        this.commonFields = Arrays.asList("remark", "version", "deleted", "createTime", "updateTime" );
+        this.voExcludeFields = Arrays.asList("password", "version", "deleted" );
 
         this.dtoPackage = parentPackage + "." + moduleName + ".dto";
         this.queryPackage = parentPackage + "." + moduleName + ".query";
@@ -355,32 +339,12 @@ public class GeneratorConfig {
     }
 
     private String handlerTableName(String tableName) {
-        if (databaseType == DatabaseType.ORACLE || databaseType == DatabaseType.ORACLE_12C) {
-            tableName = tableName.toUpperCase();
-        }
         return tableName;
     }
 
     public GeneratorConfig setTablePrefix(String... tablePrefix) {
         this.tablePrefix = tablePrefix;
         return this;
-    }
-
-    public void setDriverName(String driverName) {
-        this.driverName = driverName;
-        if (StringUtils.isNotBlank(driverName)) {
-            if (driverName.contains(MYSQL)) {
-                this.databaseType = DatabaseType.MYSQL;
-            } else if (driverName.contains(ORACLE)) {
-                this.databaseType = DatabaseType.ORACLE;
-            } else if (driverName.contains(POSTGRESQL)) {
-                this.databaseType = DatabaseType.POSTGRE_SQL;
-            } else if (driverName.contains(MARIADB)) {
-                this.databaseType = DatabaseType.MARIADB;
-            } else if (driverName.contains(SQLSERVER)) {
-                this.databaseType = DatabaseType.SQL_SERVER;
-            }
-        }
     }
 
 }

@@ -31,6 +31,9 @@
             <if test="responseSuccess != null">
                 and response_success = #{responseSuccess}
             </if>
+            <if test="requestIp != null and requestIp != ''">
+                and request_ip like concat('%',#{requestIp},'%')
+            </if>
             <if test="createStartTime != null">
                 and date(create_time) >= date(#{createStartTime})
             </if>

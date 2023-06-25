@@ -5,6 +5,7 @@ import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
 import io.geekidea.boot.system.entity.SysUserRole;
 import io.geekidea.boot.system.mapper.SysUserRoleMapper;
 import io.geekidea.boot.system.service.SysUserRoleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @author geekidea
  * @since 2022-12-26
  */
+@Slf4j
 @Service
 public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
 

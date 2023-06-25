@@ -11,6 +11,7 @@ import io.geekidea.boot.system.query.SysDeptQuery;
 import io.geekidea.boot.system.service.SysDeptService;
 import io.geekidea.boot.system.vo.SysDeptInfoVo;
 import io.geekidea.boot.system.vo.SysDeptTreeVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
  * @author geekidea
  * @since 2022-12-26
  */
+@Slf4j
 @Service
 public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
 

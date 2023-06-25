@@ -1,4 +1,4 @@
-package io.geekidea.boot;
+package io.geekidea.boot.generator;
 
 import io.geekidea.boot.generator.config.GeneratorConfig;
 import io.geekidea.boot.generator.handler.GenerateHandler;
@@ -11,17 +11,17 @@ import io.geekidea.boot.generator.handler.GenerateHandler;
  **/
 public class Generator {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         GeneratorConfig config = new GeneratorConfig();
         // 项目信息配置
-        config.setParentPackage("io.geekidea.boot")
-                .setModuleName("hello")
-                .setAuthor("geekidea");
+        config.setParentPackage("io.geekidea.boot" )
+                .setModuleName("hello" )
+                .setAuthor("geekidea" );
         // 表名称和需要去掉的表前缀
-        config.setTableNames("sys_user")
-                .setTablePrefix("");
+        config.setTableNames("sys_user" )
+                .setTablePrefix("" );
         // 是否只更新实体类
-         config.setOnlyOverrideEntity(true);
+        config.setOnlyOverrideEntity(true);
         // 是否覆盖已有文件
         config.setFileOverride(true);
         GenerateHandler handler = new GenerateHandler();

@@ -9,6 +9,7 @@ import io.geekidea.boot.system.query.SysLogQuery;
 import io.geekidea.boot.system.service.SysLogService;
 import io.geekidea.boot.system.vo.SysLogInfoVo;
 import io.geekidea.boot.system.vo.SysLogVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.List;
  * @author geekidea
  * @since 2023-02-16
  */
+@Slf4j
 @Service
 public class SysLogServiceImpl extends BaseServiceImpl<SysLogMapper, SysLog> implements SysLogService {
 

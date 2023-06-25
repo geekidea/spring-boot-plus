@@ -5,6 +5,7 @@ import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
 import io.geekidea.boot.system.entity.SysRoleMenu;
 import io.geekidea.boot.system.mapper.SysRoleMenuMapper;
 import io.geekidea.boot.system.service.SysRoleMenuService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
  * @author geekidea
  * @since 2022-12-26
  */
+@Slf4j
 @Service
 public class SysRoleMenuServiceImpl extends BaseServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {
 

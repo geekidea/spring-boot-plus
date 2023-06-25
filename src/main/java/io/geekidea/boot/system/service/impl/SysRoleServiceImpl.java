@@ -16,6 +16,7 @@ import io.geekidea.boot.system.service.SysRoleMenuService;
 import io.geekidea.boot.system.service.SysRoleService;
 import io.geekidea.boot.system.vo.SysRoleInfoVo;
 import io.geekidea.boot.system.vo.SysRoleVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ import java.util.List;
  * @author geekidea
  * @since 2022-12-26
  */
+@Slf4j
 @Service
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
 

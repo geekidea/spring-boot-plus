@@ -1,14 +1,14 @@
 package io.geekidea.boot.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import io.geekidea.boot.auth.service.LoginRedisService;
 import io.geekidea.boot.auth.util.PasswordUtil;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.OrderByItem;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
-import io.geekidea.boot.system.dto.ResetSysUserPasswordDto;
-import io.geekidea.boot.system.dto.SysUserAddDto;
-import io.geekidea.boot.system.dto.SysUserUpdateDto;
+import io.geekidea.boot.framework.util.UUIDUtil;
+import io.geekidea.boot.system.dto.*;
 import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.entity.SysUser;
 import io.geekidea.boot.system.mapper.SysRoleMapper;
@@ -18,6 +18,7 @@ import io.geekidea.boot.system.service.SysUserRoleService;
 import io.geekidea.boot.system.service.SysUserService;
 import io.geekidea.boot.system.vo.SysUserInfoVo;
 import io.geekidea.boot.system.vo.SysUserVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +36,7 @@ import java.util.List;
  * @author geekidea
  * @since 2022-12-26
  */
+@Slf4j
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
@@ -46,6 +48,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
+
+    @Autowired
+    private LoginRedisService loginRedisService;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -151,20 +156,82 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         return paging;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean resetSysUserPassword(ResetSysUserPasswordDto resetSysUserPasswordDto) throws Exception {
-        Long userId = resetSysUserPasswordDto.getUserId();
+    public boolean resetSysUserPassword(SysUserResetPasswordDto sysUserResetPasswordDto) throws Exception {
+        Long userId = sysUserResetPasswordDto.getUserId();
+        log.info("管理员重置用户密码：" + userId);
         SysUser sysUser = getById(userId);
         if (sysUser == null) {
             throw new BusinessException("系统用户不存在");
         }
-        String salt = sysUser.getSalt();
-        String password = resetSysUserPasswordDto.getPassword();
-        String newPassword = PasswordUtil.encrypt(password, salt);
+        String password = sysUserResetPasswordDto.getPassword();
+        return handleUpdatePassword(userId, password);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateProfile(SysUserUpdateProfileDto sysUserUpdateProfileDto) throws Exception {
+        Long id = sysUserUpdateProfileDto.getId();
+        SysUser sysUser = getById(id);
+        if (sysUser == null) {
+            throw new BusinessException("用户信息不存在");
+        }
+        LambdaUpdateWrapper<SysUser> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        lambdaUpdateWrapper.set(SysUser::getNickname, sysUserUpdateProfileDto.getNickname());
+        lambdaUpdateWrapper.set(SysUser::getPhone, sysUserUpdateProfileDto.getPhone());
+        lambdaUpdateWrapper.set(SysUser::getEmail, sysUserUpdateProfileDto.getEmail());
+        lambdaUpdateWrapper.set(SysUser::getGender, sysUserUpdateProfileDto.getGender());
+        lambdaUpdateWrapper.eq(SysUser::getId, id);
+        return update(lambdaUpdateWrapper);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updatePassword(SysUserUpdatePasswordDto sysUserUpdatePasswordDto) throws Exception {
+        Long id = sysUserUpdatePasswordDto.getId();
+        log.info("用户修改密码：" + id);
+        SysUser sysUser = getById(id);
+        if (sysUser == null) {
+            throw new BusinessException("用户信息不存在");
+        }
+        // 验证旧密码
+        String dbPassword = sysUser.getPassword();
+        String dbSalt = sysUser.getSalt();
+        String oldPassword = sysUserUpdatePasswordDto.getOldPassword();
+        String encryptOldPassword = PasswordUtil.encrypt(oldPassword, dbSalt);
+        if (!dbPassword.equals(encryptOldPassword)) {
+            throw new BusinessException("旧密码错误");
+        }
+        // 验证两次密码是否一致
+        String password = sysUserUpdatePasswordDto.getPassword();
+        String confirmPassword = sysUserUpdatePasswordDto.getConfirmPassword();
+        if (!password.equals(confirmPassword)) {
+            throw new BusinessException("两次输入的密码不一致");
+        }
+        return handleUpdatePassword(id, password);
+    }
+
+    /**
+     * 修改密码并删除该用户当前的登录信息
+     *
+     * @param id
+     * @param password
+     * @return
+     * @throws Exception
+     */
+    private boolean handleUpdatePassword(Long id, String password) throws Exception {
+        // 生产新的盐值
+        String newSalt = UUIDUtil.getUuid();
+        String newPassword = PasswordUtil.encrypt(password, newSalt);
+        // 修改密码
         LambdaUpdateWrapper<SysUser> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         lambdaUpdateWrapper.set(SysUser::getPassword, newPassword);
+        lambdaUpdateWrapper.set(SysUser::getSalt, newSalt);
         lambdaUpdateWrapper.set(SysUser::getUpdateTime, new Date());
-        lambdaUpdateWrapper.eq(SysUser::getId, userId);
+        lambdaUpdateWrapper.eq(SysUser::getId, id);
+        // 清除当前用户登录信息
+        loginRedisService.deleteLoginInfoByUserId(id);
         return update(lambdaUpdateWrapper);
     }
 

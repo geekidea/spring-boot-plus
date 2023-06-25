@@ -13,6 +13,7 @@ import io.geekidea.boot.system.service.SysMenuService;
 import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
 import io.geekidea.boot.system.vo.SysNavMenuTreeVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
  * @author geekidea
  * @since 2022-12-26
  */
+@Slf4j
 @Service
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
 

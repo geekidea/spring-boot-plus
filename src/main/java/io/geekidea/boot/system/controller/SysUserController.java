@@ -3,9 +3,7 @@ package io.geekidea.boot.system.controller;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
-import io.geekidea.boot.system.dto.ResetSysUserPasswordDto;
-import io.geekidea.boot.system.dto.SysUserAddDto;
-import io.geekidea.boot.system.dto.SysUserUpdateDto;
+import io.geekidea.boot.system.dto.*;
 import io.geekidea.boot.system.query.SysUserQuery;
 import io.geekidea.boot.system.service.SysUserService;
 import io.geekidea.boot.system.vo.SysUserInfoVo;
@@ -111,15 +109,45 @@ public class SysUserController {
     /**
      * 重置系统用户密码
      *
-     * @param resetSysUserPasswordDto
+     * @param sysUserResetPasswordDto
      * @return
      * @throws Exception
      */
     @PostMapping("/resetSysUserPassword")
     @Operation(summary = "重置系统用户密码")
     @Permission("sys:user:reset-password")
-    public ApiResult resetSysUserPassword(@Valid @RequestBody ResetSysUserPasswordDto resetSysUserPasswordDto) throws Exception {
-        boolean flag = sysUserService.resetSysUserPassword(resetSysUserPasswordDto);
+    public ApiResult resetSysUserPassword(@Valid @RequestBody SysUserResetPasswordDto sysUserResetPasswordDto) throws Exception {
+        boolean flag = sysUserService.resetSysUserPassword(sysUserResetPasswordDto);
+        return ApiResult.result(flag);
+    }
+
+    /**
+     * 修改个人信息
+     *
+     * @param sysUserUpdateProfileDto
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/updateProfile")
+    @Operation(summary = "修改个人信息")
+    @Permission("sys:user:update-profile")
+    public ApiResult updateProfile(@Valid @RequestBody SysUserUpdateProfileDto sysUserUpdateProfileDto) throws Exception {
+        boolean flag = sysUserService.updateProfile(sysUserUpdateProfileDto);
+        return ApiResult.result(flag);
+    }
+
+    /**
+     * 修改用户密码
+     *
+     * @param sysUserUpdatePasswordDto
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/updatePassword")
+    @Operation(summary = "修改用户密码")
+    @Permission("sys:user:update-password")
+    public ApiResult updatePassword(@Valid @RequestBody SysUserUpdatePasswordDto sysUserUpdatePasswordDto) throws Exception {
+        boolean flag = sysUserService.updatePassword(sysUserUpdatePasswordDto);
         return ApiResult.result(flag);
     }
 

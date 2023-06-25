@@ -1,4 +1,4 @@
-package io.geekidea.boot;
+package io.geekidea.boot.generator;
 
 import io.geekidea.boot.generator.config.SimpleGeneratorConfig;
 import io.geekidea.boot.generator.handler.SimpleGeneratorHandler;

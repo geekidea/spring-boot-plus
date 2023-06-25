@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Data
 @Schema(description = "$!{table.comment}查询参数")
 #if($!{entitySerialVersionUID})
-public class $!{entity}Query extends BasePageOrderQuery {
+public class $!{entity}Query extends BasePageQuery {
 #else
 public class $!{entity}Query {
 #end

@@ -35,6 +35,9 @@ public class SysLogQuery extends BasePageQuery {
     @Schema(description = "响应状态 false:失败,true:成功")
     private Boolean responseSuccess;
 
+    @Schema(description = "请求IP")
+    private String requestIp;
+
     @Schema(description = "创建开始时间")
     private Date createStartTime;
 

@@ -62,4 +62,13 @@ public interface LoginRedisService {
      * @throws Exception
      */
     Long getLoginUserId(String token) throws Exception;
+
+    /**
+     * 通过用户ID删除当前用户所有的redis登录信息
+     *
+     * @param userId
+     * @throws Exception
+     */
+    void deleteLoginInfoByUserId(Long userId) throws Exception;
+
 }

@@ -60,13 +60,13 @@ public class LoginController {
     }
 
     /**
-     * 登出
+     * 退出
      *
      * @return
      * @throws Exception
      */
     @PostMapping("/logout")
-    @Operation(summary = "登出")
+    @Operation(summary = "退出")
     public ApiResult<Boolean> logout() throws Exception {
         loginService.logout();
         return ApiResult.success();
