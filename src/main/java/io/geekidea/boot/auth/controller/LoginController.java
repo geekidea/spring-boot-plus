@@ -24,7 +24,7 @@ import javax.validation.Valid;
  **/
 @Slf4j
 @RestController
-@Tag(name = "登录登出")
+@Tag(name = "登录退出")
 public class LoginController {
 
     @Autowired

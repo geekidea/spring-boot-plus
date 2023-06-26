@@ -1,6 +1,8 @@
 package io.geekidea.boot.system.controller;
 
 import io.geekidea.boot.auth.annotation.Permission;
+import io.geekidea.boot.auth.util.LoginUtil;
+import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.system.dto.*;
@@ -119,6 +121,24 @@ public class SysUserController {
     public ApiResult resetSysUserPassword(@Valid @RequestBody SysUserResetPasswordDto sysUserResetPasswordDto) throws Exception {
         boolean flag = sysUserService.resetSysUserPassword(sysUserResetPasswordDto);
         return ApiResult.result(flag);
+    }
+
+    /**
+     * 获取个人信息
+     *
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/getProfile")
+    @Operation(summary = "获取个人信息")
+    @Permission("sys:user:profile")
+    public ApiResult<SysUserInfoVo> getProfile() throws Exception {
+        Long userId = LoginUtil.getUserId();
+        if (userId == null) {
+            throw new BusinessException("用户ID为空");
+        }
+        SysUserInfoVo sysUserInfoVo = sysUserService.getSysUserById(userId);
+        return ApiResult.success(sysUserInfoVo);
     }
 
     /**

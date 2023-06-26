@@ -39,6 +39,9 @@ public class SysUserUpdateProfileDto implements Serializable {
     @Schema(description = "性别，0：未知，1：男，2：女，默认0" )
     private Integer gender;
 
+    @Schema(description = "头像")
+    private String head;
+
 }
 
 

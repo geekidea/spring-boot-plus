@@ -182,8 +182,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         lambdaUpdateWrapper.set(SysUser::getPhone, sysUserUpdateProfileDto.getPhone());
         lambdaUpdateWrapper.set(SysUser::getEmail, sysUserUpdateProfileDto.getEmail());
         lambdaUpdateWrapper.set(SysUser::getGender, sysUserUpdateProfileDto.getGender());
+        lambdaUpdateWrapper.set(SysUser::getHead, sysUserUpdateProfileDto.getHead());
         lambdaUpdateWrapper.eq(SysUser::getId, id);
-        return update(lambdaUpdateWrapper);
+        boolean flag = update(lambdaUpdateWrapper);
+        // TODO 更新缓存中的用户信息
+        return flag;
     }
 
     @Transactional(rollbackFor = Exception.class)
