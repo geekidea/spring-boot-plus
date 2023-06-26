@@ -1,5 +1,7 @@
 package io.geekidea.boot.generator.config;
 
+import cn.hutool.core.lang.Dict;
+import cn.hutool.setting.yaml.YamlUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.BasePageQuery;
@@ -15,8 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -248,17 +248,16 @@ public class GeneratorConfig {
     private boolean simple = false;
 
     public GeneratorConfig() throws Exception {
-        String projectPath = System.getProperty("user.dir" );
-        String configFilePath = projectPath + "/src/test/resources/generator.properties";
-        InputStream inputStream = new FileInputStream(configFilePath);
-        Properties properties = new Properties();
-        properties.load(inputStream);
-        String driver = properties.getProperty("driver" );
-        String url = properties.getProperty("url" );
-        String username = properties.getProperty("username" );
-        String password = properties.getProperty("password" );
-        log.info("生成代码JDBC配置信息：" );
-        log.info("配置文件路径：" + configFilePath);
+        String projectPath = System.getProperty("user.dir");
+        String generatorYmlPath = "/src/test/resources/generator.yml";
+        String configFileFullPath = projectPath + generatorYmlPath;
+        Dict dict = YamlUtil.loadByPath(configFileFullPath);
+        String driver = dict.getStr("driver");
+        String url = dict.getStr("url");
+        String username = dict.getStr("username");
+        String password = dict.getStr("password");
+        log.info("生成代码JDBC配置信息：");
+        log.info("配置文件路径：" + configFileFullPath);
         log.info("driver = " + driver);
         log.info("url = " + url);
         log.info("username = " + username);
@@ -268,7 +267,7 @@ public class GeneratorConfig {
                 StringUtils.isBlank(username) ||
                 StringUtils.isBlank(password)
         ) {
-            throw new RuntimeException("JDBC配置异常，请检查generator.properties配置文件" );
+            throw new RuntimeException("JDBC配置异常，请检查" + generatorYmlPath + "配置文件");
         }
         this.driver = driver;
         this.url = url;
@@ -281,9 +280,9 @@ public class GeneratorConfig {
      */
     public void init() {
         if (StringUtils.isBlank(this.parentPackage)) {
-            throw new BusinessException("parentPackage不能为空" );
+            throw new BusinessException("parentPackage不能为空");
         }
-        this.projectPackagePath = this.parentPackage.replaceAll("\\.", "/" );
+        this.projectPackagePath = this.parentPackage.replaceAll("\\.", "/");
         this.commonParentPackage = parentPackage + ".framework";
         this.superService = BaseService.class.getName();
         this.superServiceImpl = BaseServiceImpl.class.getName();
@@ -297,8 +296,8 @@ public class GeneratorConfig {
         this.commonPaging = Paging.class.getName();
         this.commonBusinessException = BusinessException.class.getName();
         this.commonOrderByItem = OrderByItem.class.getName();
-        this.commonFields = Arrays.asList("remark", "version", "deleted", "createTime", "updateTime" );
-        this.voExcludeFields = Arrays.asList("password", "version", "deleted" );
+        this.commonFields = Arrays.asList("remark", "version", "deleted", "createTime", "updateTime");
+        this.voExcludeFields = Arrays.asList("password", "version", "deleted");
 
         this.dtoPackage = parentPackage + "." + moduleName + ".dto";
         this.queryPackage = parentPackage + "." + moduleName + ".query";

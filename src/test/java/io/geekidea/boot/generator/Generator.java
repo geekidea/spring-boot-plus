@@ -18,12 +18,12 @@ public class Generator {
                 .setModuleName("hello" )
                 .setAuthor("geekidea" );
         // 表名称和需要去掉的表前缀
-        config.setTableNames("sys_user" )
-                .setTablePrefix("" );
-        // 是否只更新实体类
-        config.setOnlyOverrideEntity(true);
+        config.setTableNames("hello_world" )
+                .setTablePrefix("");
         // 是否覆盖已有文件
         config.setFileOverride(true);
+        // 是否只更新实体类
+        config.setOnlyOverrideEntity(false);
         GenerateHandler handler = new GenerateHandler();
         handler.generator(config);
     }
