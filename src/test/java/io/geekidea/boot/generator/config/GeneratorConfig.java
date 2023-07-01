@@ -258,10 +258,10 @@ public class GeneratorConfig {
         String password = dict.getStr("password");
         log.info("生成代码JDBC配置信息：");
         log.info("配置文件路径：" + configFileFullPath);
-        log.info("driver = " + driver);
-        log.info("url = " + url);
-        log.info("username = " + username);
-        log.info("password = " + password);
+        log.info("driver: " + driver);
+        log.info("url: " + url);
+        log.info("username: " + username);
+        log.info("password: " + password);
         if (StringUtils.isBlank(driver) ||
                 StringUtils.isBlank(url) ||
                 StringUtils.isBlank(username) ||

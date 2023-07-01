@@ -33,6 +33,11 @@ public class GenerateHandler {
      * 生成代码
      */
     public void generator(GeneratorConfig config) {
+        // 文件是否覆盖
+        boolean fileOverride = config.isFileOverride();
+        if (!fileOverride) {
+            throw new RuntimeException("文件覆盖为false，将不会生成文件");
+        }
         // 初始化
         config.init();
         // 循环生成
@@ -50,6 +55,8 @@ public class GenerateHandler {
         DbType dbType = dataSourceConfigBuilder.build().getDbType();
         // 当前项目目录
         String projectPath = System.getProperty("user.dir");
+        // 如果是仅仅覆盖实体类，则只更新实体类
+        boolean onlyOverrideEntity = config.isOnlyOverrideEntity();
         // 代码生成
         FastAutoGenerator.create(dataSourceConfigBuilder)
                 .globalConfig(builder -> {
@@ -78,6 +85,7 @@ public class GenerateHandler {
                             .enableFileOverride()
                             .formatMapperFileName("%sMapper")
                             .formatXmlFileName("%sMapper");
+
                 })
                 .templateConfig(builder -> {
                     if (!config.isGeneratorEntity()) {
@@ -99,6 +107,9 @@ public class GenerateHandler {
                     if (!config.isGeneratorMapper()) {
                         builder.mapper(null);
                     }
+                    if (!config.isGeneratorMapperXml()) {
+                        builder.xml(null);
+                    }
                 })
                 .injectionConfig(builder -> {
                     builder.beforeOutputFile(((tableInfo, objectMap) -> {
@@ -109,53 +120,56 @@ public class GenerateHandler {
                     String dtoPackage = projectPackagePath + "/" + moduleName + "/dto";
                     String queryPackage = projectPackagePath + "/" + moduleName + "/query";
                     String voPackage = projectPackagePath + "/" + moduleName + "/vo";
-                    // 自定义addDto
-                    CustomFile addDtoCustomFile = new CustomFile.Builder()
-                            .fileName("AddDto.java")
-                            .filePath(projectPath + "/src/main/java/")
-                            .templatePath("/templates/addDto.java.vm")
-                            .packageName(dtoPackage)
-                            .enableFileOverride()
-                            .build();
-                    // 自定义updateDto
-                    CustomFile updateDtoCustomFile = new CustomFile.Builder()
-                            .fileName("UpdateDto.java")
-                            .filePath(projectPath + "/src/main/java/")
-                            .templatePath("/templates/updateDto.java.vm")
-                            .packageName(dtoPackage)
-                            .enableFileOverride()
-                            .build();
-                    // 自定义query
-                    CustomFile queryCustomFile = new CustomFile.Builder()
-                            .fileName("Query.java")
-                            .filePath(projectPath + "/src/main/java/")
-                            .templatePath("/templates/query.java.vm")
-                            .packageName(queryPackage)
-                            .enableFileOverride()
-                            .build();
-                    // 自定义vo
-                    CustomFile voCustomFile = new CustomFile.Builder()
-                            .fileName("Vo.java")
-                            .filePath(projectPath + "/src/main/java/")
-                            .templatePath("/templates/vo.java.vm")
-                            .packageName(voPackage)
-                            .enableFileOverride()
-                            .build();
-                    // 自定义infoVo
-                    CustomFile infoVoCustomFile = new CustomFile.Builder()
-                            .fileName("InfoVo.java")
-                            .filePath(projectPath + "/src/main/java/")
-                            .templatePath("/templates/infoVo.java.vm")
-                            .packageName(voPackage)
-                            .enableFileOverride()
-                            .build();
-                    // 添加自定义文件
-                    builder.customMap(Collections.singletonMap("zzz", "ZZZ..."))
-                            .customFile(addDtoCustomFile)
-                            .customFile(updateDtoCustomFile)
-                            .customFile(queryCustomFile)
-                            .customFile(voCustomFile)
-                            .customFile(infoVoCustomFile);
+                    // 如果是仅仅覆盖实体类，则不更新dto、query、vo
+                    if (!onlyOverrideEntity) {
+                        // 自定义addDto
+                        CustomFile addDtoCustomFile = new CustomFile.Builder()
+                                .fileName("AddDto.java")
+                                .filePath(projectPath + "/src/main/java/")
+                                .templatePath("/templates/addDto.java.vm")
+                                .packageName(dtoPackage)
+                                .enableFileOverride()
+                                .build();
+                        // 自定义updateDto
+                        CustomFile updateDtoCustomFile = new CustomFile.Builder()
+                                .fileName("UpdateDto.java")
+                                .filePath(projectPath + "/src/main/java/")
+                                .templatePath("/templates/updateDto.java.vm")
+                                .packageName(dtoPackage)
+                                .enableFileOverride()
+                                .build();
+                        // 自定义query
+                        CustomFile queryCustomFile = new CustomFile.Builder()
+                                .fileName("Query.java")
+                                .filePath(projectPath + "/src/main/java/")
+                                .templatePath("/templates/query.java.vm")
+                                .packageName(queryPackage)
+                                .enableFileOverride()
+                                .build();
+                        // 自定义vo
+                        CustomFile voCustomFile = new CustomFile.Builder()
+                                .fileName("Vo.java")
+                                .filePath(projectPath + "/src/main/java/")
+                                .templatePath("/templates/vo.java.vm")
+                                .packageName(voPackage)
+                                .enableFileOverride()
+                                .build();
+                        // 自定义infoVo
+                        CustomFile infoVoCustomFile = new CustomFile.Builder()
+                                .fileName("InfoVo.java")
+                                .filePath(projectPath + "/src/main/java/")
+                                .templatePath("/templates/infoVo.java.vm")
+                                .packageName(voPackage)
+                                .enableFileOverride()
+                                .build();
+                        // 添加自定义文件
+                        builder.customMap(Collections.singletonMap("projectName", "spring-boot-plus"))
+                                .customFile(addDtoCustomFile)
+                                .customFile(updateDtoCustomFile)
+                                .customFile(queryCustomFile)
+                                .customFile(voCustomFile)
+                                .customFile(infoVoCustomFile);
+                    }
                 }).execute();
     }
 
