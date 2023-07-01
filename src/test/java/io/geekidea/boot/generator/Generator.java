@@ -15,10 +15,10 @@ public class Generator {
         GeneratorConfig config = new GeneratorConfig();
         // 项目信息配置
         config.setParentPackage("io.geekidea.boot" )
-                .setModuleName("hello" )
+                .setModuleName("foobar" )
                 .setAuthor("geekidea" );
         // 表名称和需要去掉的表前缀
-        config.setTableNames("hello_world" )
+        config.setTableNames("foo_bar" )
                 .setTablePrefix("");
         // 是否覆盖已有文件
         config.setFileOverride(true);

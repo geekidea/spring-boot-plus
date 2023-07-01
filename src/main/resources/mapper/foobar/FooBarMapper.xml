@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.foobar.mapper.FooBarMapper">
+
+    <select id="getFooBarById" resultType="io.geekidea.boot.foobar.vo.FooBarInfoVo">
+        select *
+        from foo_bar
+        where id = #{id}
+    </select>
+
+    <select id="getFooBarList" parameterType="io.geekidea.boot.foobar.query.FooBarQuery"
+            resultType="io.geekidea.boot.foobar.vo.FooBarVo">
+        select *
+        from foo_bar
+    </select>
+
+</mapper>
