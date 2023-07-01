@@ -1,24 +1,37 @@
 #! /bin/shell
 
+# 当前时间
 NOW=$(date --date='0 days ago' "+%Y-%m-%d-%H-%M-%S")
 echo "${NOW}"
+# 变量配置
+# 代码更新结果
 PULL_RESULT=""
 IS_UPDATE=0
-# 项目名称
+# 服务路径，注意需在服务器上创建如下服务目录，然后将deploy.sh、start.sh、shutdown.sh放到其目录下
+SERVER_PATH="/home/spring-boot-plus-server"
+# GIT项目名称
 PROJECT_NAME="spring-boot-plus"
 # 版本库路径
-REPO_URL="https://gitee.com/geekidea/spring-boot-plus.git"
-# 打包文件名称
-ASSEMBLY_NAME="spring-boot-plus-server-2.0.tar.gz"
-# 服务目录名称
-SERVER_DIR="spring-boot-plus-server-2.0"
+REPO_URL="git@gitee.com:geekidea/spring-boot-plus.git"
+# jar包名称
+JAR_NAME="spring-boot-plus.jar"
+# 日志文件名称
+LOG_NAME="nohup.log"
+# 备份jar目录
+BACK_JAR_DIR="back-jar"
+# 备份jar目录
+BACK_LOG_DIR="back-log"
 # 发布的GIT分支名称
-DEPLOY_BRANCH=dev
+DEPLOY_BRANCH=master
 # 发布的Maven Profile
 ACTIVE_PROFILE=test
 
-# 1. 下载或更新spring-boot-plus版本库
-# 先判断当前目录下是否有spring-boot-plus目录
+# 进入到服务目录
+cd ${SERVER_PATH}
+pwd
+
+# 1. 下载或更新版本库
+# 先判断当前目录下是否有源代码目录
 # 如果有，则执行git pull
 # 如果没有，则clone
 if [ ! -d "${PROJECT_NAME}" ]; then
@@ -43,48 +56,51 @@ git checkout ${DEPLOY_BRANCH}
 git branch
 
 # 2. maven打包
-mvn clean install -P release,${ACTIVE_PROFILE}
-mvn clean package -P release,${ACTIVE_PROFILE}
+mvn clean install -P${ACTIVE_PROFILE}
 
 pwd
 # 判断是否生成成功
-if [ ! -f "distribution/target/${ASSEMBLY_NAME}" ]; then
+if [ ! -f "target/${JAR_NAME}" ]; then
   echo "maven build fail"
   exit
 fi
+echo "maven build success"
 
 # 3. 停服
-cd ..
+cd ${SERVER_PATH}
 pwd
 
-if [ -d "${SERVER_DIR}" ]; then
-  sh ${SERVER_DIR}/bin/shutdown.sh
+sh shutdown.sh
+
+# 4. 复制jar和日志文件到back目录下
+if [ ! -d "${BACK_JAR_DIR}" ]; then
+  mkdir ${BACK_JAR_DIR}
+fi
+if [ ! -d "${BACK_LOG_DIR}" ]; then
+  mkdir ${BACK_LOG_DIR}
 fi
 
-# 4. 复制spring-boot-plus-server-assembly.tar.gz到项目同级目录下
-# 备份之前的server
-if [ ! -d "${SERVER_DIR}-back" ]; then
-  mkdir ${SERVER_DIR}-back
+# 备份jar包
+if [ -f "${JAR_NAME}" ]; then
+  echo "back ${JAR_NAME}..."
+  mv ${JAR_NAME} ${BACK_JAR_DIR}/${JAR_NAME}"-${NOW}"
+  echo "back ${JAR_NAME} success"
 fi
 
-if [[ -d "${SERVER_DIR}" ]]
-then
-	echo "back ${SERVER_DIR}..."
-  mv ${SERVER_DIR} ${SERVER_DIR}-back/${SERVER_DIR}-back-"${NOW}"
-  echo "back success"
+# 备份日志
+if [ -f "${LOG_NAME}" ]; then
+  echo "back ${LOG_NAME}..."
+  mv ${LOG_NAME} ${BACK_LOG_DIR}/${LOG_NAME}"-${NOW}"
+  echo "back ${LOG_NAME} success"
 fi
 
-echo "copy ${ASSEMBLY_NAME}..."
+# 5. 复制打包后的jar到运行目录
+echo "copy ${SERVER_PATH}/${PROJECT_NAME}/target/${JAR_NAME}..."
 # 复制到项目同级目录，如果有，则覆盖
-cp -r -f ${PROJECT_NAME}/distribution/target/${ASSEMBLY_NAME} ${ASSEMBLY_NAME}
-echo "copy success"
+cp -r -f ${PROJECT_NAME}/target/${JAR_NAME} .
+echo "copy ${JAR_NAME} success"
 
 pwd
-# 5. 运行spring-boot-plus
-tar -zxvf ${ASSEMBLY_NAME}
-echo "tar.gz decompression success"
-
-pwd
-sh ${SERVER_DIR}/bin/shutdown.sh
-sh ${SERVER_DIR}/bin/startup.sh
+# 6. 运行jar
+sh start.sh
 
