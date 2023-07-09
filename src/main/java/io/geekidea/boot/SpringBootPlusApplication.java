@@ -47,8 +47,10 @@ public class SpringBootPlusApplication {
             if (!BACKSLASH.equals(contextPath)) {
                 contextPath = contextPath + BACKSLASH;
             }
-            String localhostUrl = "\nhttp://localhost:" + serverPort + contextPath + "doc.html";
-            System.out.println(localhostUrl);
+            String localhostDocUrl = "\nhttp://localhost:" + serverPort + contextPath + "doc.html";
+            System.out.println(localhostDocUrl);
+            String localhostSwaggerUrl = "http://localhost:" + serverPort + contextPath + "swagger-ui/index.html";
+            System.out.println(localhostSwaggerUrl);
             List<String> ipV4List = IpUtil.getLocalhostIpList();
             if (CollectionUtils.isNotEmpty(ipV4List)) {
                 for (String ip : ipV4List) {

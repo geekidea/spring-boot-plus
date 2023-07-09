@@ -89,7 +89,7 @@ public class SysLog implements Serializable {
     @Schema(description = "IP运营商")
     private String ipIsp;
 
-    @Schema(description = "0:其它,1:新增,2:修改,3:删除,4:详情查询,5:所有列表,6:分页列表,7:其它查询,8:上传文件")
+    @Schema(description = "0:访问日志,1:新增,2:修改,3:删除,4:详情,5:所有列表,6:分页列表,7:其它查询,8:上传文件,9:登录,10:退出")
     private Integer logType;
 
     @Schema(description = "响应时间")
@@ -119,11 +119,14 @@ public class SysLog implements Serializable {
     @Schema(description = "耗时描述")
     private String diffTimeDesc;
 
-    @Schema(description = "来源地址")
+    @Schema(description = "请求来源地址")
     private String referer;
 
-    @Schema(description = "请求来源")
+    @Schema(description = "请求来源服务名")
     private String origin;
+
+    @Schema(description = "请求来源类型")
+    private String sourceType;
 
     @Schema(description = "是否手机 0：否，1：是")
     private Boolean isMobile;

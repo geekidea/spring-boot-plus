@@ -4,9 +4,11 @@ import io.geekidea.boot.auth.interceptor.LoginInterceptor;
 import io.geekidea.boot.auth.interceptor.RefreshTokenInterceptor;
 import io.geekidea.boot.config.properties.FileProperties;
 import io.geekidea.boot.config.properties.LoginProperties;
+import io.geekidea.boot.config.properties.XssProperties;
 import io.geekidea.boot.framework.filter.JsonRequestBodyFilter;
 import io.geekidea.boot.framework.filter.TraceIdLogFilter;
 import io.geekidea.boot.framework.interceptor.PageHelperClearInterceptor;
+import io.geekidea.boot.framework.xss.XssFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -35,6 +37,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private FileProperties fileProperties;
+
+    @Autowired
+    private XssProperties xssProperties;
 
     @Bean
     public LoginInterceptor loginInterceptor() {
@@ -71,6 +76,23 @@ public class WebMvcConfig implements WebMvcConfigurer {
         filterRegistrationBean.setUrlPatterns(urls);
         return filterRegistrationBean;
     }
+
+    /**
+     * XssFilter配置
+     *
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean xssFilter() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new XssFilter());
+        filterRegistrationBean.setEnabled(xssProperties.isEnable());
+        filterRegistrationBean.addUrlPatterns(xssProperties.getUrlPatterns());
+        filterRegistrationBean.setOrder(xssProperties.getOrder());
+        filterRegistrationBean.setAsyncSupported(xssProperties.isAsync());
+        return filterRegistrationBean;
+    }
+
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

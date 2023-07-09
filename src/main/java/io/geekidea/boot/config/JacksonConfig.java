@@ -1,4 +1,4 @@
-package io.geekidea.boot.framework.jackson;
+package io.geekidea.boot.config;
 
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -6,6 +6,9 @@ import io.geekidea.boot.framework.jackson.deserializer.JacksonDateDeserializer;
 import io.geekidea.boot.framework.jackson.deserializer.JacksonStringDeserializer;
 import io.geekidea.boot.framework.jackson.serializer.JacksonBigDecimalSerializer;
 import io.geekidea.boot.framework.jackson.serializer.JacksonStringSerializer;
+import io.geekidea.boot.framework.xss.XssJacksonDeserializer;
+import io.geekidea.boot.framework.xss.XssJacksonSerializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +26,9 @@ import java.util.TimeZone;
 @Configuration
 public class JacksonConfig {
 
+    @Value("${spring-boot-plus.xss.enable}")
+    private boolean enableXss;
+
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
         return builder -> {
@@ -39,6 +45,12 @@ public class JacksonConfig {
             // 去掉响应结果中字符串左右两边的空格
             builder.serializerByType(String.class, JacksonStringSerializer.INSTANCE);
             builder.serializerByType(BigDecimal.class, new JacksonBigDecimalSerializer());
+
+            // XSS序列化
+            if (enableXss){
+                builder.serializerByType(String.class, new XssJacksonSerializer());
+                builder.deserializerByType(String.class, new XssJacksonDeserializer());
+            }
 
         };
     }

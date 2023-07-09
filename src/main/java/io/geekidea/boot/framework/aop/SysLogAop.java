@@ -27,6 +27,7 @@ import io.geekidea.boot.system.mapper.SysLogMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -43,6 +44,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,7 +76,9 @@ public class SysLogAop {
     private static final String USER_AGENT = "User-Agent";
     private static final String ORIGIN = "Origin";
     private static final String SWAGGER_UI = "swagger-ui";
+    private static final String KNIFE4J = "Knife4j";
     private static final String POSTMAN = "postman";
+    private static final String REQUEST_ORIGION = "Request-Origion";
 
     /**
      * 本地线程变量，保存操作日志到当前线程中
@@ -84,8 +88,6 @@ public class SysLogAop {
     @Autowired
     private LogAopProperties logAopProperties;
 
-    private List<String> excludeUrls;
-
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -94,10 +96,24 @@ public class SysLogAop {
 
     @Around(AspectConstant.COMMON_POINTCUT)
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        // 执行方法之前处理
-        handleBefore(joinPoint);
+        HttpServletRequest request = HttpRequestUtil.getRequest();
+        // 项目上下文路径
+        String contextPath = request.getContextPath();
+        // 请求全路径
+        String requestUrl = request.getRequestURI();
+        if (StringUtils.isNotBlank(contextPath)) {
+            requestUrl = requestUrl.substring(contextPath.length());
+        }
+        // 是否处理日志
+        boolean isHandleLog = isHandleLog(requestUrl);
+        if (!isHandleLog) {
+            // 如果是排除的路径，则直接跳过
+            return joinPoint.proceed();
+        }
         Object result;
         try {
+            // 执行方法之前处理
+            handleBefore(joinPoint, request, requestUrl);
             // 执行目标方法,获得返回值
             result = joinPoint.proceed();
             // 执行方法之后处理
@@ -114,125 +130,76 @@ public class SysLogAop {
     }
 
     /**
+     * 是否处理日志
+     *
+     * @param requestUrl
+     * @return
+     */
+    private boolean isHandleLog(String requestUrl) {
+        // 判断是否是排除路径
+        boolean isHandleLog = true;
+        // 排除路径
+        List<String> excludePaths = logAopProperties.getExcludePaths();
+        if (CollectionUtils.isNotEmpty(excludePaths)) {
+            for (String excludePath : excludePaths) {
+                AntPathMatcher antPathMatcher = new AntPathMatcher();
+                boolean match = antPathMatcher.match(excludePath, requestUrl);
+                if (match) {
+                    isHandleLog = false;
+                    break;
+                }
+            }
+        }
+        return isHandleLog;
+    }
+
+    /**
      * 执行方法之前
      *
      * @param joinPoint
      * @throws Exception
      */
-    private void handleBefore(ProceedingJoinPoint joinPoint) throws Exception {
+    private void handleBefore(ProceedingJoinPoint joinPoint, HttpServletRequest request, String requestUrl) throws Exception {
         try {
-            HttpServletRequest request = HttpRequestUtil.getRequest();
             Signature signature = joinPoint.getSignature();
             MethodSignature methodSignature = (MethodSignature) signature;
             Method method = methodSignature.getMethod();
             // 系统日志
             SysLog sysLog = new SysLog();
+            // 将日志保存到当前线程中
             LOCAL_LOG.set(sysLog);
+            // 设置请求路径
+            sysLog.setRequestUrl(requestUrl);
+            // 设置请求时间，包含毫秒
             String requestTime = DateUtil.format(new Date(), DatePattern.NORM_DATETIME_MS_PATTERN);
             sysLog.setRequestTime(requestTime);
             // 设置日志链路ID
             String traceId = MDC.get(CommonConstant.TRACE_ID);
-            MDC.put(CommonConstant.TRACE_ID, traceId);
             sysLog.setTraceId(traceId);
-            // 设置IP
-            String ip = IpUtil.getRequestIp();
-            sysLog.setRequestIp(ip);
-            try {
-                // 设置IP归属地信息
-                IpRegion ipRegion = IpRegionUtil.getIpRegion(ip);
-                if (ipRegion != null) {
-                    sysLog.setIpCountry(ipRegion.getCountry());
-                    sysLog.setIpProvince(ipRegion.getProvince());
-                    sysLog.setIpCity(ipRegion.getCity());
-                    sysLog.setIpAreaDesc(ipRegion.getAreaDesc());
-                    sysLog.setIpIsp(ipRegion.getIsp());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            String contextPath = request.getContextPath();
-            // 请求全路径
-            String requestUrl = request.getRequestURI();
-            sysLog.setRequestUrl(requestUrl);
-            if (StringUtils.isNotBlank(contextPath)) {
-                requestUrl = requestUrl.substring(contextPath.length());
-            }
+            // 设置IP区域信息
+            handleIpArea(sysLog);
+            // 设置内容类型
             String contentType = request.getContentType();
             sysLog.setContentType(contentType);
-            // 日志名称 获取@Operation的value
-            Operation operation = method.getAnnotation(Operation.class);
-            if (operation != null) {
-                String summary = operation.summary();
-                sysLog.setLogName(summary);
-            }
-            // 日志类型 获取@Log的code
-            Log log = method.getAnnotation(Log.class);
-            if (log != null) {
-                Integer logType = log.type().getCode();
-                sysLog.setLogType(logType);
-            }
-            // 权限编码 获取@Permission的value
-            Permission permission = method.getAnnotation(Permission.class);
-            if (permission != null) {
-                String permissionCode = permission.value();
-                sysLog.setPermissionCode(permissionCode);
-            }
+            // 处理方法上的注解
+            handleAnnotation(method, sysLog);
             // 请求方式，GET/POST
             sysLog.setRequestMethod(request.getMethod());
-            // 判断是否是JSON参数请求
-            Annotation[][] annotations = method.getParameterAnnotations();
-            boolean isRequestBody = isRequestBody(annotations);
-            // 是否是JSON请求映射参数
-            sysLog.setIsRequestBody(isRequestBody);
-            String requestBodyString = handleRequestParam(request, sysLog, isRequestBody);
-            try {
-                // 设置token
-                String token = TokenUtil.getToken(request);
-                sysLog.setToken(token);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            // 处理请求参数
+            String requestBodyString = handleRequestParam(request, method, sysLog);
             // 设置类名称
             String className = method.getDeclaringClass().getName();
             sysLog.setClassName(className);
-            // 模块名称
-            try {
-                String packName = method.getDeclaringClass().getPackage().getName();
-                int lastIndexOf = packName.lastIndexOf(".");
-                packName = packName.substring(0, lastIndexOf);
-                String moduleName = packName.substring(packName.lastIndexOf(".") + 1);
-                sysLog.setModuleName(moduleName);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            // 处理模块名称
+            handleModuleName(method, sysLog);
             // 设置方法名称
             String methodName = method.getName();
             sysLog.setMethodName(methodName);
             // 来源地址
             String referer = request.getHeader(REFERER);
             sysLog.setReferer(referer);
-            // 用户环境
-            String userAgentString = request.getHeader(USER_AGENT);
-            sysLog.setUserAgent(userAgentString);
-            UserAgent userAgent;
-            try {
-                userAgent = UserAgentUtil.parse(userAgentString);
-                if (userAgent != null) {
-                    // 是否是手机
-                    boolean isMobile = userAgent.isMobile();
-                    sysLog.setIsMobile(isMobile);
-                    // 操作系统平台名称
-                    Platform platform = userAgent.getPlatform();
-                    String platformName = platform.getName();
-                    sysLog.setPlatformName(platformName);
-                    // 浏览器名称
-                    Browser browser = userAgent.getBrowser();
-                    String browserName = browser.getName();
-                    sysLog.setBrowserName(browserName);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            // 处理用户代理信息
+            String userAgentString = handleUserAgent(request, sysLog);
             // 用户来源
             String origin = request.getHeader(ORIGIN);
             if (StringUtils.isBlank(origin)) {
@@ -247,6 +214,12 @@ public class SysLogAop {
                     sysLog.setOrigin(POSTMAN);
                 }
             }
+
+            String requestOrigion = request.getHeader(REQUEST_ORIGION);
+            if (KNIFE4J.equals(requestOrigion)) {
+                sysLog.setSourceType(KNIFE4J);
+            }
+
             // 处理登录人信息
             handleLoginUser(sysLog, requestUrl, requestBodyString);
             // 打印请求头
@@ -257,7 +230,6 @@ public class SysLogAop {
             e.printStackTrace();
         }
     }
-
 
     /**
      * 执行方法之后
@@ -343,6 +315,134 @@ public class SysLogAop {
             // 移除日志链路ID
             MDC.remove(CommonConstant.TRACE_ID);
         }
+    }
+
+    /**
+     * isHandleLog
+     *
+     * @param request
+     * @param method
+     * @param sysLog
+     * @return
+     */
+    private String handleRequestParam(HttpServletRequest request, Method method, SysLog sysLog) {
+        // 判断是否是JSON参数请求
+        Annotation[][] annotations = method.getParameterAnnotations();
+        boolean isRequestBody = isRequestBody(annotations);
+        // 是否是JSON请求映射参数
+        sysLog.setIsRequestBody(isRequestBody);
+        String requestBodyString = handleRequestParam(request, sysLog, isRequestBody);
+        try {
+            // 设置token
+            String token = TokenUtil.getToken(request);
+            sysLog.setToken(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return requestBodyString;
+    }
+
+    /**
+     * 处理IP区域
+     *
+     * @param sysLog
+     */
+    private void handleIpArea(SysLog sysLog) {
+        // 设置IP
+        String ip = IpUtil.getRequestIp();
+        sysLog.setRequestIp(ip);
+        try {
+            // 设置IP归属地信息
+            IpRegion ipRegion = IpRegionUtil.getIpRegion(ip);
+            if (ipRegion != null) {
+                sysLog.setIpCountry(ipRegion.getCountry());
+                sysLog.setIpProvince(ipRegion.getProvince());
+                sysLog.setIpCity(ipRegion.getCity());
+                sysLog.setIpAreaDesc(ipRegion.getAreaDesc());
+                sysLog.setIpIsp(ipRegion.getIsp());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 处理方法注解
+     *
+     * @param method
+     * @param sysLog
+     */
+    private void handleAnnotation(Method method, SysLog sysLog) {
+        // 日志名称 获取@Operation的value
+        Operation operation = method.getAnnotation(Operation.class);
+        if (operation != null) {
+            String summary = operation.summary();
+            sysLog.setLogName(summary);
+        }
+        // 日志类型 获取@Log的code
+        Log log = method.getAnnotation(Log.class);
+        if (log != null) {
+            Integer logType = log.type().getCode();
+            sysLog.setLogType(logType);
+        }
+        // 权限编码 获取@Permission的value
+        Permission permission = method.getAnnotation(Permission.class);
+        if (permission != null) {
+            String permissionCode = permission.value();
+            sysLog.setPermissionCode(permissionCode);
+        }
+    }
+
+    /**
+     * 处理模块名称
+     *
+     * @param method
+     * @param sysLog
+     */
+    private void handleModuleName(Method method, SysLog sysLog) {
+        // 模块名称
+        try {
+            String packName = method.getDeclaringClass().getPackage().getName();
+            int lastIndexOf = packName.lastIndexOf(".");
+            packName = packName.substring(0, lastIndexOf);
+            String moduleName = packName.substring(packName.lastIndexOf(".") + 1);
+            sysLog.setModuleName(moduleName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 处理用户代理环境
+     *
+     * @param request
+     * @param sysLog
+     * @return
+     */
+    private String handleUserAgent(HttpServletRequest request, SysLog sysLog) {
+        // 用户环境
+        String userAgentString = request.getHeader(USER_AGENT);
+        sysLog.setUserAgent(userAgentString);
+        UserAgent userAgent;
+        try {
+            userAgent = UserAgentUtil.parse(userAgentString);
+            if (userAgent != null) {
+                // 是否是手机
+                boolean isMobile = userAgent.isMobile();
+                sysLog.setIsMobile(isMobile);
+                // 操作系统平台名称
+                Platform platform = userAgent.getPlatform();
+                String platformName = platform.getName();
+                sysLog.setPlatformName(platformName);
+                // 浏览器名称
+                Browser browser = userAgent.getBrowser();
+                String browserName = browser.getName();
+                sysLog.setBrowserName(browserName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userAgentString;
     }
 
     private String handleRequestParam(HttpServletRequest request, SysLog sysLog, boolean isRequestBody) {

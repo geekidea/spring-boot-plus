@@ -44,9 +44,9 @@ spring:
     hikari:
       minimum-idle: 10
       maximum-pool-size: 20
-      idle-timeout: 10000
+      idle-timeout: 60000
       max-lifetime: 1800000
-      connection-timeout: 10000
+      connection-timeout: 60000
   # redis配置
   redis:
     host: 127.0.0.1
@@ -133,6 +133,19 @@ spring-boot-plus:
     print-head-log: false
     # 登录页面路径
     login-url: /login
+    # 排除路径
+    excludePaths:
+      - /sysLog/**
+  # XSS
+  xss:
+    # 是否启用，默认禁用
+    enable: true
+    # 拦截的路径
+    url-patterns: /*
+    # 排序
+    order: 2
+    # 是否支持异步
+    async: true
 
 
 # swagger配置

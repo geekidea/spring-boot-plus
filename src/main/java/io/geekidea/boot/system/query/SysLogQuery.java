@@ -29,7 +29,7 @@ public class SysLogQuery extends BasePageQuery {
     @Schema(description = "操作人")
     private String username;
 
-    @Schema(description = "日志类型 0:其它,1:新增,2:修改,3:删除,4:详情查询,5:所有列表,6:分页列表,7:其它查询,8:上传文件")
+    @Schema(description = "日志类型 0:访问日志,1:新增,2:修改,3:删除,4:详情,5:所有列表,6:分页列表,7:其它查询,8:上传文件,9:登录,10:退出")
     private Integer logType;
 
     @Schema(description = "响应状态 false:失败,true:成功")

@@ -24,19 +24,15 @@ public class DataRangeAop {
 
     @Around(AspectConstant.COMMON_POINTCUT)
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        try {
-            Object[] args = joinPoint.getArgs();
-            if (ArrayUtils.isEmpty(args)) {
-                return joinPoint.proceed();
+        Object[] args = joinPoint.getArgs();
+        if (ArrayUtils.isEmpty(args)) {
+            return joinPoint.proceed();
+        }
+        for (Object arg : args) {
+            if (arg instanceof DataRangeQuery) {
+                handleDataRangeQuery(arg);
+                break;
             }
-            for (Object arg : args) {
-                if (arg instanceof DataRangeQuery) {
-                    handleDataRangeQuery(arg);
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return joinPoint.proceed();
     }

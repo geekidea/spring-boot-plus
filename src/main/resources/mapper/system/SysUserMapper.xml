@@ -60,7 +60,6 @@
                u.username,
                u.nickname,
                u.password,
-               u.password,
                u.salt,
                u.status
         from sys_user u

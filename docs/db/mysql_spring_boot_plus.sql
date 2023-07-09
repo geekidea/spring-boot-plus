@@ -5,18 +5,19 @@ create database if not exists spring_boot_plus character set utf8mb4 COLLATE utf
 use spring_boot_plus;
 
 -- 创建表结构
-
-create table hello_world
+create table foo_bar
 (
     id          bigint                               not null comment '主键'
         primary key,
     name        varchar(20)                          not null comment '名称',
-    remark      varchar(200)                         null comment '手机号码',
+    foo         varchar(100)                         null comment 'Foo',
+    bar         varchar(100)                         null comment 'Bar',
+    remark      varchar(200)                         null comment '备注',
     status      tinyint(1) default 1                 not null comment '状态，0：禁用，1：启用',
     create_time timestamp  default CURRENT_TIMESTAMP null comment '创建时间',
     update_time timestamp                            null comment '修改时间'
 )
-    comment '你好世界';
+    comment 'FooBar';
 
 create table sys_dept
 (
@@ -69,8 +70,9 @@ create table sys_log
     exception_message text                               null comment '异常信息',
     diff_time         bigint                             null comment '耗时，单位：毫秒',
     diff_time_desc    varchar(100)                       null comment '耗时描述',
-    referer           varchar(1000)                      null comment '来源地址',
-    origin            varchar(1000)                      null comment '请求来源',
+    referer           varchar(1000)                      null comment '请求来源地址',
+    origin            varchar(1000)                      null comment '请求来源服务名',
+    source_type       varchar(100)                       null comment '请求来源类型',
     is_mobile         tinyint(1)                         null comment '是否手机 0：否，1：是',
     platform_name     varchar(100)                       null comment '平台名称',
     browser_name      varchar(100)                       null comment '浏览器名称',
@@ -251,8 +253,10 @@ create index sys_user_role_user_id_index
     on sys_user_role (user_id);
 
 
+
+
 -- 测试数据
-INSERT INTO hello_world (id, name, remark, status, create_time, update_time) VALUES (1, '你好', '你好世界', 1, '2023-06-26 15:04:02', null);
+INSERT INTO foo_bar (id, name, foo, bar, remark, status, create_time, update_time) VALUES (1, 'FooBar', 'Foo', 'Bar', null, 1, '2023-07-01 21:01:10', null);
 
 
 -- 部门数据
