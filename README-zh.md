@@ -43,12 +43,20 @@
 - 集成Redis缓存
 - 集成HikariCP连接池，JDBC性能和慢查询检测
 
-## 项目结构
+## 源代码目录结构
 ```text
 spring-boot-plus
 ├── main
 │ ├── java
 │ │ └── io
+│ │   └── geekidea
+│ │     └── boot
+│ │       └── auth
+│ │       └── config
+│ │       └── foobar
+│ │       └── framework
+│ │       └── system
+│ │       └── SpringBootPlusApplication.java
 │ └── resources
 │     ├── application-dev.yml
 │     ├── application-prod.yml
@@ -62,16 +70,6 @@ spring-boot-plus
     │ └── io
     └── resources
         └── templates
-```
-
-## 源代码目录结构
-```text
-src/main/java/io/geekidea/boot
-├── SpringBootPlusApplication.java
-├── auth
-├── config
-├── framework
-└── system
 ```
 
 ### 项目环境 

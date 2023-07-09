@@ -47,12 +47,20 @@
 - Integrated Redis Cache
 - Integration HikariCP connection pool, A solid, high-performance, JDBC connection pool at last.
 
-## Project structure
+## Source code directory structure
 ```text
 spring-boot-plus
 ├── main
 │ ├── java
 │ │ └── io
+│ │   └── geekidea
+│ │     └── boot
+│ │       └── auth
+│ │       └── config
+│ │       └── foobar
+│ │       └── framework
+│ │       └── system
+│ │       └── SpringBootPlusApplication.java
 │ └── resources
 │     ├── application-dev.yml
 │     ├── application-prod.yml
@@ -66,16 +74,6 @@ spring-boot-plus
     │ └── io
     └── resources
         └── templates
-```
-
-## Source code directory structure
-```text
-src/main/java/io/geekidea/boot
-├── SpringBootPlusApplication.java
-├── auth
-├── config
-├── framework
-└── system
 ```
 
 ### Project Environment 
