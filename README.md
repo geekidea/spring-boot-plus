@@ -27,10 +27,11 @@
 ### A **easy-to-use**, **high-speed**, **high-efficient**, **feature-rich**, **open source** spring boot scaffolding.
 > spring-boot-plus is a background rapid development framework that integrates spring boot common development components.
 
-> Front-end and back-end separation, more focusing on back-end services
-
 ## Purpose
 > Everyone can develop projects independently, quickly and efficiently！
+
+## Open source License MIT-License
+> Any individual or company can conduct secondary development based on this framework for commercial use without authorization!
 
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 

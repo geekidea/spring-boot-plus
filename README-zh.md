@@ -25,10 +25,11 @@
 ### spring-boot-plus是一套集成spring boot常用开发组件的后台快速开发框架
 > Spring-Boot-Plus是易于使用，快速，高效，功能丰富，开源的spring boot 脚手架.
 
-> 前后端分离,更专注于后端服务
-
 ## 目标
 > 每个人都可以独立、快速、高效地开发项目！
+
+## 开源协议 MIT-License
+> 任何个人或公司，均可基于此框架进行二次开发后，进行商业使用，无需授权！
 
 #### [GITHUB](https://github.com/geekidea/spring-boot-plus) | [GITEE](https://gitee.com/geekidea/spring-boot-plus)
 
@@ -298,5 +299,5 @@ QQ 625301326| 微信公众号 geekideaio|  今日头条 GeekIdea
 ![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png) | ![Wechat Official Account](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-official.jpg) | ![toutiao](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-toutiao.jpeg) |
 
 ## License
-spring-boot-plus is under the MIT-license. See the [LICENSE](https://gitee.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.
+spring-boot-plus is under the MIT-License. See the [LICENSE](https://gitee.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.
 
