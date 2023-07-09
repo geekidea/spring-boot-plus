@@ -202,27 +202,6 @@ public class Generator {
 }
 ```
 
-#### Code Generator Templates
-> Use Velocity template to generate code, you can customize and modify the code to generate template
-
-```text
-src/test/resources
-```
-```text
-└── templates
-    ├── addDto.java.vm          Add DTO generator template
-    ├── controller.java.vm      Controller generator template
-    ├── entity.java.vm          Entity generator template
-    ├── infoVo.java.vm          Detail VO generator template
-    ├── mapper.java.vm          Mapper  generator template
-    ├── mapper.xml.vm           Mapper xml  generator template
-    ├── query.java.vm           Page Query  generator template
-    ├── service.java.vm         Service  generator template
-    ├── serviceImpl.java.vm     Service implement  generator template
-    ├── updateDto.java.vm       Update DTO generator template
-    └── vo.java.vm              List VO generator template
-```
-
 #### Generated code structure
 
 ```text
@@ -250,6 +229,26 @@ resources
     └── foobar
         └── FooBarMapper.xml    
 ```
+
+#### Code Generator Templates
+> Use Velocity template to generate code, you can customize and modify the code to generate template
+
+```text
+src/test/resources
+└── templates
+    ├── addDto.java.vm          Add DTO generator template
+    ├── controller.java.vm      Controller generator template
+    ├── entity.java.vm          Entity generator template
+    ├── infoVo.java.vm          Detail VO generator template
+    ├── mapper.java.vm          Mapper  generator template
+    ├── mapper.xml.vm           Mapper xml  generator template
+    ├── query.java.vm           Page Query  generator template
+    ├── service.java.vm         Service  generator template
+    ├── serviceImpl.java.vm     Service implement  generator template
+    ├── updateDto.java.vm       Update DTO generator template
+    └── vo.java.vm              List VO generator template
+```
+
 
 ### 3. Startup Project
 > Project Main Class: SpringBootPlusApplication  [http://localhost:8888](http://localhost:8888)
@@ -287,60 +286,14 @@ public class SpringBootPlusApplication {
 ```
 
 ### 4. Access Swagger Docs
-[http://localhost:8888/api/swagger-ui.html](http://localhost:8888/api/swagger-ui.html)
+[http://localhost:8888/swagger-ui/index.html](http://localhost:8888/swagger-ui/index.html)
 ![swagger-ui.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui.png)
 ![swagger-ui-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui-1.png)
 
 ### 5. Access Knife4j Docs 
-[http://localhost:8888/api/doc.html](http://localhost:8888/api/doc.html)
+[http://localhost:8888/doc.html](http://localhost:8888/doc.html)
 ![knife4j.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j.png)
 ![knife4j-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j-1.png)
-
-
-## CentOS Quick Installation Environment / Build / Deploy / Launch Spring-boot-plus Project
-
-### 1. Download the installation script
-> Install `jdk`, `git`, `maven`, `redis`, `mysql`
-
-```bash
-wget -O download-install-all.sh https://springboot.plus/bin/download-install-all.sh
-```
-
-### 2. Run the installation script
-```bash
-sh download-install-all.sh
-```
-
-### 3. Modify MySQL password
-```bash
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'Springbootplus666!';
-exit
-mysql -uroot -pSpringbootplus666!
-```
-
-### 4. Import MySQL scripts
-```bash
-create database if not exists spring_boot_plus character set utf8mb4;
-use spring_boot_plus;
-source /root/mysql_spring_boot_plus.sql;
-show tables;
-exit
-```
-
-### 5. Download deployment script `deploy.sh`
-```bash
-wget -O deploy.sh https://springboot.plus/bin/deploy.sh
-```
-
-### 6. Execution script
-```bash
-sh deploy.sh
-```
-
-### 7. View project run log
-```bash
-tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
-```
 
 
 ## spring-boot-plus Views
@@ -349,26 +302,6 @@ tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
 
 ![spring-boot-plus-idea](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/idea.png)
 
-### [Spring Boot Admin Instances](http://localhost:8000/instances/11090f218c47/details)
-<p>
-    <a href="http://localhost:8000/instances/11090f218c47/details">
-        <img src="https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootadmin-en.png" alt="spring-boot-admin instances">
-    </a>
-</p>
-
-### [Spring Boot Admin Statistics](http://localhost:8000/instances/11090f218c47/details)
-<p>
-    <a href="http://localhost:8000/instances/11090f218c47/details">
-        <img src="https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootadmin-en-1.png" alt="spring-boot-admin statistics">
-    </a>
-</p>
-
-### [Spring Boot Admin Log](http://localhost:8000/instances/11090f218c47/logfile)
-<p>
-    <a href="http://localhost:8000/instances/11090f218c47/logfile">
-        <img src="https://springboot.plus/img/home/spring-boot-admin-log-en.png" alt="spring-boot-admin log">
-    </a>
-</p>
 
 ## spring-boot-plus-vue Front-end Project
 ### [GITHUB-REPO](https://github.com/geekidea/spring-boot-plus-vue)
@@ -383,10 +316,7 @@ tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
 ![System Menu List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-3.png)
 
 ## spring-boot-plus Videos  :movie_camera: 
-- [V2.x Video Introduction](https://www.bilibili.com/video/BV1HQ4y1M73i/)
-- [V1.x 5-Minutes-Finish-CRUD](https://www.bilibili.com/video/av67401204)
-- [CentOS Quick Installation JDK/Git/Maven/Redis/MySQL](https://www.bilibili.com/video/av67218836/)
-- [CentOS Quick Build / Deploy / Launch Spring-boot-plus Project](https://www.bilibili.com/video/av67218970/)
+
 
 ## Contact
 QQ 625301326| Wechat geekideaio|  toutiao GeekIdea

@@ -182,28 +182,6 @@ public class Generator {
 }
 ```
 
-#### 代码生成模版
-> 使用Velocity模版生成代码，可自定义修改代码生成模版
-
-```text
-src/test/resources
-```
-
-```text
-└── templates
-    ├── addDto.java.vm          添加DTO代码生成模版
-    ├── controller.java.vm      控制器代码生成模版
-    ├── entity.java.vm          实体类代码生成模版
-    ├── infoVo.java.vm          详情VO代码生成模版
-    ├── mapper.java.vm          Mapper代码生成模版
-    ├── mapper.xml.vm           Mapper xml 代码生成模版
-    ├── query.java.vm           分页参数代码生成模版
-    ├── service.java.vm         服务接口代码生成模版
-    ├── serviceImpl.java.vm     服务实现代码生成模版
-    ├── updateDto.java.vm       修改DTO代码生成模版
-    └── vo.java.vm              列表VO代码生成模版
-```
-
 #### 生成的代码结构
 
 ```text
@@ -232,6 +210,27 @@ resources
         └── FooBarMapper.xml    
     
 ```
+
+
+#### 代码生成模版
+> 使用Velocity模版生成代码，可自定义修改代码生成模版
+
+```text
+src/test/resources
+└── templates
+    ├── addDto.java.vm          添加DTO代码生成模版
+    ├── controller.java.vm      控制器代码生成模版
+    ├── entity.java.vm          实体类代码生成模版
+    ├── infoVo.java.vm          详情VO代码生成模版
+    ├── mapper.java.vm          Mapper代码生成模版
+    ├── mapper.xml.vm           Mapper xml 代码生成模版
+    ├── query.java.vm           分页参数代码生成模版
+    ├── service.java.vm         服务接口代码生成模版
+    ├── serviceImpl.java.vm     服务实现代码生成模版
+    ├── updateDto.java.vm       修改DTO代码生成模版
+    └── vo.java.vm              列表VO代码生成模版
+```
+
 
 ### 3. 启动项目
 > 项目入口类: SpringBootPlusApplication  [http://localhost:8888](http://localhost:8888)
@@ -268,86 +267,18 @@ public class SpringBootPlusApplication {
 ```
 
 ### 4. 访问项目Swagger文档
-[http://localhost:8888/api/swagger-ui.html](http://localhost:8888/api/swagger-ui.html)
+[http://localhost:8888/swagger-ui/index.html](http://localhost:8888/swagger-ui/index.html)
 ![swagger-ui.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui.png)
-![swagger-ui-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui-1.png)
 
 ### 5. 访问Knife4j文档
-[http://localhost:8888/api/doc.html](http://localhost:8888/api/doc.html)
+[http://localhost:8888/doc.html](http://localhost:8888/doc.html)
 ![knife4j.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j.png)
-![knife4j-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j-1.png)
-
-## CentOS快速安装环境/构建/部署/启动spring-boot-plus项目
-### 1. 下载安装脚本
-> 安装 `jdk`, `git`, `maven`, `redis`, `mysql`
-
-```bash
-wget -O download-install-all.sh https://springboot.plus/bin/download-install-all.sh
-```
-
-### 2. 运行安装脚本
-```bash
-sh download-install-all.sh
-```
-
-### 3. 修改MySQL密码
-```bash
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'Springbootplus666!';
-exit
-mysql -uroot -pSpringbootplus666!
-```
-
-### 4. 导入MySQL脚本
-```bash
-create database if not exists spring_boot_plus character set utf8mb4;
-use spring_boot_plus;
-source /root/mysql_spring_boot_plus.sql;
-show tables;
-exit
-```
-
-### 5. 下载部署脚本 `deploy.sh`
-```bash
-wget -O deploy.sh https://springboot.plus/bin/deploy.sh
-```
-
-### 6. 执行脚本
-```bash
-sh deploy.sh
-```
-
-### 7. 查看项目运行日志
-```bash
-tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
-```
-
 
 ## spring-boot-plus Views
 
 ### spring-boot-plus IDEA Sources Views
 
 ![spring-boot-plus-idea](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/idea.png)
-
-### [Spring Boot Admin Instances](http://localhost:8000/instances/11090f218c47/details)
-<p>
-    <a href="http://localhost:8000/instances/11090f218c47/details">
-        <img src="https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootadmin.png" alt="spring-boot-admin instances">
-    </a>
-</p>
-
-### [Spring Boot Admin Statistics](http://localhost:8000/instances/11090f218c47/details)
-<p>
-    <a href="http://localhost:8000/instances/11090f218c47/details">
-        <img src="https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootadmin1.png" alt="spring-boot-admin statistics">
-    </a>
-</p>
-
-### [Spring Boot Admin Log](http://localhost:8000/instances/11090f218c47/logfile)
-<p>
-    <a href="http://localhost:8000/instances/11090f218c47/logfile">
-        <img src="https://spring-boot-plus.gitee.io/img/home/spring-boot-admin-log.png" alt="spring-boot-admin log">
-    </a>
-</p>
 
 ## spring-boot-plus-vue 前端项目
 ### [GITHUB-REPO](https://github.com/geekidea/spring-boot-plus-vue)
@@ -362,11 +293,6 @@ tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
 ![系统菜单列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-3.png)
 
 ## spring-boot-plus 视频  :movie_camera:
-- [V2.x 视频介绍慢放版](https://www.bilibili.com/video/BV1HQ4y1M73i/)
-- [V1.x 5分钟完成增删改查](https://www.bilibili.com/video/av67401204)
-- [CentOS 快速安装 JDK/Git/Maven/Redis/MySQL](https://www.bilibili.com/video/av67218836/)
-- [CentOS 快速部署/构建/打包/运行项目](https://www.bilibili.com/video/av67218970/)
-
 
 ## 联系
 QQ 625301326| 微信公众号 geekideaio|  今日头条 GeekIdea
