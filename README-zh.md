@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/geekidea/spring-boot-plus">
-   <img alt="spring-boot-plus logo" src="https://springboot.plus/img/logo.png">
+   <img alt="spring-boot-plus logo" src="https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/logo.png">
   </a>
 </p>
 <p align="center">
@@ -8,21 +8,24 @@
 </p>
 
 <p align="center">  
-  <a href="https://github.com/geekidea/spring-boot-plus/">
-    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-2.0-blue">
+  <a href="https://gitee.com/geekidea/spring-boot-plus">
+    <img alt="spring-boot-plus version" src="https://img.shields.io/badge/spring--boot--plus-2.7.12-blue">
   </a>
   <a href="https://github.com/spring-projects/spring-boot">
-    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.2.5.RELEASE-brightgreen">
+    <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.7.12-brightgreen">
+  </a>
+  <a href="https://cn.vuejs.org/">
+    <img alt="spring boot version" src="https://img.shields.io/badge/vue-3-darkgreen">
   </a>
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
-    <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
+    <img alt="code style" src="https://img.shields.io/badge/license-MIT-green">
   </a>
 </p>
 
 ### spring-boot-plus是一套集成spring boot常用开发组件的后台快速开发框架
 > Spring-Boot-Plus是易于使用，快速，高效，功能丰富，开源的spring boot 脚手架.
 
-> 前后端分离,专注于后端服务
+> 前后端分离,更专注于后端服务
 
 ## 目标
 > 每个人都可以独立、快速、高效地开发项目！
@@ -39,13 +42,6 @@
 - 集成Swagger/Knife4j，可自动生成api文档
 - 集成Redis缓存
 - 集成HikariCP连接池，JDBC性能和慢查询检测
-
-## [V2.0视频介绍](https://www.bilibili.com/video/BV16A41187XE/)
-<p align="center">
-  <a href="https://www.bilibili.com/video/BV16A41187XE/">
-   <img alt="spring-boot-plus videos" src="https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/videos-acfun-ui.png">
-  </a>
-</p>
 
 ## 项目结构
 ```text
@@ -79,7 +75,7 @@ src/main/java/io/geekidea/boot
 ```
 
 ### 项目环境 
-中间件 | 版本 |  备注
+名称 | 版本 |  备注
 -|-|-
 JDK | 1.8+ | JDK1.8及以上 |
 MySQL | 5.7+ | 5.7及以上 |
@@ -88,9 +84,10 @@ Redis | 3.2+ |  |
 ### 技术选型 
 技术 | 版本 |  备注
 -|-|-
-spring boot | 2.7.12 | 最新发布稳定版 |
+spring boot | 2.7.12 |
 mybatis-plus | 3.5.3.1 | mybatis增强框架 |
 fastjson2 | 2.0.33 | JSON处理工具集 |
+Swagger2 | V3 | Swagger文档 |
 knife4j | 4.1.0 | api文档生成工具 |
 commons-lang3 | 3.12.0 | 常用工具包 |
 commons-io | 2.11.0 | IO工具包 |
@@ -128,29 +125,24 @@ mvn clean package -Pdev
 -- Table structure for foo_bar
 -- ----------------------------
 DROP TABLE IF EXISTS `foo_bar`;
-CREATE TABLE `foo_bar`
+create table foo_bar
 (
-    `id`            bigint(20)  NOT NULL COMMENT '主键',
-    `name`          varchar(20) NOT NULL COMMENT '名称',
-    `foo`           varchar(20)          DEFAULT NULL COMMENT 'Foo',
-    `bar`           varchar(20) NOT NULL COMMENT 'Bar',
-    `remark`        varchar(200)         DEFAULT NULL COMMENT '备注',
-    `state`         int(11)     NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：启用',
-    `version`       int(11)     NOT NULL DEFAULT '0' COMMENT '版本',
-    `create_time`   timestamp   NULL     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time`   timestamp   NULL     DEFAULT NULL COMMENT '修改时间',
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_general_ci COMMENT ='FooBar';
+    id          bigint                               not null comment '主键'
+        primary key,
+    name        varchar(20)                          not null comment '名称',
+    foo         varchar(100)                         null comment 'Foo',
+    bar         varchar(100)                         null comment 'Bar',
+    remark      varchar(200)                         null comment '备注',
+    status      tinyint(1) default 1                 not null comment '状态，0：禁用，1：启用',
+    create_time timestamp  default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time timestamp                            null comment '修改时间'
+)
+    comment 'FooBar';
 
 -- ----------------------------
 -- Records of foo_bar
 -- ----------------------------
-INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time) 
-    VALUES (1, 'FooBar', 'foo', 'bar', 'remark...', 1, 0, '2019-11-01 14:05:14', null);
-INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, update_time) 
-    VALUES (2, 'HelloWorld', 'hello', 'world', null, 1, 0, '2019-11-01 14:05:14', null);
+INSERT INTO foo_bar (id, name, foo, bar, remark, status, create_time, update_time) VALUES (1, 'FooBar', 'Foo', 'Bar', null, 1, '2023-07-01 21:01:10', null);
 
 ```
 
@@ -159,207 +151,129 @@ INSERT INTO foo_bar (id, name, foo, bar, remark, state, version, create_time, up
 > 代码生成入口类，在generator模块中
 
 ```text
-spring-boot-plus/generator/src/main/java/io/geekidea/springbootplus/generator/SpringBootPlusGenerator.java
+src/test/java/io/geekidea/boot/generator/Generator.java
 ```
 
 ```java
 /**
- * spring-boot-plus代码生成器入口类
+ * Spring Boot Plus 代码生成器
  *
  * @author geekidea
- * @date 2019-10-22
+ * @date 2022/3/16
  **/
-@Component
-public class SpringBootPlusGenerator {
+public class Generator {
 
-    /**
-     * 生成代码
-     * @param args
-     */
-    public static void main(String[] args) {
-        GeneratorProperties generatorProperties = new GeneratorProperties();
-
-        // 设置基本信息
-        generatorProperties
-                .setMavenModuleName("example")
-                .setParentPackage("com.example")
-                .setModuleName("foobar")
-                .setAuthor("geekidea")
-                .setFileOverride(true);
-
-        // 设置表信息
-        generatorProperties.addTable("foo_bar","id");
-
-        // 数据源配置
-        generatorProperties.getDataSourceConfig()
-                .setDbType(DbType.MYSQL)
-                .setUsername("root")
-                .setPassword("root")
-                .setDriverName("com.mysql.jdbc.Driver")
-                .setUrl("jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
-
-        // 生成配置
-        generatorProperties.getGeneratorConfig()
-                .setGeneratorStrategy(GeneratorStrategy.SINGLE)
-                .setGeneratorEntity(true)
-                .setGeneratorController(true)
-                .setGeneratorService(true)
-                .setGeneratorServiceImpl(true)
-                .setGeneratorMapper(true)
-                .setGeneratorMapperXml(true)
-                .setGeneratorPageParam(true)
-                .setGeneratorQueryVo(true)
-                .setRequiresPermissions(true)
-                .setPageListOrder(true)
-                .setParamValidation(true)
-                .setSwaggerTags(true)
-                .setOperationLog(true);
-
-        // 全局配置
-        generatorProperties.getMybatisPlusGeneratorConfig().getGlobalConfig()
-                .setOpen(true)
-                .setSwagger2(true)
-                .setIdType(IdType.AUTO)
-                .setDateType(DateType.ONLY_DATE);
-
-        // 策略配置
-        generatorProperties.getMybatisPlusGeneratorConfig().getStrategyConfig()
-                .setNaming(NamingStrategy.underline_to_camel)
-                .setColumnNaming(NamingStrategy.underline_to_camel)
-                .setEntityLombokModel(true)
-                .setRestControllerStyle(true)
-                .setControllerMappingHyphenStyle(true)
-                .setVersionFieldName(GeneratorConstant.VERSION)
-                .setLogicDeleteFieldName(GeneratorConstant.DELETED);
-
-        // 生成代码
-        CodeGenerator codeGenerator = new CodeGenerator();
-        codeGenerator.generator(generatorProperties);
+    public static void main(String[] args) throws Exception {
+        GeneratorConfig config = new GeneratorConfig();
+        // 项目信息配置
+        config.setParentPackage("io.geekidea.boot" )
+                .setModuleName("foobar" )
+                .setAuthor("geekidea" );
+        // 表名称和需要去掉的表前缀
+        config.setTableNames("foo_bar" )
+                .setTablePrefix("");
+        // 是否覆盖已有文件
+        config.setFileOverride(true);
+        // 是否只更新实体类
+        config.setOnlyOverrideEntity(false);
+        GenerateHandler handler = new GenerateHandler();
+        handler.generator(config);
     }
 }
 ```
 
-#### Code Generator Templates
+#### 代码生成模版
 > 使用Velocity模版生成代码，可自定义修改代码生成模版
 
 ```text
-spring-boot-plus/generator/src/main/resources
+src/test/resources
 ```
 
 ```text
 └── templates
+    ├── addDto.java.vm          添加DTO代码生成模版
     ├── controller.java.vm      控制器代码生成模版
     ├── entity.java.vm          实体类代码生成模版
-    ├── mapper.java.vm          mapper代码生成模版
-    ├── mapper.xml.vm           mapper xml 代码生成模版
-    ├── pageParam.java.vm       分页参数代码生成模版
-    ├── queryVo.java.vm         查询结果代码生成模版
+    ├── infoVo.java.vm          详情VO代码生成模版
+    ├── mapper.java.vm          Mapper代码生成模版
+    ├── mapper.xml.vm           Mapper xml 代码生成模版
+    ├── query.java.vm           分页参数代码生成模版
     ├── service.java.vm         服务接口代码生成模版
-    └── serviceImpl.java.vm     服务实现代码生成模版
+    ├── serviceImpl.java.vm     服务实现代码生成模版
+    ├── updateDto.java.vm       修改DTO代码生成模版
+    └── vo.java.vm              列表VO代码生成模版
 ```
 
 #### 生成的代码结构
 
 ```text
-└── src
-    └── main
-        ├── java
-        │   └── com
-        │       └── example
-        │           └── foobar
-        │               ├── controller
-        │               │   └── FooBarController.java
-        │               ├── entity
-        │               │   └── FooBar.java
-        │               ├── mapper
-        │               │   └── FooBarMapper.java
-        │               ├── param
-        │               │   └── FooBarPageParam.java
-        │               ├── service
-        │               │   ├── FooBarService.java
-        │               │   └── impl
-        │               │       └── FooBarServiceImpl.java
-        │               └── vo
-        │                   └── FooBarQueryVo.java
-        └── resources
-            └── mapper
-                └── foobar
-                    └── FooBarMapper.xml
+├── controller
+│ └── FooBarController.java
+├── dto
+│ ├── FooBarAddDto.java
+│ └── FooBarUpdateDto.java
+├── entity
+│ └── FooBar.java
+├── mapper
+│ └── FooBarMapper.java
+├── query
+│ └── FooBarQuery.java
+├── service
+│ ├── FooBarService.java
+│ └── impl
+│     └── FooBarServiceImp.java
+└── vo
+    ├── FooBarInfoVo.java
+    └── FooBarVo.java
+
+resources
+└── mapper
+    └── foobar
+        └── FooBarMapper.xml    
+    
 ```
 
-### 3. 启动SpringBootAdmin
-> SpringBootAdmin Server启动类，在admin模块中  [http://localhost:8000](http://localhost:8000)
+### 3. 启动项目
+> 项目入口类: SpringBootPlusApplication  [http://localhost:8888](http://localhost:8888)
 
 ```text
-spring-boot-plus/admin/src/main/java/io/geekidea/springbootplus/admin/SpringBootPlusAdminApplication
+src/main/java/io/geekidea/boot/SpringBootPlusApplication.java
 ```
 
 ```java
 /**
- * Spring Boot Admin Bootstrap Main Class
+ * 启动类
  *
  * @author geekidea
- * @date 2020/3/20
- **/
-@Slf4j
-@Configuration
-@EnableAutoConfiguration
-@EnableAdminServer
-@SpringBootApplication
-public class SpringBootPlusAdminApplication {
-
-    public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusAdminApplication.class, args);
-        ConfigurableEnvironment environment = context.getEnvironment();
-        String serverPort = environment.getProperty("server.port");
-        log.info("SpringBootAdmin: http://localhost:" + serverPort);
-    }
-
-}
-```
-
-### 4. 启动项目
-> 项目入口类，在bootstrap模块中  [http://localhost:8888](http://localhost:8888)
-
-```text
-spring-boot-plus/bootstrap/src/main/java/io/geekidea/springbootplus/SpringBootPlusApplication.java
-```
-
-```java
-/**
- * spring-boot-plus 项目启动入口
- *
- * @author geekidea
- * @since 2018-11-08
+ * @date 2022-3-16
  */
 @EnableAsync
-@EnableScheduling
-@EnableTransactionManagement
-@EnableConfigurationProperties
-@ServletComponentScan
-@MapperScan({"io.geekidea.springbootplus.**.mapper", "com.example.**.mapper"})
-@SpringBootApplication(scanBasePackages = {"io.geekidea.springbootplus", "com.example"})
+@SpringBootApplication
 public class SpringBootPlusApplication {
 
-    public static void main(String[] args) {
-        // 启动spring-boot-plus
+    private static final String BACKSLASH = "/";
+
+    public static void main(String[] args) throws Exception {
         ConfigurableApplicationContext context = SpringApplication.run(SpringBootPlusApplication.class, args);
         // 打印项目信息
-        PrintApplicationInfo.print(context);
-        // 打印项目提示
-        PrintApplicationInfo.printTip(context);
+        printlnProjectInfo(context);
+        System.out.println("  _____ _______       _____ _______    _____ _    _  _____ _____ ______  _____ _____ \n" +
+                " / ____|__   __|/\\   |  __ \\__   __|  / ____| |  | |/ ____/ ____|  ____|/ ____/ ____|\n" +
+                "| (___    | |  /  \\  | |__) | | |    | (___ | |  | | |   | |    | |__  | (___| (___  \n" +
+                " \\___ \\   | | / /\\ \\ |  _  /  | |     \\___ \\| |  | | |   | |    |  __|  \\___ \\\\___ \\ \n" +
+                " ____) |  | |/ ____ \\| | \\ \\  | |     ____) | |__| | |___| |____| |____ ____) |___) |\n" +
+                "|_____/   |_/_/    \\_\\_|  \\_\\ |_|    |_____/ \\____/ \\_____\\_____|______|_____/_____/ \n");
     }
-
 }
 ```
 
-### 5. 访问项目Swagger文档
-[http://47.105.159.10:8888/api/swagger-ui.html](http://47.105.159.10:8888/api/swagger-ui.html)
+### 4. 访问项目Swagger文档
+[http://localhost:8888/api/swagger-ui.html](http://localhost:8888/api/swagger-ui.html)
 ![swagger-ui.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui.png)
 ![swagger-ui-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui-1.png)
 
-### 6. 访问Knife4j文档
-[http://47.105.159.10:8888/api/doc.html](http://47.105.159.10:8888/api/doc.html)
+### 5. 访问Knife4j文档
+[http://localhost:8888/api/doc.html](http://localhost:8888/api/doc.html)
 ![knife4j.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j.png)
 ![knife4j-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j-1.png)
 
@@ -414,30 +328,30 @@ tail -f -n 1000 /spring-boot-plus-server-2.0/logs/spring-boot-plus.log
 
 ![spring-boot-plus-idea](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/idea.png)
 
-### [Spring Boot Admin Instances](http://47.105.159.10:8000/instances/11090f218c47/details)
+### [Spring Boot Admin Instances](http://localhost:8000/instances/11090f218c47/details)
 <p>
-    <a href="http://47.105.159.10:8000/instances/11090f218c47/details">
+    <a href="http://localhost:8000/instances/11090f218c47/details">
         <img src="https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootadmin.png" alt="spring-boot-admin instances">
     </a>
 </p>
 
-### [Spring Boot Admin Statistics](http://47.105.159.10:8000/instances/11090f218c47/details)
+### [Spring Boot Admin Statistics](http://localhost:8000/instances/11090f218c47/details)
 <p>
-    <a href="http://47.105.159.10:8000/instances/11090f218c47/details">
+    <a href="http://localhost:8000/instances/11090f218c47/details">
         <img src="https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootadmin1.png" alt="spring-boot-admin statistics">
     </a>
 </p>
 
-### [Spring Boot Admin Log](http://47.105.159.10:8000/instances/11090f218c47/logfile)
+### [Spring Boot Admin Log](http://localhost:8000/instances/11090f218c47/logfile)
 <p>
-    <a href="http://47.105.159.10:8000/instances/11090f218c47/logfile">
+    <a href="http://localhost:8000/instances/11090f218c47/logfile">
         <img src="https://spring-boot-plus.gitee.io/img/home/spring-boot-admin-log.png" alt="spring-boot-admin log">
     </a>
 </p>
 
 ## spring-boot-plus-vue 前端项目
 ### [GITHUB-REPO](https://github.com/geekidea/spring-boot-plus-vue)
-### [VUE演示地址](http://47.105.159.10/)
+### [VUE演示地址](http://localhost/)
 #### VUE主页
 ![VUE主页](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue.png)
 #### 系统用户列表
