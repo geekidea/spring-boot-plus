@@ -299,11 +299,6 @@ QQ 625301326| 微信公众号 geekideaio|  今日头条 GeekIdea
 -|-|-
 ![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png) | ![Wechat Official Account](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-official.jpg) | ![toutiao](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-toutiao.jpeg) |
 
-## 赞赏
-请作者喝咖啡，让代码飞一会儿！
-                          
-![geekidea-wechat-donate](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-donate.jpeg)
-
 ## License
-spring-boot-plus is under the Apache 2.0 license. See the [LICENSE](https://github.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.
+spring-boot-plus is under the MIT-license. See the [LICENSE](https://gitee.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.
 
