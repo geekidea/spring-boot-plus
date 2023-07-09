@@ -11,7 +11,7 @@
 
     <groupId>io.geekidea.boot</groupId>
     <artifactId>spring-boot-plus</artifactId>
-    <version>2.7.12-SNAPSHOT</version>
+    <version>2.7.12</version>
 
     <name>spring-boot-plus</name>
     <description>spring-boot-plus</description>
