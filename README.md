@@ -14,7 +14,10 @@
   <a href="https://github.com/spring-projects/spring-boot">
     <img alt="spring boot version" src="https://img.shields.io/badge/spring%20boot-2.7.12-brightgreen">
   </a>
-  <a href="https://www.apache.org/licenses/LICENSE-2.0">
+  <a href="https://cn.vuejs.org/">
+    <img alt="spring boot version" src="https://img.shields.io/badge/vue-3.2-darkgreen">
+  </a>
+  <a href="https://github.com/geekidea/spring-boot-plus/blob/master/LICENSE">
     <img alt="code style" src="https://img.shields.io/badge/license-MIT-green">
   </a>
 </p>
