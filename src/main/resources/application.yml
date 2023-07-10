@@ -139,7 +139,7 @@ spring-boot-plus:
   # XSS
   xss:
     # 是否启用，默认禁用
-    enable: true
+    enable: false
     # 拦截的路径
     url-patterns: /*
     # 排序
