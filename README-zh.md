@@ -86,7 +86,7 @@ Redis | 3.2+ |  |
 spring boot | 2.7.12 |
 mybatis-plus | 3.5.3.1 | mybatis增强框架 |
 fastjson2 | 2.0.33 | JSON处理工具集 |
-Swagger2 | V3 | Swagger文档 |
+Swagger | V3 | Swagger文档 |
 knife4j | 4.1.0 | api文档生成工具 |
 commons-lang3 | 3.12.0 | 常用工具包 |
 commons-io | 2.11.0 | IO工具包 |
@@ -97,9 +97,9 @@ hutool-all | 5.8.16 | 常用工具集 |
 lombok | 1.18.26 | 注解生成Java Bean等工具 |
 
 ### 项目链路图
-![项目调用链路图](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/spring-boot-plus-link-diagram.jpg)
+![项目调用链路图](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/system-link.jpg)
 
-### [CHANGELOG](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
+### [CHANGELOG](https://gitee.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
 ## 快速开始
 ### 克隆 spring-boot-plus
@@ -267,36 +267,41 @@ public class SpringBootPlusApplication {
 
 ### 4. 访问项目Swagger文档
 [http://localhost:8888/swagger-ui/index.html](http://localhost:8888/swagger-ui/index.html)
-![swagger-ui.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui.png)
+![swagger-ui.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-v3.png)
 
 ### 5. 访问Knife4j文档
 [http://localhost:8888/doc.html](http://localhost:8888/doc.html)
-![knife4j.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j.png)
+![knife4j.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j-doc.png)
 
-## spring-boot-plus Views
-
-### spring-boot-plus IDEA Sources Views
-
-![spring-boot-plus-idea](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/idea.png)
 
 ## spring-boot-plus-vue 前端项目
-### [GITHUB-REPO](https://github.com/geekidea/spring-boot-plus-vue)
-### [VUE演示地址](http://localhost/)
-#### VUE主页
-![VUE主页](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue.png)
+### [GITHUB-REPO](https://gitee.com/geekidea/spring-boot-plus-vue3)
 #### 系统用户列表
-![系统用户列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-1.png)
+![系统用户列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/user-manager.png)
 #### 系统角色列表
-![系统角色模块](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-2.png)
+![系统角色列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/role-manager.png)
 #### 系统菜单列表
-![系统菜单列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-3.png)
+![系统菜单列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/menu-manager.png)
+#### 系统部门列表
+![系统部门列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/dept-manager-dark.png)
+#### 系统日志
+![系统日志列表](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/log-manager.png)
+![系统日志详情](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/log-detail.png)
+#### 个人中心
+![个人中心](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/profile.png)
 
 ## spring-boot-plus 视频  :movie_camera:
+
 
 ## 联系
 QQ 625301326| 微信公众号 geekideaio|  今日头条 GeekIdea
 -|-|-
 ![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png) | ![Wechat Official Account](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-official.jpg) | ![toutiao](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-toutiao.jpeg) |
+
+## 赞赏
+请作者喝咖啡，让代码飞一会儿！
+
+![geekidea-wechat-donate](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-donate.jpeg)
 
 ## License
 spring-boot-plus is under the MIT-License. See the [LICENSE](https://gitee.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.

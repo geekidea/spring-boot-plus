@@ -33,8 +33,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String requestUrl = request.getRequestURI();
-        System.out.println("requestUrl = " + requestUrl);
         // 如果访问的是控制器
         if (handler instanceof HandlerMethod) {
             // 排除不需要登录验证的路径 路径配置 注解

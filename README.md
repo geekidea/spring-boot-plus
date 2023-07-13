@@ -91,7 +91,7 @@ Spring Boot | 2.7.12 |
 Mybatis | 3.5.3.1 | DAO Framework |
 Mybatis Plus | 3.3.1 | mybatis Enhanced framework |
 Fastjson | 2.0.33 | JSON processing toolset |
-Swagger2 | V3 | Api document generation tool |
+Swagger | V3 | Api document generation tool |
 Knife4j | 4.1.0 | Api document generation tool |
 commons-lang3 | 3.12.0 | Apache language toolkit |
 commons-io | 2.11.0 | Apache IO Toolkit |
@@ -102,7 +102,7 @@ hutool-all | 5.8.16 | Common toolset |
 lombok | 1.18.26 | Automatically plugs |
 
 ### Project Link Diagram
-![项目调用链路图](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/spring-boot-plus-link-diagram.jpg)
+![项目调用链路图](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/system-link.jpg)
 
 ### [CHANGELOG](https://github.com/geekidea/spring-boot-plus/blob/master/CHANGELOG.md)
 
@@ -286,33 +286,28 @@ public class SpringBootPlusApplication {
 
 ### 4. Access Swagger Docs
 [http://localhost:8888/swagger-ui/index.html](http://localhost:8888/swagger-ui/index.html)
-![swagger-ui.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui.png)
-![swagger-ui-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-ui-1.png)
+![swagger-ui.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/swagger-v3.png)
 
 ### 5. Access Knife4j Docs 
 [http://localhost:8888/doc.html](http://localhost:8888/doc.html)
-![knife4j.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j.png)
-![knife4j-1.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j-1.png)
+![knife4j.png](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/knife4j-doc.png)
 
 
-## spring-boot-plus Views
-
-### spring-boot-plus IDEA Sources Views
-
-![spring-boot-plus-idea](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/idea.png)
-
-
-## spring-boot-plus-vue Front-end Project
-### [GITHUB-REPO](https://github.com/geekidea/spring-boot-plus-vue)
-### [VUE WebSite](http://localhost/)
-#### VUE HOME
-![VUE HOME](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue.png)
+## spring-boot-plus-vue Vue3 Project
+### [GITEE-REPO](https://gitee.com/geekidea/spring-boot-plus-vue3)
 #### System User List
-![System User List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-1.png)
+![System User List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/user-manager.png)
 #### System Role List
-![System Role List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-2.png)
+![System Role List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/role-manager.png)
 #### System Menu List
-![System Menu List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/springbootplusvue-3.png)
+![System Menu List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/menu-manager.png)
+#### System Department
+![System Department List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/dept-manager-dark.png)
+#### System Log List
+![System Log List](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/log-manager.png)
+![System Log Detail](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/log-detail.png)
+#### User Profile
+![User Profile](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/profile.png)
 
 ## spring-boot-plus Videos  :movie_camera: 
 
@@ -321,6 +316,12 @@ public class SpringBootPlusApplication {
 QQ 625301326| Wechat geekideaio|  toutiao GeekIdea
 -|-|-
 ![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png) | ![Wechat Official Account](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-official.jpg) | ![toutiao](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-toutiao.jpeg) |
+
+## Donate
+Ask the author to drink coffee and let the code fly for a while!
+
+![geekidea-wechat-donate](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-donate.png)
+
 
 ## License
 spring-boot-plus is under the MIT-License. See the [LICENSE](https://github.com/geekidea/spring-boot-plus/blob/master/LICENSE) file for details.
