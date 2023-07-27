@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.generator.config.GeneratorConfig;
 import io.geekidea.boot.generator.enums.DefaultOrderType;
 import lombok.Data;
@@ -69,7 +70,7 @@ public class GenerateHandler {
                 .packageConfig(builder -> {
                     builder.parent(config.getParentPackage())
                             .moduleName(config.getModuleName())
-                            .controller(config.getPackageController())
+                            .controller(config.getControllerPackage())
                             .pathInfo(Collections.singletonMap(OutputFile.xml, projectPath + "/src/main/resources/mapper" + "/" + config.getModuleName()));
                 })
                 .strategyConfig(builder -> {
@@ -77,14 +78,16 @@ public class GenerateHandler {
                             .addInclude(tableName)
                             .addTablePrefix(config.getTablePrefix())
                             .entityBuilder().enableFileOverride().enableLombok().idType(config.getIdType())
+                            .formatFileName(config.getFormatEntityFileName())
                             .controllerBuilder().enableFileOverride().enableRestStyle()
+                            .formatFileName(config.getFormatControllerFileName())
                             .serviceBuilder().enableFileOverride().superServiceClass(config.getSuperService()).superServiceImplClass(config.getSuperServiceImpl())
-                            .formatServiceFileName("%sService")
-                            .formatServiceImplFileName("%sServiceImp")
+                            .formatServiceFileName(config.getFormatServiceFileName())
+                            .formatServiceImplFileName(config.getFormatServiceImplFileName())
                             .mapperBuilder()
                             .enableFileOverride()
-                            .formatMapperFileName("%sMapper")
-                            .formatXmlFileName("%sMapper");
+                            .formatMapperFileName(config.getFormatMapperFileName())
+                            .formatXmlFileName(config.getFormatXmlFileName());
 
                 })
                 .templateConfig(builder -> {
@@ -117,14 +120,14 @@ public class GenerateHandler {
                     }));
                     String projectPackagePath = config.getProjectPackagePath();
                     String moduleName = config.getModuleName();
-                    String dtoPackage = projectPackagePath + "/" + moduleName + "/dto";
-                    String queryPackage = projectPackagePath + "/" + moduleName + "/query";
-                    String voPackage = projectPackagePath + "/" + moduleName + "/vo";
+                    String dtoPackage = projectPackagePath + "/" + moduleName + "/" + config.getDtoPackage();
+                    String queryPackage = projectPackagePath + "/" + moduleName + "/" + config.getQueryPackage();
+                    String voPackage = projectPackagePath + "/" + moduleName + "/" + config.getVoPackage();
                     // 如果是仅仅覆盖实体类，则不更新dto、query、vo
                     if (!onlyOverrideEntity) {
                         // 自定义addDto
                         CustomFile addDtoCustomFile = new CustomFile.Builder()
-                                .fileName("AddDto.java")
+                                .fileName(config.getAddDtoFileName() + ".java")
                                 .filePath(projectPath + "/src/main/java/")
                                 .templatePath("/templates/addDto.java.vm")
                                 .packageName(dtoPackage)
@@ -132,7 +135,7 @@ public class GenerateHandler {
                                 .build();
                         // 自定义updateDto
                         CustomFile updateDtoCustomFile = new CustomFile.Builder()
-                                .fileName("UpdateDto.java")
+                                .fileName(config.getUpdateDtoFileName() + ".java")
                                 .filePath(projectPath + "/src/main/java/")
                                 .templatePath("/templates/updateDto.java.vm")
                                 .packageName(dtoPackage)
@@ -140,7 +143,7 @@ public class GenerateHandler {
                                 .build();
                         // 自定义query
                         CustomFile queryCustomFile = new CustomFile.Builder()
-                                .fileName("Query.java")
+                                .fileName(config.getQueryFileName() + ".java")
                                 .filePath(projectPath + "/src/main/java/")
                                 .templatePath("/templates/query.java.vm")
                                 .packageName(queryPackage)
@@ -148,7 +151,7 @@ public class GenerateHandler {
                                 .build();
                         // 自定义vo
                         CustomFile voCustomFile = new CustomFile.Builder()
-                                .fileName("Vo.java")
+                                .fileName(config.getVoFileName() + ".java")
                                 .filePath(projectPath + "/src/main/java/")
                                 .templatePath("/templates/vo.java.vm")
                                 .packageName(voPackage)
@@ -156,7 +159,7 @@ public class GenerateHandler {
                                 .build();
                         // 自定义infoVo
                         CustomFile infoVoCustomFile = new CustomFile.Builder()
-                                .fileName("InfoVo.java")
+                                .fileName(config.getInfoVoFileName() + ".java")
                                 .filePath(projectPath + "/src/main/java/")
                                 .templatePath("/templates/infoVo.java.vm")
                                 .packageName(voPackage)
@@ -188,14 +191,11 @@ public class GenerateHandler {
             String colonTableName = underlineToColon(tableName);
             String entityName = tableInfo.getEntityName();
             String entityObjectName = pascalToCamel(entityName);
-            cfgMap.put("entityObjectName", entityObjectName);
 
             String serviceName = tableInfo.getServiceName();
             String mapperName = tableInfo.getMapperName();
             String serviceObjectName = pascalToCamel(serviceName);
             String mapperObjectName = pascalToCamel(mapperName);
-            cfgMap.put("serviceObjectName", serviceObjectName);
-            cfgMap.put("mapperObjectName", mapperObjectName);
 
             // 默认的分页排序类型
             DefaultOrderType defaultOrderType = config.getDefaultOrderType();
@@ -265,39 +265,48 @@ public class GenerateHandler {
             // 是否存在BigDecimal
             cfgMap.put("existsBigDecimalType", existsBigDecimalType);
 
+            // 文件名称格式化
+            String addDtoFileName = entityName + config.getAddDtoFileName();
+            String updateDtoFileName = entityName + config.getUpdateDtoFileName();
+            String queryFileName = entityName + config.getQueryFileName();
+            String infoVoFileName = entityName + config.getInfoVoFileName();
+            String voFileName = entityName + config.getVoFileName();
+
+            String addDtoObjectName = pascalToCamel(addDtoFileName);
+            String updateDtoObjectName = pascalToCamel(updateDtoFileName);
+            String queryObjectName = pascalToCamel(queryFileName);
+            String infoVoObjectName = pascalToCamel(infoVoFileName);
+            String voObjectName = pascalToCamel(voFileName);
+
+
             // 包路径
             // dto
-            String dtoPackage = config.getDtoPackage();
-            cfgMap.put("dtoPackage", dtoPackage);
-            cfgMap.put("addDtoPath", dtoPackage + "." + entityName + "AddDto");
-            cfgMap.put("updateDtoPath", dtoPackage + "." + entityName + "UpdateDto");
+            String dtoPackagePath = config.getDtoPackagePath();
+            cfgMap.put("dtoPackagePath", dtoPackagePath);
+            cfgMap.put("addDtoPath", dtoPackagePath + "." + addDtoFileName);
+            cfgMap.put("updateDtoPath", dtoPackagePath + "." + updateDtoFileName);
             // vo
-            String voPackage = config.getVoPackage();
-            cfgMap.put("voPackage", voPackage);
-            cfgMap.put("voPath", voPackage + "." + entityName + "Vo");
-            cfgMap.put("infoVoPath", voPackage + "." + entityName + "InfoVo");
+            String voPackagePath = config.getVoPackagePath();
+            cfgMap.put("voPackagePath", voPackagePath);
+            cfgMap.put("voPath", voPackagePath + "." + voFileName);
+            cfgMap.put("infoVoPath", voPackagePath + "." + infoVoFileName);
             // query
-            String queryPackage = config.getQueryPackage();
-            cfgMap.put("queryPackage", queryPackage);
-            cfgMap.put("queryPath", queryPackage + "." + entityName + "Query");
+            String queryPackagePath = config.getQueryPackagePath();
+            cfgMap.put("queryPackagePath", queryPackagePath);
+            cfgMap.put("queryPath", queryPackagePath + "." + queryFileName);
             // 导入排序查询参数类
             cfgMap.put("superQueryPath", config.getSuperQuery());
-            // service对象名称
-            cfgMap.put("serviceObjectName", entityObjectName + "Service");
-            // mapper对象名称
-            cfgMap.put("mapperObjectName", entityObjectName + "Mapper");
             cfgMap.put("commonFields", config.getCommonFields());
             cfgMap.put("voExcludeFields", config.getVoExcludeFields());
             // 冒号连接的表名称
             cfgMap.put("colonTableName", colonTableName);
             // 是否生成permission注解
             cfgMap.put("permission", permission);
+            cfgMap.put("permissionPath", Permission.class.getName());
             cfgMap.put("simple", simple);
 
             // 导入分页类
             cfgMap.put("paging", config.getCommonPaging());
-            // 导入排序枚举
-            cfgMap.put("orderEnum", config.getCommonOrderEnum());
             // ApiResult
             cfgMap.put("apiResult", config.getCommonApiResult());
             // 分页列表查询是否排序
@@ -307,6 +316,26 @@ public class GenerateHandler {
 
             // 代码Validation校验
             cfgMap.put("paramValidation", config.isParamValidation());
+
+            // 对象名称
+            cfgMap.put("entityObjectName", entityObjectName);
+            // service对象名称
+            cfgMap.put("serviceObjectName", serviceObjectName);
+            // mapper对象名称
+            cfgMap.put("mapperObjectName", mapperObjectName);
+            // 自定义文件和对象名称
+            cfgMap.put("addDtoName", addDtoFileName);
+            cfgMap.put("updateDtoName", updateDtoFileName);
+            cfgMap.put("queryName", queryFileName);
+            cfgMap.put("infoVoName", infoVoFileName);
+            cfgMap.put("voName", voFileName);
+            cfgMap.put("addDtoObjectName", addDtoObjectName);
+            cfgMap.put("updateDtoObjectName", updateDtoObjectName);
+            cfgMap.put("queryObjectName", queryObjectName);
+            cfgMap.put("infoVoObjectName", infoVoObjectName);
+            cfgMap.put("voObjectName", voObjectName);
+
+
             objectMap.put("cfg", cfgMap);
         } catch (
                 Exception e) {

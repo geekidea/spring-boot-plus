@@ -1,6 +1,6 @@
 package $!{package.Controller};
 
-import io.geekidea.boot.auth.annotation.Permission;
+import $!{cfg.permissionPath};
 import $!{cfg.paging};
 import $!{cfg.apiResult};
 import $!{cfg.addDtoPath};
@@ -35,7 +35,7 @@ public class $!{table.controllerName} {
     /**
      * 添加$!{table.comment}
      *
-     * @param $!{cfg.entityObjectName}AddDto
+     * @param $!{cfg.addDtoObjectName}
      * @return
      * @throws Exception
      */
@@ -44,15 +44,15 @@ public class $!{table.controllerName} {
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:add")
     #end
-    public ApiResult add$!{entity}(@Valid @RequestBody $!{entity}AddDto $!{cfg.entityObjectName}AddDto) throws Exception {
-        boolean flag = $!{cfg.entityObjectName}Service.add$!{entity}($!{cfg.entityObjectName}AddDto);
+    public ApiResult add$!{entity}(@Valid @RequestBody $!{cfg.addDtoName} $!{cfg.addDtoObjectName}) throws Exception {
+        boolean flag = $!{cfg.serviceObjectName}.add$!{entity}($!{cfg.addDtoObjectName});
         return ApiResult.result(flag);
     }
 
     /**
      * 修改$!{table.comment}
      *
-     * @param $!{cfg.entityObjectName}UpdateDto
+     * @param $!{cfg.updateDtoObjectName}
      * @return
      * @throws Exception
      */
@@ -61,8 +61,8 @@ public class $!{table.controllerName} {
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:update")
     #end
-    public ApiResult update$!{entity}(@Valid @RequestBody $!{entity}UpdateDto $!{cfg.entityObjectName}UpdateDto) throws Exception {
-        boolean flag = $!{cfg.entityObjectName}Service.update$!{entity}($!{cfg.entityObjectName}UpdateDto);
+    public ApiResult update$!{entity}(@Valid @RequestBody $!{cfg.updateDtoName} $!{cfg.updateDtoObjectName}) throws Exception {
+        boolean flag = $!{cfg.serviceObjectName}.update$!{entity}($!{cfg.updateDtoObjectName});
         return ApiResult.result(flag);
     }
 
@@ -79,7 +79,7 @@ public class $!{table.controllerName} {
     @Permission("$!{cfg.colonTableName}:delete")
     #end
     public ApiResult delete$!{entity}(@PathVariable Long $!{cfg.pkIdName}) throws Exception {
-        boolean flag = $!{cfg.entityObjectName}Service.delete$!{entity}($!{cfg.pkIdName});
+        boolean flag = $!{cfg.serviceObjectName}.delete$!{entity}($!{cfg.pkIdName});
         return ApiResult.result(flag);
     }
 
@@ -95,15 +95,15 @@ public class $!{table.controllerName} {
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:info")
     #end
-    public ApiResult<$!{entity}InfoVo> get$!{entity}(@PathVariable Long $!{cfg.pkIdName}) throws Exception {
-        $!{entity}InfoVo $!{cfg.entityObjectName}InfoVo = $!{cfg.entityObjectName}Service.get$!{entity}ById($!{cfg.pkIdName});
-        return ApiResult.success($!{cfg.entityObjectName}InfoVo);
+    public ApiResult<$!{cfg.infoVoName}> get$!{entity}(@PathVariable Long $!{cfg.pkIdName}) throws Exception {
+        $!{cfg.infoVoName} $!{cfg.infoVoObjectName} = $!{cfg.serviceObjectName}.get$!{entity}ById($!{cfg.pkIdName});
+        return ApiResult.success($!{cfg.infoVoObjectName});
     }
 
     /**
      * $!{table.comment}分页列表
      *
-     * @param $!{cfg.entityObjectName}Query
+     * @param $!{cfg.queryObjectName}
      * @return
      * @throws Exception
      */
@@ -112,8 +112,8 @@ public class $!{table.controllerName} {
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:list")
     #end
-    public ApiResult<$!{entity}Vo> get$!{entity}List(@Valid @RequestBody $!{entity}Query $!{cfg.entityObjectName}Query) throws Exception {
-        Paging<$!{entity}Vo> paging = $!{cfg.entityObjectName}Service.get$!{entity}List($!{cfg.entityObjectName}Query);
+    public ApiResult<$!{cfg.voName}> get$!{entity}List(@Valid @RequestBody $!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception {
+        Paging<$!{cfg.voName}> paging = $!{cfg.serviceObjectName}.get$!{entity}List($!{cfg.queryObjectName});
         return ApiResult.success(paging);
     }
 

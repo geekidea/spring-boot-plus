@@ -53,10 +53,6 @@ public class GeneratorConfig {
      */
     private String parentPackage;
     /**
-     * 包名称
-     */
-    private String packageController = "controller";
-    /**
      * 模块名称
      */
     private String moduleName;
@@ -145,10 +141,6 @@ public class GeneratorConfig {
      */
     private String superServiceImpl;
     /**
-     * 查询参数父类
-     */
-    private String superQueryParam;
-    /**
      * 实体父类实体列表
      */
     private String[] superEntityCommonColumns;
@@ -162,10 +154,6 @@ public class GeneratorConfig {
      * 公共结果集路径
      */
     private String commonApiResult;
-    /**
-     * 公共排序枚举
-     */
-    private String commonOrderEnum;
     /**
      * 公共排序查询参数
      */
@@ -198,18 +186,7 @@ public class GeneratorConfig {
      * vo排除字段
      */
     private List<String> voExcludeFields = new ArrayList<>();
-    /**
-     * dto包名称
-     */
-    private String dtoPackage;
-    /**
-     * query包名称
-     */
-    private String queryPackage;
-    /**
-     * vo包名称
-     */
-    private String voPackage;
+
     /**
      * 主键生成类型
      */
@@ -246,6 +223,109 @@ public class GeneratorConfig {
      * 是否生成简单模式，只生成对应的类，不生成方法
      */
     private boolean simple = false;
+
+    /**
+     * 实体类包名称
+     */
+    private String entityPackage = "entity";
+
+    /**
+     * 控制器包名称
+     */
+    private String controllerPackage = "controller";
+
+    /**
+     * service接口包名称
+     */
+    private String servicePackage = "service";
+
+    /**
+     * serviceImpl实现类包名称
+     */
+    private String serviceImplPackage = "service.impl";
+
+    /**
+     * mapper包名称
+     */
+    private String mapperPackage = "mapper";
+    /**
+     * dto包名称
+     */
+    private String dtoPackage = "dto";
+    /**
+     * query包名称
+     */
+    private String queryPackage = "query";
+    /**
+     * vo包名称
+     */
+    private String voPackage = "vo";
+
+    /**
+     * 格式化entity文件名称
+     */
+    private String formatEntityFileName = "%s";
+
+    /**
+     * 格式化controller文件名称
+     */
+    private String formatControllerFileName = "%sController";
+
+    /**
+     * 格式化service文件名称
+     */
+    private String formatServiceFileName = "%sService";
+
+    /**
+     * 格式化serviceImpl文件名称
+     */
+    private String formatServiceImplFileName = "%sServiceImpl";
+
+    /**
+     * 格式化mapper文件名称
+     */
+    private String formatMapperFileName = "%sMapper";
+
+    /**
+     * 格式化mapperXml文件名称
+     */
+    private String formatXmlFileName = "%sMapper";
+
+    /**
+     * 自定义addDto文件名称
+     */
+    private String addDtoFileName = "AddDto";
+    /**
+     * 自定义updateDto文件名称
+     */
+    private String updateDtoFileName = "UpdateDto";
+    /**
+     * 自定义query文件名称
+     */
+    private String queryFileName = "Query";
+    /**
+     * 自定义infoVo文件名称
+     */
+    private String infoVoFileName = "InfoVo";
+    /**
+     * 自定义vo文件名称
+     */
+    private String voFileName = "Vo";
+
+
+    /**
+     * dto包路径
+     */
+    private String dtoPackagePath;
+    /**
+     * query包路径
+     */
+    private String queryPackagePath;
+    /**
+     * vo包路径
+     */
+    private String voPackagePath;
+
 
     public GeneratorConfig() throws Exception {
         String projectPath = System.getProperty("user.dir");
@@ -286,12 +366,9 @@ public class GeneratorConfig {
         this.commonParentPackage = parentPackage + ".framework";
         this.superService = BaseService.class.getName();
         this.superServiceImpl = BaseServiceImpl.class.getName();
-        this.superQueryParam = commonParentPackage + ".param.QueryParam";
         this.superEntityCommonColumns = new String[]{};
 
-        this.commonIdParam = commonParentPackage + ".param.IdParam";
         this.commonApiResult = ApiResult.class.getName();
-        this.commonOrderEnum = commonParentPackage + ".enums.OrderEnum";
         this.superQuery = BasePageQuery.class.getName();
         this.commonPaging = Paging.class.getName();
         this.commonBusinessException = BusinessException.class.getName();
@@ -299,9 +376,9 @@ public class GeneratorConfig {
         this.commonFields = Arrays.asList("remark", "version", "deleted", "createTime", "updateTime");
         this.voExcludeFields = Arrays.asList("password", "version", "deleted");
 
-        this.dtoPackage = parentPackage + "." + moduleName + ".dto";
-        this.queryPackage = parentPackage + "." + moduleName + ".query";
-        this.voPackage = parentPackage + "." + moduleName + ".vo";
+        this.dtoPackagePath = parentPackage + "." + moduleName + "." + dtoPackage;
+        this.queryPackagePath = parentPackage + "." + moduleName + "." + queryPackage;
+        this.voPackagePath = parentPackage + "." + moduleName + "." + voPackage;
 
         if (onlyOverrideEntity) {
             this.generatorEntity = true;

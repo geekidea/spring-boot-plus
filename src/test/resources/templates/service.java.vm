@@ -20,20 +20,20 @@ public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}>
     /**
      * 添加$!{table.comment}
      *
-     * @param $!{cfg.entityObjectName}AddDto
+     * @param $!{cfg.addDtoObjectName}
      * @return
      * @throws Exception
      */
-    boolean add$!{entity}($!{entity}AddDto $!{cfg.entityObjectName}AddDto) throws Exception;
+    boolean add$!{entity}($!{cfg.addDtoName} $!{cfg.addDtoObjectName}) throws Exception;
 
     /**
      * 修改$!{table.comment}
      *
-     * @param $!{cfg.entityObjectName}UpdateDto
+     * @param $!{cfg.updateDtoObjectName}
      * @return
      * @throws Exception
      */
-    boolean update$!{entity}($!{entity}UpdateDto $!{cfg.entityObjectName}UpdateDto) throws Exception;
+    boolean update$!{entity}($!{cfg.updateDtoName} $!{cfg.updateDtoObjectName}) throws Exception;
 
     /**
      * 删除$!{table.comment}
@@ -51,15 +51,15 @@ public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}>
      * @return
      * @throws Exception
      */
-    $!{entity}InfoVo get$!{entity}ById(Long $!{cfg.pkIdName}) throws Exception;
+    $!{cfg.infoVoName} get$!{entity}ById(Long $!{cfg.pkIdName}) throws Exception;
 
     /**
      * $!{table.comment}分页列表
      *
-     * @param $!{cfg.entityObjectName}Query
+     * @param $!{cfg.queryObjectName}
      * @return
      * @throws Exception
      */
-    Paging<$!{entity}Vo> get$!{entity}List($!{entity}Query $!{cfg.entityObjectName}Query) throws Exception;
+    Paging<$!{cfg.voName}> get$!{entity}List($!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception;
 
 }

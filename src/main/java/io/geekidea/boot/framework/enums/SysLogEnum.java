@@ -9,42 +9,17 @@ package io.geekidea.boot.framework.enums;
  **/
 public enum SysLogEnum {
 
-    /**
-     * 其它
-     **/
-    OTHER(0, "其它"),
-    /**
-     * 新增
-     **/
+    OTHER(0, "访问日志"),
     ADD(1, "新增"),
-    /**
-     * 修改
-     **/
     UPDATE(2, "修改"),
-    /**
-     * 删除
-     **/
     DELETE(3, "删除"),
-    /**
-     * 详情查询
-     **/
     INFO(4, "详情查询"),
-    /**
-     * 所有列表
-     **/
     ALL_LIST(5, "所有列表"),
-    /**
-     * 分页列表
-     **/
     LIST(6, "分页列表"),
-    /**
-     * 其它查询
-     **/
     OTHER_QUERY(7, "其它查询"),
-    /**
-     * 上传文件
-     **/
-    UPLOAD(8, "上传文件");
+    UPLOAD(8, "上传文件"),
+    LOGIN(9, "登录"),
+    LOGOUT(10, "退出");
 
     private Integer code;
     private String desc;

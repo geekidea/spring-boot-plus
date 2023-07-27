@@ -1,4 +1,4 @@
-package $!{cfg.dtoPackage};
+package $!{cfg.dtoPackagePath};
 
 #if($!{cfg.existsBigDecimalType})
 import java.math.BigDecimal;
@@ -26,7 +26,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 #end
 @Schema(description = "添加$!{table.comment}参数")
-public class $!{entity}AddDto implements Serializable {
+public class $!{cfg.addDtoName} implements Serializable {
 
     private static final long serialVersionUID = 1L;
 ## ----------  BEGIN 字段循环遍历  ----------

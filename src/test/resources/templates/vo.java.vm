@@ -1,4 +1,4 @@
-package $!{cfg.voPackage};
+package $!{cfg.voPackagePath};
 
 #if($!{cfg.existsBigDecimalType})
 import java.math.BigDecimal;
@@ -20,7 +20,7 @@ import java.io.Serializable;
  */
 @Data
 @Schema(description = "$!{table.comment}查询结果")
-public class $!{entity}Vo implements Serializable {
+public class $!{cfg.voName} implements Serializable {
 
     private static final long serialVersionUID = 1L;
 ## ----------  BEGIN 字段循环遍历  ----------

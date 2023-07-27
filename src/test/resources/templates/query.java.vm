@@ -1,4 +1,4 @@
-package $!{cfg.queryPackage};
+package $!{cfg.queryPackagePath};
 
 import $!{cfg.superQueryPath};
 
@@ -17,9 +17,9 @@ import lombok.experimental.Accessors;
 @Data
 @Schema(description = "$!{table.comment}查询参数")
 #if($!{entitySerialVersionUID})
-public class $!{entity}Query extends BasePageQuery {
+public class $!{cfg.queryName} extends BasePageQuery {
 #else
-public class $!{entity}Query {
+public class $!{cfg.queryName} {
 #end
 #if($!{entitySerialVersionUID})
     private static final long serialVersionUID = 1L;

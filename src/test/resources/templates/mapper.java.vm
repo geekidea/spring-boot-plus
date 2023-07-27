@@ -24,14 +24,14 @@ public interface $!{table.mapperName} extends $!{superMapperClass}<$!{entity}> {
      * @param $!{cfg.pkIdName}
      * @return
      */
-    $!{entity}InfoVo get$!{entity}ById(Long $!{cfg.pkIdName});
+    $!{cfg.infoVoName} get$!{entity}ById(Long $!{cfg.pkIdName});
 
     /**
      * $!{table.comment}分页列表
      *
-     * @param $!{cfg.entityObjectName}Query
+     * @param $!{cfg.queryObjectName}
      * @return
      */
-    List<$!{entity}Vo> get$!{entity}List($!{entity}Query $!{cfg.entityObjectName}Query);
+    List<$!{cfg.voName}> get$!{entity}List($!{cfg.queryName} $!{cfg.queryObjectName});
 
 }

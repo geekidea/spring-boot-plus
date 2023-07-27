@@ -312,8 +312,7 @@ public class SysLogAop {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // 移除日志链路ID
-            MDC.remove(CommonConstant.TRACE_ID);
+
         }
     }
 

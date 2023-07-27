@@ -15,7 +15,7 @@ public class Generator {
         GeneratorConfig config = new GeneratorConfig();
         // 项目信息配置
         config.setParentPackage("io.geekidea.boot" )
-                .setModuleName("foobar" )
+                .setModuleName("temp" )
                 .setAuthor("geekidea" );
         // 表名称和需要去掉的表前缀
         config.setTableNames("foo_bar" )
@@ -24,6 +24,18 @@ public class Generator {
         config.setFileOverride(true);
         // 是否只更新实体类
         config.setOnlyOverrideEntity(false);
+        // 自定义包名称
+        config.setEntityPackage("model");
+        config.setMapperPackage("dao");
+        config.setDtoPackage("dto");
+        config.setQueryPackage("req");
+        config.setVoPackage("resp");
+        config.setAddDtoFileName("AddDTO");
+        config.setUpdateDtoFileName("UpdateDTO");
+        config.setQueryFileName("Request");
+        config.setInfoVoFileName("DetailVo");
+        config.setVoFileName("Response");
+
         GenerateHandler handler = new GenerateHandler();
         handler.generator(config);
     }

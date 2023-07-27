@@ -36,21 +36,21 @@ public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{tabl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean add$!{entity}($!{entity}AddDto $!{cfg.entityObjectName}AddDto) throws Exception {
+    public boolean add$!{entity}($!{cfg.addDtoName} $!{cfg.addDtoObjectName}) throws Exception {
         $!{entity} $!{cfg.entityObjectName} = new $!{entity}();
-        BeanUtils.copyProperties($!{cfg.entityObjectName}AddDto, $!{cfg.entityObjectName});
+        BeanUtils.copyProperties($!{cfg.addDtoObjectName}, $!{cfg.entityObjectName});
         return save($!{cfg.entityObjectName});
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean update$!{entity}($!{entity}UpdateDto $!{cfg.entityObjectName}UpdateDto) throws Exception {
-        Long $!{cfg.pkIdName} = $!{cfg.entityObjectName}UpdateDto.get$!{cfg.pascalPkIdName}();
+    public boolean update$!{entity}($!{cfg.updateDtoName} $!{cfg.updateDtoObjectName}) throws Exception {
+        Long $!{cfg.pkIdName} = $!{cfg.updateDtoObjectName}.get$!{cfg.pascalPkIdName}();
         $!{entity} $!{cfg.entityObjectName} = getById($!{cfg.pkIdName});
         if ($!{cfg.entityObjectName} == null) {
             throw new BusinessException("$!{table.comment}不存在");
         }
-        BeanUtils.copyProperties($!{cfg.entityObjectName}UpdateDto, $!{cfg.entityObjectName});
+        BeanUtils.copyProperties($!{cfg.updateDtoObjectName}, $!{cfg.entityObjectName});
     #if($!{cfg.pascalUpdateTimeColumnName})
         $!{cfg.entityObjectName}.set$!{cfg.pascalUpdateTimeColumnName}(new Date());
     #end
@@ -64,19 +64,19 @@ public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{tabl
     }
 
     @Override
-    public $!{entity}InfoVo get$!{entity}ById(Long $!{cfg.pkIdName}) throws Exception {
-        return $!{cfg.entityObjectName}Mapper.get$!{entity}ById($!{cfg.pkIdName});
+    public $!{cfg.infoVoName} get$!{entity}ById(Long $!{cfg.pkIdName}) throws Exception {
+        return $!{cfg.mapperObjectName}.get$!{entity}ById($!{cfg.pkIdName});
     }
 
     @Override
-    public Paging<$!{entity}Vo> get$!{entity}List($!{entity}Query $!{cfg.entityObjectName}Query) throws Exception {
+    public Paging<$!{cfg.voName}> get$!{entity}List($!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception {
         #if($!{cfg.defaultOrderColumnName})
-        handlePage($!{cfg.entityObjectName}Query, OrderByItem.desc("$!{cfg.defaultOrderColumnName}"));
+        handlePage($!{cfg.queryObjectName}, OrderByItem.desc("$!{cfg.defaultOrderColumnName}"));
         #else
-        handlePage($!{cfg.entityObjectName}Query);
+        handlePage($!{cfg.queryObjectName});
         #end
-        List<$!{entity}Vo> list = $!{cfg.entityObjectName}Mapper.get$!{entity}List($!{cfg.entityObjectName}Query);
-        Paging<$!{entity}Vo> paging = new Paging<>(list);
+        List<$!{cfg.voName}> list = $!{cfg.mapperObjectName}.get$!{entity}List($!{cfg.queryObjectName});
+        Paging<$!{cfg.voName}> paging = new Paging<>(list);
         return paging;
     }
 
