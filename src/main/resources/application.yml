@@ -87,7 +87,7 @@ mybatis-plus:
 
 # 分页
 pagehelper:
-  reasonable: true
+  reasonable: false
   support-methods-arguments: true
   params: count=countSql
 
