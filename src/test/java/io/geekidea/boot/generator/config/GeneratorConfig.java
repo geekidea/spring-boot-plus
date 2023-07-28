@@ -11,6 +11,7 @@ import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.framework.service.BaseService;
 import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
 import io.geekidea.boot.generator.enums.DefaultOrderType;
+import io.geekidea.boot.generator.enums.RequestMappingType;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
@@ -325,6 +326,46 @@ public class GeneratorConfig {
      * vo包路径
      */
     private String voPackagePath;
+
+    /**
+     * 请求路径是否加上模块名称
+     */
+    private boolean requestMappingModule = false;
+
+    /**
+     * 请求路径映射类型
+     */
+    private RequestMappingType requestMappingType = RequestMappingType.CAMEL;
+
+    /**
+     * 控制器请求路径
+     */
+    private String controllerRequestMapping = "%s";
+
+    /**
+     * 添加请求路径
+     */
+    private String addRequestMapping = "add%s";
+
+    /**
+     * 修改请求路径
+     */
+    private String updateRequestMapping = "update%s";
+
+    /**
+     * 删除请求路径
+     */
+    private String deleteRequestMapping = "delete%s";
+
+    /**
+     * 详情请求路径
+     */
+    private String infoRequestMapping = "get%sInfo";
+
+    /**
+     * 分页列表请求路径
+     */
+    private String pageRequestMapping = "get%sPage";
 
 
     public GeneratorConfig() throws Exception {

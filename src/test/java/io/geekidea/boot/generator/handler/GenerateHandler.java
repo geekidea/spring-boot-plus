@@ -9,9 +9,11 @@ import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.google.common.base.CaseFormat;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.generator.config.GeneratorConfig;
 import io.geekidea.boot.generator.enums.DefaultOrderType;
+import io.geekidea.boot.generator.enums.RequestMappingType;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
@@ -220,14 +222,7 @@ public class GenerateHandler {
                 String propertyName = tableField.getPropertyName();
                 boolean isKeyFlag = tableField.isKeyFlag();
                 if (isKeyFlag) {
-                    pkIdColumnName = columnName;
-                    cfgMap.put("pkIdColumnName", pkIdColumnName);
-                    String pkIdName = propertyName;
-                    if (StringUtils.isNotBlank(pkIdName)) {
-                        String pascalPkIdName = camelToPascal(pkIdName);
-                        cfgMap.put("pascalPkIdName", pascalPkIdName);
-                        cfgMap.put("pkIdName", pkIdName);
-                    }
+                    pkIdColumnName = handlePkId(cfgMap, columnName, propertyName);
                 } else {
                     if (StringUtils.isNotBlank(createTimeColumn) && createTimeColumn.equalsIgnoreCase(columnName)) {
                         existsCreateTimeColumn = true;
@@ -243,6 +238,11 @@ public class GenerateHandler {
                     existsBigDecimalType = true;
                 }
             }
+
+            if (StringUtils.isBlank(pkIdColumnName)) {
+                pkIdColumnName = handleDefaultPkId(cfgMap);
+            }
+
             String defaultOrderColumnName = null;
             if (DefaultOrderType.PK_ID == defaultOrderType) {
                 defaultOrderColumnName = pkIdColumnName;
@@ -335,6 +335,74 @@ public class GenerateHandler {
             cfgMap.put("infoVoObjectName", infoVoObjectName);
             cfgMap.put("voObjectName", voObjectName);
 
+            // 请求路径
+//            String controllerRequestMappingName = "";
+//            String requestMappingName = "";
+            // 不通请求映射类型路径设置
+            RequestMappingType requestMappingType = config.getRequestMappingType();
+//            if (RequestMappingType.CAMEL == requestMappingType) {
+//                controllerRequestMappingName = entityObjectName;
+//                requestMappingName = entityName;
+//            } else if (RequestMappingType.HYPHEN == requestMappingType) {
+//                controllerRequestMappingName = toHyphen(entityName);
+//                requestMappingName = toHyphen(entityName);
+//            } else if (RequestMappingType.UNDERLINE == requestMappingType) {
+//                controllerRequestMappingName = toUnderline(entityName);
+//                requestMappingName = toUnderline(entityName);
+//            } else if (RequestMappingType.BACKSLASH == requestMappingType) {
+//                controllerRequestMappingName = toBackslash(entityName);
+//                requestMappingName = toBackslash(entityName);
+//            }
+            // 格式化请求路径
+            String controllerRequestMapping = String.format(config.getControllerRequestMapping(), entityObjectName);
+            String addRequestMapping = String.format(config.getAddRequestMapping(), entityName);
+            String updateRequestMapping = String.format(config.getUpdateRequestMapping(), entityName);
+            String deleteRequestMapping = String.format(config.getDeleteRequestMapping(), entityName);
+            String infoRequestMapping = String.format(config.getInfoRequestMapping(), entityName);
+            String pageRequestMapping = String.format(config.getPageRequestMapping(), entityName);
+            // 判断是否需要加上模块名称
+            String moduleName = config.getModuleName();
+            boolean requestMappingModule = config.isRequestMappingModule();
+            if (requestMappingModule) {
+                controllerRequestMapping = moduleName + "/" + controllerRequestMapping;
+            }
+            if (RequestMappingType.CAMEL == requestMappingType) {
+            } else if (RequestMappingType.HYPHEN == requestMappingType) {
+                controllerRequestMapping = toHyphen(controllerRequestMapping);
+                addRequestMapping = toHyphen(addRequestMapping);
+                updateRequestMapping = toHyphen(updateRequestMapping);
+                deleteRequestMapping = toHyphen(deleteRequestMapping);
+                infoRequestMapping = toHyphen(infoRequestMapping);
+                pageRequestMapping = toHyphen(pageRequestMapping);
+            } else if (RequestMappingType.UNDERLINE == requestMappingType) {
+                controllerRequestMapping = toUnderline(controllerRequestMapping);
+                addRequestMapping = toUnderline(addRequestMapping);
+                updateRequestMapping = toUnderline(updateRequestMapping);
+                deleteRequestMapping = toUnderline(deleteRequestMapping);
+                infoRequestMapping = toUnderline(infoRequestMapping);
+                pageRequestMapping = toUnderline(pageRequestMapping);
+            } else if (RequestMappingType.BACKSLASH == requestMappingType) {
+                controllerRequestMapping = toBackslash(controllerRequestMapping);
+                addRequestMapping = toBackslash(addRequestMapping);
+                updateRequestMapping = toBackslash(updateRequestMapping);
+                deleteRequestMapping = toBackslash(deleteRequestMapping);
+                infoRequestMapping = toBackslash(infoRequestMapping);
+                pageRequestMapping = toBackslash(pageRequestMapping);
+            } else if (RequestMappingType.LOWER == requestMappingType) {
+                controllerRequestMapping = toLower(controllerRequestMapping);
+                addRequestMapping = toLower(addRequestMapping);
+                updateRequestMapping = toLower(updateRequestMapping);
+                deleteRequestMapping = toLower(deleteRequestMapping);
+                infoRequestMapping = toLower(infoRequestMapping);
+                pageRequestMapping = toLower(pageRequestMapping);
+            }
+
+            cfgMap.put("controllerRequestMapping", controllerRequestMapping);
+            cfgMap.put("addRequestMapping", addRequestMapping);
+            cfgMap.put("updateRequestMapping", updateRequestMapping);
+            cfgMap.put("deleteRequestMapping", deleteRequestMapping);
+            cfgMap.put("infoRequestMapping", infoRequestMapping);
+            cfgMap.put("pageRequestMapping", pageRequestMapping);
 
             objectMap.put("cfg", cfgMap);
         } catch (
@@ -342,6 +410,23 @@ public class GenerateHandler {
             e.printStackTrace();
             System.exit(0);
         }
+    }
+
+    private String handleDefaultPkId(Map<String, Object> cfgMap) {
+        return handlePkId(cfgMap, "id", "id");
+    }
+
+    private String handlePkId(Map<String, Object> cfgMap, String columnName, String propertyName) {
+        String pkIdColumnName;
+        pkIdColumnName = columnName;
+        cfgMap.put("pkIdColumnName", pkIdColumnName);
+        String pkIdName = propertyName;
+        if (StringUtils.isNotBlank(pkIdName)) {
+            String pascalPkIdName = camelToPascal(pkIdName);
+            cfgMap.put("pascalPkIdName", pascalPkIdName);
+            cfgMap.put("pkIdName", pkIdName);
+        }
+        return pkIdColumnName;
     }
 
 
@@ -414,6 +499,84 @@ public class GenerateHandler {
             return pascal.substring(0, 1).toLowerCase() + pascal.substring(1);
         }
         return pascal;
+    }
+
+    /**
+     * 下划线转换成横线连接命名
+     * sys_user --> sys-user
+     *
+     * @param underline
+     * @return
+     */
+    public static String underlineToHyphen(String underline) {
+        if (StringUtils.isNotBlank(underline)) {
+            String string = underline.toLowerCase();
+            return string.replaceAll("_", "-");
+        }
+        return null;
+    }
+
+    /**
+     * 转换成中横线连接
+     * sys-user
+     *
+     * @param value
+     * @return
+     */
+    public static String toHyphen(String value) {
+        if (StringUtils.isNotBlank(value)) {
+            String result = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_HYPHEN, value);
+            return result.replaceAll("_", "-");
+        }
+        return null;
+    }
+
+    /**
+     * 转换成下划线
+     *
+     * @param value
+     * @return
+     */
+    public static String toUnderline(String value) {
+        if (StringUtils.isNotBlank(value)) {
+            return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, value);
+        }
+        return null;
+    }
+
+    /**
+     * 转换成反斜杠
+     *
+     * @param value
+     * @return
+     */
+    public static String toBackslash(String value) {
+        if (StringUtils.isNotBlank(value)) {
+            String result = toHyphen(value);
+            return result.replaceAll("-", "/");
+        }
+        return null;
+    }
+
+    /**
+     * 转换成小写
+     *
+     * @param value
+     * @return
+     */
+    public static String toLower(String value) {
+        if (StringUtils.isNotBlank(value)) {
+            return value.toLowerCase();
+        }
+        return null;
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(toHyphen("sys_user"));
+        System.out.println(toHyphen("sysUser"));
+        System.out.println(toHyphen("SysUser"));
+        GeneratorConfig config = new GeneratorConfig();
+        System.out.println(String.format(config.getAddRequestMapping(), "Hello"));
     }
 
 }

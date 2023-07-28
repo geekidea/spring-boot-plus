@@ -25,7 +25,7 @@ import javax.validation.Valid;
  */
 @Slf4j
 @RestController
-@RequestMapping("/$!{cfg.entityObjectName}")
+@RequestMapping("/$!{cfg.controllerRequestMapping}")
 @Tag(name = "$!{table.comment}")
 public class $!{table.controllerName} {
 
@@ -39,7 +39,7 @@ public class $!{table.controllerName} {
      * @return
      * @throws Exception
      */
-    @PostMapping("/add$!{entity}")
+    @PostMapping("/$!{cfg.addRequestMapping}")
     @Operation(summary = "添加$!{table.comment}")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:add")
@@ -56,7 +56,7 @@ public class $!{table.controllerName} {
      * @return
      * @throws Exception
      */
-    @PostMapping("/update$!{entity}")
+    @PostMapping("/$!{cfg.updateRequestMapping}")
     @Operation(summary = "修改$!{table.comment}")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:update")
@@ -73,7 +73,7 @@ public class $!{table.controllerName} {
      * @return
      * @throws Exception
      */
-    @PostMapping("/delete$!{entity}/{$!{cfg.pkIdName}}")
+    @PostMapping("/$!{cfg.deleteRequestMapping}/{$!{cfg.pkIdName}}")
     @Operation(summary = "删除$!{table.comment}")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:delete")
@@ -90,7 +90,7 @@ public class $!{table.controllerName} {
      * @return
      * @throws Exception
      */
-    @PostMapping("/get$!{entity}/{$!{cfg.pkIdName}}")
+    @PostMapping("/$!{cfg.infoRequestMapping}/{$!{cfg.pkIdName}}")
     @Operation(summary = "$!{table.comment}详情")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:info")
@@ -107,7 +107,7 @@ public class $!{table.controllerName} {
      * @return
      * @throws Exception
      */
-    @PostMapping("/get$!{entity}List")
+    @PostMapping("/$!{cfg.pageRequestMapping}")
     @Operation(summary = "$!{table.comment}分页列表")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:list")

@@ -1,5 +1,91 @@
 # 更新日志 CHANGELOG
 
+## [V2.7.12.1] 2023
+> 代码生成优化
+
+###  ⭐️  New Features
+#### 代码生成可自定义包名称、文件名称
+```text
+// 自定义包名称
+config.setEntityPackage("model");
+config.setMapperPackage("dao");
+config.setDtoPackage("dto");
+config.setQueryPackage("req");
+config.setVoPackage("resp");
+config.setAddDtoFileName("AddDTO");
+config.setUpdateDtoFileName("UpdateDTO");
+config.setQueryFileName("Request");
+config.setInfoVoFileName("DetailVo");
+config.setVoFileName("Response");
+```
+#### 代码生成可自定义controller中的请求路径方式
+##### 代码生成可自定义controller中的请求路径是否添加模块名称
+```text
+config.setRequestMappingModule(true);
+```
+##### 代码生成自定义请求路径名称
+> 以下展示的默认值，如果一致，可不设置，%s为实体类名称对应的值
+```text
+config.setControllerRequestMapping("%s");
+config.setAddRequestMapping("add%s");
+config.setUpdateRequestMapping("update%s");
+config.setDeleteRequestMapping("delete%s");
+config.setInfoRequestMapping("get%sInfo");
+config.setPageRequestMapping("get%sPage");
+```
+##### 请求路径方式 CAMEL：骆驼(默认)，HYPHEN：中横线，下划线：UNDERLINE，反斜杠：BACKSLASH，全小写：LOWER
+```text
+config.setRequestMappingType(RequestMappingType.CAMEL);
+```
+###### CAMEL：骆驼(默认)
+```text
+/fooBar
+/addFooBar
+/updateFooBar
+/deleteFooBar/{id}
+/getFooBarInfo/{id}
+/getFooBarPage
+```
+
+###### HYPHEN：中横线
+```text
+/foo-bar
+/add-foo-bar
+/update-foo-bar
+/delete-foo-bar/{id}
+/get-foo-bar-info/{id}
+/get-foo-bar-page
+```
+
+###### 下划线：UNDERLINE
+```text
+/foo_bar
+/add_foo_bar
+/update_foo_bar
+/delete_foo_bar/{id}
+/get_foo_bar_info/{id}
+/get_foo_bar_page
+```
+
+###### 反斜杠：BACKSLASH
+```text
+/foo/bar
+/add/foo/bar
+/update/foo/bar
+/delete/foo/bar/{id}
+/get/foo/bar/info/{id}
+/get/foo/bar/page
+```
+
+###### 全小写：LOWER
+```text
+/foobar
+/addfoobar
+/updatefoobar
+/deletefoobar/{id}
+/getfoobarinfo/{id}
+/getfoobarpage
+```
 
 ## [V2.7.12] 2023.7.10  
 > 单体架构发布，更简单实用
