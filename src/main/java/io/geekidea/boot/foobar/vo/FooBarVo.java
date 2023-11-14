@@ -11,7 +11,7 @@ import java.io.Serializable;
  * FooBarVO
  *
  * @author geekidea
- * @since 2023-07-01
+ * @since 2023-11-14
  */
 @Data
 @Schema(description = "FooBar查询结果")

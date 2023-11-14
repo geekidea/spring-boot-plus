@@ -3,6 +3,8 @@ package io.geekidea.boot.generator.config;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.setting.yaml.YamlUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.geekidea.boot.framework.annotation.Log;
+import io.geekidea.boot.framework.enums.SysLogEnum;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.BasePageQuery;
 import io.geekidea.boot.framework.page.OrderByItem;
@@ -367,6 +369,49 @@ public class GeneratorConfig {
      */
     private String pageRequestMapping = "get%sPage";
 
+    /**
+     * 是否生成web端
+     */
+    private boolean generatorWeb = true;
+
+    /**
+     * 是否生成app端
+     */
+    private boolean generatorApp = false;
+
+    /**
+     * Web端前缀
+     */
+    private String webPrefix = "";
+
+    /**
+     * App端前缀
+     */
+    private String appPrefix = "App";
+
+    /**
+     * Web路径前缀
+     */
+    private String webPathPrefix = "";
+
+    /**
+     * App路径前缀
+     */
+    private String appPathPrefix = "app";
+
+    /**
+     * 是否生成系统日志
+     */
+    private boolean sysLog = true;
+    /**
+     * @Log包路径
+     */
+    private String logPackagePath;
+    /**
+     * SysLogEnum枚举包路径
+     */
+    private String sysLogEnumPackagePath;
+
 
     public GeneratorConfig() throws Exception {
         String projectPath = System.getProperty("user.dir");
@@ -421,6 +466,9 @@ public class GeneratorConfig {
         this.queryPackagePath = parentPackage + "." + moduleName + "." + queryPackage;
         this.voPackagePath = parentPackage + "." + moduleName + "." + voPackage;
 
+        this.logPackagePath = Log.class.getName();
+        this.sysLogEnumPackagePath = SysLogEnum.class.getName();
+
         if (onlyOverrideEntity) {
             this.generatorEntity = true;
             this.generatorAddDto = false;
@@ -439,6 +487,21 @@ public class GeneratorConfig {
             this.generatorQuery = false;
             this.generatorVo = false;
         }
+
+        if (generatorApp) {
+            formatEntityFileName = appPrefix + "%s";
+            formatControllerFileName = appPrefix + "%sController";
+            formatServiceFileName = appPrefix + "%sService";
+            formatServiceImplFileName = appPrefix + "%sServiceImpl";
+            formatMapperFileName = appPrefix + "%sMapper";
+            formatXmlFileName = appPrefix + "%sMapper";
+            generatorEntity = false;
+        } else {
+            appPrefix = "";
+            appPathPrefix = "";
+        }
+
+
     }
 
     public GeneratorConfig setTableNames(String... tableNames) {

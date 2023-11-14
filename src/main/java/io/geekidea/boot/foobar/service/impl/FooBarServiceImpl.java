@@ -25,11 +25,11 @@ import java.util.List;
  * FooBar 服务实现类
  *
  * @author geekidea
- * @since 2023-07-01
+ * @since 2023-11-14
  */
 @Slf4j
 @Service
-public class FooBarServiceImp extends BaseServiceImpl<FooBarMapper, FooBar> implements FooBarService {
+public class FooBarServiceImpl extends BaseServiceImpl<FooBarMapper, FooBar> implements FooBarService {
 
     @Autowired
     private FooBarMapper fooBarMapper;
@@ -67,9 +67,9 @@ public class FooBarServiceImp extends BaseServiceImpl<FooBarMapper, FooBar> impl
     }
 
     @Override
-    public Paging<FooBarVo> getFooBarList(FooBarQuery fooBarQuery) throws Exception {
+    public Paging<FooBarVo> getFooBarPage(FooBarQuery fooBarQuery) throws Exception {
         handlePage(fooBarQuery, OrderByItem.desc("id"));
-        List<FooBarVo> list = fooBarMapper.getFooBarList(fooBarQuery);
+        List<FooBarVo> list = fooBarMapper.getFooBarPage(fooBarQuery);
         Paging<FooBarVo> paging = new Paging<>(list);
         return paging;
     }

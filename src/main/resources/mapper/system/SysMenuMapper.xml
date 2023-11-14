@@ -85,6 +85,7 @@
                  inner join sys_menu m
                             on m.id = rm.menu_id
         where m.status = 1
+          and rm.is_choice = 1
           and r.id = #{roleId}
     </select>
 

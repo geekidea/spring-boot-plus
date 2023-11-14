@@ -8,7 +8,7 @@
         where id = #{id}
     </select>
 
-    <select id="getFooBarList" parameterType="io.geekidea.boot.foobar.query.FooBarQuery"
+    <select id="getFooBarPage" parameterType="io.geekidea.boot.foobar.query.FooBarQuery"
             resultType="io.geekidea.boot.foobar.vo.FooBarVo">
         select *
         from foo_bar

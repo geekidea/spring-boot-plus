@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 添加$!{table.comment}参数
+ * 添加$!{cfg.appPrefix}$!{table.comment}参数
  *
  * @author $!{author}
  * @since $!{date}
@@ -25,7 +25,7 @@ import java.io.Serializable;
 #if($!{chainModel})
 @Accessors(chain = true)
 #end
-@Schema(description = "添加$!{table.comment}参数")
+@Schema(description = "添加$!{cfg.appPrefix}$!{table.comment}参数")
 public class $!{cfg.addDtoName} implements Serializable {
 
     private static final long serialVersionUID = 1L;

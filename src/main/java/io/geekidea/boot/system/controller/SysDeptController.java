@@ -101,7 +101,6 @@ public class SysDeptController {
      */
     @PostMapping("/getAllSysDeptTreeList")
     @Operation(summary = "获取所有的部门树形列表")
-    @Permission("sys:dept:all-tree-list")
     public ApiResult<SysDeptTreeVo> getAllSysDeptTreeList(@Valid @RequestBody SysDeptQuery sysDeptQuery) throws Exception {
         List<SysDeptTreeVo> list = sysDeptService.getAllSysDeptTreeList(sysDeptQuery);
         return ApiResult.success(list);
@@ -115,7 +114,6 @@ public class SysDeptController {
      */
     @PostMapping("/getSysDeptTreeList")
     @Operation(summary = "获取启用的部门树形列表")
-    @Permission("sys:dept:tree-list")
     public ApiResult<SysDeptTreeVo> getSysDeptTreeList() throws Exception {
         List<SysDeptTreeVo> list = sysDeptService.getSysDeptTreeList();
         return ApiResult.success(list);

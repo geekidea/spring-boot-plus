@@ -8,7 +8,7 @@ cd /home/tools
 wget https://archive.apache.org/dist/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.tar.gz
 
 # 解压
-tar -zxvf apache-maven-3.6.2
+tar -zxvf apache-maven-3.6.2-bin.tar.gz
 
 # 修改环境变量
 vi /etc/profile

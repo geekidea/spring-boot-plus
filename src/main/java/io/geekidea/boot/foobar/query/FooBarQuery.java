@@ -9,7 +9,7 @@ import lombok.Data;
  * FooBar查询参数
  *
  * @author geekidea
- * @since 2023-07-01
+ * @since 2023-11-14
  */
 @Data
 @Schema(description = "FooBar查询参数")

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
+import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
@@ -95,25 +96,31 @@ public class GenerateHandler {
                 .templateConfig(builder -> {
                     if (!config.isGeneratorEntity()) {
                         builder.entity(null);
+                        builder.disable(TemplateType.ENTITY);
                     }
                     // 是否生成controller
                     if (!config.isGeneratorController()) {
                         builder.controller(null);
+                        builder.disable(TemplateType.CONTROLLER);
                     }
                     // 是否生成service
                     if (!config.isGeneratorService()) {
                         builder.service(null);
+                        builder.disable(TemplateType.SERVICE);
                     }
                     // 是否生成serviceImpl
                     if (!config.isGeneratorServiceImpl()) {
                         builder.serviceImpl(null);
+                        builder.disable(TemplateType.SERVICE_IMPL);
                     }
                     // 是否生成mapper
                     if (!config.isGeneratorMapper()) {
                         builder.mapper(null);
+                        builder.disable(TemplateType.MAPPER);
                     }
                     if (!config.isGeneratorMapperXml()) {
                         builder.xml(null);
+                        builder.disable(TemplateType.XML);
                     }
                 })
                 .injectionConfig(builder -> {
@@ -190,10 +197,27 @@ public class GenerateHandler {
         try {
             Map<String, Object> cfgMap = new HashMap<>();
             String tableName = tableInfo.getName();
-            String colonTableName = underlineToColon(tableName);
+            String appPathPrefix = config.getAppPathPrefix();
+            String colonTableName;
+            if (StringUtils.isNotBlank(appPathPrefix)) {
+                colonTableName = underlineToColon(appPathPrefix + ":" + tableName);
+            } else {
+                colonTableName = underlineToColon(tableName);
+            }
             String entityName = tableInfo.getEntityName();
             String entityObjectName = pascalToCamel(entityName);
-
+            String appPrefix = config.getAppPrefix();
+            String uniqueEntityName;
+            String uniqueEntityObjectName;
+            if (entityName.startsWith(appPrefix)) {
+                int length = appPrefix.length();
+                uniqueEntityName = entityName.substring(length);
+                uniqueEntityObjectName = pascalToCamel(entityObjectName.substring(length));
+                ;
+            } else {
+                uniqueEntityName = entityName;
+                uniqueEntityObjectName = entityObjectName;
+            }
             String serviceName = tableInfo.getServiceName();
             String mapperName = tableInfo.getMapperName();
             String serviceObjectName = pascalToCamel(serviceName);
@@ -336,23 +360,7 @@ public class GenerateHandler {
             cfgMap.put("voObjectName", voObjectName);
 
             // 请求路径
-//            String controllerRequestMappingName = "";
-//            String requestMappingName = "";
-            // 不通请求映射类型路径设置
             RequestMappingType requestMappingType = config.getRequestMappingType();
-//            if (RequestMappingType.CAMEL == requestMappingType) {
-//                controllerRequestMappingName = entityObjectName;
-//                requestMappingName = entityName;
-//            } else if (RequestMappingType.HYPHEN == requestMappingType) {
-//                controllerRequestMappingName = toHyphen(entityName);
-//                requestMappingName = toHyphen(entityName);
-//            } else if (RequestMappingType.UNDERLINE == requestMappingType) {
-//                controllerRequestMappingName = toUnderline(entityName);
-//                requestMappingName = toUnderline(entityName);
-//            } else if (RequestMappingType.BACKSLASH == requestMappingType) {
-//                controllerRequestMappingName = toBackslash(entityName);
-//                requestMappingName = toBackslash(entityName);
-//            }
             // 格式化请求路径
             String controllerRequestMapping = String.format(config.getControllerRequestMapping(), entityObjectName);
             String addRequestMapping = String.format(config.getAddRequestMapping(), entityName);
@@ -365,6 +373,14 @@ public class GenerateHandler {
             boolean requestMappingModule = config.isRequestMappingModule();
             if (requestMappingModule) {
                 controllerRequestMapping = moduleName + "/" + controllerRequestMapping;
+            }
+            boolean generatorApp = config.isGeneratorApp();
+            if (generatorApp) {
+                if (StringUtils.isNotBlank(appPrefix)) {
+                    int length = appPrefix.length();
+                    String name = controllerRequestMapping.substring(length);
+                    controllerRequestMapping = appPathPrefix + "/" + pascalToCamel(name);
+                }
             }
             if (RequestMappingType.CAMEL == requestMappingType) {
             } else if (RequestMappingType.HYPHEN == requestMappingType) {
@@ -403,6 +419,15 @@ public class GenerateHandler {
             cfgMap.put("deleteRequestMapping", deleteRequestMapping);
             cfgMap.put("infoRequestMapping", infoRequestMapping);
             cfgMap.put("pageRequestMapping", pageRequestMapping);
+
+            cfgMap.put("appPrefix", config.getAppPrefix());
+            cfgMap.put("appPathPrefix", config.getAppPathPrefix());
+            cfgMap.put("uniqueEntityName", uniqueEntityName);
+            cfgMap.put("uniqueEntityObjectName", uniqueEntityObjectName);
+
+            cfgMap.put("logPackagePath",config.getLogPackagePath());
+            cfgMap.put("sysLog",config.isSysLog());
+            cfgMap.put("sysLogEnumPackagePath",config.getSysLogEnumPackagePath());
 
             objectMap.put("cfg", cfgMap);
         } catch (

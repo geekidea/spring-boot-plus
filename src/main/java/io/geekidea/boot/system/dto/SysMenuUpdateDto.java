@@ -77,6 +77,9 @@ public class SysMenuUpdateDto implements Serializable {
     @Schema(description = "链接地址")
     @Length(max = 100, message = "链接地址长度超过限制")
     private String linkUrl;
+    
+    @Schema(description = "是否首页 0：否，1：是")
+    private Boolean isHome;
 
 }
 

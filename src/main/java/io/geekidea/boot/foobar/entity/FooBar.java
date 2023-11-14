@@ -14,7 +14,7 @@ import java.io.Serializable;
  * FooBar
  *
  * @author geekidea
- * @since 2023-07-01
+ * @since 2023-11-14
  */
 @Data
 @TableName("foo_bar")

@@ -13,7 +13,7 @@ import java.util.List;
  * FooBar Mapper 接口
  *
  * @author geekidea
- * @since 2023-07-01
+ * @since 2023-11-14
  */
 @Mapper
 public interface FooBarMapper extends BaseMapper<FooBar> {
@@ -32,6 +32,6 @@ public interface FooBarMapper extends BaseMapper<FooBar> {
      * @param fooBarQuery
      * @return
      */
-    List<FooBarVo> getFooBarList(FooBarQuery fooBarQuery);
+    List<FooBarVo> getFooBarPage(FooBarQuery fooBarQuery);
 
 }

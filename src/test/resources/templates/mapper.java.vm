@@ -1,7 +1,7 @@
 package $!{package.Mapper};
 
 import $!{superMapperClassPackage};
-import $!{package.Entity}.$!{entity};
+import $!{package.Entity}.$!{cfg.uniqueEntityName};
 import $!{cfg.queryPath};
 import $!{cfg.infoVoPath};
 import $!{cfg.voPath};
@@ -10,16 +10,16 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * $!{table.comment} Mapper 接口
+ * $!{cfg.appPrefix}$!{table.comment} Mapper 接口
  *
  * @author $!{author}
  * @since $!{date}
  */
 @Mapper
-public interface $!{table.mapperName} extends $!{superMapperClass}<$!{entity}> {
+public interface $!{table.mapperName} extends $!{superMapperClass}<$!{cfg.uniqueEntityName}> {
 
     /**
-     * $!{table.comment}详情
+     * $!{cfg.appPrefix}$!{table.comment}详情
      *
      * @param $!{cfg.pkIdName}
      * @return
@@ -27,11 +27,11 @@ public interface $!{table.mapperName} extends $!{superMapperClass}<$!{entity}> {
     $!{cfg.infoVoName} get$!{entity}ById(Long $!{cfg.pkIdName});
 
     /**
-     * $!{table.comment}分页列表
+     * $!{cfg.appPrefix}$!{table.comment}分页列表
      *
      * @param $!{cfg.queryObjectName}
      * @return
      */
-    List<$!{cfg.voName}> get$!{entity}List($!{cfg.queryName} $!{cfg.queryObjectName});
+    List<$!{cfg.voName}> get$!{entity}Page($!{cfg.queryName} $!{cfg.queryObjectName});
 
 }

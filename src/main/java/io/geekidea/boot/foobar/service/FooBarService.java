@@ -13,7 +13,7 @@ import io.geekidea.boot.foobar.vo.FooBarVo;
  * FooBar 服务接口
  *
  * @author geekidea
- * @since 2023-07-01
+ * @since 2023-11-14
  */
 public interface FooBarService extends BaseService<FooBar> {
 
@@ -60,6 +60,6 @@ public interface FooBarService extends BaseService<FooBar> {
      * @return
      * @throws Exception
      */
-    Paging<FooBarVo> getFooBarList(FooBarQuery fooBarQuery) throws Exception;
+    Paging<FooBarVo> getFooBarPage(FooBarQuery fooBarQuery) throws Exception;
 
 }

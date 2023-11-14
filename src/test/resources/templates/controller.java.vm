@@ -1,6 +1,8 @@
 package $!{package.Controller};
 
 import $!{cfg.permissionPath};
+import $!{cfg.logPackagePath};
+import $!{cfg.sysLogEnumPackagePath};
 import $!{cfg.paging};
 import $!{cfg.apiResult};
 import $!{cfg.addDtoPath};
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- * $!{table.comment} 控制器
+ * $!{cfg.appPrefix}$!{table.comment} 控制器
  *
  * @author $!{author}
  * @since $!{date}
@@ -26,21 +28,24 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("/$!{cfg.controllerRequestMapping}")
-@Tag(name = "$!{table.comment}")
+@Tag(name = "$!{cfg.appPrefix}$!{table.comment}")
 public class $!{table.controllerName} {
 
     @Autowired
     private $!{table.serviceName} $!{cfg.serviceObjectName};
 
     /**
-     * 添加$!{table.comment}
+     * 添加$!{cfg.appPrefix}$!{table.comment}
      *
      * @param $!{cfg.addDtoObjectName}
      * @return
      * @throws Exception
      */
+    #if($!{cfg.sysLog})
+    @Log(value = "添加$!{table.comment}", type = SysLogEnum.ADD)
+    #end
     @PostMapping("/$!{cfg.addRequestMapping}")
-    @Operation(summary = "添加$!{table.comment}")
+    @Operation(summary = "添加$!{cfg.appPrefix}$!{table.comment}")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:add")
     #end
@@ -50,14 +55,17 @@ public class $!{table.controllerName} {
     }
 
     /**
-     * 修改$!{table.comment}
+     * 修改$!{cfg.appPrefix}$!{table.comment}
      *
      * @param $!{cfg.updateDtoObjectName}
      * @return
      * @throws Exception
      */
+    #if($!{cfg.sysLog})
+    @Log(value = "修改$!{table.comment}", type = SysLogEnum.UPDATE)
+    #end
     @PostMapping("/$!{cfg.updateRequestMapping}")
-    @Operation(summary = "修改$!{table.comment}")
+    @Operation(summary = "修改$!{cfg.appPrefix}$!{table.comment}")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:update")
     #end
@@ -67,14 +75,17 @@ public class $!{table.controllerName} {
     }
 
     /**
-     * 删除$!{table.comment}
+     * 删除$!{cfg.appPrefix}$!{table.comment}
      *
      * @param $!{cfg.pkIdName}
      * @return
      * @throws Exception
      */
+    #if($!{cfg.sysLog})
+    @Log(value = "删除$!{table.comment}", type = SysLogEnum.DELETE)
+    #end
     @PostMapping("/$!{cfg.deleteRequestMapping}/{$!{cfg.pkIdName}}")
-    @Operation(summary = "删除$!{table.comment}")
+    @Operation(summary = "删除$!{cfg.appPrefix}$!{table.comment}")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:delete")
     #end
@@ -84,14 +95,14 @@ public class $!{table.controllerName} {
     }
 
     /**
-     * 获取$!{table.comment}详情
+     * 获取$!{cfg.appPrefix}$!{table.comment}详情
      *
      * @param $!{cfg.pkIdName}
      * @return
      * @throws Exception
      */
     @PostMapping("/$!{cfg.infoRequestMapping}/{$!{cfg.pkIdName}}")
-    @Operation(summary = "$!{table.comment}详情")
+    @Operation(summary = "$!{cfg.appPrefix}$!{table.comment}详情")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:info")
     #end
@@ -101,19 +112,19 @@ public class $!{table.controllerName} {
     }
 
     /**
-     * $!{table.comment}分页列表
+     * $!{cfg.appPrefix}$!{table.comment}分页列表
      *
      * @param $!{cfg.queryObjectName}
      * @return
      * @throws Exception
      */
     @PostMapping("/$!{cfg.pageRequestMapping}")
-    @Operation(summary = "$!{table.comment}分页列表")
+    @Operation(summary = "$!{cfg.appPrefix}$!{table.comment}分页列表")
     #if($!{cfg.permission})
-    @Permission("$!{cfg.colonTableName}:list")
+    @Permission("$!{cfg.colonTableName}:page")
     #end
-    public ApiResult<$!{cfg.voName}> get$!{entity}List(@Valid @RequestBody $!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception {
-        Paging<$!{cfg.voName}> paging = $!{cfg.serviceObjectName}.get$!{entity}List($!{cfg.queryObjectName});
+    public ApiResult<$!{cfg.voName}> get$!{entity}Page(@Valid @RequestBody $!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception {
+        Paging<$!{cfg.voName}> paging = $!{cfg.serviceObjectName}.get$!{entity}Page($!{cfg.queryObjectName});
         return ApiResult.success(paging);
     }
 

@@ -1,5 +1,6 @@
 package io.geekidea.boot.system.controller;
 
+import io.geekidea.boot.auth.annotation.IgnoreLogin;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.system.dto.SysMenuAddDto;
@@ -129,7 +130,6 @@ public class SysMenuController {
      */
     @PostMapping("/getNavMenuTreeList")
     @Operation(summary = "获取当前用户的导航菜单")
-    @Permission("sys:menu:nav-tree-list")
     public ApiResult<SysNavMenuTreeVo> getNavMenuTreeList() throws Exception {
         List<SysNavMenuTreeVo> list = sysMenuService.getNavMenuTreeList();
         return ApiResult.success(list);

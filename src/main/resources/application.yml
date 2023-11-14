@@ -113,7 +113,7 @@ spring-boot-plus:
     # token过期时间，单位为分钟
     token-expire-minutes: 60
     # 是否校验目标方法权限
-    login-permission: false
+    login-permission: true
     # 排除路径
     exclude-paths:
       - /v3/api-docs/**

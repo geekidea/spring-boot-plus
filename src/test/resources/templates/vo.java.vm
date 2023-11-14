@@ -13,13 +13,13 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * $!{table.comment}VO
+ * $!{cfg.appPrefix}$!{table.comment}VO
  *
  * @author $!{author}
  * @since $!{date}
  */
 @Data
-@Schema(description = "$!{table.comment}查询结果")
+@Schema(description = "$!{cfg.appPrefix}$!{table.comment}查询结果")
 public class $!{cfg.voName} implements Serializable {
 
     private static final long serialVersionUID = 1L;

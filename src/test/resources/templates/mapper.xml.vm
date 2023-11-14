@@ -8,7 +8,7 @@
         where $!{cfg.pkIdColumnName} = #{$!{cfg.pkIdName}}
     </select>
 
-    <select id="get$!{entity}List" parameterType="$!{cfg.queryPath}"
+    <select id="get$!{entity}Page" parameterType="$!{cfg.queryPath}"
             resultType="$!{cfg.voPath}">
         select *
         from $!{table.name}

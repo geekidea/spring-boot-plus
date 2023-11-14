@@ -6,7 +6,7 @@ import $!{cfg.paging};
 import $!{superServiceImplClassPackage};
 import $!{cfg.addDtoPath};
 import $!{cfg.updateDtoPath};
-import $!{package.Entity}.$!{entity};
+import $!{package.Entity}.$!{cfg.uniqueEntityName};
 import $!{package.Mapper}.$!{table.mapperName};
 import $!{cfg.queryPath};
 import $!{package.Service}.$!{table.serviceName};
@@ -22,14 +22,14 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * $!{table.comment} 服务实现类
+ * $!{cfg.appPrefix}$!{table.comment} 服务实现类
  *
  * @author $!{author}
  * @since $!{date}
  */
 @Slf4j
 @Service
-public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{table.mapperName}, $!{entity}> implements $!{table.serviceName} {
+public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{table.mapperName}, $!{cfg.uniqueEntityName}> implements $!{table.serviceName} {
 
     @Autowired
     private $!{table.mapperName} $!{cfg.mapperObjectName};
@@ -37,24 +37,24 @@ public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{tabl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean add$!{entity}($!{cfg.addDtoName} $!{cfg.addDtoObjectName}) throws Exception {
-        $!{entity} $!{cfg.entityObjectName} = new $!{entity}();
-        BeanUtils.copyProperties($!{cfg.addDtoObjectName}, $!{cfg.entityObjectName});
-        return save($!{cfg.entityObjectName});
+        $!{cfg.uniqueEntityName} $!{cfg.uniqueEntityObjectName} = new $!{cfg.uniqueEntityName}();
+        BeanUtils.copyProperties($!{cfg.addDtoObjectName}, $!{cfg.uniqueEntityObjectName});
+        return save($!{cfg.uniqueEntityObjectName});
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean update$!{entity}($!{cfg.updateDtoName} $!{cfg.updateDtoObjectName}) throws Exception {
         Long $!{cfg.pkIdName} = $!{cfg.updateDtoObjectName}.get$!{cfg.pascalPkIdName}();
-        $!{entity} $!{cfg.entityObjectName} = getById($!{cfg.pkIdName});
-        if ($!{cfg.entityObjectName} == null) {
-            throw new BusinessException("$!{table.comment}不存在");
+        $!{cfg.uniqueEntityName} $!{cfg.uniqueEntityObjectName} = getById($!{cfg.pkIdName});
+        if ($!{cfg.uniqueEntityObjectName} == null) {
+            throw new BusinessException("$!{cfg.appPrefix}$!{table.comment}不存在");
         }
-        BeanUtils.copyProperties($!{cfg.updateDtoObjectName}, $!{cfg.entityObjectName});
+        BeanUtils.copyProperties($!{cfg.updateDtoObjectName}, $!{cfg.uniqueEntityObjectName});
     #if($!{cfg.pascalUpdateTimeColumnName})
-        $!{cfg.entityObjectName}.set$!{cfg.pascalUpdateTimeColumnName}(new Date());
+        $!{cfg.uniqueEntityObjectName}.set$!{cfg.pascalUpdateTimeColumnName}(new Date());
     #end
-        return updateById($!{cfg.entityObjectName});
+        return updateById($!{cfg.uniqueEntityObjectName});
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -69,13 +69,13 @@ public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{tabl
     }
 
     @Override
-    public Paging<$!{cfg.voName}> get$!{entity}List($!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception {
+    public Paging<$!{cfg.voName}> get$!{entity}Page($!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception {
         #if($!{cfg.defaultOrderColumnName})
         handlePage($!{cfg.queryObjectName}, OrderByItem.desc("$!{cfg.defaultOrderColumnName}"));
         #else
         handlePage($!{cfg.queryObjectName});
         #end
-        List<$!{cfg.voName}> list = $!{cfg.mapperObjectName}.get$!{entity}List($!{cfg.queryObjectName});
+        List<$!{cfg.voName}> list = $!{cfg.mapperObjectName}.get$!{entity}Page($!{cfg.queryObjectName});
         Paging<$!{cfg.voName}> paging = new Paging<>(list);
         return paging;
     }

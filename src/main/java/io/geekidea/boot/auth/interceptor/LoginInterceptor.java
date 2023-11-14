@@ -57,7 +57,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             LoginVo loginVo = loginRedisVo.getLoginVo();
             List<String> roleCodes = loginVo.getRoleCodes();
             boolean loginPermission = loginProperties.isLoginPermission();
-            if (loginPermission) {
+            boolean admin = LoginUtil.isAdmin();
+            if (!admin && loginPermission) {
                 Permission permission = handlerMethod.getMethodAnnotation(Permission.class);
                 if (permission != null) {
                     // 从redis中获取权限列表

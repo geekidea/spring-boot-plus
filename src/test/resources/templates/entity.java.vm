@@ -9,7 +9,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * $!{table.comment}
+ * $!{cfg.appPrefix}$!{table.comment}
  *
  * @author $!{author}
  * @since $!{date}
@@ -18,7 +18,7 @@ import java.io.Serializable;
 #if($!{table.convert})
 @TableName("$!{table.name}")
 #end
-@Schema(description = "$!{table.comment}")
+@Schema(description = "$!{cfg.appPrefix}$!{table.comment}")
 public class $!{entity} implements Serializable {
 
     private static final long serialVersionUID = 1L;

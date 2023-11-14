@@ -123,7 +123,6 @@ public class SysRoleController {
      */
     @PostMapping("/getSysRoleAllList")
     @Operation(summary = "系统所有角色列表")
-    @Permission("sys:role:all-list")
     public ApiResult<SysRole> getSysRoleAllList() throws Exception {
         List<SysRole> list = sysRoleService.getSysRoleAllList();
         return ApiResult.success(list);

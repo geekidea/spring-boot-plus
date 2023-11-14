@@ -4,21 +4,21 @@ import $!{cfg.paging};
 import $!{superServiceClassPackage};
 import $!{cfg.addDtoPath};
 import $!{cfg.updateDtoPath};
-import $!{package.Entity}.$!{entity};
+import $!{package.Entity}.$!{cfg.uniqueEntityName};
 import $!{cfg.queryPath};
 import $!{cfg.infoVoPath};
 import $!{cfg.voPath};
 
 /**
- * $!{table.comment} 服务接口
+ * $!{cfg.appPrefix}$!{table.comment} 服务接口
  *
  * @author $!{author}
  * @since $!{date}
  */
-public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}> {
+public interface $!{table.serviceName} extends $!{superServiceClass}<$!{cfg.uniqueEntityName}> {
 
     /**
-     * 添加$!{table.comment}
+     * 添加$!{cfg.appPrefix}$!{table.comment}
      *
      * @param $!{cfg.addDtoObjectName}
      * @return
@@ -27,7 +27,7 @@ public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}>
     boolean add$!{entity}($!{cfg.addDtoName} $!{cfg.addDtoObjectName}) throws Exception;
 
     /**
-     * 修改$!{table.comment}
+     * 修改$!{cfg.appPrefix}$!{table.comment}
      *
      * @param $!{cfg.updateDtoObjectName}
      * @return
@@ -36,7 +36,7 @@ public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}>
     boolean update$!{entity}($!{cfg.updateDtoName} $!{cfg.updateDtoObjectName}) throws Exception;
 
     /**
-     * 删除$!{table.comment}
+     * 删除$!{cfg.appPrefix}$!{table.comment}
      *
      * @param $!{cfg.pkIdName}
      * @return
@@ -45,7 +45,7 @@ public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}>
     boolean delete$!{entity}(Long $!{cfg.pkIdName}) throws Exception;
 
     /**
-     * $!{table.comment}详情
+     * $!{cfg.appPrefix}$!{table.comment}详情
      *
      * @param $!{cfg.pkIdName}
      * @return
@@ -54,12 +54,12 @@ public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}>
     $!{cfg.infoVoName} get$!{entity}ById(Long $!{cfg.pkIdName}) throws Exception;
 
     /**
-     * $!{table.comment}分页列表
+     * $!{cfg.appPrefix}$!{table.comment}分页列表
      *
      * @param $!{cfg.queryObjectName}
      * @return
      * @throws Exception
      */
-    Paging<$!{cfg.voName}> get$!{entity}List($!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception;
+    Paging<$!{cfg.voName}> get$!{entity}Page($!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception;
 
 }

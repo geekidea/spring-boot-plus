@@ -32,6 +32,9 @@ public class SysRoleMenu implements Serializable {
     @Schema(description = "菜单id")
     private Long menuId;
 
+    @Schema(description = "是否用户选中 0：否，1：是")
+    private boolean isChoice;
+
     @Schema(description = "创建时间")
     private Date createTime;
 

@@ -9,13 +9,13 @@ import lombok.experimental.Accessors;
 #end
 
 /**
- * $!{table.comment}查询参数
+ * $!{cfg.appPrefix}$!{table.comment}查询参数
  *
  * @author $!{author}
  * @since $!{date}
  */
 @Data
-@Schema(description = "$!{table.comment}查询参数")
+@Schema(description = "$!{cfg.appPrefix}$!{table.comment}查询参数")
 #if($!{entitySerialVersionUID})
 public class $!{cfg.queryName} extends BasePageQuery {
 #else

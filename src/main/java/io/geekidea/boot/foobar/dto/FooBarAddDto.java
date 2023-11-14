@@ -14,7 +14,7 @@ import java.io.Serializable;
  * 添加FooBar参数
  *
  * @author geekidea
- * @since 2023-07-01
+ * @since 2023-11-14
  */
 @Data
 @Schema(description = "添加FooBar参数")

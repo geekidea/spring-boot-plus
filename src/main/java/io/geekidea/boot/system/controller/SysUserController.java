@@ -131,7 +131,6 @@ public class SysUserController {
      */
     @PostMapping("/getProfile")
     @Operation(summary = "获取个人信息")
-    @Permission("sys:user:profile")
     public ApiResult<SysUserInfoVo> getProfile() throws Exception {
         Long userId = LoginUtil.getUserId();
         if (userId == null) {
