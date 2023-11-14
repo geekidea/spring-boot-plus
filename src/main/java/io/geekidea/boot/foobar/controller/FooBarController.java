@@ -1,6 +1,8 @@
 package io.geekidea.boot.foobar.controller;
 
 import io.geekidea.boot.auth.annotation.Permission;
+import io.geekidea.boot.framework.annotation.Log;
+import io.geekidea.boot.framework.enums.SysLogEnum;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.foobar.dto.FooBarAddDto;
@@ -21,7 +23,7 @@ import javax.validation.Valid;
  * FooBar 控制器
  *
  * @author geekidea
- * @since 2023-07-01
+ * @since 2023-11-14
  */
 @Slf4j
 @RestController
@@ -39,6 +41,7 @@ public class FooBarController {
      * @return
      * @throws Exception
      */
+    @Log(value = "添加FooBar", type = SysLogEnum.ADD)
     @PostMapping("/addFooBar")
     @Operation(summary = "添加FooBar")
     @Permission("foo:bar:add")
@@ -54,6 +57,7 @@ public class FooBarController {
      * @return
      * @throws Exception
      */
+    @Log(value = "修改FooBar", type = SysLogEnum.UPDATE)
     @PostMapping("/updateFooBar")
     @Operation(summary = "修改FooBar")
     @Permission("foo:bar:update")
@@ -69,6 +73,7 @@ public class FooBarController {
      * @return
      * @throws Exception
      */
+    @Log(value = "删除FooBar", type = SysLogEnum.DELETE)
     @PostMapping("/deleteFooBar/{id}")
     @Operation(summary = "删除FooBar")
     @Permission("foo:bar:delete")
@@ -84,7 +89,7 @@ public class FooBarController {
      * @return
      * @throws Exception
      */
-    @PostMapping("/getFooBar/{id}")
+    @PostMapping("/getFooBarInfo/{id}")
     @Operation(summary = "FooBar详情")
     @Permission("foo:bar:info")
     public ApiResult<FooBarInfoVo> getFooBar(@PathVariable Long id) throws Exception {
@@ -99,11 +104,11 @@ public class FooBarController {
      * @return
      * @throws Exception
      */
-    @PostMapping("/getFooBarList")
+    @PostMapping("/getFooBarPage")
     @Operation(summary = "FooBar分页列表")
-    @Permission("foo:bar:list")
-    public ApiResult<FooBarVo> getFooBarList(@Valid @RequestBody FooBarQuery fooBarQuery) throws Exception {
-        Paging<FooBarVo> paging = fooBarService.getFooBarList(fooBarQuery);
+    @Permission("foo:bar:page")
+    public ApiResult<FooBarVo> getFooBarPage(@Valid @RequestBody FooBarQuery fooBarQuery) throws Exception {
+        Paging<FooBarVo> paging = fooBarService.getFooBarPage(fooBarQuery);
         return ApiResult.success(paging);
     }
 
