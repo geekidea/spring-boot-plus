@@ -1,17 +1,13 @@
 package io.geekidea.boot.config;
 
-import io.geekidea.boot.auth.interceptor.LoginInterceptor;
-import io.geekidea.boot.auth.interceptor.RefreshTokenInterceptor;
-import io.geekidea.boot.config.properties.FileProperties;
-import io.geekidea.boot.config.properties.LoginProperties;
-import io.geekidea.boot.config.properties.XssProperties;
+import io.geekidea.boot.auth.interceptor.*;
+import io.geekidea.boot.config.properties.*;
 import io.geekidea.boot.framework.filter.JsonRequestBodyFilter;
 import io.geekidea.boot.framework.filter.TraceIdLogFilter;
 import io.geekidea.boot.framework.interceptor.PageHelperClearInterceptor;
 import io.geekidea.boot.framework.xss.XssFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,11 +25,16 @@ import java.util.List;
  **/
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(FileProperties.class)
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private LoginProperties loginProperties;
+
+    @Autowired
+    private LoginAdminProperties loginAdminProperties;
+
+    @Autowired
+    private LoginAppProperties loginAppProperties;
 
     @Autowired
     private FileProperties fileProperties;
@@ -42,8 +43,23 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private XssProperties xssProperties;
 
     @Bean
+    public ExcludePathInterceptor excludePathInterceptor() {
+        return new ExcludePathInterceptor();
+    }
+
+    @Bean
+    public TokenInterceptor tokenInterceptor() {
+        return new TokenInterceptor();
+    }
+
+    @Bean
     public LoginInterceptor loginInterceptor() {
         return new LoginInterceptor();
+    }
+
+    @Bean
+    public LoginAppInterceptor loginAppInterceptor() {
+        return new LoginAppInterceptor();
     }
 
     @Bean
@@ -103,15 +119,30 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        boolean enableLoginInterceptor = loginProperties.isEnable();
-        if (enableLoginInterceptor) {
+        // 加入的顺序就是拦截器执行的顺序
+        registry.addInterceptor(excludePathInterceptor());
+        // token拦截器
+        registry.addInterceptor(tokenInterceptor()).excludePathPatterns("/admin/login", "/app/login");
+        // 管理后台登录拦截器配置
+        boolean enableAdminInterceptor = loginAdminProperties.isEnable();
+        if (enableAdminInterceptor) {
             List<String> excludePaths = loginProperties.getExcludePaths();
-            // 登录验证拦截器
-            registry.addInterceptor(loginInterceptor()).excludePathPatterns(excludePaths);
-            // 刷新token拦截器
-            registry.addInterceptor(refreshTokenInterceptor());
-
+            List<String> adminExcludePaths = loginAdminProperties.getExcludePaths();
+            adminExcludePaths.addAll(excludePaths);
+            registry.addInterceptor(loginInterceptor())
+                    .addPathPatterns(loginAdminProperties.getIncludePaths())
+                    .excludePathPatterns(adminExcludePaths);
         }
+        // 移动端端登录拦截器配置
+        boolean enableAppInterceptor = loginAppProperties.isEnable();
+        if (enableAppInterceptor) {
+            List<String> appIncludePaths = loginAppProperties.getIncludePaths();
+            registry.addInterceptor(loginAppInterceptor()).addPathPatterns(appIncludePaths);
+        }
+        // 刷新token拦截器
+        registry.addInterceptor(refreshTokenInterceptor());
+
+        // TODO 公共请求拦截器，排除/admin和/app开头的所有请求
         // 分页缓存清除拦截器
         registry.addInterceptor(pageHelperClearInterceptor());
     }

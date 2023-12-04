@@ -1,6 +1,7 @@
 package io.geekidea.boot.generator;
 
 import io.geekidea.boot.generator.config.GeneratorConfig;
+import io.geekidea.boot.generator.enums.GeneratorType;
 import io.geekidea.boot.generator.handler.GenerateHandler;
 
 /**
@@ -15,16 +16,18 @@ public class Generator {
         GeneratorConfig config = new GeneratorConfig();
         // 项目信息配置
         config.setParentPackage("io.geekidea.boot")
-                .setModuleName("foobar")
+                .setModuleName("demo")
                 .setAuthor("geekidea");
         // 表名称和需要去掉的表前缀
-        config.setTableNames("foo_bar")
+        config.setTableNames("demo")
                 .setTablePrefix("");
-        // 是否覆盖已有文件
-        config.setFileOverride(true);
+        // 设置生成的类型
+        config.setGeneratorType(GeneratorType.FULL);
+        // 是否生成APP端代码
+        config.setGeneratorApp(true);
         // 是否只更新实体类
         config.setOnlyOverrideEntity(false);
-
+        // 代码生成
         GenerateHandler handler = new GenerateHandler();
         handler.generator(config);
     }

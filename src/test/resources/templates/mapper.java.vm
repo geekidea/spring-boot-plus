@@ -1,16 +1,25 @@
 package $!{package.Mapper};
 
+#if($!{cfg.generatorType} == 'BASIC')
+import $!{superMapperClassPackage};
+import $!{package.Entity}.$!{cfg.uniqueEntityName};
+import org.apache.ibatis.annotations.Mapper;
+#elseif($!{cfg.generatorType} == 'FULL')
 import $!{superMapperClassPackage};
 import $!{package.Entity}.$!{cfg.uniqueEntityName};
 import $!{cfg.queryPath};
-import $!{cfg.infoVoPath};
 import $!{cfg.voPath};
+#if($!{cfg.generatorApi})
+import $!{cfg.appQueryPath};
+import $!{cfg.appVoPath};
+#end
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+#end
 
 /**
- * $!{cfg.appPrefix}$!{table.comment} Mapper 接口
+ * $!{table.comment} Mapper 接口
  *
  * @author $!{author}
  * @since $!{date}
@@ -18,20 +27,40 @@ import java.util.List;
 @Mapper
 public interface $!{table.mapperName} extends $!{superMapperClass}<$!{cfg.uniqueEntityName}> {
 
+#if($!{cfg.generatorType} == 'FULL')
     /**
-     * $!{cfg.appPrefix}$!{table.comment}详情
+     * $!{table.comment}详情
      *
      * @param $!{cfg.pkIdName}
      * @return
      */
-    $!{cfg.infoVoName} get$!{entity}ById(Long $!{cfg.pkIdName});
+    $!{cfg.voName} get$!{entity}ById(Long $!{cfg.pkIdName});
 
     /**
-     * $!{cfg.appPrefix}$!{table.comment}分页列表
+     * $!{table.comment}分页列表
      *
-     * @param $!{cfg.queryObjectName}
+     * @param query
      * @return
      */
-    List<$!{cfg.voName}> get$!{entity}Page($!{cfg.queryName} $!{cfg.queryObjectName});
+    List<$!{cfg.voName}> get$!{entity}Page($!{cfg.queryName} query);
 
+#if($!{cfg.generatorApi})
+    /**
+     * $!{cfg.appTableComment}详情
+     *
+     * @param $!{cfg.pkIdName}
+     * @return
+     */
+    $!{cfg.appVoName} get$!{cfg.appEntityName}ById(Long $!{cfg.pkIdName});
+
+    /**
+     * $!{cfg.appTableComment}分页列表
+     *
+     * @param query
+     * @return
+     */
+    List<$!{cfg.appVoName}> get$!{cfg.appEntityName}Page($!{cfg.appQueryName} query);
+
+#end
+#end
 }

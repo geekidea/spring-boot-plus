@@ -1,25 +1,27 @@
 package $!{cfg.voPackagePath};
 
-#if($!{cfg.existsBigDecimalType})
-import java.math.BigDecimal;
-#end
-#if($!{cfg.existsDateType})
-import java.util.Date;
-#end
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+#if($!{cfg.existsBigDecimalType})
+import java.math.BigDecimal;
+#end
 import java.io.Serializable;
+#if($!{cfg.existsDateType})
+import java.util.Date;
+#end
+#if($!{cfg.existsTimeType})
+import java.sql.Time;
+#end
 
 /**
- * $!{cfg.appPrefix}$!{table.comment}VO
+ * $!{table.comment}VO
  *
  * @author $!{author}
  * @since $!{date}
  */
 @Data
-@Schema(description = "$!{cfg.appPrefix}$!{table.comment}查询结果")
+@Schema(description = "$!{table.comment}查询结果")
 public class $!{cfg.voName} implements Serializable {
 
     private static final long serialVersionUID = 1L;

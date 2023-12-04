@@ -32,9 +32,6 @@ public class SysRole implements Serializable {
     @Schema(description = "角色唯一编码")
     private String code;
 
-    @Schema(description = "角色状态，0：禁用，1：启用")
-    private Boolean status;
-
     @Schema(description = "角色备注")
     private String remark;
 

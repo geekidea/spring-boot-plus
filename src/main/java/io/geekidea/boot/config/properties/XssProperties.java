@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2023/7/9
  **/
 @Data
-@ConfigurationProperties(prefix = "spring-boot-plus.xss")
+@ConfigurationProperties(prefix = "xss")
 public class XssProperties {
 
     /**

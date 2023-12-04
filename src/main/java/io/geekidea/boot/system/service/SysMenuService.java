@@ -1,12 +1,11 @@
 package io.geekidea.boot.system.service;
 
-import io.geekidea.boot.framework.service.BaseService;
-import io.geekidea.boot.system.dto.SysMenuAddDto;
-import io.geekidea.boot.system.dto.SysMenuUpdateDto;
+import com.baomidou.mybatisplus.extension.service.IService;
+import io.geekidea.boot.system.dto.SysMenuDto;
 import io.geekidea.boot.system.entity.SysMenu;
 import io.geekidea.boot.system.query.SysMenuQuery;
-import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
+import io.geekidea.boot.system.vo.SysMenuVo;
 import io.geekidea.boot.system.vo.SysNavMenuTreeVo;
 
 import java.util.List;
@@ -17,25 +16,25 @@ import java.util.List;
  * @author geekidea
  * @since 2022-12-26
  */
-public interface SysMenuService extends BaseService<SysMenu> {
+public interface SysMenuService extends IService<SysMenu> {
 
     /**
      * 添加系统菜单
      *
-     * @param sysMenuAddDto
+     * @param sysMenuDto
      * @return
      * @throws Exception
      */
-    boolean addSysMenu(SysMenuAddDto sysMenuAddDto) throws Exception;
+    boolean addSysMenu(SysMenuDto sysMenuDto) throws Exception;
 
     /**
      * 修改系统菜单
      *
-     * @param sysMenuUpdateDto
+     * @param sysMenuDto
      * @return
      * @throws Exception
      */
-    boolean updateSysMenu(SysMenuUpdateDto sysMenuUpdateDto) throws Exception;
+    boolean updateSysMenu(SysMenuDto sysMenuDto) throws Exception;
 
     /**
      * 删除系统菜单
@@ -53,7 +52,7 @@ public interface SysMenuService extends BaseService<SysMenu> {
      * @return
      * @throws Exception
      */
-    SysMenuInfoVo getSysMenuById(Long id) throws Exception;
+    SysMenuVo getSysMenuById(Long id) throws Exception;
 
     /**
      * 获取所有的系统菜单树形列表
@@ -82,6 +81,7 @@ public interface SysMenuService extends BaseService<SysMenu> {
 
     /**
      * 获取角色权限ID集合
+     *
      * @param roleId
      * @return
      * @throws Exception

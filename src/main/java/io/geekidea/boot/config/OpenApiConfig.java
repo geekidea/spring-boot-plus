@@ -1,5 +1,6 @@
 package io.geekidea.boot.config;
 
+import io.geekidea.boot.common.constant.CommonConstant;
 import io.geekidea.boot.config.properties.OpenApiProperties;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -10,7 +11,6 @@ import io.swagger.v3.oas.models.parameters.HeaderParameter;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,13 +19,18 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022/10/27
  **/
 @Configuration
-@EnableConfigurationProperties(OpenApiProperties.class)
 public class OpenApiConfig {
 
     private static final String TOKEN = "token";
 
     @Autowired
     private OpenApiProperties openApiProperties;
+
+    /**
+     * token请求头参数
+     */
+    private Parameter tokenParameter = new HeaderParameter().name(TOKEN).schema(new StringSchema()._default("").name(TOKEN));
+
 
     @Bean
     public OpenAPI openApi() {
@@ -40,13 +45,42 @@ public class OpenApiConfig {
     }
 
     @Bean
-    public GroupedOpenApi systemApi() {
-        String[] packagedToMatch = {"io.geekidea.boot"};
-        Parameter tokenParameter = new HeaderParameter().name(TOKEN).schema(new StringSchema()._default("").name(TOKEN));
-        Parameter customParameter = new HeaderParameter().name("custom").schema(new StringSchema()._default("").name(""));
+    public GroupedOpenApi authApi() {
+        String[] packagedToMatch = {CommonConstant.AUTH_PACKAGE_NAME};
+        return api("1.登录授权接口文档", packagedToMatch);
+    }
+
+    @Bean
+    public GroupedOpenApi adminApi() {
+        String[] packagedToMatch = {CommonConstant.SYSTEM_PACKAGE_NAME};
+        return api("2.系统管理接口文档", packagedToMatch);
+    }
+
+    @Bean
+    public GroupedOpenApi commonApi() {
+        String[] packagedToMatch = {CommonConstant.COMMON_PACKAGE_NAME};
+        return api("3.公共服务接口文档", packagedToMatch);
+    }
+
+    @Bean
+    public GroupedOpenApi appApi() {
+        String[] packagedToMatch = {CommonConstant.DEMO_PACKAGE_NAME};
+        return api("4.Demo接口文档", packagedToMatch);
+    }
+
+    /**
+     * 配置接口
+     *
+     * @param group
+     * @param packagedToMatch
+     * @return
+     */
+    private GroupedOpenApi api(String group, String[] packagedToMatch) {
         return GroupedOpenApi.builder()
-                .group("spring-boot-plus doc")
-                .addOperationCustomizer((operation, handlerMethod) -> operation.addParametersItem(tokenParameter).addParametersItem(customParameter))
+                .group(group)
+                .addOperationCustomizer((operation, handlerMethod) -> operation
+                        .addParametersItem(tokenParameter)
+                )
                 .pathsToMatch("/**")
                 .packagesToScan(packagedToMatch).build();
     }

@@ -1,42 +1,51 @@
 package $!{package.Service};
 
-import $!{cfg.paging};
+#if($!{cfg.generatorType} == 'BASIC')
 import $!{superServiceClassPackage};
-import $!{cfg.addDtoPath};
-import $!{cfg.updateDtoPath};
+import $!{package.Entity}.$!{cfg.uniqueEntityName};
+#elseif($!{cfg.generatorType} == 'FULL')
+import $!{superServiceClassPackage};
+import $!{cfg.paging};
+import $!{cfg.dtoPath};
 import $!{package.Entity}.$!{cfg.uniqueEntityName};
 import $!{cfg.queryPath};
-import $!{cfg.infoVoPath};
 import $!{cfg.voPath};
+#if($!{cfg.generatorApi})
+import $!{cfg.appQueryPath};
+import $!{cfg.appVoPath};
+#end
+#end
+
 
 /**
- * $!{cfg.appPrefix}$!{table.comment} 服务接口
+ * $!{table.comment} 服务接口
  *
  * @author $!{author}
  * @since $!{date}
  */
 public interface $!{table.serviceName} extends $!{superServiceClass}<$!{cfg.uniqueEntityName}> {
 
+#if($!{cfg.generatorType} == 'FULL')
     /**
-     * 添加$!{cfg.appPrefix}$!{table.comment}
+     * 添加$!{table.comment}
      *
-     * @param $!{cfg.addDtoObjectName}
+     * @param $!{cfg.dtoObjectName}
      * @return
      * @throws Exception
      */
-    boolean add$!{entity}($!{cfg.addDtoName} $!{cfg.addDtoObjectName}) throws Exception;
+    boolean add$!{entity}($!{cfg.dtoName} $!{cfg.dtoObjectName}) throws Exception;
 
     /**
-     * 修改$!{cfg.appPrefix}$!{table.comment}
+     * 修改$!{table.comment}
      *
-     * @param $!{cfg.updateDtoObjectName}
+     * @param $!{cfg.dtoObjectName}
      * @return
      * @throws Exception
      */
-    boolean update$!{entity}($!{cfg.updateDtoName} $!{cfg.updateDtoObjectName}) throws Exception;
+    boolean update$!{entity}($!{cfg.dtoName} $!{cfg.dtoObjectName}) throws Exception;
 
     /**
-     * 删除$!{cfg.appPrefix}$!{table.comment}
+     * 删除$!{table.comment}
      *
      * @param $!{cfg.pkIdName}
      * @return
@@ -45,21 +54,42 @@ public interface $!{table.serviceName} extends $!{superServiceClass}<$!{cfg.uniq
     boolean delete$!{entity}(Long $!{cfg.pkIdName}) throws Exception;
 
     /**
-     * $!{cfg.appPrefix}$!{table.comment}详情
+     * $!{table.comment}详情
      *
      * @param $!{cfg.pkIdName}
      * @return
      * @throws Exception
      */
-    $!{cfg.infoVoName} get$!{entity}ById(Long $!{cfg.pkIdName}) throws Exception;
+    $!{cfg.voName} get$!{entity}ById(Long $!{cfg.pkIdName}) throws Exception;
 
     /**
-     * $!{cfg.appPrefix}$!{table.comment}分页列表
+     * $!{table.comment}分页列表
      *
-     * @param $!{cfg.queryObjectName}
+     * @param query
      * @return
      * @throws Exception
      */
-    Paging<$!{cfg.voName}> get$!{entity}Page($!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception;
+    Paging<$!{cfg.voName}> get$!{entity}Page($!{cfg.queryName} query) throws Exception;
 
+#if($!{cfg.generatorApi})
+    /**
+     * $!{cfg.appTableComment}详情
+     *
+     * @param $!{cfg.pkIdName}
+     * @return
+     * @throws Exception
+     */
+    $!{cfg.appVoName} get$!{cfg.appEntityName}ById(Long $!{cfg.pkIdName}) throws Exception;
+
+    /**
+     * $!{cfg.appTableComment}分页列表
+     *
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    Paging<$!{cfg.appVoName}> get$!{cfg.appEntityName}Page($!{cfg.appQueryName} query) throws Exception;
+
+#end
+#end
 }

@@ -1,14 +1,14 @@
 package io.geekidea.boot.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.boot.framework.page.OrderByItem;
 import io.geekidea.boot.framework.page.Paging;
-import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
 import io.geekidea.boot.system.entity.SysLog;
 import io.geekidea.boot.system.mapper.SysLogMapper;
 import io.geekidea.boot.system.query.SysLogQuery;
 import io.geekidea.boot.system.service.SysLogService;
-import io.geekidea.boot.system.vo.SysLogInfoVo;
 import io.geekidea.boot.system.vo.SysLogVo;
+import io.geekidea.boot.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,20 +23,20 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class SysLogServiceImpl extends BaseServiceImpl<SysLogMapper, SysLog> implements SysLogService {
+public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
 
     @Autowired
     private SysLogMapper sysLogMapper;
 
     @Override
-    public SysLogInfoVo getSysLogById(Long id) throws Exception {
+    public SysLogVo getSysLogById(Long id) throws Exception {
         return sysLogMapper.getSysLogById(id);
     }
 
     @Override
-    public Paging<SysLogVo> getSysLogList(SysLogQuery sysLogQuery) throws Exception {
-        handlePage(sysLogQuery, OrderByItem.desc("id"));
-        List<SysLogVo> list = sysLogMapper.getSysLogList(sysLogQuery);
+    public Paging<SysLogVo> getSysLogPage(SysLogQuery sysLogQuery) throws Exception {
+        PagingUtil.handlePage(sysLogQuery, OrderByItem.desc("id"));
+        List<SysLogVo> list = sysLogMapper.getSysLogPage(sysLogQuery);
         Paging<SysLogVo> paging = new Paging<>(list);
         return paging;
     }

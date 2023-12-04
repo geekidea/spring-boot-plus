@@ -1,15 +1,13 @@
 package io.geekidea.boot.system.controller;
 
-import io.geekidea.boot.auth.annotation.IgnoreLogin;
-import io.geekidea.boot.auth.annotation.Permission;
-import io.geekidea.boot.framework.response.ApiResult;
-import io.geekidea.boot.system.dto.SysMenuAddDto;
-import io.geekidea.boot.system.dto.SysMenuUpdateDto;
+import io.geekidea.boot.system.dto.SysMenuDto;
 import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.service.SysMenuService;
-import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
+import io.geekidea.boot.system.vo.SysMenuVo;
 import io.geekidea.boot.system.vo.SysNavMenuTreeVo;
+import io.geekidea.boot.auth.annotation.Permission;
+import io.geekidea.boot.framework.response.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +25,8 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/sysMenu")
 @Tag(name = "系统菜单")
+@RequestMapping("/admin/sysMenu")
 public class SysMenuController {
 
     @Autowired
@@ -37,30 +35,30 @@ public class SysMenuController {
     /**
      * 添加系统菜单
      *
-     * @param sysMenuAddDto
+     * @param sysMenuDto
      * @return
      * @throws Exception
      */
     @PostMapping("/addSysMenu")
     @Operation(summary = "添加系统菜单")
     @Permission("sys:menu:add")
-    public ApiResult addSysMenu(@Valid @RequestBody SysMenuAddDto sysMenuAddDto) throws Exception {
-        boolean flag = sysMenuService.addSysMenu(sysMenuAddDto);
+    public ApiResult addSysMenu(@Valid @RequestBody SysMenuDto sysMenuDto) throws Exception {
+        boolean flag = sysMenuService.addSysMenu(sysMenuDto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改系统菜单
      *
-     * @param sysMenuUpdateDto
+     * @param sysMenuDto
      * @return
      * @throws Exception
      */
     @PostMapping("/updateSysMenu")
     @Operation(summary = "修改系统菜单")
     @Permission("sys:menu:update")
-    public ApiResult updateSysMenu(@Valid @RequestBody SysMenuUpdateDto sysMenuUpdateDto) throws Exception {
-        boolean flag = sysMenuService.updateSysMenu(sysMenuUpdateDto);
+    public ApiResult updateSysMenu(@Valid @RequestBody SysMenuDto sysMenuDto) throws Exception {
+        boolean flag = sysMenuService.updateSysMenu(sysMenuDto);
         return ApiResult.result(flag);
     }
 
@@ -89,9 +87,9 @@ public class SysMenuController {
     @PostMapping("/getSysMenu/{id}")
     @Operation(summary = "系统菜单详情")
     @Permission("sys:menu:info")
-    public ApiResult<SysMenuInfoVo> getSysMenu(@PathVariable Long id) throws Exception {
-        SysMenuInfoVo sysMenuInfoVo = sysMenuService.getSysMenuById(id);
-        return ApiResult.success(sysMenuInfoVo);
+    public ApiResult<SysMenuVo> getSysMenu(@PathVariable Long id) throws Exception {
+        SysMenuVo sysMenuVo = sysMenuService.getSysMenuById(id);
+        return ApiResult.success(sysMenuVo);
     }
 
     /**

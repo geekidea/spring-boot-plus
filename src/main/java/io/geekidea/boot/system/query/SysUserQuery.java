@@ -26,9 +26,6 @@ public class SysUserQuery extends BasePageQuery {
     @Schema(description = "角色ID")
     private Long roleId;
 
-    @Schema(description = "部门ID")
-    private Long deptId;
-
     @Schema(description = "手机号码")
     private String phone;
 

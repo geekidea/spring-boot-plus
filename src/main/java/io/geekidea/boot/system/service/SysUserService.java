@@ -1,11 +1,13 @@
 package io.geekidea.boot.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import io.geekidea.boot.framework.page.Paging;
-import io.geekidea.boot.framework.service.BaseService;
-import io.geekidea.boot.system.dto.*;
+import io.geekidea.boot.system.dto.SysUserDto;
+import io.geekidea.boot.system.dto.SysUserResetPasswordDto;
+import io.geekidea.boot.system.dto.SysUserUpdatePasswordDto;
+import io.geekidea.boot.system.dto.SysUserUpdateProfileDto;
 import io.geekidea.boot.system.entity.SysUser;
 import io.geekidea.boot.system.query.SysUserQuery;
-import io.geekidea.boot.system.vo.SysUserInfoVo;
 import io.geekidea.boot.system.vo.SysUserVo;
 
 /**
@@ -14,25 +16,25 @@ import io.geekidea.boot.system.vo.SysUserVo;
  * @author geekidea
  * @since 2022-12-26
  */
-public interface SysUserService extends BaseService<SysUser> {
+public interface SysUserService extends IService<SysUser> {
 
     /**
      * 添加系统用户
      *
-     * @param sysUserAddDto
+     * @param sysUserDto
      * @return
      * @throws Exception
      */
-    boolean addSysUser(SysUserAddDto sysUserAddDto) throws Exception;
+    boolean addSysUser(SysUserDto sysUserDto) throws Exception;
 
     /**
      * 修改系统用户
      *
-     * @param sysUserUpdateDto
+     * @param sysUserDto
      * @return
      * @throws Exception
      */
-    boolean updateSysUser(SysUserUpdateDto sysUserUpdateDto) throws Exception;
+    boolean updateSysUser(SysUserDto sysUserDto) throws Exception;
 
     /**
      * 删除系统用户
@@ -50,7 +52,7 @@ public interface SysUserService extends BaseService<SysUser> {
      * @return
      * @throws Exception
      */
-    SysUserInfoVo getSysUserById(Long id) throws Exception;
+    SysUserVo getSysUserById(Long id) throws Exception;
 
     /**
      * 系统用户分页列表
@@ -59,7 +61,7 @@ public interface SysUserService extends BaseService<SysUser> {
      * @return
      * @throws Exception
      */
-    Paging<SysUserVo> getSysUserList(SysUserQuery sysUserQuery) throws Exception;
+    Paging<SysUserVo> getSysUserPage(SysUserQuery sysUserQuery) throws Exception;
 
     /**
      * 重置系统用户密码

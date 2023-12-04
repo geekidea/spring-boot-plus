@@ -1,7 +1,7 @@
 package io.geekidea.boot.generator.handler;
 
 import cn.hutool.core.date.DateUtil;
-import io.geekidea.boot.framework.constant.CommonConstant;
+import io.geekidea.boot.common.constant.CommonConstant;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.generator.config.SimpleGeneratorConfig;
 import lombok.extern.slf4j.Slf4j;

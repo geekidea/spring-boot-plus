@@ -1,6 +1,6 @@
 package io.geekidea.boot.config;
 
-import io.geekidea.boot.config.properties.XssProperties;
+import io.geekidea.boot.config.properties.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +9,17 @@ import org.springframework.context.annotation.Configuration;
  * @date 2023/7/9
  **/
 @Configuration
-@EnableConfigurationProperties(XssProperties.class)
+@EnableConfigurationProperties({
+        BootProperties.class,
+        LoginProperties.class,
+        LoginAdminProperties.class,
+        LoginAppProperties.class,
+        FileProperties.class,
+        OpenApiProperties.class,
+        XssProperties.class,
+        WxMpProperties.class,
+        OssProperties.class
+})
 public class PropertiesConfig {
 
 }

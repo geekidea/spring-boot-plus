@@ -1,6 +1,6 @@
 package io.geekidea.boot.system.service;
 
-import io.geekidea.boot.framework.service.BaseService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import io.geekidea.boot.system.entity.SysRoleMenu;
 
 /**
@@ -9,7 +9,7 @@ import io.geekidea.boot.system.entity.SysRoleMenu;
  * @author geekidea
  * @since 2022-12-26
  */
-public interface SysRoleMenuService extends BaseService<SysRoleMenu> {
+public interface SysRoleMenuService extends IService<SysRoleMenu> {
 
     /**
      * 根据角色ID删除角色权限关联关系

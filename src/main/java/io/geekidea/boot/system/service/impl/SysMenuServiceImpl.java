@@ -1,18 +1,17 @@
 package io.geekidea.boot.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.framework.exception.BusinessException;
-import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
-import io.geekidea.boot.framework.util.ObjectValueUtil;
-import io.geekidea.boot.system.dto.SysMenuAddDto;
-import io.geekidea.boot.system.dto.SysMenuUpdateDto;
+import io.geekidea.boot.system.dto.SysMenuDto;
 import io.geekidea.boot.system.entity.SysMenu;
 import io.geekidea.boot.system.mapper.SysMenuMapper;
 import io.geekidea.boot.system.query.SysMenuQuery;
 import io.geekidea.boot.system.service.SysMenuService;
-import io.geekidea.boot.system.vo.SysMenuInfoVo;
 import io.geekidea.boot.system.vo.SysMenuTreeVo;
+import io.geekidea.boot.system.vo.SysMenuVo;
 import io.geekidea.boot.system.vo.SysNavMenuTreeVo;
+import io.geekidea.boot.util.ObjectValueUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -32,28 +31,28 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
+public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
 
     @Autowired
     private SysMenuMapper sysMenuMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addSysMenu(SysMenuAddDto sysMenuAddDto) throws Exception {
+    public boolean addSysMenu(SysMenuDto sysMenuDto) throws Exception {
         SysMenu sysMenu = new SysMenu();
-        BeanUtils.copyProperties(sysMenuAddDto, sysMenu);
+        BeanUtils.copyProperties(sysMenuDto, sysMenu);
         return save(sysMenu);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateSysMenu(SysMenuUpdateDto sysMenuUpdateDto) throws Exception {
-        Long id = sysMenuUpdateDto.getId();
+    public boolean updateSysMenu(SysMenuDto sysMenuDto) throws Exception {
+        Long id = sysMenuDto.getId();
         SysMenu sysMenu = getById(id);
         if (sysMenu == null) {
             throw new BusinessException("系统菜单不存在");
         }
-        BeanUtils.copyProperties(sysMenuUpdateDto, sysMenu);
+        BeanUtils.copyProperties(sysMenuDto, sysMenu);
         sysMenu.setUpdateTime(new Date());
         return updateById(sysMenu);
     }
@@ -65,7 +64,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> 
     }
 
     @Override
-    public SysMenuInfoVo getSysMenuById(Long id) throws Exception {
+    public SysMenuVo getSysMenuById(Long id) throws Exception {
         return sysMenuMapper.getSysMenuById(id);
     }
 

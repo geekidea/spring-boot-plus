@@ -2,7 +2,7 @@ package io.geekidea.boot.framework.response;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.geekidea.boot.framework.constant.CommonConstant;
+import io.geekidea.boot.common.constant.CommonConstant;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="$!{package.Mapper}.$!{table.mapperName}">
 
-    <select id="get$!{entity}ById" resultType="$!{cfg.infoVoPath}">
+#if($!{cfg.generatorType} == 'FULL')
+    <select id="get$!{entity}ById" resultType="$!{cfg.voPath}">
         select *
         from $!{table.name}
         where $!{cfg.pkIdColumnName} = #{$!{cfg.pkIdName}}
@@ -14,4 +15,19 @@
         from $!{table.name}
     </select>
 
+#if($!{cfg.generatorApi})
+    <select id="get$!{cfg.appEntityName}ById" resultType="$!{cfg.appVoPath}">
+        select *
+        from $!{table.name}
+        where $!{cfg.pkIdColumnName} = #{$!{cfg.pkIdName}}
+    </select>
+
+    <select id="get$!{cfg.appEntityName}Page" parameterType="$!{cfg.appQueryPath}"
+            resultType="$!{cfg.appVoPath}">
+        select *
+        from $!{table.name}
+    </select>
+
+#end
+#end
 </mapper>

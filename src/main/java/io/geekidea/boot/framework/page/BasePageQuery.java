@@ -1,6 +1,6 @@
 package io.geekidea.boot.framework.page;
 
-import io.geekidea.boot.framework.constant.CommonConstant;
+import io.geekidea.boot.common.constant.CommonConstant;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -20,6 +20,9 @@ public abstract class BasePageQuery extends BaseOrderQuery {
 
     @Schema(description = "页大小,默认为10", example = "10")
     private Integer pageSize = CommonConstant.DEFAULT_PAGE_SIZE;
+
+    @Schema(description = "关键字搜索")
+    private String keyword;
 
     public Integer getPageIndex() {
         if (pageIndex == null || pageIndex <= 0) {

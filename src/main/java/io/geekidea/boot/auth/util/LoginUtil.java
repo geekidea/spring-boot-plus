@@ -1,14 +1,11 @@
 package io.geekidea.boot.auth.util;
 
-import io.geekidea.boot.auth.constant.LoginConstant;
 import io.geekidea.boot.auth.service.LoginRedisService;
 import io.geekidea.boot.auth.vo.LoginRedisVo;
 import io.geekidea.boot.auth.vo.LoginVo;
-import io.geekidea.boot.config.properties.LoginProperties;
 import io.geekidea.boot.framework.exception.BusinessException;
-import org.apache.commons.collections4.CollectionUtils;
+import io.geekidea.boot.util.TokenUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,7 +15,6 @@ import java.util.List;
  * @date 2022/6/26
  **/
 @Component
-@EnableConfigurationProperties(LoginProperties.class)
 public class LoginUtil {
 
     private static LoginRedisService loginRedisService;
@@ -37,6 +33,7 @@ public class LoginUtil {
         if (StringUtils.isBlank(token)) {
             return null;
         }
+        TokenUtil.checkAdminToken(token);
         LoginRedisVo loginRedisVo = loginRedisService.getLoginRedisVo(token);
         return loginRedisVo;
     }
@@ -78,7 +75,8 @@ public class LoginUtil {
         if (StringUtils.isBlank(token)) {
             return null;
         }
-        Long userId = loginRedisService.getLoginUserId(token);
+        LoginVo loginVo = getLoginVo();
+        Long userId = loginVo.getUserId();
         return userId;
     }
 
@@ -100,23 +98,10 @@ public class LoginUtil {
      *
      * @return
      */
-    public static List<Long> getRoleIds() throws Exception {
+    public static Long getRoleId() throws Exception {
         LoginVo loginVo = getLoginVo();
         if (loginVo != null) {
-            return loginVo.getRoleIds();
-        }
-        return null;
-    }
-
-    /**
-     * 获取登录部门ID
-     *
-     * @return
-     */
-    public static Long getDeptId() throws Exception {
-        LoginVo loginVo = getLoginVo();
-        if (loginVo != null) {
-            return loginVo.getDeptId();
+            return loginVo.getRoleId();
         }
         return null;
     }
@@ -128,23 +113,15 @@ public class LoginUtil {
      * @throws Exception
      */
     public static boolean isAdmin() throws Exception {
-        List<Long> roleIds = getRoleIds();
-        boolean isAdmin = false;
-        if (CollectionUtils.isNotEmpty(roleIds)) {
-            for (Long roleId : roleIds) {
-                if (LoginConstant.ADMIN_ROLE_ID_LIST.contains(roleId)) {
-                    isAdmin = true;
-                    break;
-                }
-            }
-        }
-        return isAdmin;
+        LoginVo loginVo = getLoginVo();
+        boolean admin = loginVo.isAdmin();
+        return admin;
     }
 
     /**
-     * 断言是否是管理员
+     * 检查是否是管理员
      */
-    public static void assertAdmin() throws Exception {
+    public static void checkAdmin() throws Exception {
         boolean admin = isAdmin();
         if (!admin) {
             throw new BusinessException("不是管理员，无权限");

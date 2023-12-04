@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 @Schema(description = "分页排序")
 public class OrderByItem {
 
-    private static final String EMPTY = "";
     private static final String DESC = "desc";
 
     @Schema(description = "排序列名称")
@@ -21,29 +20,36 @@ public class OrderByItem {
     @Schema(description = "排序方式 true：升序，false：降序")
     private boolean asc = true;
 
+    public static String orderBy(String column, Boolean asc) {
+        if (asc == null) {
+            asc = true;
+        }
+        if (asc) {
+            return asc(column);
+        } else {
+            return desc(column);
+        }
+    }
+
     public static String asc(String column) {
         if (StringUtils.isBlank(column)) {
-            return EMPTY;
+            return null;
         }
         return column;
     }
 
     public static String desc(String column) {
         if (StringUtils.isBlank(column)) {
-            return EMPTY;
+            return null;
         }
         return column + " " + DESC;
     }
 
-    public String getOrderBy() {
-        if (StringUtils.isNotBlank(column)) {
-            if (asc) {
-                return asc(column);
-            } else {
-                return desc(column);
-            }
+    public static String orderBy(String orderBy) {
+        if (StringUtils.isBlank(orderBy)) {
+            return null;
         }
-        return EMPTY;
+        return orderBy;
     }
 
 }

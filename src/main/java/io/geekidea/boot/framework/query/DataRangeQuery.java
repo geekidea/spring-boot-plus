@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.Null;
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * 数据范围查询
@@ -14,26 +14,40 @@ import java.util.List;
  **/
 @Data
 @Schema(description = "数据范围查询")
-public class DataRangeQuery {
+public class DataRangeQuery implements Serializable {
 
-    @Schema(description = "登录用户ID", hidden = true)
+    private static final long serialVersionUID = 43552489665526540L;
+
+    @Schema(description = "管理后台或APP登录用户ID", hidden = true)
+    @Null(message = "非法参数")
+    private Long loginCommonUserId;
+
+    @Schema(description = "是否是管理后台的管理员", hidden = true)
+    @Null(message = "非法参数")
+    private Boolean loginAdmin;
+
+    @Schema(description = "管理后台登录用户ID", hidden = true)
     @Null(message = "非法参数")
     private Long loginUserId;
 
-    @Schema(description = "登录角色ID集合", hidden = true)
+    @Schema(description = "管理后台登录角色ID", hidden = true)
     @Null(message = "非法参数")
-    private List<Long> loginRoleIds;
+    private Long loginRoleId;
 
-    @Schema(description = "登录角色编码集合", hidden = true)
+    @Schema(description = "管理后台登录角色编码", hidden = true)
     @Null(message = "非法参数")
-    private List<String> loginRoleCodes;
+    private String loginRoleCode;
 
-    @Schema(description = "登录部门ID", hidden = true)
+    @Schema(description = "是否是移动端的会员", hidden = true)
     @Null(message = "非法参数")
-    private Long loginDeptId;
+    private Boolean loginAppVip;
 
-    @Schema(description = "是否是管理员", hidden = true)
+    @Schema(description = "APP登录用户ID", hidden = true)
     @Null(message = "非法参数")
-    private Boolean admin;
+    private Long loginAppUserId;
+
+    @Schema(description = "APP端登录VIP级别", hidden = true)
+    @Null(message = "非法参数")
+    private Integer loginAppVipLevel;
 
 }

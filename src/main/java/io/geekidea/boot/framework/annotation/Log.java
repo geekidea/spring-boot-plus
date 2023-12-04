@@ -1,6 +1,6 @@
 package io.geekidea.boot.framework.annotation;
 
-import io.geekidea.boot.framework.enums.SysLogEnum;
+import io.geekidea.boot.common.enums.SysLogType;
 
 /**
  * @author geekidea
@@ -16,6 +16,6 @@ public @interface Log {
     String value() default "";
 
 
-    SysLogEnum type() default SysLogEnum.OTHER;
+    SysLogType type() default SysLogType.OTHER;
 
 }

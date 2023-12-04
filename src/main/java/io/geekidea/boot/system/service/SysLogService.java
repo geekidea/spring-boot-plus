@@ -1,10 +1,9 @@
 package io.geekidea.boot.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import io.geekidea.boot.framework.page.Paging;
-import io.geekidea.boot.framework.service.BaseService;
 import io.geekidea.boot.system.entity.SysLog;
 import io.geekidea.boot.system.query.SysLogQuery;
-import io.geekidea.boot.system.vo.SysLogInfoVo;
 import io.geekidea.boot.system.vo.SysLogVo;
 
 /**
@@ -13,7 +12,7 @@ import io.geekidea.boot.system.vo.SysLogVo;
  * @author geekidea
  * @since 2023-02-16
  */
-public interface SysLogService extends BaseService<SysLog> {
+public interface SysLogService extends IService<SysLog> {
 
     /**
      * 系统日志详情
@@ -22,7 +21,7 @@ public interface SysLogService extends BaseService<SysLog> {
      * @return
      * @throws Exception
      */
-    SysLogInfoVo getSysLogById(Long id) throws Exception;
+    SysLogVo getSysLogById(Long id) throws Exception;
 
     /**
      * 系统日志分页列表
@@ -31,6 +30,6 @@ public interface SysLogService extends BaseService<SysLog> {
      * @return
      * @throws Exception
      */
-    Paging<SysLogVo> getSysLogList(SysLogQuery sysLogQuery) throws Exception;
+    Paging<SysLogVo> getSysLogPage(SysLogQuery sysLogQuery) throws Exception;
 
 }

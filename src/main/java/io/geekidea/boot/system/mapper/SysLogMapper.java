@@ -1,10 +1,9 @@
 package io.geekidea.boot.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.geekidea.boot.system.vo.SysLogVo;
 import io.geekidea.boot.system.entity.SysLog;
 import io.geekidea.boot.system.query.SysLogQuery;
-import io.geekidea.boot.system.vo.SysLogInfoVo;
-import io.geekidea.boot.system.vo.SysLogVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
      * @param id
      * @return
      */
-    SysLogInfoVo getSysLogById(Long id);
+    SysLogVo getSysLogById(Long id);
 
     /**
      * 系统日志分页列表
@@ -32,6 +31,6 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
      * @param sysLogQuery
      * @return
      */
-    List<SysLogVo> getSysLogList(SysLogQuery sysLogQuery);
+    List<SysLogVo> getSysLogPage(SysLogQuery sysLogQuery);
 
 }

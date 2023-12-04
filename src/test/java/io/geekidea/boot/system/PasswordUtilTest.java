@@ -1,6 +1,6 @@
 package io.geekidea.boot.system;
 
-import io.geekidea.boot.auth.util.PasswordUtil;
+import io.geekidea.boot.util.PasswordUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**

@@ -5,8 +5,9 @@ import $!{pkg};
 #end
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-
-import java.io.Serializable;
+#if($!{cfg.existsTimeType})
+import java.sql.Time;
+#end
 
 /**
  * $!{cfg.appPrefix}$!{table.comment}

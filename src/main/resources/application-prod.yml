@@ -8,14 +8,12 @@ spring:
     port: 6379
     password:
 
-# spring-boot-plus框架配置
-spring-boot-plus:
-  # 文件上传相关配置
-  file:
-    # 上传文件访问路径
-    access-path: /file/**
-    # 上传文件保存路径
-    upload-path: /home/upload/
+# 文件上传相关配置
+file:
+  # 上传文件访问路径
+  access-path: /file/**
+  # 上传文件保存路径
+  upload-path: /home/upload/
 
 knife4j:
   # 启用账号密码登录
@@ -23,3 +21,8 @@ knife4j:
     enable: true
     username: admin
     password: 123456
+
+# 日志配置，logback-spring.xml中会引用以下变量
+logback-spring:
+  # 日志文件目录
+  path: /home/boot/logs

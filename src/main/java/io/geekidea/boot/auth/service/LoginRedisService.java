@@ -18,7 +18,7 @@ public interface LoginRedisService {
      * @return
      * @throws Exception
      */
-    String getLoginRedisKey(String token) throws Exception;
+    String getLoginTokenRedisKey(String token) throws Exception;
 
     /**
      * 设置登录用户信息到redis
@@ -55,20 +55,11 @@ public interface LoginRedisService {
     void refreshToken() throws Exception;
 
     /**
-     * 获取登录用户ID
+     * 通过用户token删除当前用户之前的所有的redis登录信息
      *
      * @param token
-     * @return
      * @throws Exception
      */
-    Long getLoginUserId(String token) throws Exception;
-
-    /**
-     * 通过用户ID删除当前用户所有的redis登录信息
-     *
-     * @param userId
-     * @throws Exception
-     */
-    void deleteLoginInfoByUserId(Long userId) throws Exception;
+    void deleteLoginInfoByToken(String token) throws Exception;
 
 }

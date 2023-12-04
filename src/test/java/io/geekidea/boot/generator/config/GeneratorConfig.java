@@ -3,16 +3,17 @@ package io.geekidea.boot.generator.config;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.setting.yaml.YamlUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.boot.framework.annotation.Log;
-import io.geekidea.boot.framework.enums.SysLogEnum;
+import io.geekidea.boot.common.enums.SysLogType;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.BasePageQuery;
 import io.geekidea.boot.framework.page.OrderByItem;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
-import io.geekidea.boot.framework.service.BaseService;
-import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
 import io.geekidea.boot.generator.enums.DefaultOrderType;
+import io.geekidea.boot.generator.enums.GeneratorType;
 import io.geekidea.boot.generator.enums.RequestMappingType;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -100,13 +101,9 @@ public class GeneratorConfig {
      */
     private boolean generatorMapperXml = true;
     /**
-     * 是否生成AddDto参数
+     * 是否生成Dto参数
      */
-    private boolean generatorAddDto = true;
-    /**
-     * 是否生成UpdateDto参数
-     */
-    private boolean generatorUpdateDto = true;
+    private boolean generatorDto = true;
     /**
      * 是否生成查询参数
      */
@@ -115,10 +112,21 @@ public class GeneratorConfig {
      * 是否生成查询VO
      */
     private boolean generatorVo = true;
+
     /**
-     * 是否生成详情VO
+     * 是否生成用户控制器
      */
-    private boolean generatorInfoVo = true;
+    private boolean generatorAppController = true;
+    /**
+     * 是否生成用户查询参数
+     */
+    private boolean generatorAppQuery = true;
+    /**
+     * 是否生成用户查询VO
+     */
+    private boolean generatorAppVo = true;
+
+
     /**
      * 是否生成Shiro RequiresPermissions 注解
      */
@@ -137,12 +145,14 @@ public class GeneratorConfig {
     private String superController;
     /**
      * service父接口
+     * 自定义：BaseService.class.getName()
      */
-    private String superService;
+    private String superService = IService.class.getName();
     /**
      * service实现父类
+     * 自定义：BaseServiceImpl.class.getName()
      */
-    private String superServiceImpl;
+    private String superServiceImpl = ServiceImpl.class.getName();
     /**
      * 实体父类实体列表
      */
@@ -176,7 +186,7 @@ public class GeneratorConfig {
     /**
      * 是否文件覆盖
      */
-    private boolean fileOverride;
+    private boolean fileOverride = true;
     /**
      * 是否生成resultMap,默认为false
      */
@@ -295,25 +305,33 @@ public class GeneratorConfig {
     private String formatXmlFileName = "%sMapper";
 
     /**
-     * 自定义addDto文件名称
+     * 自定义dto文件名称
      */
-    private String addDtoFileName = "AddDto";
-    /**
-     * 自定义updateDto文件名称
-     */
-    private String updateDtoFileName = "UpdateDto";
+    private String dtoFileName = "Dto";
     /**
      * 自定义query文件名称
      */
     private String queryFileName = "Query";
     /**
-     * 自定义infoVo文件名称
-     */
-    private String infoVoFileName = "InfoVo";
-    /**
      * 自定义vo文件名称
      */
     private String voFileName = "Vo";
+
+
+    /**
+     * 格式化APP controller文件名称
+     */
+    private String formatAppControllerFileName;
+
+    /**
+     * 格式化APP query文件名称
+     */
+    private String formatAppQueryFileName;
+
+    /**
+     * 格式化APP vo文件名称
+     */
+    private String formatAppVoFileName;
 
 
     /**
@@ -362,7 +380,7 @@ public class GeneratorConfig {
     /**
      * 详情请求路径
      */
-    private String infoRequestMapping = "get%sInfo";
+    private String infoRequestMapping = "get%s";
 
     /**
      * 分页列表请求路径
@@ -370,34 +388,30 @@ public class GeneratorConfig {
     private String pageRequestMapping = "get%sPage";
 
     /**
-     * 是否生成web端
+     * 生成代码的类型
      */
-    private boolean generatorWeb = true;
+    private GeneratorType generatorType = GeneratorType.FULL;
 
     /**
-     * 是否生成app端
+     * 是否生成APP接口
      */
     private boolean generatorApp = false;
 
     /**
-     * Web端前缀
+     * APP名称
      */
-    private String webPrefix = "";
+    private String appName = "App";
 
     /**
-     * App端前缀
+     * Admin路径前缀
      */
-    private String appPrefix = "App";
+    private String adminMapping = "/admin";
 
     /**
-     * Web路径前缀
+     * APP路径前缀
      */
-    private String webPathPrefix = "";
+    private String appMapping = "/app";
 
-    /**
-     * App路径前缀
-     */
-    private String appPathPrefix = "app";
 
     /**
      * 是否生成系统日志
@@ -410,7 +424,7 @@ public class GeneratorConfig {
     /**
      * SysLogEnum枚举包路径
      */
-    private String sysLogEnumPackagePath;
+    private String sysLogTypePackagePath;
 
 
     public GeneratorConfig() throws Exception {
@@ -450,8 +464,6 @@ public class GeneratorConfig {
         }
         this.projectPackagePath = this.parentPackage.replaceAll("\\.", "/");
         this.commonParentPackage = parentPackage + ".framework";
-        this.superService = BaseService.class.getName();
-        this.superServiceImpl = BaseServiceImpl.class.getName();
         this.superEntityCommonColumns = new String[]{};
 
         this.commonApiResult = ApiResult.class.getName();
@@ -459,7 +471,7 @@ public class GeneratorConfig {
         this.commonPaging = Paging.class.getName();
         this.commonBusinessException = BusinessException.class.getName();
         this.commonOrderByItem = OrderByItem.class.getName();
-        this.commonFields = Arrays.asList("remark", "version", "deleted", "createTime", "updateTime");
+        this.commonFields = Arrays.asList("version", "deleted", "createTime", "updateTime");
         this.voExcludeFields = Arrays.asList("password", "version", "deleted");
 
         this.dtoPackagePath = parentPackage + "." + moduleName + "." + dtoPackage;
@@ -467,12 +479,17 @@ public class GeneratorConfig {
         this.voPackagePath = parentPackage + "." + moduleName + "." + voPackage;
 
         this.logPackagePath = Log.class.getName();
-        this.sysLogEnumPackagePath = SysLogEnum.class.getName();
+        this.sysLogTypePackagePath = SysLogType.class.getName();
+
+        if (GeneratorType.BASIC == generatorType) {
+            this.generatorDto = false;
+            this.generatorQuery = false;
+            this.generatorVo = false;
+        }
 
         if (onlyOverrideEntity) {
             this.generatorEntity = true;
-            this.generatorAddDto = false;
-            this.generatorUpdateDto = false;
+            this.generatorDto = false;
             this.generatorQuery = false;
             this.generatorVo = false;
             this.generatorController = false;
@@ -480,27 +497,18 @@ public class GeneratorConfig {
             this.generatorServiceImpl = false;
             this.generatorMapper = false;
             this.generatorMapperXml = false;
+            this.generatorAppController = false;
+            this.generatorAppVo = false;
         }
         if (simple) {
-            this.generatorAddDto = false;
-            this.generatorUpdateDto = false;
+            this.generatorDto = false;
             this.generatorQuery = false;
             this.generatorVo = false;
         }
 
-        if (generatorApp) {
-            formatEntityFileName = appPrefix + "%s";
-            formatControllerFileName = appPrefix + "%sController";
-            formatServiceFileName = appPrefix + "%sService";
-            formatServiceImplFileName = appPrefix + "%sServiceImpl";
-            formatMapperFileName = appPrefix + "%sMapper";
-            formatXmlFileName = appPrefix + "%sMapper";
-            generatorEntity = false;
-        } else {
-            appPrefix = "";
-            appPathPrefix = "";
-        }
-
+        formatAppControllerFileName = "%s" + appName + "Controller";
+        formatAppQueryFileName = "%s" + appName + "Query";
+        formatAppVoFileName = "%s" + appName + "Vo";
 
     }
 

@@ -53,8 +53,8 @@ public class SysUser implements Serializable {
     @Schema(description = "状态，0：禁用，1：启用")
     private Boolean status;
 
-    @Schema(description = "部门id")
-    private Long deptId;
+    @Schema(description = "角色id")
+    private Long roleId;
 
     @Schema(description = "是否是超管 0：否，1：是")
     private Boolean isAdmin;

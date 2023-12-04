@@ -4,20 +4,28 @@ spring:
     username: root
     password: root
   redis:
-    host: 127.0.0.1
+    host: localhost
     port: 6379
-    password:
+    password: 
 
 # 打印SQL语句和结果集，本地开发环境可开启，线上注释掉
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-# spring-boot-plus框架配置
-spring-boot-plus:
-  # 文件上传相关配置
-  file:
+# 文件上传相关配置
+file:
+  # 本地上传服务配置
+  local:
     # 上传文件访问路径
     access-path: /file/**
-    # 上传文件保存路径
-    upload-path: /Users/mrliu/upload/
+    # 上传文件保存路径，注意：最后带上反斜杠
+    upload-path: /Users/mrliu/upload/boot/
+    # 上传文件访问URL前缀
+    access-url: http://localhost:8888/api/file
+
+# 日志配置，logback-spring.xml中会引用以下变量
+logback-spring:
+  # 日志文件目录
+  path: logs
+

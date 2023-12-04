@@ -1,18 +1,15 @@
 package io.geekidea.boot.system.controller;
 
+import io.geekidea.boot.system.vo.SysRoleVo;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.system.dto.RoleMenusDto;
-import io.geekidea.boot.system.dto.SysRoleAddDto;
-import io.geekidea.boot.system.dto.SysRoleUpdateDto;
+import io.geekidea.boot.system.dto.SysRoleDto;
 import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.query.SysRoleQuery;
 import io.geekidea.boot.system.service.SysMenuService;
 import io.geekidea.boot.system.service.SysRoleService;
-import io.geekidea.boot.system.vo.SysMenuTreeVo;
-import io.geekidea.boot.system.vo.SysRoleInfoVo;
-import io.geekidea.boot.system.vo.SysRoleVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +27,8 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/sysRole")
 @Tag(name = "系统角色")
+@RequestMapping("/admin/sysRole")
 public class SysRoleController {
 
     @Autowired
@@ -43,30 +40,30 @@ public class SysRoleController {
     /**
      * 添加系统角色
      *
-     * @param sysRoleAddDto
+     * @param sysRoleDto
      * @return
      * @throws Exception
      */
     @PostMapping("/addSysRole")
     @Operation(summary = "添加系统角色")
     @Permission("sys:role:add")
-    public ApiResult addSysRole(@Valid @RequestBody SysRoleAddDto sysRoleAddDto) throws Exception {
-        boolean flag = sysRoleService.addSysRole(sysRoleAddDto);
+    public ApiResult addSysRole(@Valid @RequestBody SysRoleDto sysRoleDto) throws Exception {
+        boolean flag = sysRoleService.addSysRole(sysRoleDto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改系统角色
      *
-     * @param sysRoleUpdateDto
+     * @param sysRoleDto
      * @return
      * @throws Exception
      */
     @PostMapping("/updateSysRole")
     @Operation(summary = "修改系统角色")
     @Permission("sys:role:update")
-    public ApiResult updateSysRole(@Valid @RequestBody SysRoleUpdateDto sysRoleUpdateDto) throws Exception {
-        boolean flag = sysRoleService.updateSysRole(sysRoleUpdateDto);
+    public ApiResult updateSysRole(@Valid @RequestBody SysRoleDto sysRoleDto) throws Exception {
+        boolean flag = sysRoleService.updateSysRole(sysRoleDto);
         return ApiResult.result(flag);
     }
 
@@ -95,9 +92,9 @@ public class SysRoleController {
     @PostMapping("/getSysRole/{id}")
     @Operation(summary = "系统角色详情")
     @Permission("sys:role:info")
-    public ApiResult<SysRoleInfoVo> getSysRole(@PathVariable Long id) throws Exception {
-        SysRoleInfoVo sysRoleInfoVo = sysRoleService.getSysRoleById(id);
-        return ApiResult.success(sysRoleInfoVo);
+    public ApiResult<SysRoleVo> getSysRole(@PathVariable Long id) throws Exception {
+        SysRoleVo sysRoleVo = sysRoleService.getSysRoleById(id);
+        return ApiResult.success(sysRoleVo);
     }
 
     /**
@@ -107,11 +104,11 @@ public class SysRoleController {
      * @return
      * @throws Exception
      */
-    @PostMapping("/getSysRoleList")
+    @PostMapping("/getSysRolePage")
     @Operation(summary = "系统角色分页列表")
-    @Permission("sys:role:list")
-    public ApiResult<SysRoleVo> getSysRoleList(@Valid @RequestBody SysRoleQuery sysRoleQuery) throws Exception {
-        Paging<SysRoleVo> paging = sysRoleService.getSysRoleList(sysRoleQuery);
+    @Permission("sys:role:page")
+    public ApiResult<SysRoleVo> getSysRolePage(@Valid @RequestBody SysRoleQuery sysRoleQuery) throws Exception {
+        Paging<SysRoleVo> paging = sysRoleService.getSysRolePage(sysRoleQuery);
         return ApiResult.success(paging);
     }
 

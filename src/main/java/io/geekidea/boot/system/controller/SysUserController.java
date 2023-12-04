@@ -1,14 +1,16 @@
 package io.geekidea.boot.system.controller;
 
-import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.auth.util.LoginUtil;
+import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
-import io.geekidea.boot.system.dto.*;
+import io.geekidea.boot.system.dto.SysUserDto;
+import io.geekidea.boot.system.dto.SysUserResetPasswordDto;
+import io.geekidea.boot.system.dto.SysUserUpdatePasswordDto;
+import io.geekidea.boot.system.dto.SysUserUpdateProfileDto;
 import io.geekidea.boot.system.query.SysUserQuery;
 import io.geekidea.boot.system.service.SysUserService;
-import io.geekidea.boot.system.vo.SysUserInfoVo;
 import io.geekidea.boot.system.vo.SysUserVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,8 +28,8 @@ import javax.validation.Valid;
  */
 @Slf4j
 @RestController
-@RequestMapping("/sysUser")
 @Tag(name = "系统用户")
+@RequestMapping("/admin/sysUser")
 public class SysUserController {
 
     @Autowired
@@ -36,30 +38,30 @@ public class SysUserController {
     /**
      * 添加系统用户
      *
-     * @param sysUserAddDto
+     * @param sysUserDto
      * @return
      * @throws Exception
      */
     @PostMapping("/addSysUser")
     @Operation(summary = "添加系统用户")
     @Permission("sys:user:add")
-    public ApiResult addSysUser(@Valid @RequestBody SysUserAddDto sysUserAddDto) throws Exception {
-        boolean flag = sysUserService.addSysUser(sysUserAddDto);
+    public ApiResult addSysUser(@Valid @RequestBody SysUserDto sysUserDto) throws Exception {
+        boolean flag = sysUserService.addSysUser(sysUserDto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改系统用户
      *
-     * @param sysUserUpdateDto
+     * @param sysUserDto
      * @return
      * @throws Exception
      */
     @PostMapping("/updateSysUser")
     @Operation(summary = "修改系统用户")
     @Permission("sys:user:update")
-    public ApiResult updateSysUser(@Valid @RequestBody SysUserUpdateDto sysUserUpdateDto) throws Exception {
-        boolean flag = sysUserService.updateSysUser(sysUserUpdateDto);
+    public ApiResult updateSysUser(@Valid @RequestBody SysUserDto sysUserDto) throws Exception {
+        boolean flag = sysUserService.updateSysUser(sysUserDto);
         return ApiResult.result(flag);
     }
 
@@ -88,9 +90,9 @@ public class SysUserController {
     @PostMapping("/getSysUser/{id}")
     @Operation(summary = "系统用户详情")
     @Permission("sys:user:info")
-    public ApiResult<SysUserInfoVo> getSysUser(@PathVariable Long id) throws Exception {
-        SysUserInfoVo sysUserInfoVo = sysUserService.getSysUserById(id);
-        return ApiResult.success(sysUserInfoVo);
+    public ApiResult<SysUserVo> getSysUser(@PathVariable Long id) throws Exception {
+        SysUserVo sysUserVo = sysUserService.getSysUserById(id);
+        return ApiResult.success(sysUserVo);
     }
 
     /**
@@ -100,11 +102,11 @@ public class SysUserController {
      * @return
      * @throws Exception
      */
-    @PostMapping("/getSysUserList")
+    @PostMapping("/getSysUserPage")
     @Operation(summary = "系统用户分页列表")
-    @Permission("sys:user:list")
-    public ApiResult<SysUserVo> getSysUserList(@Valid @RequestBody SysUserQuery sysUserQuery) throws Exception {
-        Paging<SysUserVo> paging = sysUserService.getSysUserList(sysUserQuery);
+    @Permission("sys:user:page")
+    public ApiResult<SysUserVo> getSysUserPage(@Valid @RequestBody SysUserQuery sysUserQuery) throws Exception {
+        Paging<SysUserVo> paging = sysUserService.getSysUserPage(sysUserQuery);
         return ApiResult.success(paging);
     }
 
@@ -131,13 +133,13 @@ public class SysUserController {
      */
     @PostMapping("/getProfile")
     @Operation(summary = "获取个人信息")
-    public ApiResult<SysUserInfoVo> getProfile() throws Exception {
+    public ApiResult<SysUserVo> getProfile() throws Exception {
         Long userId = LoginUtil.getUserId();
         if (userId == null) {
             throw new BusinessException("用户ID为空");
         }
-        SysUserInfoVo sysUserInfoVo = sysUserService.getSysUserById(userId);
-        return ApiResult.success(sysUserInfoVo);
+        SysUserVo sysUserVo = sysUserService.getSysUserById(userId);
+        return ApiResult.success(sysUserVo);
     }
 
     /**

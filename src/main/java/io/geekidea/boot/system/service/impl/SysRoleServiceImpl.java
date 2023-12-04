@@ -1,13 +1,12 @@
 package io.geekidea.boot.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.OrderByItem;
 import io.geekidea.boot.framework.page.Paging;
-import io.geekidea.boot.framework.service.impl.BaseServiceImpl;
 import io.geekidea.boot.system.dto.RoleMenusDto;
-import io.geekidea.boot.system.dto.SysRoleAddDto;
-import io.geekidea.boot.system.dto.SysRoleUpdateDto;
+import io.geekidea.boot.system.dto.SysRoleDto;
 import io.geekidea.boot.system.entity.SysMenu;
 import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.entity.SysRoleMenu;
@@ -16,8 +15,8 @@ import io.geekidea.boot.system.query.SysRoleQuery;
 import io.geekidea.boot.system.service.SysMenuService;
 import io.geekidea.boot.system.service.SysRoleMenuService;
 import io.geekidea.boot.system.service.SysRoleService;
-import io.geekidea.boot.system.vo.SysRoleInfoVo;
 import io.geekidea.boot.system.vo.SysRoleVo;
+import io.geekidea.boot.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -36,7 +35,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
+public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
@@ -49,21 +48,21 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addSysRole(SysRoleAddDto sysRoleAddDto) throws Exception {
+    public boolean addSysRole(SysRoleDto sysRoleDto) throws Exception {
         SysRole sysRole = new SysRole();
-        BeanUtils.copyProperties(sysRoleAddDto, sysRole);
+        BeanUtils.copyProperties(sysRoleDto, sysRole);
         return save(sysRole);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateSysRole(SysRoleUpdateDto sysRoleUpdateDto) throws Exception {
-        Long id = sysRoleUpdateDto.getId();
+    public boolean updateSysRole(SysRoleDto sysRoleDto) throws Exception {
+        Long id = sysRoleDto.getId();
         SysRole sysRole = getById(id);
         if (sysRole == null) {
             throw new BusinessException("系统角色不存在");
         }
-        BeanUtils.copyProperties(sysRoleUpdateDto, sysRole);
+        BeanUtils.copyProperties(sysRoleDto, sysRole);
         sysRole.setUpdateTime(new Date());
         return updateById(sysRole);
     }
@@ -75,14 +74,14 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     }
 
     @Override
-    public SysRoleInfoVo getSysRoleById(Long id) throws Exception {
+    public SysRoleVo getSysRoleById(Long id) throws Exception {
         return sysRoleMapper.getSysRoleById(id);
     }
 
     @Override
-    public Paging<SysRoleVo> getSysRoleList(SysRoleQuery sysRoleQuery) throws Exception {
-        handlePage(sysRoleQuery, OrderByItem.desc("id"));
-        List<SysRoleVo> list = sysRoleMapper.getSysRoleList(sysRoleQuery);
+    public Paging<SysRoleVo> getSysRolePage(SysRoleQuery sysRoleQuery) throws Exception {
+        PagingUtil.handlePage(sysRoleQuery, OrderByItem.desc("id"));
+        List<SysRoleVo> list = sysRoleMapper.getSysRolePage(sysRoleQuery);
         Paging<SysRoleVo> paging = new Paging<>(list);
         return paging;
     }
@@ -90,7 +89,6 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> 
     @Override
     public List<SysRole> getSysRoleAllList() throws Exception {
         LambdaQueryWrapper<SysRole> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(SysRole::getStatus, true);
         lambdaQueryWrapper.orderByAsc(SysRole::getId);
         return list(lambdaQueryWrapper);
     }

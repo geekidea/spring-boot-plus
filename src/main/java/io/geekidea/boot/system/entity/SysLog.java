@@ -32,7 +32,7 @@ public class SysLog implements Serializable {
     @Schema(description = "请求时间")
     private String requestTime;
 
-    @Schema(description = "全路径")
+    @Schema(description = "请求路径")
     private String requestUrl;
 
     @Schema(description = "权限编码")
@@ -65,11 +65,11 @@ public class SysLog implements Serializable {
     @Schema(description = "请求参数")
     private String requestParam;
 
+    @Schema(description = "系统类型 1：Admin管理后台，2：APP移动端端")
+    private Integer systemType;
+
     @Schema(description = "用户ID")
     private Long userId;
-
-    @Schema(description = "用户名")
-    private String username;
 
     @Schema(description = "请求ip")
     private String requestIp;

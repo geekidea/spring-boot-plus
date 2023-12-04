@@ -1,7 +1,6 @@
 package $!{cfg.queryPackagePath};
 
 import $!{cfg.superQueryPath};
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 #if($!{chainModel});
@@ -9,13 +8,13 @@ import lombok.experimental.Accessors;
 #end
 
 /**
- * $!{cfg.appPrefix}$!{table.comment}查询参数
+ * $!{table.comment}查询参数
  *
  * @author $!{author}
  * @since $!{date}
  */
 @Data
-@Schema(description = "$!{cfg.appPrefix}$!{table.comment}查询参数")
+@Schema(description = "$!{table.comment}查询参数")
 #if($!{entitySerialVersionUID})
 public class $!{cfg.queryName} extends BasePageQuery {
 #else

@@ -26,7 +26,7 @@ import java.util.TimeZone;
 @Configuration
 public class JacksonConfig {
 
-    @Value("${spring-boot-plus.xss.enable}")
+    @Value("${xss.enable}")
     private boolean enableXss;
 
     @Bean

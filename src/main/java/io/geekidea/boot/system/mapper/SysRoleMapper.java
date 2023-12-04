@@ -1,10 +1,9 @@
 package io.geekidea.boot.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.geekidea.boot.system.vo.SysRoleVo;
 import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.query.SysRoleQuery;
-import io.geekidea.boot.system.vo.SysRoleInfoVo;
-import io.geekidea.boot.system.vo.SysRoleVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @param id
      * @return
      */
-    SysRoleInfoVo getSysRoleById(Long id);
+    SysRoleVo getSysRoleById(Long id);
 
     /**
      * 系统角色分页列表
@@ -32,14 +31,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @param sysRoleQuery
      * @return
      */
-    List<SysRoleVo> getSysRoleList(SysRoleQuery sysRoleQuery);
-
-    /**
-     * 根据用户ID获取所有角色列表
-     *
-     * @param userId
-     * @return
-     */
-    List<SysRole> getSysRolesByUserId(Long userId);
+    List<SysRoleVo> getSysRolePage(SysRoleQuery sysRoleQuery);
 
 }

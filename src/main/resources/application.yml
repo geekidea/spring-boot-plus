@@ -1,7 +1,7 @@
 server:
   port: 8888
   servlet:
-    context-path: /
+    context-path: /api
   tomcat:
     uri-encoding: UTF-8
     threads:
@@ -13,10 +13,9 @@ server:
 # spring配置
 spring:
   application:
-    name: spring-boot-plus
-  # 当前项目maven激活环境，例如：dev/test/prod，对应pom.xml中profile设置值
+  # 当前项目maven激活环境，例如：dev/test/prod
   profiles:
-    active: @profileActive@
+    active: dev
   jackson:
     date-format: yyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
@@ -31,20 +30,10 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    cachePrepStmts: true
-    prepStmtCacheSize: 20
-    prepStmtCacheSqlLimit: 1024
-    useServerPrepStmts: true
-    useLocalSessionState: true
-    rewriteBatchedStatements: true
-    cacheResultSetMetadata: true
-    cacheServerConfiguration: true
-    elideSetAutoCommits: true
-    maintainTimeStats: false
     hikari:
       minimum-idle: 10
       maximum-pool-size: 20
-      idle-timeout: 60000
+      idle-timeout: 600000
       max-lifetime: 1800000
       connection-timeout: 60000
   # redis配置
@@ -91,79 +80,130 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
-# spring-boot-plus框架配置
-spring-boot-plus:
-  # swagger配置
-  openapi:
-    title: spring-boot-plus API Docs
-    description: spring-boot-plus后台接口文档
-    terms-of-service: https://github.com/geekidea
-    contact-name: geekidea
-    contact-url: https://geekidea.io
-    contact-email: geekidea@qq.com
-    version: @project.version@
-    external-description: spring-boot-plus
-    external-url: https://springboot.plus
-  # 登录权限配置
-  login:
+# 主键ID生成配置
+# 机器码 如果一台服务器部署多个独立服务，需要为每个服务指定不同的 WorkerId
+# 取值0～63
+workerId: 0
+
+# 框架公共配置
+boot:
+  # 排除路径
+  exclude-paths:
+    - /v3/api-docs/**
+    - /swagger-resources/**,/swagger-ui/**,/doc.html
+    - /webjars/**
+    - /favicon.ico
+    - /index.html
+
+# 登录权限配置
+login:
+  # 排除路径
+  exclude-paths:
+    - /file/**
+  # 管理后台登录配置
+  admin:
     # 是否启用登录权限校验
     enable: true
     # 是否单次登录
-    single-login: false
+    single-Login: false
     # token过期时间，单位为分钟
     token-expire-minutes: 60
     # 是否校验目标方法权限
-    login-permission: true
-    # 排除路径
+    login-permission: false
+    # 包含的路径
+    include-paths:
+      - /admin/**
+    # 排除的路径
     exclude-paths:
-      - /v3/api-docs/**
-      - /swagger-resources/**,/swagger-ui/**,/doc.html
-      - /webjars/**
-      - /favicon.ico
-      - /login
-      - /index.html
-      - /file/**
-  # 日志AOP配置
-  log-aop:
-    # 是否启用
+      - /admin/login
+      - /common/**
+      - /app/**
+  # 用户端登录配置
+  app:
+    # 是否启用登录权限校验
     enable: true
-    # 是否打印日志
-    print-log: true
-    # 是否打印请求头
-    print-head-log: false
-    # 登录页面路径
-    login-url: /login
-    # 排除路径
-    excludePaths:
-      - /sysLog/**
-  # XSS
-  xss:
-    # 是否启用，默认禁用
-    enable: false
-    # 拦截的路径
-    url-patterns: /*
-    # 排序
-    order: 2
-    # 是否支持异步
-    async: true
+    # 是否单次登录
+    single-Login: false
+    # token过期时间，单位为天
+    token-expire-minutes: 30
+    # 包含路径
+    include-paths:
+      - /app/**
 
+# 日志AOP配置
+log-aop:
+  # 是否启用
+  enable: true
+  # 是否打印日志
+  print-log: true
+  # 是否打印请求头
+  print-head-log: false
+  # 排除路径
+  excludePaths:
+    - /sysLog/**
+# XSS
+xss:
+  # 是否启用，默认禁用
+  enable: false
+  # 拦截的路径
+  url-patterns: /*
+  # 排序
+  order: 2
+  # 是否支持异步
+  async: true
+# redis项目前缀
+redis:
+  projectPrefix: boot
+# file上传配置
+file:
+  # 文件服务类型 本地还是OSS
+  file-server-type: LOCAL
+  # OSS配置
+  oss:
+    accessKeyId:
+    accessKeySecret:
+    endpoint:
+    bucketName:
+    accessDomain:
+
+# 微信小程序配置
+wx:
+  mp:
+    appid:
+    secret:
 
 # swagger配置
 springdoc:
   swagger-ui:
     enabled: true
-
-
 knife4j:
   enable: true
-  # 启用账号密码登录
   basic:
     enable: false
-    username: admin
-    password: 123456
   setting:
     # 自定义底部
     enable-footer: false
     enable-footer-custom: true
     footer-custom-content: MIT License | Copyright © 2019-2023 [geekidea](https://geekidea.io)
+openapi:
+  title: Boot API Docs
+  description: spring-boot-plus后台接口文档
+  terms-of-service: https://github.com/geekidea
+  contact-name: geekidea
+  contact-url: https://geekidea.io
+  contact-email: geekidea@qq.com
+  version: @project.version@
+  external-description: spring-boot-plus
+  external-url: https://springboot.plus
+
+# 日志配置，logback-spring.xml中会引用以下变量
+logback-spring:
+  # 日志文件目录
+  path: logs
+  # info级别文件名称(包含error日志，方便查看)
+  info-file-name: boot-info
+  # error级别文件名称(只有error日志)
+  error-file-name: boot-error
+
+
 

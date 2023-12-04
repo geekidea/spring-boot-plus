@@ -207,7 +207,7 @@ public class Generator {
 ├── controller
 │ └── FooBarController.java
 ├── dto
-│ ├── FooBarAddDto.java
+│ ├── FooBarDto.java
 │ └── FooBarUpdateDto.java
 ├── entity
 │ └── FooBar.java
@@ -220,7 +220,7 @@ public class Generator {
 │ └── impl
 │     └── FooBarServiceImp.java
 └── vo
-    ├── FooBarInfoVo.java
+    ├── FooBarVo.java
     └── FooBarVo.java
 
 resources

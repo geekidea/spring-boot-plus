@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
  * @date 2022/6/26
  **/
 @Data
-@Schema(description = "LoginDto")
+@Schema(description = "AdminLoginDto")
 public class LoginDto {
 
     @Schema(description = "用户名", example = "admin")

@@ -1,15 +1,21 @@
 package $!{package.Controller};
 
-import $!{cfg.permissionPath};
+#if($!{cfg.generatorType} == 'BASIC')
+import $!{package.Service}.$!{table.serviceName};
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+#elseif($!{cfg.generatorType} == 'FULL')
+import $!{cfg.sysLogTypePackagePath};
 import $!{cfg.logPackagePath};
-import $!{cfg.sysLogEnumPackagePath};
+import $!{cfg.permissionPath};
 import $!{cfg.paging};
 import $!{cfg.apiResult};
-import $!{cfg.addDtoPath};
-import $!{cfg.updateDtoPath};
+import $!{cfg.dtoPath};
 import $!{cfg.queryPath};
 import $!{package.Service}.$!{table.serviceName};
-import $!{cfg.infoVoPath};
 import $!{cfg.voPath};
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,74 +24,76 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+#end
 
 /**
- * $!{cfg.appPrefix}$!{table.comment} 控制器
+ * $!{table.comment} 控制器
  *
  * @author $!{author}
  * @since $!{date}
  */
 @Slf4j
 @RestController
-@RequestMapping("/$!{cfg.controllerRequestMapping}")
-@Tag(name = "$!{cfg.appPrefix}$!{table.comment}")
+@Tag(name = "$!{table.comment}")
+@RequestMapping("$!{cfg.adminMapping}/$!{cfg.controllerRequestMapping}")
 public class $!{table.controllerName} {
 
     @Autowired
     private $!{table.serviceName} $!{cfg.serviceObjectName};
 
+#if($!{cfg.generatorType} == 'FULL')
     /**
-     * 添加$!{cfg.appPrefix}$!{table.comment}
+     * 添加$!{table.comment}
      *
-     * @param $!{cfg.addDtoObjectName}
+     * @param $!{cfg.dtoObjectName}
      * @return
      * @throws Exception
      */
     #if($!{cfg.sysLog})
-    @Log(value = "添加$!{table.comment}", type = SysLogEnum.ADD)
+    @Log(value = "添加$!{table.comment}", type = SysLogType.ADD)
     #end
     @PostMapping("/$!{cfg.addRequestMapping}")
-    @Operation(summary = "添加$!{cfg.appPrefix}$!{table.comment}")
+    @Operation(summary = "添加$!{table.comment}")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:add")
     #end
-    public ApiResult add$!{entity}(@Valid @RequestBody $!{cfg.addDtoName} $!{cfg.addDtoObjectName}) throws Exception {
-        boolean flag = $!{cfg.serviceObjectName}.add$!{entity}($!{cfg.addDtoObjectName});
+    public ApiResult add$!{entity}(@Valid @RequestBody $!{cfg.dtoName} $!{cfg.dtoObjectName}) throws Exception {
+        boolean flag = $!{cfg.serviceObjectName}.add$!{entity}($!{cfg.dtoObjectName});
         return ApiResult.result(flag);
     }
 
     /**
-     * 修改$!{cfg.appPrefix}$!{table.comment}
+     * 修改$!{table.comment}
      *
-     * @param $!{cfg.updateDtoObjectName}
+     * @param $!{cfg.dtoObjectName}
      * @return
      * @throws Exception
      */
     #if($!{cfg.sysLog})
-    @Log(value = "修改$!{table.comment}", type = SysLogEnum.UPDATE)
+    @Log(value = "修改$!{table.comment}", type = SysLogType.UPDATE)
     #end
     @PostMapping("/$!{cfg.updateRequestMapping}")
-    @Operation(summary = "修改$!{cfg.appPrefix}$!{table.comment}")
+    @Operation(summary = "修改$!{table.comment}")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:update")
     #end
-    public ApiResult update$!{entity}(@Valid @RequestBody $!{cfg.updateDtoName} $!{cfg.updateDtoObjectName}) throws Exception {
-        boolean flag = $!{cfg.serviceObjectName}.update$!{entity}($!{cfg.updateDtoObjectName});
+    public ApiResult update$!{entity}(@Valid @RequestBody $!{cfg.dtoName} $!{cfg.dtoObjectName}) throws Exception {
+        boolean flag = $!{cfg.serviceObjectName}.update$!{entity}($!{cfg.dtoObjectName});
         return ApiResult.result(flag);
     }
 
     /**
-     * 删除$!{cfg.appPrefix}$!{table.comment}
+     * 删除$!{table.comment}
      *
      * @param $!{cfg.pkIdName}
      * @return
      * @throws Exception
      */
     #if($!{cfg.sysLog})
-    @Log(value = "删除$!{table.comment}", type = SysLogEnum.DELETE)
+    @Log(value = "删除$!{table.comment}", type = SysLogType.DELETE)
     #end
     @PostMapping("/$!{cfg.deleteRequestMapping}/{$!{cfg.pkIdName}}")
-    @Operation(summary = "删除$!{cfg.appPrefix}$!{table.comment}")
+    @Operation(summary = "删除$!{table.comment}")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:delete")
     #end
@@ -95,37 +103,38 @@ public class $!{table.controllerName} {
     }
 
     /**
-     * 获取$!{cfg.appPrefix}$!{table.comment}详情
+     * 获取$!{table.comment}详情
      *
      * @param $!{cfg.pkIdName}
      * @return
      * @throws Exception
      */
     @PostMapping("/$!{cfg.infoRequestMapping}/{$!{cfg.pkIdName}}")
-    @Operation(summary = "$!{cfg.appPrefix}$!{table.comment}详情")
+    @Operation(summary = "$!{table.comment}详情")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:info")
     #end
-    public ApiResult<$!{cfg.infoVoName}> get$!{entity}(@PathVariable Long $!{cfg.pkIdName}) throws Exception {
-        $!{cfg.infoVoName} $!{cfg.infoVoObjectName} = $!{cfg.serviceObjectName}.get$!{entity}ById($!{cfg.pkIdName});
-        return ApiResult.success($!{cfg.infoVoObjectName});
+    public ApiResult<$!{cfg.voName}> get$!{entity}(@PathVariable Long $!{cfg.pkIdName}) throws Exception {
+        $!{cfg.voName} $!{cfg.voObjectName} = $!{cfg.serviceObjectName}.get$!{entity}ById($!{cfg.pkIdName});
+        return ApiResult.success($!{cfg.voObjectName});
     }
 
     /**
-     * $!{cfg.appPrefix}$!{table.comment}分页列表
+     * $!{table.comment}分页列表
      *
-     * @param $!{cfg.queryObjectName}
+     * @param query
      * @return
      * @throws Exception
      */
     @PostMapping("/$!{cfg.pageRequestMapping}")
-    @Operation(summary = "$!{cfg.appPrefix}$!{table.comment}分页列表")
+    @Operation(summary = "$!{table.comment}分页列表")
     #if($!{cfg.permission})
     @Permission("$!{cfg.colonTableName}:page")
     #end
-    public ApiResult<$!{cfg.voName}> get$!{entity}Page(@Valid @RequestBody $!{cfg.queryName} $!{cfg.queryObjectName}) throws Exception {
-        Paging<$!{cfg.voName}> paging = $!{cfg.serviceObjectName}.get$!{entity}Page($!{cfg.queryObjectName});
+    public ApiResult<$!{cfg.voName}> get$!{entity}Page(@Valid @RequestBody $!{cfg.queryName} query) throws Exception {
+        Paging<$!{cfg.voName}> paging = $!{cfg.serviceObjectName}.get$!{entity}Page(query);
         return ApiResult.success(paging);
     }
 
+#end
 }

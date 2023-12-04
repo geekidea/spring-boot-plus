@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2022/03/15
  **/
 @Data
-@ConfigurationProperties(prefix = "spring-boot-plus.openapi")
+@ConfigurationProperties(prefix = "openapi")
 public class OpenApiProperties {
 
     /**

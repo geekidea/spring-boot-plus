@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.system.mapper.SysDictMapper">
+
+    <select id="getSysDictById" resultType="io.geekidea.boot.system.vo.SysDictVo">
+        select *
+        from sys_dict
+        where id = #{id}
+    </select>
+
+    <select id="getSysDictPage" parameterType="io.geekidea.boot.system.query.SysDictQuery"
+            resultType="io.geekidea.boot.system.vo.SysDictVo">
+        select *
+        from sys_dict
+        where dict_code = #{dictCode}
+        <if test="keyword != null and keyword != ''">
+            and (value like concat('%',#{keyword},'%')
+            or label like concat('%',#{keyword},'%')
+            )
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+    </select>
+
+    <select id="getAppSysDictList" parameterType="io.geekidea.boot.system.query.SysDictAppQuery"
+            resultType="io.geekidea.boot.system.vo.SysDictAppVo">
+        select value, label, dict_code
+        from sys_dict
+        where status = 1
+        <if test="dictCode != null and dictCode != ''">
+            and dict_code = #{dictCode}
+        </if>
+        order by sort
+    </select>
+
+</mapper>

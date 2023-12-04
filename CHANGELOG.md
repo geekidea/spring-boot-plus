@@ -12,10 +12,10 @@ config.setMapperPackage("dao");
 config.setDtoPackage("dto");
 config.setQueryPackage("req");
 config.setVoPackage("resp");
-config.setAddDtoFileName("AddDTO");
+config.setDtoFileName("AddDTO");
 config.setUpdateDtoFileName("UpdateDTO");
 config.setQueryFileName("Request");
-config.setInfoVoFileName("DetailVo");
+config.setVoFileName("DetailVo");
 config.setVoFileName("Response");
 ```
 #### 代码生成可自定义controller中的请求路径方式

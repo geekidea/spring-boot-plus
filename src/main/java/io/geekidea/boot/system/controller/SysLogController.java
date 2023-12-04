@@ -1,12 +1,11 @@
 package io.geekidea.boot.system.controller;
 
+import io.geekidea.boot.system.vo.SysLogVo;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.system.query.SysLogQuery;
 import io.geekidea.boot.system.service.SysLogService;
-import io.geekidea.boot.system.vo.SysLogInfoVo;
-import io.geekidea.boot.system.vo.SysLogVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +22,8 @@ import javax.validation.Valid;
  */
 @Slf4j
 @RestController
-@RequestMapping("/sysLog")
 @Tag(name = "系统日志")
+@RequestMapping("/admin/sysLog")
 public class SysLogController {
 
     @Autowired
@@ -40,9 +39,9 @@ public class SysLogController {
     @PostMapping("/getSysLog/{id}")
     @Operation(summary = "系统日志详情")
     @Permission("sys:log:info")
-    public ApiResult<SysLogInfoVo> getSysLog(@PathVariable Long id) throws Exception {
-        SysLogInfoVo sysLogInfoVo = sysLogService.getSysLogById(id);
-        return ApiResult.success(sysLogInfoVo);
+    public ApiResult<SysLogVo> getSysLog(@PathVariable Long id) throws Exception {
+        SysLogVo sysLogVo = sysLogService.getSysLogById(id);
+        return ApiResult.success(sysLogVo);
     }
 
     /**
@@ -52,11 +51,11 @@ public class SysLogController {
      * @return
      * @throws Exception
      */
-    @PostMapping("/getSysLogList")
+    @PostMapping("/getSysLogPage")
     @Operation(summary = "系统日志分页列表")
-    @Permission("sys:log:list")
-    public ApiResult<SysLogVo> getSysLogList(@Valid @RequestBody SysLogQuery sysLogQuery) throws Exception {
-        Paging<SysLogVo> paging = sysLogService.getSysLogList(sysLogQuery);
+    @Permission("sys:log:page")
+    public ApiResult<SysLogVo> getSysLogPage(@Valid @RequestBody SysLogQuery sysLogQuery) throws Exception {
+        Paging<SysLogVo> paging = sysLogService.getSysLogPage(sysLogQuery);
         return ApiResult.success(paging);
     }
 

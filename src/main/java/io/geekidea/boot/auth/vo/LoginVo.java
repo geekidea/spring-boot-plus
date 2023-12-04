@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author geekidea
@@ -30,21 +29,18 @@ public class LoginVo implements Serializable {
     private boolean admin;
 
     @Schema(description = "角色ID")
-    private List<Long> roleIds;
+    private Long roleId;
 
-    @Schema(description = "角色名称集合")
-    private List<String> roleNames;
+    @Schema(description = "角色编码")
+    private String roleCode;
 
-    @Schema(description = "角色编码集合")
-    private List<String> roleCodes;
-
-    @Schema(description = "部门ID")
-    private Long deptId;
-
-    @Schema(description = "部门名称")
-    private String deptName;
+    @Schema(description = "角色名称")
+    private String roleName;
 
     @Schema(description = "登录时间")
     private Date loginTime;
+
+    @Schema(description = "系统类型 1：管理后台，2：用户端")
+    private Integer systemType;
 
 }

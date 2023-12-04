@@ -1,6 +1,6 @@
 package io.geekidea.boot.framework.filter;
 
-import io.geekidea.boot.framework.constant.CommonConstant;
+import io.geekidea.boot.common.constant.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 

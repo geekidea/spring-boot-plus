@@ -1,6 +1,6 @@
 package io.geekidea.boot;
 
-import io.geekidea.boot.framework.util.IpUtil;
+import io.geekidea.boot.util.IpUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

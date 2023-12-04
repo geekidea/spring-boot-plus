@@ -10,20 +10,18 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import io.geekidea.boot.auth.annotation.Permission;
-import io.geekidea.boot.auth.util.LoginUtil;
-import io.geekidea.boot.auth.util.TokenUtil;
+import io.geekidea.boot.auth.util.LoginCommonUtil;
+import io.geekidea.boot.common.constant.AopConstant;
+import io.geekidea.boot.common.constant.CommonConstant;
+import io.geekidea.boot.common.enums.SystemType;
 import io.geekidea.boot.config.properties.LogAopProperties;
 import io.geekidea.boot.framework.annotation.Log;
-import io.geekidea.boot.framework.constant.AspectConstant;
-import io.geekidea.boot.framework.constant.CommonConstant;
 import io.geekidea.boot.framework.exception.GlobalExceptionHandler;
 import io.geekidea.boot.framework.response.ApiResult;
-import io.geekidea.boot.framework.util.HttpRequestUtil;
-import io.geekidea.boot.framework.util.IpRegionUtil;
-import io.geekidea.boot.framework.util.IpUtil;
 import io.geekidea.boot.framework.vo.IpRegion;
 import io.geekidea.boot.system.entity.SysLog;
 import io.geekidea.boot.system.mapper.SysLogMapper;
+import io.geekidea.boot.util.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -94,18 +92,13 @@ public class SysLogAop {
     @Autowired
     private SysLogMapper sysLogMapper;
 
-    @Around(AspectConstant.COMMON_POINTCUT)
+    @Around(AopConstant.PROJECT_POINTCUT)
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = HttpRequestUtil.getRequest();
-        // 项目上下文路径
-        String contextPath = request.getContextPath();
-        // 请求全路径
-        String requestUrl = request.getRequestURI();
-        if (StringUtils.isNotBlank(contextPath)) {
-            requestUrl = requestUrl.substring(contextPath.length());
-        }
+        // 请求路径
+        String servletPath = request.getServletPath();
         // 是否处理日志
-        boolean isHandleLog = isHandleLog(requestUrl);
+        boolean isHandleLog = isHandleLog(servletPath);
         if (!isHandleLog) {
             // 如果是排除的路径，则直接跳过
             return joinPoint.proceed();
@@ -113,7 +106,7 @@ public class SysLogAop {
         Object result;
         try {
             // 执行方法之前处理
-            handleBefore(joinPoint, request, requestUrl);
+            handleBefore(joinPoint, request, servletPath);
             // 执行目标方法,获得返回值
             result = joinPoint.proceed();
             // 执行方法之后处理
@@ -132,10 +125,10 @@ public class SysLogAop {
     /**
      * 是否处理日志
      *
-     * @param requestUrl
+     * @param servletPath
      * @return
      */
-    private boolean isHandleLog(String requestUrl) {
+    private boolean isHandleLog(String servletPath) {
         // 判断是否是排除路径
         boolean isHandleLog = true;
         // 排除路径
@@ -143,7 +136,7 @@ public class SysLogAop {
         if (CollectionUtils.isNotEmpty(excludePaths)) {
             for (String excludePath : excludePaths) {
                 AntPathMatcher antPathMatcher = new AntPathMatcher();
-                boolean match = antPathMatcher.match(excludePath, requestUrl);
+                boolean match = antPathMatcher.match(excludePath, servletPath);
                 if (match) {
                     isHandleLog = false;
                     break;
@@ -157,9 +150,11 @@ public class SysLogAop {
      * 执行方法之前
      *
      * @param joinPoint
+     * @param request
+     * @param servletPath
      * @throws Exception
      */
-    private void handleBefore(ProceedingJoinPoint joinPoint, HttpServletRequest request, String requestUrl) throws Exception {
+    private void handleBefore(ProceedingJoinPoint joinPoint, HttpServletRequest request, String servletPath) throws Exception {
         try {
             Signature signature = joinPoint.getSignature();
             MethodSignature methodSignature = (MethodSignature) signature;
@@ -169,7 +164,7 @@ public class SysLogAop {
             // 将日志保存到当前线程中
             LOCAL_LOG.set(sysLog);
             // 设置请求路径
-            sysLog.setRequestUrl(requestUrl);
+            sysLog.setRequestUrl(servletPath);
             // 设置请求时间，包含毫秒
             String requestTime = DateUtil.format(new Date(), DatePattern.NORM_DATETIME_MS_PATTERN);
             sysLog.setRequestTime(requestTime);
@@ -214,14 +209,14 @@ public class SysLogAop {
                     sysLog.setOrigin(POSTMAN);
                 }
             }
-
             String requestOrigion = request.getHeader(REQUEST_ORIGION);
             if (KNIFE4J.equals(requestOrigion)) {
                 sysLog.setSourceType(KNIFE4J);
             }
-
             // 处理登录人信息
-            handleLoginUser(sysLog, requestUrl, requestBodyString);
+            handleLoginUser(sysLog, servletPath, requestBodyString);
+            StringBuffer requestURL = request.getRequestURL();
+            printLog("requestURL: " + requestURL);
             // 打印请求头
             printHeadLog(request);
             // 打印请求日志
@@ -240,8 +235,8 @@ public class SysLogAop {
         try {
             if (result != null) {
                 SysLog sysLog = LOCAL_LOG.get();
-                ApiResult apiResult = (ApiResult) result;
-                if (apiResult != null) {
+                if (result instanceof ApiResult) {
+                    ApiResult apiResult = (ApiResult) result;
                     boolean success = apiResult.isSuccess();
                     sysLog.setResponseSuccess(success);
                     sysLog.setResponseCode(apiResult.getCode());
@@ -251,10 +246,12 @@ public class SysLogAop {
                         String responseDataString = JSON.toJSONString(responseData);
                         sysLog.setResponseData(responseDataString);
                     }
+                    printLog("response: code:" + apiResult.getCode() + ",success:" + apiResult.isSuccess() + ",msg:" + apiResult.getMsg());
+                } else {
+                    printLog("response:" + result);
                 }
-                printLog("response：" + JSON.toJSONString(result));
             } else {
-                printLog("response：");
+                printLog("response:");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -333,7 +330,7 @@ public class SysLogAop {
         String requestBodyString = handleRequestParam(request, sysLog, isRequestBody);
         try {
             // 设置token
-            String token = TokenUtil.getToken(request);
+            String token = TokenUtil.getToken();
             sysLog.setToken(token);
         } catch (Exception e) {
             e.printStackTrace();
@@ -488,23 +485,27 @@ public class SysLogAop {
      * 处理登录人信息
      *
      * @param sysLog
-     * @param requestUrl
+     * @param servletPath
      * @param requestBodyString
      * @throws Exception
      */
-    private void handleLoginUser(SysLog sysLog, String requestUrl, String requestBodyString) throws Exception {
+    private void handleLoginUser(SysLog sysLog, String servletPath, String requestBodyString) throws Exception {
         try {
-            String loginUrl = logAopProperties.getLoginUrl();
-            if (requestUrl.equals(loginUrl)) {
-                // 获取请求参数中的用户名称
-                if (StringUtils.isNotBlank(requestBodyString)) {
-                    JSONObject jsonObject = JSON.parseObject(requestBodyString);
-                    String username = jsonObject.getString(USERNAME);
-                    sysLog.setUsername(username);
+            // TODO 配置是否打印响应日志，通常增删改才需要记录响应日志，查询不用记录
+            String token = sysLog.getToken();
+            if (StringUtils.isNotBlank(token)) {
+                SystemType systemType = SystemTypeUtil.getSystemTypeByToken(token);
+                if (systemType != null) {
+                    // 系统类型 1：Admin管理后台，2：APP移动端端
+                    sysLog.setSystemType(systemType.getCode());
+                    // 记录用户ID
+                    try {
+                        Long userId = LoginCommonUtil.getUserId(systemType);
+                        sysLog.setUserId(userId);
+                    } catch (Exception e) {
+
+                    }
                 }
-            } else {
-                sysLog.setUserId(LoginUtil.getUserId());
-                sysLog.setUsername(LoginUtil.getUsername());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -521,12 +522,12 @@ public class SysLogAop {
         try {
             if (sysLog != null) {
                 Integer logType = sysLog.getLogType();
-//                if (logType != null) {
-                int result = sysLogMapper.insert(sysLog);
-                if (result != 1) {
-                    log.error("保存操作日志错误" + sysLog);
+                if (logType != null) {
+                    int result = sysLogMapper.insert(sysLog);
+                    if (result != 1) {
+                        log.error("保存操作日志错误" + sysLog);
+                    }
                 }
-//                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -541,7 +542,7 @@ public class SysLogAop {
     private void printLog(SysLog sysLog) {
         if (logAopProperties.isPrintLog()) {
             if (sysLog != null) {
-                String requestLog = sysLog.getRequestMethod() + "," + sysLog.getRequestUrl() + "," + sysLog.getContentType() + ",isRequestBody:" + sysLog.getIsRequestBody() + "," + sysLog.getRequestParam();
+                String requestLog = "request: " + sysLog.getRequestMethod() + "," + sysLog.getRequestUrl() + "," + sysLog.getContentType() + ",isRequestBody:" + sysLog.getIsRequestBody() + "," + sysLog.getRequestParam();
                 printLog(requestLog);
             }
         }
