@@ -5,8 +5,8 @@ import cn.hutool.setting.yaml.YamlUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.geekidea.boot.framework.annotation.Log;
 import io.geekidea.boot.common.enums.SysLogType;
+import io.geekidea.boot.framework.annotation.Log;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.BasePageQuery;
 import io.geekidea.boot.framework.page.OrderByItem;
@@ -428,16 +428,25 @@ public class GeneratorConfig {
 
 
     public GeneratorConfig() throws Exception {
+        log.info("生成代码JDBC连接信息：");
         String projectPath = System.getProperty("user.dir");
-        String generatorYmlPath = "/src/test/resources/generator.yml";
-        String configFileFullPath = projectPath + generatorYmlPath;
-        Dict dict = YamlUtil.loadByPath(configFileFullPath);
-        String driver = dict.getStr("driver");
-        String url = dict.getStr("url");
-        String username = dict.getStr("username");
-        String password = dict.getStr("password");
-        log.info("生成代码JDBC配置信息：");
-        log.info("配置文件路径：" + configFileFullPath);
+        String applicationYmlPath = "/src/main/resources/application.yml";
+        String applicationYmlFilePath = projectPath + applicationYmlPath;
+        Dict applicationYmlDict = YamlUtil.loadByPath(applicationYmlFilePath);
+        // 从application.yml中获取spring.profiles.active的环境值，如：dev、test、prod等
+        String active = applicationYmlDict.getByPath("spring.profiles.active", String.class);
+        log.info("active = " + active);
+        // 从application.yml获取driver-class-name
+        String driver = applicationYmlDict.getByPath("spring.datasource.driver-class-name", String.class);
+        // 获取指定环境的配置文件
+        String applicationActiveYmlPath = "/src/main/resources/application-" + active + ".yml";
+        String applicationActiveYmlFilePath = projectPath + applicationActiveYmlPath;
+        Dict applicationActiveYmlDict = YamlUtil.loadByPath(applicationActiveYmlFilePath);
+        // 读取url、username、password
+        String url = applicationActiveYmlDict.getByPath("spring.datasource.url", String.class);
+        String username = applicationActiveYmlDict.getByPath("spring.datasource.username", String.class);
+        String password = applicationActiveYmlDict.getByPath("spring.datasource.password", String.class);
+        log.info("activeFile：" + applicationActiveYmlFilePath);
         log.info("driver: " + driver);
         log.info("url: " + url);
         log.info("username: " + username);
@@ -447,7 +456,7 @@ public class GeneratorConfig {
                 StringUtils.isBlank(username) ||
                 StringUtils.isBlank(password)
         ) {
-            throw new RuntimeException("JDBC配置异常，请检查" + generatorYmlPath + "配置文件");
+            throw new RuntimeException("JDBC配置异常");
         }
         this.driver = driver;
         this.url = url;

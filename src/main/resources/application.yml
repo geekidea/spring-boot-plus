@@ -192,7 +192,7 @@ openapi:
   contact-name: geekidea
   contact-url: https://geekidea.io
   contact-email: geekidea@qq.com
-  version: @project.version@
+  version: 1.0
   external-description: spring-boot-plus
   external-url: https://springboot.plus
 
