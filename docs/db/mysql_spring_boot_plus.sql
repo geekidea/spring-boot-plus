@@ -431,7 +431,7 @@ create table user
     head               varchar(200)                         null comment '头像',
     introduction       varchar(200)                         null comment '个人简介',
     is_vip             tinyint(1) default 0                 not null comment '是否是VIP，1：是，0：否',
-    vip_level          int                                  not null comment 'VIP等级 1：普通会员，2：黄金会员，3：铂金会员，4：钻石会员',
+    vip_level          int                                  null comment 'VIP等级 1：普通会员，2：黄金会员，3：铂金会员，4：钻石会员',
     status             tinyint(1) default 1                 not null comment '状态 1：正常，0：禁用',
     register_time      datetime                             null comment '注册时间',
     register_ip        varchar(20)                          null comment '注册IP',
