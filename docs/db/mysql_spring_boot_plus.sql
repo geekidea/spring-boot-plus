@@ -505,3 +505,43 @@ INSERT INTO data_range_app_test (id, name, user_id, remark, create_time, update_
 INSERT INTO data_range_app_test (id, name, user_id, remark, create_time, update_time) VALUES (6, '数据6', 2, null, '2023-12-02 17:12:57', null);
 INSERT INTO data_range_app_test (id, name, user_id, remark, create_time, update_time) VALUES (488957102522373, '测试添加', 1, 'aa', '2023-12-02 17:51:34', null);
 
+
+-- 演示商户
+create table demo_merchant
+(
+    id          bigint                               not null comment '主键'
+        primary key,
+    name        varchar(20)                          not null comment '商户名称',
+    remark      varchar(200)                         null comment '备注',
+    status      tinyint(1) default 1                 not null comment '状态，0：禁用，1：启用',
+    create_time timestamp  default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time timestamp                            null comment '修改时间'
+)
+    comment '测试商户';
+
+INSERT INTO spring_boot_plus.demo_merchant (id, name, remark, status, create_time, update_time) VALUES (1, '商户A', null, 1, '2023-12-05 00:06:36', null);
+INSERT INTO spring_boot_plus.demo_merchant (id, name, remark, status, create_time, update_time) VALUES (2, '商户B', null, 1, '2023-12-05 00:06:37', null);
+INSERT INTO spring_boot_plus.demo_merchant (id, name, remark, status, create_time, update_time) VALUES (3, '商户C', null, 1, '2023-12-05 00:06:37', null);
+
+
+-- 演示商品表
+create table demo_product
+(
+    id          bigint                               not null comment '主键'
+        primary key,
+    name        varchar(20)                          not null comment '商品名称',
+    merchant_id bigint                               not null comment '商户ID',
+    remark      varchar(200)                         null comment '备注',
+    status      tinyint(1) default 1                 not null comment '状态，0：禁用，1：启用',
+    create_time timestamp  default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time timestamp                            null comment '修改时间'
+)
+    comment '测试商品';
+
+INSERT INTO spring_boot_plus.demo_product (id, name, merchant_id, remark, status, create_time, update_time) VALUES (10, '商户A-商品1', 1, null, 1, '2023-12-05 00:08:37', null);
+INSERT INTO spring_boot_plus.demo_product (id, name, merchant_id, remark, status, create_time, update_time) VALUES (11, '商户A-商品2', 1, 'update...111', 1, '2023-12-05 00:08:37', '2023-12-05 00:45:31');
+INSERT INTO spring_boot_plus.demo_product (id, name, merchant_id, remark, status, create_time, update_time) VALUES (20, '商户B-商品1', 2, null, 1, '2023-12-05 00:08:37', null);
+INSERT INTO spring_boot_plus.demo_product (id, name, merchant_id, remark, status, create_time, update_time) VALUES (21, '商户B-商品2', 2, null, 1, '2023-12-05 00:08:37', null);
+INSERT INTO spring_boot_plus.demo_product (id, name, merchant_id, remark, status, create_time, update_time) VALUES (30, '商户C-商品1', 3, null, 1, '2023-12-05 00:08:37', null);
+INSERT INTO spring_boot_plus.demo_product (id, name, merchant_id, remark, status, create_time, update_time) VALUES (31, '商户C-商品2', 3, null, 1, '2023-12-05 00:08:37', null);
+INSERT INTO spring_boot_plus.demo_product (id, name, merchant_id, remark, status, create_time, update_time) VALUES (32, '商户C-商品3', 3, null, 1, '2023-12-05 00:08:37', null);

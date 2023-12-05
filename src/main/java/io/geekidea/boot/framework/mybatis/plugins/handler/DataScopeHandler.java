@@ -1,4 +1,4 @@
-package io.geekidea.boot.framework.mybatis;
+package io.geekidea.boot.framework.mybatis.plugins.handler;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.handler.DataPermissionHandler;

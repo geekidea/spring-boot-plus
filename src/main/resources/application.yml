@@ -172,6 +172,14 @@ wx:
     appid:
     secret:
 
+# 多商户行级数据权限配置
+merchant-line:
+  # 商户ID列名称
+  merchant-id-column: merchant_id
+  # 包含的表名称,自动添加商户ID条件处理
+  include-tables:
+    - demo_product
+
 # swagger配置
 springdoc:
   swagger-ui:

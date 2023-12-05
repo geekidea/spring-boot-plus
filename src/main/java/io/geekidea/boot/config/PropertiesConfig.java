@@ -18,7 +18,8 @@ import org.springframework.context.annotation.Configuration;
         OpenApiProperties.class,
         XssProperties.class,
         WxMpProperties.class,
-        OssProperties.class
+        OssProperties.class,
+        MerchantLineProperties.class
 })
 public class PropertiesConfig {
 

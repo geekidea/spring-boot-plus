@@ -119,6 +119,16 @@ public class LoginUtil {
     }
 
     /**
+     * 判断不是管理员
+     *
+     * @return
+     * @throws Exception
+     */
+    public static boolean isNotAdmin() throws Exception {
+        return !isAdmin();
+    }
+
+    /**
      * 检查是否是管理员
      */
     public static void checkAdmin() throws Exception {

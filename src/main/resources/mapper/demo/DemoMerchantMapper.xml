@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.demo.mapper.DemoMerchantMapper">
+
+    <select id="getDemoMerchantById" resultType="io.geekidea.boot.demo.vo.DemoMerchantVo">
+        select *
+        from demo_merchant
+        where id = #{id}
+    </select>
+
+    <select id="getDemoMerchantPage" parameterType="io.geekidea.boot.demo.query.DemoMerchantQuery"
+            resultType="io.geekidea.boot.demo.vo.DemoMerchantVo">
+        select *
+        from demo_merchant
+    </select>
+
+    <select id="getAppDemoMerchantById" resultType="io.geekidea.boot.demo.vo.DemoMerchantAppVo">
+        select *
+        from demo_merchant
+        where id = #{id}
+    </select>
+
+    <select id="getAppDemoMerchantPage" parameterType="io.geekidea.boot.demo.query.DemoMerchantAppQuery"
+            resultType="io.geekidea.boot.demo.vo.DemoMerchantAppVo">
+        select *
+        from demo_merchant
+    </select>
+
+</mapper>

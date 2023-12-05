@@ -87,4 +87,32 @@ public class SystemTypeUtil {
         return null;
     }
 
+    /**
+     * 判断是否是管理后台系统
+     *
+     * @return
+     * @throws Exception
+     */
+    public static boolean isAdminSystem() throws Exception {
+        SystemType systemType = getSystemTypeByToken();
+        if (SystemType.ADMIN == systemType) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 判断是否是APP移动端系统
+     *
+     * @return
+     * @throws Exception
+     */
+    public static boolean isAppSystem() throws Exception {
+        SystemType systemType = getSystemTypeByToken();
+        if (SystemType.APP == systemType) {
+            return true;
+        }
+        return false;
+    }
+
 }
