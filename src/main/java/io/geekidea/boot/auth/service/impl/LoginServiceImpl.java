@@ -77,6 +77,8 @@ public class LoginServiceImpl implements LoginService {
         loginVo.setUserId(userId);
         loginVo.setLoginTime(new Date());
         loginVo.setAdmin(sysUser.getIsAdmin());
+        loginVo.setRoleCode(sysRole.getCode());
+        loginVo.setRoleName(sysRole.getName());
         // 系统类型 1：管理后台，2：用户端
         loginVo.setSystemType(SystemType.ADMIN.getCode());
         // 获取登录用户的权限编码
