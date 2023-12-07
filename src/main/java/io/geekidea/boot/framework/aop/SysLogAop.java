@@ -94,7 +94,7 @@ public class SysLogAop {
 
     @Around(AopConstant.PROJECT_POINTCUT)
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request = HttpRequestUtil.getRequest();
+        HttpServletRequest request = HttpServletRequestUtil.getRequest();
         // 请求路径
         String servletPath = request.getServletPath();
         // 是否处理日志

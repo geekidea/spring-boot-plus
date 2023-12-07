@@ -9,7 +9,6 @@ import io.geekidea.boot.config.properties.LoginAdminProperties;
 import io.geekidea.boot.framework.exception.LoginException;
 import io.geekidea.boot.framework.exception.LoginTokenException;
 import io.geekidea.boot.framework.interceptor.BaseExcludeMethodInterceptor;
-import io.geekidea.boot.framework.interceptor.BaseMethodInterceptor;
 import io.geekidea.boot.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -43,7 +42,7 @@ public class LoginInterceptor extends BaseExcludeMethodInterceptor {
         }
         String token = TokenUtil.getToken();
         if (StringUtils.isBlank(token)) {
-            throw new LoginTokenException("token不能为空");
+            throw new LoginTokenException("请登录后再操作");
         }
         // 获取登录用户信息
         LoginRedisVo loginRedisVo = LoginUtil.getLoginRedisVo();

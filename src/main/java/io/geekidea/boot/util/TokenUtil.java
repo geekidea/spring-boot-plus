@@ -83,7 +83,7 @@ public class TokenUtil {
      */
     public static String getToken() throws Exception {
         // 从请求对象中获取
-        HttpServletRequest request = HttpRequestUtil.getRequest();
+        HttpServletRequest request = HttpServletRequestUtil.getRequest();
         String token = (String) request.getAttribute(CommonConstant.REQUEST_PARAM_TOKEN);
         return token;
     }
@@ -141,35 +141,23 @@ public class TokenUtil {
             return null;
         }
         if (SystemType.ADMIN == systemType) {
-            return getCookieValueByName(cookies, LoginConstant.ADMIN_COOKIE_TOKEN_NAME);
+            // 管理系统token的cookie可以通过接口文档传递或者浏览器页面传递
+            return CookieUtil.getCookieValueByName(cookies, LoginConstant.ADMIN_COOKIE_TOKEN_NAME);
         } else if (SystemType.APP == systemType) {
-            return getCookieValueByName(cookies, LoginConstant.APP_COOKIE_TOKEN_NAME);
+            // 判断是否是接口文档请求，是则从cookie中获取，否则不获取，app接口只能通过接口文档传递token的cookie
+            if (HttpServletRequestUtil.isDocRequest()) {
+                return CookieUtil.getCookieValueByName(cookies, LoginConstant.APP_COOKIE_TOKEN_NAME);
+            }
+            return null;
         } else {
-            String cookieValue = getCookieValueByName(cookies, LoginConstant.ADMIN_COOKIE_TOKEN_NAME);
+            String cookieValue = CookieUtil.getCookieValueByName(cookies, LoginConstant.ADMIN_COOKIE_TOKEN_NAME);
             if (StringUtils.isBlank(cookieValue)) {
-                cookieValue = getCookieValueByName(cookies, LoginConstant.APP_COOKIE_TOKEN_NAME);
+                if (HttpServletRequestUtil.isDocRequest()) {
+                    cookieValue = CookieUtil.getCookieValueByName(cookies, LoginConstant.APP_COOKIE_TOKEN_NAME);
+                }
             }
             return cookieValue;
         }
-    }
-
-    /**
-     * 通过cookie名称获取cookie值
-     *
-     * @param cookies
-     * @param cookieName
-     * @return
-     * @throws Exception
-     */
-    public static String getCookieValueByName(Cookie[] cookies, String cookieName) throws Exception {
-        for (Cookie cookie : cookies) {
-            String name = cookie.getName();
-            if (name.equals(cookieName)) {
-                String value = cookie.getValue();
-                return value;
-            }
-        }
-        return null;
     }
 
     /**

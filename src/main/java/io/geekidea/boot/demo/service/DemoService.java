@@ -14,7 +14,7 @@ import io.geekidea.boot.demo.vo.DemoAppVo;
  * 演示 服务接口
  *
  * @author geekidea
- * @since 2023-12-03
+ * @since 2023-12-06
  */
 public interface DemoService extends IService<Demo> {
 

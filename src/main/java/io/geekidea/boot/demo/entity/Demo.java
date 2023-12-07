@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -12,7 +13,7 @@ import lombok.Data;
  * 演示
  *
  * @author geekidea
- * @since 2023-12-03
+ * @since 2023-12-06
  */
 @Data
 @TableName("demo")
@@ -27,6 +28,9 @@ public class Demo implements Serializable {
 
     @Schema(description = "名称")
     private String name;
+
+    @Schema(description = "金额")
+    private BigDecimal amount;
 
     @Schema(description = "备注")
     private String remark;

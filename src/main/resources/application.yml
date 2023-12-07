@@ -94,15 +94,16 @@ boot:
     - /webjars/**
     - /favicon.ico
     - /index.html
+    - /file/**
 
 # 登录权限配置
 login:
   # 排除路径
   exclude-paths:
-    - /file/**
+    -
   # 管理后台登录配置
   admin:
-    # 是否启用登录权限校验
+    # 是否启用管理后台登录权限校验
     enable: true
     # 是否单次登录
     single-Login: false
@@ -116,11 +117,9 @@ login:
     # 排除的路径
     exclude-paths:
       - /admin/login
-      - /common/**
-      - /app/**
   # 用户端登录配置
   app:
-    # 是否启用登录权限校验
+    # 是否启用APP移动端登录权限校验
     enable: true
     # 是否单次登录
     single-Login: false
@@ -129,6 +128,13 @@ login:
     # 包含路径
     include-paths:
       - /app/**
+  # 系统公共请求
+  common:
+    # 是否启用拦截器
+    enable: true
+    # 包含路径
+    include-paths:
+      - /common/**
 
 # 日志AOP配置
 log-aop:
@@ -141,6 +147,7 @@ log-aop:
   # 排除路径
   excludePaths:
     - /sysLog/**
+
 # XSS
 xss:
   # 是否启用，默认禁用
@@ -151,9 +158,11 @@ xss:
   order: 2
   # 是否支持异步
   async: true
+
 # redis项目前缀
 redis:
   projectPrefix: boot
+
 # file上传配置
 file:
   # 文件服务类型 本地还是OSS

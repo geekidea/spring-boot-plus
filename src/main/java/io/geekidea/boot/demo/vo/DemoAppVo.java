@@ -3,6 +3,7 @@ package io.geekidea.boot.demo.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,7 +11,7 @@ import java.util.Date;
  * App演示VO
  *
  * @author geekidea
- * @since 2023-12-03
+ * @since 2023-12-06
  */
 @Data
 @Schema(description = "App演示查询结果")
@@ -23,6 +24,9 @@ public class DemoAppVo implements Serializable {
 
     @Schema(description = "名称")
     private String name;
+
+    @Schema(description = "金额")
+    private BigDecimal amount;
 
     @Schema(description = "备注")
     private String remark;

@@ -11,12 +11,12 @@ import java.io.PrintWriter;
  * @author geekidea
  * @date 2018-11-08
  */
-public final class HttpResponseUtil {
+public final class HttpServletResponseUtil {
 
     private static String UTF8 = "UTF-8";
     private static String CONTENT_TYPE = "application/json";
 
-    private HttpResponseUtil() {
+    private HttpServletResponseUtil() {
         throw new AssertionError();
     }
 

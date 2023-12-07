@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author geekidea
  * @date 2022/10/12
  **/
-public class PageHelperClearInterceptor extends BaseExcludeMethodInterceptor {
+public class PageHelperClearInterceptor extends BaseMethodInterceptor {
 
     @Override
     protected boolean preHandleMethod(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
         LoginProperties.class,
         LoginAdminProperties.class,
         LoginAppProperties.class,
+        LoginCommonProperties.class,
         FileProperties.class,
         OpenApiProperties.class,
         XssProperties.class,

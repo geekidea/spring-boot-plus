@@ -37,7 +37,7 @@ public class LoginAppInterceptor extends BaseExcludeMethodInterceptor {
         // 移动端登录校验
         String token = TokenUtil.getToken();
         if (StringUtils.isBlank(token)) {
-            throw new LoginTokenException("token不能为空");
+            throw new LoginTokenException("请登录后再操作");
         }
         // 获取登录用户信息
         LoginRedisAppVo loginRedisAppVo = LoginAppUtil.getLoginRedisVo();

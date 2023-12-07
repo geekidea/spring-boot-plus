@@ -37,10 +37,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private LoginAppProperties loginAppProperties;
 
     @Autowired
+    private LoginCommonProperties loginCommonProperties;
+
+    @Autowired
     private FileProperties fileProperties;
 
     @Autowired
     private XssProperties xssProperties;
+
 
     @Bean
     public ExcludePathInterceptor excludePathInterceptor() {
@@ -60,6 +64,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public LoginAppInterceptor loginAppInterceptor() {
         return new LoginAppInterceptor();
+    }
+
+    @Bean
+    public LoginCommonInterceptor loginCommonInterceptor() {
+        return new LoginCommonInterceptor();
     }
 
     @Bean
@@ -142,7 +151,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // 刷新token拦截器
         registry.addInterceptor(refreshTokenInterceptor());
 
-        // TODO 公共请求拦截器，排除/admin和/app开头的所有请求
+        // 系统公共请求拦截器，子拦截/common/开头的请求
+        boolean enableCommonInterceptor = loginCommonProperties.isEnable();
+        if (enableCommonInterceptor){
+            registry.addInterceptor(loginCommonInterceptor()).addPathPatterns(loginCommonProperties.getIncludePaths());
+        }
+
         // 分页缓存清除拦截器
         registry.addInterceptor(pageHelperClearInterceptor());
     }

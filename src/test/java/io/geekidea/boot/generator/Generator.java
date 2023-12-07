@@ -19,7 +19,7 @@ public class Generator {
                 .setModuleName("demo")
                 .setAuthor("geekidea");
         // 表名称和需要去掉的表前缀
-        config.setTableNames("demo_merchant","demo_product")
+        config.setTableNames("demo")
                 .setTablePrefix("");
         // 设置生成的类型
         config.setGeneratorType(GeneratorType.FULL);

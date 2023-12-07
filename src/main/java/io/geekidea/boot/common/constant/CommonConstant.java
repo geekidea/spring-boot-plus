@@ -34,6 +34,11 @@ public interface CommonConstant {
     String DEMO_PACKAGE_NAME = PACKAGE_NAME + ".demo";
 
     /**
+     * 达人通AI包名称
+     */
+    String AI_PACKAGE_NAME = PACKAGE_NAME + ".ai";
+
+    /**
      * 默认页码为1
      */
     Integer DEFAULT_PAGE_INDEX = 1;
@@ -75,4 +80,13 @@ public interface CommonConstant {
      */
     int ONE_THOUSAND = 1000;
 
+    /**
+     * Knife4j
+     */
+    String KNIFE4J = "Knife4j";
+
+    /**
+     * swaggerUI访问路径
+     */
+    String SWAGGER_UI_PATH = "/swagger-ui/index.html";
 }

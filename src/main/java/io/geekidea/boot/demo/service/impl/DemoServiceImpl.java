@@ -1,22 +1,18 @@
 package io.geekidea.boot.demo.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.geekidea.boot.auth.util.LoginUtil;
-import io.geekidea.boot.common.enums.SystemType;
-import io.geekidea.boot.demo.dto.DemoDto;
-import io.geekidea.boot.demo.entity.Demo;
-import io.geekidea.boot.demo.mapper.DemoMapper;
-import io.geekidea.boot.demo.query.DemoAppQuery;
-import io.geekidea.boot.demo.query.DemoQuery;
-import io.geekidea.boot.demo.service.DemoService;
-import io.geekidea.boot.demo.vo.DemoAppVo;
-import io.geekidea.boot.demo.vo.DemoVo;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.OrderByItem;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.util.PagingUtil;
-import io.geekidea.boot.util.SystemTypeUtil;
-import io.geekidea.boot.util.TokenUtil;
+import io.geekidea.boot.demo.dto.DemoDto;
+import io.geekidea.boot.demo.entity.Demo;
+import io.geekidea.boot.demo.mapper.DemoMapper;
+import io.geekidea.boot.demo.query.DemoQuery;
+import io.geekidea.boot.demo.service.DemoService;
+import io.geekidea.boot.demo.vo.DemoVo;
+import io.geekidea.boot.demo.query.DemoAppQuery;
+import io.geekidea.boot.demo.vo.DemoAppVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +26,7 @@ import java.util.List;
  * 演示 服务实现类
  *
  * @author geekidea
- * @since 2023-12-03
+ * @since 2023-12-06
  */
 @Slf4j
 @Service
@@ -68,21 +64,6 @@ public class DemoServiceImpl extends ServiceImpl<DemoMapper, Demo> implements De
 
     @Override
     public DemoVo getDemoById(Long id) throws Exception {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String token = TokenUtil.getToken();
-                    System.out.println("token = " + token);
-                    SystemType systemTypeByToken = SystemTypeUtil.getSystemTypeByToken();
-                    System.out.println("systemTypeByToken = " + systemTypeByToken);
-                    Long userId = LoginUtil.getUserId();
-                    System.out.println("userId = " + userId);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
         return demoMapper.getDemoById(id);
     }
 

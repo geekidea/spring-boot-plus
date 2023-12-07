@@ -7,6 +7,7 @@ package io.geekidea.boot.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
@@ -32,7 +33,7 @@ public class IpUtil {
      * @return
      */
     public static String getRequestIp() {
-        HttpServletRequest request = HttpRequestUtil.getRequest();
+        HttpServletRequest request = HttpServletRequestUtil.getRequest();
         String ip = getRequestIp(request);
         if (ip.indexOf(COMMA) != -1) {
             String[] strings = ip.split(COMMA);
@@ -48,17 +49,19 @@ public class IpUtil {
      * @return
      */
     public static String getRequestIp(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        String ip = request.getHeader("X-Forwarded-For");
+        if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Real-IP");
+        }
+        if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-
         if (IPV6_LOCAL.equals(ip)) {
             ip = getLocalhostIp();
         }

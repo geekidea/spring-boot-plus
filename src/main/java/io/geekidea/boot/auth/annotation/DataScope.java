@@ -20,7 +20,7 @@ public @interface DataScope {
      *
      * @return
      */
-    String userAlias() default "u";
+    String userAlias() default "";
 
     /**
      * 筛选的userId列

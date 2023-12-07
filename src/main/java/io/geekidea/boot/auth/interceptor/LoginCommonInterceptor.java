@@ -8,7 +8,6 @@ import io.geekidea.boot.auth.vo.LoginRedisVo;
 import io.geekidea.boot.common.enums.SystemType;
 import io.geekidea.boot.framework.exception.LoginTokenException;
 import io.geekidea.boot.framework.interceptor.BaseExcludeMethodInterceptor;
-import io.geekidea.boot.framework.interceptor.BaseMethodInterceptor;
 import io.geekidea.boot.util.SystemTypeUtil;
 import io.geekidea.boot.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +36,7 @@ public class LoginCommonInterceptor extends BaseExcludeMethodInterceptor {
         }
         String token = TokenUtil.getToken();
         if (StringUtils.isBlank(token)) {
-            throw new LoginTokenException("token不能为空");
+            throw new LoginTokenException("请登录后再操作");
         }
         SystemType systemType = SystemTypeUtil.getSystemTypeByToken(token);
         if (SystemType.ADMIN == systemType) {
