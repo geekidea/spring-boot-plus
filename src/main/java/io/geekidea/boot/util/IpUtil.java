@@ -26,6 +26,7 @@ public class IpUtil {
     private static final String IPV6_LOCAL = "0:0:0:0:0:0:0:1";
     private static final String COMMA = ",";
     private static final String FE = "fe";
+    private static final String[] IP_HEADS = new String[]{"x-forwarded-for", "X-Forwarded-For", "X-Real-IP", "Proxy-Client-IP", "WL-Proxy-Client-IP"};
 
     /**
      * 获取请求用户的IP地址
@@ -49,15 +50,12 @@ public class IpUtil {
      * @return
      */
     public static String getRequestIp(HttpServletRequest request) {
-        String ip = request.getHeader("X-Forwarded-For");
-        if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeader("X-Real-IP");
-        }
-        if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
+        String ip = null;
+        for (String ipHead : IP_HEADS) {
+            ip = request.getHeader(ipHead);
+            if (StringUtils.isNotBlank(ip) && !UNKNOWN.equalsIgnoreCase(ip)) {
+                break;
+            }
         }
         if (StringUtils.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();

@@ -1,7 +1,7 @@
 package io.geekidea.boot.auth.interceptor;
 
-import io.geekidea.boot.auth.annotation.IgnoreLogin;
 import io.geekidea.boot.auth.annotation.Permission;
+import io.geekidea.boot.auth.cache.LoginCache;
 import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.auth.vo.LoginRedisVo;
 import io.geekidea.boot.auth.vo.LoginVo;
@@ -32,12 +32,9 @@ public class LoginInterceptor extends BaseExcludeMethodInterceptor {
 
     @Override
     protected boolean preHandleMethod(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
-        IgnoreLogin ignoreLogin = handlerMethod.getMethodAnnotation(IgnoreLogin.class);
-        if (ignoreLogin != null) {
-            return true;
-        }
-        ignoreLogin = handlerMethod.getMethod().getDeclaringClass().getAnnotation(IgnoreLogin.class);
-        if (ignoreLogin != null) {
+        // 判断是否存在@IgnoreLogin，存在，则跳过
+        boolean existIgnoreLoginAnnotation = isExistIgnoreLoginAnnotation(handlerMethod);
+        if (existIgnoreLoginAnnotation) {
             return true;
         }
         String token = TokenUtil.getToken();
@@ -45,10 +42,13 @@ public class LoginInterceptor extends BaseExcludeMethodInterceptor {
             throw new LoginTokenException("请登录后再操作");
         }
         // 获取登录用户信息
-        LoginRedisVo loginRedisVo = LoginUtil.getLoginRedisVo();
+        LoginRedisVo loginRedisVo = LoginUtil.getLoginRedisVo(token);
         if (loginRedisVo == null) {
             throw new LoginTokenException("登录已过期或登录信息不存在，请重新登录");
         }
+        // 将管理后台的登录信息保存到当前线程中
+        LoginCache.set(loginRedisVo);
+        // 获取登录信息判断
         LoginVo loginVo = loginRedisVo.getLoginVo();
         String roleCode = loginVo.getRoleCode();
         boolean loginPermission = loginAdminProperties.isLoginPermission();
@@ -76,6 +76,11 @@ public class LoginInterceptor extends BaseExcludeMethodInterceptor {
             }
         }
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        LoginCache.remove();
     }
 
 }

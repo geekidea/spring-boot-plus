@@ -1,9 +1,7 @@
 package io.geekidea.boot.auth.interceptor;
 
-import io.geekidea.boot.common.constant.CommonConstant;
-import io.geekidea.boot.common.constant.LoginConstant;
+import io.geekidea.boot.auth.cache.TokenCache;
 import io.geekidea.boot.framework.interceptor.BaseExcludeMethodInterceptor;
-import io.geekidea.boot.framework.interceptor.BaseMethodInterceptor;
 import io.geekidea.boot.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -28,9 +26,14 @@ public class TokenInterceptor extends BaseExcludeMethodInterceptor {
         if (StringUtils.isBlank(token)) {
             return true;
         }
-        // 设置token值到请求对象中，避免重复获取
-        request.setAttribute(CommonConstant.REQUEST_PARAM_TOKEN, token);
+        // 设置token值到当前线程中，避免重复获取
+        TokenCache.set(token);
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        TokenCache.remove();
     }
 
 }

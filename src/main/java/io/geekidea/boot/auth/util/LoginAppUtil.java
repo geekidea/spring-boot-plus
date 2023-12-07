@@ -1,5 +1,6 @@
 package io.geekidea.boot.auth.util;
 
+import io.geekidea.boot.auth.cache.LoginAppCache;
 import io.geekidea.boot.auth.service.LoginRedisAppService;
 import io.geekidea.boot.auth.vo.LoginAppVo;
 import io.geekidea.boot.auth.vo.LoginRedisAppVo;
@@ -22,18 +23,28 @@ public class LoginAppUtil {
     }
 
     /**
-     * 获取登录Redis用户信息
+     * 根据token从redis中获取登录用户信息
      *
+     * @param token
      * @return
+     * @throws Exception
      */
-    public static LoginRedisAppVo getLoginRedisVo() throws Exception {
-        String token = TokenUtil.getToken();
+    public static LoginRedisAppVo getLoginRedisVo(String token) throws Exception {
         if (StringUtils.isBlank(token)) {
             return null;
         }
         TokenUtil.checkAppToken(token);
         LoginRedisAppVo loginRedisAppVo = loginRedisAppService.getLoginRedisVo(token);
         return loginRedisAppVo;
+    }
+
+    /**
+     * 从当前线程中获取登录用户信息
+     *
+     * @return
+     */
+    public static LoginRedisAppVo getLoginRedisVo() throws Exception {
+        return LoginAppCache.get();
     }
 
     /**

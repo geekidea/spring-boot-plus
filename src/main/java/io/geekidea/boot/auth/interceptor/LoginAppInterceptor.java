@@ -1,7 +1,7 @@
 package io.geekidea.boot.auth.interceptor;
 
-import io.geekidea.boot.auth.annotation.Login;
 import io.geekidea.boot.auth.annotation.Vip;
+import io.geekidea.boot.auth.cache.LoginAppCache;
 import io.geekidea.boot.auth.util.LoginAppUtil;
 import io.geekidea.boot.auth.vo.LoginAppVo;
 import io.geekidea.boot.auth.vo.LoginRedisAppVo;
@@ -26,13 +26,10 @@ public class LoginAppInterceptor extends BaseExcludeMethodInterceptor {
 
     @Override
     protected boolean preHandleMethod(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
-        // 获取方法上和类上是否有@Login注解，如果没有，则放行，有，则校验
-        Login login = handlerMethod.getMethodAnnotation(Login.class);
-        if (login == null) {
-            login = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Login.class);
-            if (login == null) {
-                return true;
-            }
+        // 如果不存在@Login注解，则跳过
+        boolean existLoginAnnotation = isExistLoginAnnotation(handlerMethod);
+        if (!existLoginAnnotation) {
+            return true;
         }
         // 移动端登录校验
         String token = TokenUtil.getToken();
@@ -40,10 +37,13 @@ public class LoginAppInterceptor extends BaseExcludeMethodInterceptor {
             throw new LoginTokenException("请登录后再操作");
         }
         // 获取登录用户信息
-        LoginRedisAppVo loginRedisAppVo = LoginAppUtil.getLoginRedisVo();
+        LoginRedisAppVo loginRedisAppVo = LoginAppUtil.getLoginRedisVo(token);
         if (loginRedisAppVo == null) {
             throw new LoginTokenException("登录已过期或登录信息不存在，请重新登录");
         }
+        // 将APP移动端的登录信息保存到当前线程中
+        LoginAppCache.set(loginRedisAppVo);
+        // 获取登录信息判断
         LoginAppVo loginAppVo = loginRedisAppVo.getLoginVo();
         // 校验VIP等级
         Vip vip = handlerMethod.getMethodAnnotation(Vip.class);
@@ -60,6 +60,11 @@ public class LoginAppInterceptor extends BaseExcludeMethodInterceptor {
             }
         }
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        LoginAppCache.remove();
     }
 
     /**

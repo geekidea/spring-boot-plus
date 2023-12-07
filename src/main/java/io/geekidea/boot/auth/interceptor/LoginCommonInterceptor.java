@@ -1,9 +1,10 @@
 package io.geekidea.boot.auth.interceptor;
 
-import io.geekidea.boot.auth.annotation.Login;
+import io.geekidea.boot.auth.cache.LoginAppCache;
+import io.geekidea.boot.auth.cache.LoginCache;
 import io.geekidea.boot.auth.util.LoginAppUtil;
 import io.geekidea.boot.auth.util.LoginUtil;
-import io.geekidea.boot.auth.vo.LoginAppVo;
+import io.geekidea.boot.auth.vo.LoginRedisAppVo;
 import io.geekidea.boot.auth.vo.LoginRedisVo;
 import io.geekidea.boot.common.enums.SystemType;
 import io.geekidea.boot.framework.exception.LoginTokenException;
@@ -26,13 +27,10 @@ public class LoginCommonInterceptor extends BaseExcludeMethodInterceptor {
 
     @Override
     protected boolean preHandleMethod(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
-        // 排除不需要登录验证的路径 路径配置 注解
-        Login login = handlerMethod.getMethodAnnotation(Login.class);
-        if (login == null) {
-            login = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Login.class);
-            if (login == null) {
-                return true;
-            }
+        // 如果不存在@Login注解，则跳过
+        boolean existLoginAnnotation = isExistLoginAnnotation(handlerMethod);
+        if (!existLoginAnnotation) {
+            return true;
         }
         String token = TokenUtil.getToken();
         if (StringUtils.isBlank(token)) {
@@ -41,17 +39,26 @@ public class LoginCommonInterceptor extends BaseExcludeMethodInterceptor {
         SystemType systemType = SystemTypeUtil.getSystemTypeByToken(token);
         if (SystemType.ADMIN == systemType) {
             // 获取管理后台登录用户信息
-            LoginRedisVo loginRedisVo = LoginUtil.getLoginRedisVo();
+            LoginRedisVo loginRedisVo = LoginUtil.getLoginRedisVo(token);
             if (loginRedisVo == null) {
                 throw new LoginTokenException("登录已过期或登录信息不存在，请重新登录");
             }
+            // 将管理后台的登录信息保存到当前线程中
+            LoginCache.set(loginRedisVo);
         } else if (SystemType.APP == systemType) {
-            LoginAppVo loginVo = LoginAppUtil.getLoginVo();
-            if (loginVo == null) {
+            LoginRedisAppVo loginRedisVo = LoginAppUtil.getLoginRedisVo(token);
+            if (loginRedisVo == null) {
                 throw new LoginTokenException("登录已过期或登录信息不存在，请重新登录");
             }
+            // 将APP移动端的登录信息保存到当前线程中
+            LoginAppCache.set(loginRedisVo);
         }
         return true;
     }
 
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        LoginCache.remove();
+        LoginAppCache.remove();
+    }
 }

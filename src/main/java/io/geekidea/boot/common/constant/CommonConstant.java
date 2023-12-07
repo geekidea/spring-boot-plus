@@ -58,11 +58,6 @@ public interface CommonConstant {
     /**
      * 请求的token
      */
-    String REQUEST_PARAM_TOKEN = "REQUEST_PARAM_TOKEN";
-
-    /**
-     * 请求的token
-     */
     String REQUEST_PARAM_EXCLUDE_PATH = "REQUEST_PARAM_EXCLUDE_PATH";
 
     /**
