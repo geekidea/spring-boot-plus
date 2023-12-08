@@ -1,7 +1,7 @@
 package io.geekidea.boot.util;
 
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
-import io.geekidea.boot.common.constant.CommonConstant;
+import io.geekidea.boot.auth.cache.TokenCache;
 import io.geekidea.boot.common.constant.LoginConstant;
 import io.geekidea.boot.common.enums.SystemType;
 import io.geekidea.boot.framework.exception.LoginTokenException;
@@ -82,10 +82,8 @@ public class TokenUtil {
      * @return
      */
     public static String getToken() throws Exception {
-        // 从请求对象中获取
-        HttpServletRequest request = HttpServletRequestUtil.getRequest();
-        String token = (String) request.getAttribute(CommonConstant.REQUEST_PARAM_TOKEN);
-        return token;
+        // 从当前线程获取
+        return TokenCache.get();
     }
 
     /**
