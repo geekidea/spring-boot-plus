@@ -51,30 +51,47 @@
 ## Source code directory structure
 ```text
 spring-boot-plus
-├── main
-│ ├── java
-│ │ └── io
-│ │   └── geekidea
-│ │     └── boot
-│ │       └── auth
-│ │       └── config
-│ │       └── foobar
-│ │       └── framework
-│ │       └── system
-│ │       └── SpringBootPlusApplication.java
-│ └── resources
-│     ├── application-dev.yml
-│     ├── application-prod.yml
-│     ├── application-test.yml
-│     ├── application.yml
-│     ├── banner.txt
-│     ├── mapper
-│     └── static
-└── test
-    ├── java
-    │ └── io
-    └── resources
-        └── templates
+├── docs
+│ ├── bin
+│ │ └── install
+│ ├── config
+│ ├── db
+│ └── img
+├── logs
+└── src
+    ├── main
+    │ ├── java
+    │ │ └── io
+    │ │     └── geekidea
+    │ │         └── boot
+    │ │             ├── auth
+    │ │             ├── common
+    │ │             ├── config
+    │ │             ├── demo
+    │ │             ├── framework
+    │ │             ├── system
+    │ │             ├── user
+    │ │             └── util
+    │ │             └── SpringBootPlusApplication.java
+    │ └── resources
+    │     ├── mapper
+    │     └── static
+    │     ├── application-dev.yml
+    │     ├── application-prod.yml
+    │     ├── application-test.yml
+    │     ├── application.yml
+    │     ├── banner.txt
+    │     ├── ip2region.xdb
+    │     ├── logback-spring.xml
+    └── test
+        ├── java
+        │ └── io
+        │     └── geekidea
+        │         └── boot
+        │             ├── generator
+        │             └── system
+        └── resources
+            └── templates
 ```
 
 ### Project Environment 
