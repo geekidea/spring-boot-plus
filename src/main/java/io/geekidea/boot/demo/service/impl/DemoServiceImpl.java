@@ -26,7 +26,7 @@ import java.util.List;
  * 演示 服务实现类
  *
  * @author geekidea
- * @since 2023-12-06
+ * @since 2023-12-09
  */
 @Slf4j
 @Service
@@ -37,21 +37,21 @@ public class DemoServiceImpl extends ServiceImpl<DemoMapper, Demo> implements De
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addDemo(DemoDto demoDto) throws Exception {
+    public boolean addDemo(DemoDto dto) throws Exception {
         Demo demo = new Demo();
-        BeanUtils.copyProperties(demoDto, demo);
+        BeanUtils.copyProperties(dto, demo);
         return save(demo);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateDemo(DemoDto demoDto) throws Exception {
-        Long id = demoDto.getId();
+    public boolean updateDemo(DemoDto dto) throws Exception {
+        Long id = dto.getId();
         Demo demo = getById(id);
         if (demo == null) {
             throw new BusinessException("演示不存在");
         }
-        BeanUtils.copyProperties(demoDto, demo);
+        BeanUtils.copyProperties(dto, demo);
         demo.setUpdateTime(new Date());
         return updateById(demo);
     }

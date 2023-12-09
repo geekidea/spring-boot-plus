@@ -39,22 +39,22 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addSysMenu(SysMenuDto sysMenuDto) throws Exception {
-        checkCodeExists(sysMenuDto.getCode());
+    public boolean addSysMenu(SysMenuDto dto) throws Exception {
+        checkCodeExists(dto.getCode());
         SysMenu sysMenu = new SysMenu();
-        BeanUtils.copyProperties(sysMenuDto, sysMenu);
+        BeanUtils.copyProperties(dto, sysMenu);
         return save(sysMenu);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateSysMenu(SysMenuDto sysMenuDto) throws Exception {
-        Long id = sysMenuDto.getId();
+    public boolean updateSysMenu(SysMenuDto dto) throws Exception {
+        Long id = dto.getId();
         SysMenu sysMenu = getById(id);
         if (sysMenu == null) {
             throw new BusinessException("系统菜单不存在");
         }
-        BeanUtils.copyProperties(sysMenuDto, sysMenu);
+        BeanUtils.copyProperties(dto, sysMenu);
         sysMenu.setUpdateTime(new Date());
         return updateById(sysMenu);
     }
@@ -71,13 +71,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenuTreeVo> getAllSysMenuTreeList(SysMenuQuery sysMenuQuery) throws Exception {
-        List<SysMenuTreeVo> list = sysMenuMapper.getSysMenuTreeList(sysMenuQuery);
+    public List<SysMenuTreeVo> getAllSysMenuTreeList(SysMenuQuery query) throws Exception {
+        List<SysMenuTreeVo> list = sysMenuMapper.getSysMenuTreeList(query);
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
         // 如果搜索条件有值，则直接返回普通列表
-        boolean flag = ObjectValueUtil.isHaveValue(sysMenuQuery);
+        boolean flag = ObjectValueUtil.isHaveValue(query);
         if (flag) {
             return list;
         }
@@ -87,9 +87,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<SysMenuTreeVo> getSysMenuTreeList() throws Exception {
-        SysMenuQuery sysMenuQuery = new SysMenuQuery();
-        sysMenuQuery.setStatus(true);
-        List<SysMenuTreeVo> list = sysMenuMapper.getSysMenuTreeList(sysMenuQuery);
+        SysMenuQuery query = new SysMenuQuery();
+        query.setStatus(true);
+        List<SysMenuTreeVo> list = sysMenuMapper.getSysMenuTreeList(query);
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }

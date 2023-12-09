@@ -34,9 +34,9 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     }
 
     @Override
-    public Paging<SysLogVo> getSysLogPage(SysLogQuery sysLogQuery) throws Exception {
-        PagingUtil.handlePage(sysLogQuery, OrderByItem.desc("id"));
-        List<SysLogVo> list = sysLogMapper.getSysLogPage(sysLogQuery);
+    public Paging<SysLogVo> getSysLogPage(SysLogQuery query) throws Exception {
+        PagingUtil.handlePage(query, OrderByItem.desc("id"));
+        List<SysLogVo> list = sysLogMapper.getSysLogPage(query);
         Paging<SysLogVo> paging = new Paging<>(list);
         return paging;
     }

@@ -337,7 +337,8 @@ public class GenerateHandler {
             String queryFileName = entityName + config.getQueryFileName();
             String voFileName = entityName + config.getVoFileName();
 
-            String dtoObjectName = pascalToCamel(dtoFileName);
+            // String dtoObjectName = pascalToCamel(dtoFileName);
+            String dtoObjectName = "dto";
             String queryObjectName = pascalToCamel(queryFileName);
             String voObjectName = pascalToCamel(voFileName);
 

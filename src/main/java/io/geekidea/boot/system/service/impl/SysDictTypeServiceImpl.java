@@ -33,24 +33,24 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addSysDictType(SysDictTypeDto sysDictTypeDto) throws Exception {
-        checkCodeExists(sysDictTypeDto.getCode());
+    public boolean addSysDictType(SysDictTypeDto dto) throws Exception {
+        checkCodeExists(dto.getCode());
         SysDictType sysDictType = new SysDictType();
-        BeanUtils.copyProperties(sysDictTypeDto, sysDictType);
+        BeanUtils.copyProperties(dto, sysDictType);
         return save(sysDictType);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateSysDictType(SysDictTypeDto sysDictTypeDto) throws Exception {
-        Long id = sysDictTypeDto.getId();
+    public boolean updateSysDictType(SysDictTypeDto dto) throws Exception {
+        Long id = dto.getId();
         SysDictType sysDictType = getById(id);
         if (sysDictType == null) {
             throw new BusinessException("字典类型不存在");
         }
-        sysDictType.setIsSystem(sysDictTypeDto.getIsSystem());
-        sysDictType.setName(sysDictTypeDto.getName());
-        sysDictType.setRemark(sysDictTypeDto.getRemark());
+        sysDictType.setIsSystem(dto.getIsSystem());
+        sysDictType.setName(dto.getName());
+        sysDictType.setRemark(dto.getRemark());
         sysDictType.setUpdateTime(new Date());
         return updateById(sysDictType);
     }

@@ -38,10 +38,10 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     /**
      * 获取系统菜单树形列表
      *
-     * @param sysMenuQuery
+     * @param query
      * @return
      */
-    List<SysMenuTreeVo> getSysMenuTreeList(SysMenuQuery sysMenuQuery);
+    List<SysMenuTreeVo> getSysMenuTreeList(SysMenuQuery query);
 
     /**
      * 管理员获取所有导航菜单树形列表

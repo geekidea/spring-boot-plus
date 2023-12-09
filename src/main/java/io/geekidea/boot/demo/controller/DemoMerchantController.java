@@ -35,7 +35,7 @@ public class DemoMerchantController {
     /**
      * 添加测试商户
      *
-     * @param demoMerchantDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -43,15 +43,15 @@ public class DemoMerchantController {
     @PostMapping("/addDemoMerchant")
     @Operation(summary = "添加测试商户")
     @Permission("demo:merchant:add")
-    public ApiResult addDemoMerchant(@Valid @RequestBody DemoMerchantDto demoMerchantDto) throws Exception {
-        boolean flag = demoMerchantService.addDemoMerchant(demoMerchantDto);
+    public ApiResult addDemoMerchant(@Valid @RequestBody DemoMerchantDto dto) throws Exception {
+        boolean flag = demoMerchantService.addDemoMerchant(dto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改测试商户
      *
-     * @param demoMerchantDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -59,8 +59,8 @@ public class DemoMerchantController {
     @PostMapping("/updateDemoMerchant")
     @Operation(summary = "修改测试商户")
     @Permission("demo:merchant:update")
-    public ApiResult updateDemoMerchant(@Valid @RequestBody DemoMerchantDto demoMerchantDto) throws Exception {
-        boolean flag = demoMerchantService.updateDemoMerchant(demoMerchantDto);
+    public ApiResult updateDemoMerchant(@Valid @RequestBody DemoMerchantDto dto) throws Exception {
+        boolean flag = demoMerchantService.updateDemoMerchant(dto);
         return ApiResult.result(flag);
     }
 

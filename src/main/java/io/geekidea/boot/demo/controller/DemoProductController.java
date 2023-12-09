@@ -35,7 +35,7 @@ public class DemoProductController {
     /**
      * 添加测试商品
      *
-     * @param demoProductDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -43,15 +43,15 @@ public class DemoProductController {
     @PostMapping("/addDemoProduct")
     @Operation(summary = "添加测试商品")
     @Permission("demo:product:add")
-    public ApiResult addDemoProduct(@Valid @RequestBody DemoProductDto demoProductDto) throws Exception {
-        boolean flag = demoProductService.addDemoProduct(demoProductDto);
+    public ApiResult addDemoProduct(@Valid @RequestBody DemoProductDto dto) throws Exception {
+        boolean flag = demoProductService.addDemoProduct(dto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改测试商品
      *
-     * @param demoProductDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -59,8 +59,8 @@ public class DemoProductController {
     @PostMapping("/updateDemoProduct")
     @Operation(summary = "修改测试商品")
     @Permission("demo:product:update")
-    public ApiResult updateDemoProduct(@Valid @RequestBody DemoProductDto demoProductDto) throws Exception {
-        boolean flag = demoProductService.updateDemoProduct(demoProductDto);
+    public ApiResult updateDemoProduct(@Valid @RequestBody DemoProductDto dto) throws Exception {
+        boolean flag = demoProductService.updateDemoProduct(dto);
         return ApiResult.result(flag);
     }
 

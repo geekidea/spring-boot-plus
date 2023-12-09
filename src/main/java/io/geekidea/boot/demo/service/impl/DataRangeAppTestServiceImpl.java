@@ -37,21 +37,21 @@ public class DataRangeAppTestServiceImpl extends ServiceImpl<DataRangeAppTestMap
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addDataRangeAppTest(DataRangeAppTestDto dataRangeAppTestDto) throws Exception {
+    public boolean addDataRangeAppTest(DataRangeAppTestDto dto) throws Exception {
         DataRangeAppTest dataRangeAppTest = new DataRangeAppTest();
-        BeanUtils.copyProperties(dataRangeAppTestDto, dataRangeAppTest);
+        BeanUtils.copyProperties(dto, dataRangeAppTest);
         return save(dataRangeAppTest);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateDataRangeAppTest(DataRangeAppTestDto dataRangeAppTestDto) throws Exception {
-        Long id = dataRangeAppTestDto.getId();
+    public boolean updateDataRangeAppTest(DataRangeAppTestDto dto) throws Exception {
+        Long id = dto.getId();
         DataRangeAppTest dataRangeAppTest = getById(id);
         if (dataRangeAppTest == null) {
             throw new BusinessException("用户端数据权限测试不存在");
         }
-        BeanUtils.copyProperties(dataRangeAppTestDto, dataRangeAppTest);
+        BeanUtils.copyProperties(dto, dataRangeAppTest);
         dataRangeAppTest.setUpdateTime(new Date());
         return updateById(dataRangeAppTest);
     }

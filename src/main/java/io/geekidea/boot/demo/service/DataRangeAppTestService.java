@@ -21,20 +21,20 @@ public interface DataRangeAppTestService extends IService<DataRangeAppTest> {
     /**
      * 添加用户端数据权限测试
      *
-     * @param dataRangeAppTestDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addDataRangeAppTest(DataRangeAppTestDto dataRangeAppTestDto) throws Exception;
+    boolean addDataRangeAppTest(DataRangeAppTestDto dto) throws Exception;
 
     /**
      * 修改用户端数据权限测试
      *
-     * @param dataRangeAppTestDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateDataRangeAppTest(DataRangeAppTestDto dataRangeAppTestDto) throws Exception;
+    boolean updateDataRangeAppTest(DataRangeAppTestDto dto) throws Exception;
 
     /**
      * 删除用户端数据权限测试

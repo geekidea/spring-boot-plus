@@ -21,7 +21,7 @@ import javax.validation.Valid;
  * 演示 控制器
  *
  * @author geekidea
- * @since 2023-12-06
+ * @since 2023-12-09
  */
 @Slf4j
 @RestController
@@ -35,7 +35,7 @@ public class DemoController {
     /**
      * 添加演示
      *
-     * @param demoDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -43,15 +43,15 @@ public class DemoController {
     @PostMapping("/addDemo")
     @Operation(summary = "添加演示")
     @Permission("demo:add")
-    public ApiResult addDemo(@Valid @RequestBody DemoDto demoDto) throws Exception {
-        boolean flag = demoService.addDemo(demoDto);
+    public ApiResult addDemo(@Valid @RequestBody DemoDto dto) throws Exception {
+        boolean flag = demoService.addDemo(dto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改演示
      *
-     * @param demoDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -59,8 +59,8 @@ public class DemoController {
     @PostMapping("/updateDemo")
     @Operation(summary = "修改演示")
     @Permission("demo:update")
-    public ApiResult updateDemo(@Valid @RequestBody DemoDto demoDto) throws Exception {
-        boolean flag = demoService.updateDemo(demoDto);
+    public ApiResult updateDemo(@Valid @RequestBody DemoDto dto) throws Exception {
+        boolean flag = demoService.updateDemo(dto);
         return ApiResult.result(flag);
     }
 

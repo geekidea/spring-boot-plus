@@ -36,7 +36,7 @@ public class SysFileController {
     /**
      * 修改系统文件
      *
-     * @param sysFileDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -44,8 +44,8 @@ public class SysFileController {
     @PostMapping("/updateSysFile")
     @Operation(summary = "修改系统文件")
     @Permission("sys:file:update")
-    public ApiResult updateSysFile(@Valid @RequestBody SysFileDto sysFileDto) throws Exception {
-        boolean flag = sysFileService.updateSysFile(sysFileDto);
+    public ApiResult updateSysFile(@Valid @RequestBody SysFileDto dto) throws Exception {
+        boolean flag = sysFileService.updateSysFile(dto);
         return ApiResult.result(flag);
     }
 

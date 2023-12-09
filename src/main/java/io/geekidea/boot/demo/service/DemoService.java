@@ -14,27 +14,27 @@ import io.geekidea.boot.demo.vo.DemoAppVo;
  * 演示 服务接口
  *
  * @author geekidea
- * @since 2023-12-06
+ * @since 2023-12-09
  */
 public interface DemoService extends IService<Demo> {
 
     /**
      * 添加演示
      *
-     * @param demoDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addDemo(DemoDto demoDto) throws Exception;
+    boolean addDemo(DemoDto dto) throws Exception;
 
     /**
      * 修改演示
      *
-     * @param demoDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateDemo(DemoDto demoDto) throws Exception;
+    boolean updateDemo(DemoDto dto) throws Exception;
 
     /**
      * 删除演示

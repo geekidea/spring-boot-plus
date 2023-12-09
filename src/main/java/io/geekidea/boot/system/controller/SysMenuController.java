@@ -35,30 +35,30 @@ public class SysMenuController {
     /**
      * 添加系统菜单
      *
-     * @param sysMenuDto
+     * @param dto
      * @return
      * @throws Exception
      */
     @PostMapping("/addSysMenu")
     @Operation(summary = "添加系统菜单")
     @Permission("sys:menu:add")
-    public ApiResult addSysMenu(@Valid @RequestBody SysMenuDto sysMenuDto) throws Exception {
-        boolean flag = sysMenuService.addSysMenu(sysMenuDto);
+    public ApiResult addSysMenu(@Valid @RequestBody SysMenuDto dto) throws Exception {
+        boolean flag = sysMenuService.addSysMenu(dto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改系统菜单
      *
-     * @param sysMenuDto
+     * @param dto
      * @return
      * @throws Exception
      */
     @PostMapping("/updateSysMenu")
     @Operation(summary = "修改系统菜单")
     @Permission("sys:menu:update")
-    public ApiResult updateSysMenu(@Valid @RequestBody SysMenuDto sysMenuDto) throws Exception {
-        boolean flag = sysMenuService.updateSysMenu(sysMenuDto);
+    public ApiResult updateSysMenu(@Valid @RequestBody SysMenuDto dto) throws Exception {
+        boolean flag = sysMenuService.updateSysMenu(dto);
         return ApiResult.result(flag);
     }
 
@@ -101,8 +101,8 @@ public class SysMenuController {
     @PostMapping("/getAllSysMenuTreeList")
     @Operation(summary = "获取所有的系统菜单树形列表")
     @Permission("sys:menu:all-tree-list")
-    public ApiResult<SysMenuTreeVo> getAllSysMenuTreeList(@Valid @RequestBody SysMenuQuery sysMenuQuery) throws Exception {
-        List<SysMenuTreeVo> list = sysMenuService.getAllSysMenuTreeList(sysMenuQuery);
+    public ApiResult<SysMenuTreeVo> getAllSysMenuTreeList(@Valid @RequestBody SysMenuQuery query) throws Exception {
+        List<SysMenuTreeVo> list = sysMenuService.getAllSysMenuTreeList(query);
         return ApiResult.success(list);
     }
 

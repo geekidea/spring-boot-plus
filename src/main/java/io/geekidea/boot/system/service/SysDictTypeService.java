@@ -21,20 +21,20 @@ public interface SysDictTypeService extends IService<SysDictType> {
     /**
      * 添加字典类型
      *
-     * @param sysDictTypeDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addSysDictType(SysDictTypeDto sysDictTypeDto) throws Exception;
+    boolean addSysDictType(SysDictTypeDto dto) throws Exception;
 
     /**
      * 修改字典类型
      *
-     * @param sysDictTypeDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateSysDictType(SysDictTypeDto sysDictTypeDto) throws Exception;
+    boolean updateSysDictType(SysDictTypeDto dto) throws Exception;
 
     /**
      * 删除字典类型

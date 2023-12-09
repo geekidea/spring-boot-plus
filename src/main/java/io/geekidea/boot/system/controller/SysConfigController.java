@@ -35,7 +35,7 @@ public class SysConfigController {
     /**
      * 添加系统配置
      *
-     * @param sysConfigDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -43,15 +43,15 @@ public class SysConfigController {
     @PostMapping("/addSysConfig")
     @Operation(summary = "添加系统配置")
     @Permission("sys:config:add")
-    public ApiResult addSysConfig(@Valid @RequestBody SysConfigDto sysConfigDto) throws Exception {
-        boolean flag = sysConfigService.addSysConfig(sysConfigDto);
+    public ApiResult addSysConfig(@Valid @RequestBody SysConfigDto dto) throws Exception {
+        boolean flag = sysConfigService.addSysConfig(dto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改系统配置
      *
-     * @param sysConfigDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -59,8 +59,8 @@ public class SysConfigController {
     @PostMapping("/updateSysConfig")
     @Operation(summary = "修改系统配置")
     @Permission("sys:config:update")
-    public ApiResult updateSysConfig(@Valid @RequestBody SysConfigDto sysConfigDto) throws Exception {
-        boolean flag = sysConfigService.updateSysConfig(sysConfigDto);
+    public ApiResult updateSysConfig(@Valid @RequestBody SysConfigDto dto) throws Exception {
+        boolean flag = sysConfigService.updateSysConfig(dto);
         return ApiResult.result(flag);
     }
 

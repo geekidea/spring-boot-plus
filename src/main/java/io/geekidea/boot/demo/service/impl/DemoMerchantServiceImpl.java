@@ -37,21 +37,21 @@ public class DemoMerchantServiceImpl extends ServiceImpl<DemoMerchantMapper, Dem
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addDemoMerchant(DemoMerchantDto demoMerchantDto) throws Exception {
+    public boolean addDemoMerchant(DemoMerchantDto dto) throws Exception {
         DemoMerchant demoMerchant = new DemoMerchant();
-        BeanUtils.copyProperties(demoMerchantDto, demoMerchant);
+        BeanUtils.copyProperties(dto, demoMerchant);
         return save(demoMerchant);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateDemoMerchant(DemoMerchantDto demoMerchantDto) throws Exception {
-        Long id = demoMerchantDto.getId();
+    public boolean updateDemoMerchant(DemoMerchantDto dto) throws Exception {
+        Long id = dto.getId();
         DemoMerchant demoMerchant = getById(id);
         if (demoMerchant == null) {
             throw new BusinessException("测试商户不存在");
         }
-        BeanUtils.copyProperties(demoMerchantDto, demoMerchant);
+        BeanUtils.copyProperties(dto, demoMerchant);
         demoMerchant.setUpdateTime(new Date());
         return updateById(demoMerchant);
     }

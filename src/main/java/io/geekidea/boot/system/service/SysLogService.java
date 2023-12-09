@@ -26,10 +26,10 @@ public interface SysLogService extends IService<SysLog> {
     /**
      * 系统日志分页列表
      *
-     * @param sysLogQuery
+     * @param query
      * @return
      * @throws Exception
      */
-    Paging<SysLogVo> getSysLogPage(SysLogQuery sysLogQuery) throws Exception;
+    Paging<SysLogVo> getSysLogPage(SysLogQuery query) throws Exception;
 
 }

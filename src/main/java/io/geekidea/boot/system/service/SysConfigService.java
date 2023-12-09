@@ -19,20 +19,20 @@ public interface SysConfigService extends IService<SysConfig> {
     /**
      * 添加系统配置
      *
-     * @param sysConfigDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addSysConfig(SysConfigDto sysConfigDto) throws Exception;
+    boolean addSysConfig(SysConfigDto dto) throws Exception;
 
     /**
      * 修改系统配置
      *
-     * @param sysConfigDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateSysConfig(SysConfigDto sysConfigDto) throws Exception;
+    boolean updateSysConfig(SysConfigDto dto) throws Exception;
 
     /**
      * 删除系统配置

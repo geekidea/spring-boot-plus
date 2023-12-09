@@ -38,13 +38,13 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateSysFile(SysFileDto sysFileDto) throws Exception {
-        Long id = sysFileDto.getId();
+    public boolean updateSysFile(SysFileDto dto) throws Exception {
+        Long id = dto.getId();
         SysFile sysFile = getById(id);
         if (sysFile == null) {
             throw new BusinessException("系统文件不存在");
         }
-        BeanUtils.copyProperties(sysFileDto, sysFile);
+        BeanUtils.copyProperties(dto, sysFile);
         sysFile.setUpdateTime(new Date());
         return updateById(sysFile);
     }

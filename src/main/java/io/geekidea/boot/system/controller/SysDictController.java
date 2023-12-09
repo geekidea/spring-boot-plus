@@ -35,7 +35,7 @@ public class SysDictController {
     /**
      * 添加字典数据
      *
-     * @param sysDictDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -43,15 +43,15 @@ public class SysDictController {
     @PostMapping("/addSysDict")
     @Operation(summary = "添加字典数据")
     @Permission("sys:dict:add")
-    public ApiResult addSysDict(@Valid @RequestBody SysDictDto sysDictDto) throws Exception {
-        boolean flag = sysDictService.addSysDict(sysDictDto);
+    public ApiResult addSysDict(@Valid @RequestBody SysDictDto dto) throws Exception {
+        boolean flag = sysDictService.addSysDict(dto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改字典数据
      *
-     * @param sysDictDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -59,8 +59,8 @@ public class SysDictController {
     @PostMapping("/updateSysDict")
     @Operation(summary = "修改字典数据")
     @Permission("sys:dict:update")
-    public ApiResult updateSysDict(@Valid @RequestBody SysDictDto sysDictDto) throws Exception {
-        boolean flag = sysDictService.updateSysDict(sysDictDto);
+    public ApiResult updateSysDict(@Valid @RequestBody SysDictDto dto) throws Exception {
+        boolean flag = sysDictService.updateSysDict(dto);
         return ApiResult.result(flag);
     }
 

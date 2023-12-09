@@ -21,11 +21,11 @@ public interface SysFileService extends IService<SysFile> {
     /**
      * 修改系统文件
      *
-     * @param sysFileDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateSysFile(SysFileDto sysFileDto) throws Exception;
+    boolean updateSysFile(SysFileDto dto) throws Exception;
 
     /**
      * 删除系统文件

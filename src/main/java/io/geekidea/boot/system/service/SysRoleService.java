@@ -21,20 +21,20 @@ public interface SysRoleService extends IService<SysRole> {
     /**
      * 添加系统角色
      *
-     * @param sysRoleDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addSysRole(SysRoleDto sysRoleDto) throws Exception;
+    boolean addSysRole(SysRoleDto dto) throws Exception;
 
     /**
      * 修改系统角色
      *
-     * @param sysRoleDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateSysRole(SysRoleDto sysRoleDto) throws Exception;
+    boolean updateSysRole(SysRoleDto dto) throws Exception;
 
     /**
      * 删除系统角色
@@ -57,11 +57,11 @@ public interface SysRoleService extends IService<SysRole> {
     /**
      * 系统角色分页列表
      *
-     * @param sysRoleQuery
+     * @param query
      * @return
      * @throws Exception
      */
-    Paging<SysRoleVo> getSysRolePage(SysRoleQuery sysRoleQuery) throws Exception;
+    Paging<SysRoleVo> getSysRolePage(SysRoleQuery query) throws Exception;
 
     /**
      * 获取所有角色列表

@@ -35,7 +35,7 @@ public class FooBarController {
     /**
      * 添加FooBar
      *
-     * @param fooBarDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -43,15 +43,15 @@ public class FooBarController {
     @PostMapping("/addFooBar")
     @Operation(summary = "添加FooBar")
     @Permission("foo:bar:add")
-    public ApiResult addFooBar(@Valid @RequestBody FooBarDto fooBarDto) throws Exception {
-        boolean flag = fooBarService.addFooBar(fooBarDto);
+    public ApiResult addFooBar(@Valid @RequestBody FooBarDto dto) throws Exception {
+        boolean flag = fooBarService.addFooBar(dto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改FooBar
      *
-     * @param fooBarDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -59,8 +59,8 @@ public class FooBarController {
     @PostMapping("/updateFooBar")
     @Operation(summary = "修改FooBar")
     @Permission("foo:bar:update")
-    public ApiResult updateFooBar(@Valid @RequestBody FooBarDto fooBarDto) throws Exception {
-        boolean flag = fooBarService.updateFooBar(fooBarDto);
+    public ApiResult updateFooBar(@Valid @RequestBody FooBarDto dto) throws Exception {
+        boolean flag = fooBarService.updateFooBar(dto);
         return ApiResult.result(flag);
     }
 

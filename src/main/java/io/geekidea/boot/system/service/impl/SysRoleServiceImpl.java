@@ -52,24 +52,24 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addSysRole(SysRoleDto sysRoleDto) throws Exception {
-        checkCodeExists(sysRoleDto.getCode());
+    public boolean addSysRole(SysRoleDto dto) throws Exception {
+        checkCodeExists(dto.getCode());
         SysRole sysRole = new SysRole();
-        BeanUtils.copyProperties(sysRoleDto, sysRole);
+        BeanUtils.copyProperties(dto, sysRole);
         return save(sysRole);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateSysRole(SysRoleDto sysRoleDto) throws Exception {
-        Long id = sysRoleDto.getId();
+    public boolean updateSysRole(SysRoleDto dto) throws Exception {
+        Long id = dto.getId();
         SysRole sysRole = getById(id);
         if (sysRole == null) {
             throw new BusinessException("系统角色不存在");
         }
         // 只修改名称和备注
-        sysRole.setName(sysRoleDto.getName());
-        sysRole.setRemark(sysRoleDto.getRemark());
+        sysRole.setName(dto.getName());
+        sysRole.setRemark(dto.getRemark());
         sysRole.setUpdateTime(new Date());
         return updateById(sysRole);
     }
@@ -91,9 +91,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public Paging<SysRoleVo> getSysRolePage(SysRoleQuery sysRoleQuery) throws Exception {
-        PagingUtil.handlePage(sysRoleQuery, OrderByItem.desc("id"));
-        List<SysRoleVo> list = sysRoleMapper.getSysRolePage(sysRoleQuery);
+    public Paging<SysRoleVo> getSysRolePage(SysRoleQuery query) throws Exception {
+        PagingUtil.handlePage(query, OrderByItem.desc("id"));
+        List<SysRoleVo> list = sysRoleMapper.getSysRolePage(query);
         Paging<SysRoleVo> paging = new Paging<>(list);
         return paging;
     }

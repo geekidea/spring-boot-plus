@@ -40,30 +40,30 @@ public class SysRoleController {
     /**
      * 添加系统角色
      *
-     * @param sysRoleDto
+     * @param dto
      * @return
      * @throws Exception
      */
     @PostMapping("/addSysRole")
     @Operation(summary = "添加系统角色")
     @Permission("sys:role:add")
-    public ApiResult addSysRole(@Valid @RequestBody SysRoleDto sysRoleDto) throws Exception {
-        boolean flag = sysRoleService.addSysRole(sysRoleDto);
+    public ApiResult addSysRole(@Valid @RequestBody SysRoleDto dto) throws Exception {
+        boolean flag = sysRoleService.addSysRole(dto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改系统角色
      *
-     * @param sysRoleDto
+     * @param dto
      * @return
      * @throws Exception
      */
     @PostMapping("/updateSysRole")
     @Operation(summary = "修改系统角色")
     @Permission("sys:role:update")
-    public ApiResult updateSysRole(@Valid @RequestBody SysRoleDto sysRoleDto) throws Exception {
-        boolean flag = sysRoleService.updateSysRole(sysRoleDto);
+    public ApiResult updateSysRole(@Valid @RequestBody SysRoleDto dto) throws Exception {
+        boolean flag = sysRoleService.updateSysRole(dto);
         return ApiResult.result(flag);
     }
 
@@ -100,15 +100,15 @@ public class SysRoleController {
     /**
      * 系统角色分页列表
      *
-     * @param sysRoleQuery
+     * @param query
      * @return
      * @throws Exception
      */
     @PostMapping("/getSysRolePage")
     @Operation(summary = "系统角色分页列表")
     @Permission("sys:role:page")
-    public ApiResult<SysRoleVo> getSysRolePage(@Valid @RequestBody SysRoleQuery sysRoleQuery) throws Exception {
-        Paging<SysRoleVo> paging = sysRoleService.getSysRolePage(sysRoleQuery);
+    public ApiResult<SysRoleVo> getSysRolePage(@Valid @RequestBody SysRoleQuery query) throws Exception {
+        Paging<SysRoleVo> paging = sysRoleService.getSysRolePage(query);
         return ApiResult.success(paging);
     }
 

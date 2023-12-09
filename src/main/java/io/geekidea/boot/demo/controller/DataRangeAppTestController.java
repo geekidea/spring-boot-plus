@@ -35,7 +35,7 @@ public class DataRangeAppTestController {
     /**
      * 添加用户端数据权限测试
      *
-     * @param dataRangeAppTestDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -43,15 +43,15 @@ public class DataRangeAppTestController {
     @PostMapping("/addDataRangeAppTest")
     @Operation(summary = "添加用户端数据权限测试")
     @Permission("data:range:app:test:add")
-    public ApiResult addDataRangeAppTest(@Valid @RequestBody DataRangeAppTestDto dataRangeAppTestDto) throws Exception {
-        boolean flag = dataRangeAppTestService.addDataRangeAppTest(dataRangeAppTestDto);
+    public ApiResult addDataRangeAppTest(@Valid @RequestBody DataRangeAppTestDto dto) throws Exception {
+        boolean flag = dataRangeAppTestService.addDataRangeAppTest(dto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改用户端数据权限测试
      *
-     * @param dataRangeAppTestDto
+     * @param dto
      * @return
      * @throws Exception
      */
@@ -59,8 +59,8 @@ public class DataRangeAppTestController {
     @PostMapping("/updateDataRangeAppTest")
     @Operation(summary = "修改用户端数据权限测试")
     @Permission("data:range:app:test:update")
-    public ApiResult updateDataRangeAppTest(@Valid @RequestBody DataRangeAppTestDto dataRangeAppTestDto) throws Exception {
-        boolean flag = dataRangeAppTestService.updateDataRangeAppTest(dataRangeAppTestDto);
+    public ApiResult updateDataRangeAppTest(@Valid @RequestBody DataRangeAppTestDto dto) throws Exception {
+        boolean flag = dataRangeAppTestService.updateDataRangeAppTest(dto);
         return ApiResult.result(flag);
     }
 

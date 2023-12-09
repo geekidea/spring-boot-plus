@@ -21,20 +21,20 @@ public interface SysMenuService extends IService<SysMenu> {
     /**
      * 添加系统菜单
      *
-     * @param sysMenuDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addSysMenu(SysMenuDto sysMenuDto) throws Exception;
+    boolean addSysMenu(SysMenuDto dto) throws Exception;
 
     /**
      * 修改系统菜单
      *
-     * @param sysMenuDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateSysMenu(SysMenuDto sysMenuDto) throws Exception;
+    boolean updateSysMenu(SysMenuDto dto) throws Exception;
 
     /**
      * 删除系统菜单
@@ -57,11 +57,11 @@ public interface SysMenuService extends IService<SysMenu> {
     /**
      * 获取所有的系统菜单树形列表
      *
-     * @param sysMenuQuery
+     * @param query
      * @return
      * @throws Exception
      */
-    List<SysMenuTreeVo> getAllSysMenuTreeList(SysMenuQuery sysMenuQuery) throws Exception;
+    List<SysMenuTreeVo> getAllSysMenuTreeList(SysMenuQuery query) throws Exception;
 
     /**
      * 获取启用的系统菜单树形列表

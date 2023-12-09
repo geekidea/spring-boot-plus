@@ -28,10 +28,10 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 系统用户分页列表
      *
-     * @param sysUserQuery
+     * @param query
      * @return
      */
-    List<SysUserVo> getSysUserPage(SysUserQuery sysUserQuery);
+    List<SysUserVo> getSysUserPage(SysUserQuery query);
 
     /**
      * 根据用户名获取登录用户对象

@@ -25,20 +25,20 @@ public interface SysDictService extends IService<SysDict> {
     /**
      * 添加字典数据
      *
-     * @param sysDictDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addSysDict(SysDictDto sysDictDto) throws Exception;
+    boolean addSysDict(SysDictDto dto) throws Exception;
 
     /**
      * 修改字典数据
      *
-     * @param sysDictDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateSysDict(SysDictDto sysDictDto) throws Exception;
+    boolean updateSysDict(SysDictDto dto) throws Exception;
 
     /**
      * 删除字典数据

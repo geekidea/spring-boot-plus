@@ -38,30 +38,30 @@ public class SysUserController {
     /**
      * 添加系统用户
      *
-     * @param sysUserDto
+     * @param dto
      * @return
      * @throws Exception
      */
     @PostMapping("/addSysUser")
     @Operation(summary = "添加系统用户")
     @Permission("sys:user:add")
-    public ApiResult addSysUser(@Valid @RequestBody SysUserDto sysUserDto) throws Exception {
-        boolean flag = sysUserService.addSysUser(sysUserDto);
+    public ApiResult addSysUser(@Valid @RequestBody SysUserDto dto) throws Exception {
+        boolean flag = sysUserService.addSysUser(dto);
         return ApiResult.result(flag);
     }
 
     /**
      * 修改系统用户
      *
-     * @param sysUserDto
+     * @param dto
      * @return
      * @throws Exception
      */
     @PostMapping("/updateSysUser")
     @Operation(summary = "修改系统用户")
     @Permission("sys:user:update")
-    public ApiResult updateSysUser(@Valid @RequestBody SysUserDto sysUserDto) throws Exception {
-        boolean flag = sysUserService.updateSysUser(sysUserDto);
+    public ApiResult updateSysUser(@Valid @RequestBody SysUserDto dto) throws Exception {
+        boolean flag = sysUserService.updateSysUser(dto);
         return ApiResult.result(flag);
     }
 
@@ -98,15 +98,15 @@ public class SysUserController {
     /**
      * 系统用户分页列表
      *
-     * @param sysUserQuery
+     * @param query
      * @return
      * @throws Exception
      */
     @PostMapping("/getSysUserPage")
     @Operation(summary = "系统用户分页列表")
     @Permission("sys:user:page")
-    public ApiResult<SysUserVo> getSysUserPage(@Valid @RequestBody SysUserQuery sysUserQuery) throws Exception {
-        Paging<SysUserVo> paging = sysUserService.getSysUserPage(sysUserQuery);
+    public ApiResult<SysUserVo> getSysUserPage(@Valid @RequestBody SysUserQuery query) throws Exception {
+        Paging<SysUserVo> paging = sysUserService.getSysUserPage(query);
         return ApiResult.success(paging);
     }
 

@@ -37,21 +37,21 @@ public class FooBarServiceImpl extends ServiceImpl<FooBarMapper, FooBar> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addFooBar(FooBarDto fooBarDto) throws Exception {
+    public boolean addFooBar(FooBarDto dto) throws Exception {
         FooBar fooBar = new FooBar();
-        BeanUtils.copyProperties(fooBarDto, fooBar);
+        BeanUtils.copyProperties(dto, fooBar);
         return save(fooBar);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateFooBar(FooBarDto fooBarDto) throws Exception {
-        Long id = fooBarDto.getId();
+    public boolean updateFooBar(FooBarDto dto) throws Exception {
+        Long id = dto.getId();
         FooBar fooBar = getById(id);
         if (fooBar == null) {
             throw new BusinessException("FooBar不存在");
         }
-        BeanUtils.copyProperties(fooBarDto, fooBar);
+        BeanUtils.copyProperties(dto, fooBar);
         fooBar.setUpdateTime(new Date());
         return updateById(fooBar);
     }

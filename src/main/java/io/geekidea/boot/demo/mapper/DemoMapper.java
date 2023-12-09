@@ -14,7 +14,7 @@ import java.util.List;
  * 演示 Mapper 接口
  *
  * @author geekidea
- * @since 2023-12-06
+ * @since 2023-12-09
  */
 @Mapper
 public interface DemoMapper extends BaseMapper<Demo> {

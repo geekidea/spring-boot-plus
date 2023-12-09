@@ -21,20 +21,20 @@ public interface DemoProductService extends IService<DemoProduct> {
     /**
      * 添加测试商品
      *
-     * @param demoProductDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addDemoProduct(DemoProductDto demoProductDto) throws Exception;
+    boolean addDemoProduct(DemoProductDto dto) throws Exception;
 
     /**
      * 修改测试商品
      *
-     * @param demoProductDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateDemoProduct(DemoProductDto demoProductDto) throws Exception;
+    boolean updateDemoProduct(DemoProductDto dto) throws Exception;
 
     /**
      * 删除测试商品

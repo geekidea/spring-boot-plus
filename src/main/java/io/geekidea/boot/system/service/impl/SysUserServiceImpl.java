@@ -48,10 +48,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addSysUser(SysUserDto sysUserDto) throws Exception {
-        checkUsernameExists(sysUserDto.getUsername());
+    public boolean addSysUser(SysUserDto dto) throws Exception {
+        checkUsernameExists(dto.getUsername());
         SysUser sysUser = new SysUser();
-        BeanUtils.copyProperties(sysUserDto, sysUser);
+        BeanUtils.copyProperties(dto, sysUser);
         // 密码加盐
         String salt = RandomStringUtils.randomNumeric(6);
         sysUser.setSalt(salt);
@@ -67,13 +67,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateSysUser(SysUserDto sysUserDto) throws Exception {
-        Long id = sysUserDto.getId();
+    public boolean updateSysUser(SysUserDto dto) throws Exception {
+        Long id = dto.getId();
         SysUser sysUser = getById(id);
         if (sysUser == null) {
             throw new BusinessException("系统用户不存在");
         }
-        BeanUtils.copyProperties(sysUserDto, sysUser);
+        BeanUtils.copyProperties(dto, sysUser);
         sysUser.setUpdateTime(new Date());
         boolean flag = updateById(sysUser);
         if (!flag) {
@@ -103,9 +103,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public Paging<SysUserVo> getSysUserPage(SysUserQuery sysUserQuery) throws Exception {
-        PagingUtil.handlePage(sysUserQuery, OrderByItem.desc("id"));
-        List<SysUserVo> list = sysUserMapper.getSysUserPage(sysUserQuery);
+    public Paging<SysUserVo> getSysUserPage(SysUserQuery query) throws Exception {
+        PagingUtil.handlePage(query, OrderByItem.desc("id"));
+        List<SysUserVo> list = sysUserMapper.getSysUserPage(query);
         Paging<SysUserVo> paging = new Paging<>(list);
         return paging;
     }

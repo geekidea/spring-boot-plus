@@ -28,9 +28,9 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
     /**
      * 系统日志分页列表
      *
-     * @param sysLogQuery
+     * @param query
      * @return
      */
-    List<SysLogVo> getSysLogPage(SysLogQuery sysLogQuery);
+    List<SysLogVo> getSysLogPage(SysLogQuery query);
 
 }

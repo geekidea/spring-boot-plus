@@ -21,20 +21,20 @@ public interface SysUserService extends IService<SysUser> {
     /**
      * 添加系统用户
      *
-     * @param sysUserDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addSysUser(SysUserDto sysUserDto) throws Exception;
+    boolean addSysUser(SysUserDto dto) throws Exception;
 
     /**
      * 修改系统用户
      *
-     * @param sysUserDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateSysUser(SysUserDto sysUserDto) throws Exception;
+    boolean updateSysUser(SysUserDto dto) throws Exception;
 
     /**
      * 删除系统用户
@@ -57,11 +57,11 @@ public interface SysUserService extends IService<SysUser> {
     /**
      * 系统用户分页列表
      *
-     * @param sysUserQuery
+     * @param query
      * @return
      * @throws Exception
      */
-    Paging<SysUserVo> getSysUserPage(SysUserQuery sysUserQuery) throws Exception;
+    Paging<SysUserVo> getSysUserPage(SysUserQuery query) throws Exception;
 
     /**
      * 重置系统用户密码

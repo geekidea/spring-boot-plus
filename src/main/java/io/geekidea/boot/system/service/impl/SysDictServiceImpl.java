@@ -42,21 +42,21 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addSysDict(SysDictDto sysDictDto) throws Exception {
+    public boolean addSysDict(SysDictDto dto) throws Exception {
         SysDict sysDict = new SysDict();
-        BeanUtils.copyProperties(sysDictDto, sysDict);
+        BeanUtils.copyProperties(dto, sysDict);
         return save(sysDict);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateSysDict(SysDictDto sysDictDto) throws Exception {
-        Long id = sysDictDto.getId();
+    public boolean updateSysDict(SysDictDto dto) throws Exception {
+        Long id = dto.getId();
         SysDict sysDict = getById(id);
         if (sysDict == null) {
             throw new BusinessException("字典数据不存在");
         }
-        BeanUtils.copyProperties(sysDictDto, sysDict);
+        BeanUtils.copyProperties(dto, sysDict);
         sysDict.setUpdateTime(new Date());
         return updateById(sysDict);
     }

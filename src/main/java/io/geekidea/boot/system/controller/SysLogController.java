@@ -47,15 +47,15 @@ public class SysLogController {
     /**
      * 系统日志分页列表
      *
-     * @param sysLogQuery
+     * @param query
      * @return
      * @throws Exception
      */
     @PostMapping("/getSysLogPage")
     @Operation(summary = "系统日志分页列表")
     @Permission("sys:log:page")
-    public ApiResult<SysLogVo> getSysLogPage(@Valid @RequestBody SysLogQuery sysLogQuery) throws Exception {
-        Paging<SysLogVo> paging = sysLogService.getSysLogPage(sysLogQuery);
+    public ApiResult<SysLogVo> getSysLogPage(@Valid @RequestBody SysLogQuery query) throws Exception {
+        Paging<SysLogVo> paging = sysLogService.getSysLogPage(query);
         return ApiResult.success(paging);
     }
 

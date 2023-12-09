@@ -21,20 +21,20 @@ public interface FooBarService extends IService<FooBar> {
     /**
      * 添加FooBar
      *
-     * @param fooBarDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addFooBar(FooBarDto fooBarDto) throws Exception;
+    boolean addFooBar(FooBarDto dto) throws Exception;
 
     /**
      * 修改FooBar
      *
-     * @param fooBarDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateFooBar(FooBarDto fooBarDto) throws Exception;
+    boolean updateFooBar(FooBarDto dto) throws Exception;
 
     /**
      * 删除FooBar

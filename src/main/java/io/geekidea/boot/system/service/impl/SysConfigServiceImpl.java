@@ -36,22 +36,22 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean addSysConfig(SysConfigDto sysConfigDto) throws Exception {
-        checkConfigKeyExists(sysConfigDto.getConfigKey());
+    public boolean addSysConfig(SysConfigDto dto) throws Exception {
+        checkConfigKeyExists(dto.getConfigKey());
         SysConfig sysConfig = new SysConfig();
-        BeanUtils.copyProperties(sysConfigDto, sysConfig);
+        BeanUtils.copyProperties(dto, sysConfig);
         return save(sysConfig);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateSysConfig(SysConfigDto sysConfigDto) throws Exception {
-        Long id = sysConfigDto.getId();
+    public boolean updateSysConfig(SysConfigDto dto) throws Exception {
+        Long id = dto.getId();
         SysConfig sysConfig = getById(id);
         if (sysConfig == null) {
             throw new BusinessException("系统配置不存在");
         }
-        BeanUtils.copyProperties(sysConfigDto, sysConfig);
+        BeanUtils.copyProperties(dto, sysConfig);
         sysConfig.setUpdateTime(new Date());
         return updateById(sysConfig);
     }

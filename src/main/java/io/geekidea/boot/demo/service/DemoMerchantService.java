@@ -21,20 +21,20 @@ public interface DemoMerchantService extends IService<DemoMerchant> {
     /**
      * 添加测试商户
      *
-     * @param demoMerchantDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean addDemoMerchant(DemoMerchantDto demoMerchantDto) throws Exception;
+    boolean addDemoMerchant(DemoMerchantDto dto) throws Exception;
 
     /**
      * 修改测试商户
      *
-     * @param demoMerchantDto
+     * @param dto
      * @return
      * @throws Exception
      */
-    boolean updateDemoMerchant(DemoMerchantDto demoMerchantDto) throws Exception;
+    boolean updateDemoMerchant(DemoMerchantDto dto) throws Exception;
 
     /**
      * 删除测试商户

@@ -28,9 +28,9 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     /**
      * 系统角色分页列表
      *
-     * @param sysRoleQuery
+     * @param query
      * @return
      */
-    List<SysRoleVo> getSysRolePage(SysRoleQuery sysRoleQuery);
+    List<SysRoleVo> getSysRolePage(SysRoleQuery query);
 
 }
