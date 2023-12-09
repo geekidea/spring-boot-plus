@@ -173,12 +173,14 @@ file:
     accessKeySecret:
     endpoint:
     bucketName:
-    accessDomain:
+    accessDomain: 
 
 # 微信小程序配置
 wx:
   mp:
+    # AppID(小程序ID)
     appid:
+    # AppSecret(小程序密钥)
     secret:
 
 # 多商户行级数据权限配置

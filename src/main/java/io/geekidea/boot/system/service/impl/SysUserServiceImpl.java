@@ -1,5 +1,6 @@
 package io.geekidea.boot.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.boot.auth.service.LoginRedisService;
@@ -11,7 +12,6 @@ import io.geekidea.boot.system.dto.SysUserResetPasswordDto;
 import io.geekidea.boot.system.dto.SysUserUpdatePasswordDto;
 import io.geekidea.boot.system.dto.SysUserUpdateProfileDto;
 import io.geekidea.boot.system.entity.SysUser;
-import io.geekidea.boot.system.mapper.SysRoleMapper;
 import io.geekidea.boot.system.mapper.SysUserMapper;
 import io.geekidea.boot.system.query.SysUserQuery;
 import io.geekidea.boot.system.service.SysUserService;
@@ -49,6 +49,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean addSysUser(SysUserDto sysUserDto) throws Exception {
+        checkUsernameExists(sysUserDto.getUsername());
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(sysUserDto, sysUser);
         // 密码加盐
@@ -166,6 +167,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new BusinessException("两次输入的密码不一致");
         }
         return handleUpdatePassword(id, password);
+    }
+
+    @Override
+    public void checkUsernameExists(String username) throws Exception {
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUser::getUsername, username);
+        long count = count(wrapper);
+        if (count > 0) {
+            throw new BusinessException(username + "用户名已经存在");
+        }
     }
 
     /**

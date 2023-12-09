@@ -5,7 +5,6 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -31,8 +30,9 @@ public class SysRoleDto implements Serializable {
     @Length(max = 100, message = "角色唯一编码长度超过限制")
     private String code;
 
-    @Schema(description = "角色状态，0：禁用，1：启用")
-    private Boolean status;
+    @Schema(description = "角色备注")
+    @Length(max = 200, message = "角色备注长度超过限制")
+    private String remark;
 
 }
 

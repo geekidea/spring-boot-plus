@@ -12,6 +12,19 @@
             resultType="io.geekidea.boot.system.vo.SysConfigVo">
         select *
         from sys_config
+        <where>
+            <if test="keyword != null and keyword != ''">
+                and (config_name like concat('%',#{keyword},'%')
+                or config_key like concat('%',#{keyword},'%')
+                or config_value like concat('%',#{keyword},'%'))
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="isSystem != null">
+                and is_system = #{isSystem}
+            </if>
+        </where>
     </select>
 
 </mapper>

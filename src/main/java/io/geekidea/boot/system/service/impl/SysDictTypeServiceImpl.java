@@ -1,5 +1,6 @@
 package io.geekidea.boot.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.system.dto.SysDictTypeDto;
@@ -33,6 +34,7 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean addSysDictType(SysDictTypeDto sysDictTypeDto) throws Exception {
+        checkCodeExists(sysDictTypeDto.getCode());
         SysDictType sysDictType = new SysDictType();
         BeanUtils.copyProperties(sysDictTypeDto, sysDictType);
         return save(sysDictType);
@@ -46,7 +48,9 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
         if (sysDictType == null) {
             throw new BusinessException("字典类型不存在");
         }
-        BeanUtils.copyProperties(sysDictTypeDto, sysDictType);
+        sysDictType.setIsSystem(sysDictTypeDto.getIsSystem());
+        sysDictType.setName(sysDictTypeDto.getName());
+        sysDictType.setRemark(sysDictTypeDto.getRemark());
         sysDictType.setUpdateTime(new Date());
         return updateById(sysDictType);
     }
@@ -74,6 +78,16 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
     public List<SysDictTypeVo> getSysDictTypeList(SysDictTypeQuery query) throws Exception {
         List<SysDictTypeVo> list = sysDictTypeMapper.getSysDictTypeList(query);
         return list;
+    }
+
+    @Override
+    public void checkCodeExists(String code) throws Exception {
+        LambdaQueryWrapper<SysDictType> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysDictType::getCode, code);
+        long count = count(wrapper);
+        if (count > 0) {
+            throw new BusinessException(code + "类型编码已经存在");
+        }
     }
 
 }

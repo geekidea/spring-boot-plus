@@ -21,8 +21,5 @@ public class SysRoleQuery extends BasePageQuery {
     @Schema(description = "角色编码")
     private String code;
 
-    @Schema(description = "角色状态，0：禁用，1：启用")
-    private Boolean status;
-
 }
 

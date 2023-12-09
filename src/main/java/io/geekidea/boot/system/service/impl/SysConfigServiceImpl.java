@@ -1,16 +1,17 @@
 package io.geekidea.boot.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.OrderByItem;
 import io.geekidea.boot.framework.page.Paging;
-import io.geekidea.boot.util.PagingUtil;
 import io.geekidea.boot.system.dto.SysConfigDto;
 import io.geekidea.boot.system.entity.SysConfig;
 import io.geekidea.boot.system.mapper.SysConfigMapper;
 import io.geekidea.boot.system.query.SysConfigQuery;
 import io.geekidea.boot.system.service.SysConfigService;
 import io.geekidea.boot.system.vo.SysConfigVo;
+import io.geekidea.boot.util.PagingUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean addSysConfig(SysConfigDto sysConfigDto) throws Exception {
+        checkConfigKeyExists(sysConfigDto.getConfigKey());
         SysConfig sysConfig = new SysConfig();
         BeanUtils.copyProperties(sysConfigDto, sysConfig);
         return save(sysConfig);
@@ -71,6 +73,16 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         List<SysConfigVo> list = sysConfigMapper.getSysConfigPage(query);
         Paging<SysConfigVo> paging = new Paging<>(list);
         return paging;
+    }
+
+    @Override
+    public void checkConfigKeyExists(String configKey) throws Exception {
+        LambdaQueryWrapper<SysConfig> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysConfig::getConfigKey, configKey);
+        long count = count(wrapper);
+        if (count > 0) {
+            throw new BusinessException(configKey + "配置key已经存在");
+        }
     }
 
 }

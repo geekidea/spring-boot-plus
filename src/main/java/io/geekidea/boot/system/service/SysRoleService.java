@@ -80,4 +80,13 @@ public interface SysRoleService extends IService<SysRole> {
      */
     boolean setRoleMenus(RoleMenusDto roleMenusDto) throws Exception;
 
+    /**
+     * 检查code是否存在
+     *
+     * @param code
+     * @return
+     * @throws Exception
+     */
+    void checkCodeExists(String code) throws Exception;
+
 }

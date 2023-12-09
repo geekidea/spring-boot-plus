@@ -88,4 +88,13 @@ public interface SysMenuService extends IService<SysMenu> {
      */
     List<Long> getMenuIdsByRoleId(Long roleId) throws Exception;
 
+    /**
+     * 检查code是否存在
+     *
+     * @param code
+     * @return
+     * @throws Exception
+     */
+    void checkCodeExists(String code) throws Exception;
+
 }

@@ -1,5 +1,6 @@
 package io.geekidea.boot.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.framework.exception.BusinessException;
@@ -39,6 +40,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean addSysMenu(SysMenuDto sysMenuDto) throws Exception {
+        checkCodeExists(sysMenuDto.getCode());
         SysMenu sysMenu = new SysMenu();
         BeanUtils.copyProperties(sysMenuDto, sysMenu);
         return save(sysMenu);
@@ -113,6 +115,16 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<Long> getMenuIdsByRoleId(Long roleId) throws Exception {
         return sysMenuMapper.getMenuIdsByRoleId(roleId);
+    }
+
+    @Override
+    public void checkCodeExists(String code) throws Exception {
+        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysMenu::getCode, code);
+        long count = count(wrapper);
+        if (count > 0) {
+            throw new BusinessException(code + "权限标识已经存在");
+        }
     }
 
     /**

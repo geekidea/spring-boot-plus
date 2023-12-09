@@ -19,9 +19,6 @@
             <if test="code!=null and code !=''">
                 and code like concat('%',#{code},'%')
             </if>
-            <if test="status!=null">
-                and status = #{status}
-            </if>
         </where>
     </select>
 

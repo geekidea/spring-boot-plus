@@ -1,9 +1,9 @@
 package io.geekidea.boot.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.geekidea.boot.system.vo.SysUserVo;
 import io.geekidea.boot.system.entity.SysUser;
 import io.geekidea.boot.system.query.SysUserQuery;
+import io.geekidea.boot.system.vo.SysUserVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -40,5 +40,13 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return
      */
     SysUser getSysUserByUsername(String username);
+
+    /**
+     * 根据角色ID获取用户数量
+     *
+     * @param roleId
+     * @return
+     */
+    Integer getCountByRoleId(Long roleId);
 
 }

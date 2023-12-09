@@ -33,6 +33,9 @@ public class SysUserDto implements Serializable {
     @Length(max = 20, message = "昵称长度超过限制")
     private String nickname;
 
+    @Schema(description = "密码")
+    private String password;
+
     @Schema(description = "手机号码")
     @Length(max = 11, message = "手机号码长度超过限制")
     private String phone;

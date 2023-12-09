@@ -90,4 +90,13 @@ public interface SysUserService extends IService<SysUser> {
      */
     boolean updatePassword(SysUserUpdatePasswordDto sysUserUpdatePasswordDto) throws Exception;
 
+    /**
+     * 检查username是否存在
+     *
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    void checkUsernameExists(String username) throws Exception;
+
 }

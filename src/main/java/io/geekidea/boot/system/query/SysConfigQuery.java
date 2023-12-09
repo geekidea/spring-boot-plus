@@ -15,5 +15,11 @@ import lombok.Data;
 public class SysConfigQuery extends BasePageQuery {
     private static final long serialVersionUID = 1L;
 
+    @Schema(description = "是否是系统字典类型")
+    private Boolean isSystem;
+
+    @Schema(description = "状态 1：正常，0：禁用")
+    private Boolean status;
+
 }
 

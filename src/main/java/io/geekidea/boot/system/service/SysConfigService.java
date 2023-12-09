@@ -61,4 +61,13 @@ public interface SysConfigService extends IService<SysConfig> {
      */
     Paging<SysConfigVo> getSysConfigPage(SysConfigQuery query) throws Exception;
 
+    /**
+     * 检查configKey是否存在
+     *
+     * @param configKey
+     * @return
+     * @throws Exception
+     */
+    void checkConfigKeyExists(String configKey) throws Exception;
+
 }

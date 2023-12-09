@@ -63,4 +63,13 @@ public interface SysDictTypeService extends IService<SysDictType> {
      */
     List<SysDictTypeVo> getSysDictTypeList(SysDictTypeQuery query) throws Exception;
 
+    /**
+     * 检查code是否存在
+     *
+     * @param code
+     * @return
+     * @throws Exception
+     */
+    void checkCodeExists(String code) throws Exception;
+
 }

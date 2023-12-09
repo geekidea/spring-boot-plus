@@ -11,6 +11,7 @@ import io.geekidea.boot.system.entity.SysMenu;
 import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.entity.SysRoleMenu;
 import io.geekidea.boot.system.mapper.SysRoleMapper;
+import io.geekidea.boot.system.mapper.SysUserMapper;
 import io.geekidea.boot.system.query.SysRoleQuery;
 import io.geekidea.boot.system.service.SysMenuService;
 import io.geekidea.boot.system.service.SysRoleMenuService;
@@ -46,9 +47,13 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Autowired
     private SysMenuService sysMenuService;
 
+    @Autowired
+    private SysUserMapper sysUserMapper;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean addSysRole(SysRoleDto sysRoleDto) throws Exception {
+        checkCodeExists(sysRoleDto.getCode());
         SysRole sysRole = new SysRole();
         BeanUtils.copyProperties(sysRoleDto, sysRole);
         return save(sysRole);
@@ -62,7 +67,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         if (sysRole == null) {
             throw new BusinessException("系统角色不存在");
         }
-        BeanUtils.copyProperties(sysRoleDto, sysRole);
+        // 只修改名称和备注
+        sysRole.setName(sysRoleDto.getName());
+        sysRole.setRemark(sysRoleDto.getRemark());
         sysRole.setUpdateTime(new Date());
         return updateById(sysRole);
     }
@@ -70,6 +77,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean deleteSysRole(Long id) throws Exception {
+        // 判断角色下是否存在用户，如果存在，则不能删除
+        Integer count = sysUserMapper.getCountByRoleId(id);
+        if (count > 0) {
+            throw new BusinessException("该角色下还存在用户，不可删除");
+        }
         return removeById(id);
     }
 
@@ -129,6 +141,16 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             throw new BusinessException("设置角色权限异常");
         }
         return true;
+    }
+
+    @Override
+    public void checkCodeExists(String code) throws Exception {
+        LambdaQueryWrapper<SysRole> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysRole::getCode, code);
+        long count = count(wrapper);
+        if (count > 0) {
+            throw new BusinessException(code + "角色编码已经存在");
+        }
     }
 
     /**
