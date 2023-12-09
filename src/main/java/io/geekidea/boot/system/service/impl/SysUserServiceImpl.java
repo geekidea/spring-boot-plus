@@ -58,11 +58,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String password = PasswordUtil.encrypt(sysUser.getPassword(), salt);
         sysUser.setPassword(password);
         // 保存用户
-        boolean flag = save(sysUser);
-        if (!flag) {
-            throw new BusinessException("保存系统用户异常");
-        }
-        return true;
+        return save(sysUser);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -75,31 +71,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
         BeanUtils.copyProperties(dto, sysUser);
         sysUser.setUpdateTime(new Date());
-        boolean flag = updateById(sysUser);
-        if (!flag) {
-            throw new BusinessException("修改系统用户异常");
-        }
-        return true;
+        return updateById(sysUser);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean deleteSysUser(Long id) throws Exception {
         // 删除用户
-        boolean flag = removeById(id);
-        if (!flag) {
-            throw new BusinessException("删除系统用户异常");
-        }
-        return true;
+        return removeById(id);
     }
 
     @Override
     public SysUserVo getSysUserById(Long id) throws Exception {
-        SysUserVo sysUserVo = sysUserMapper.getSysUserById(id);
-        if (sysUserVo == null) {
-            throw new BusinessException("用户信息不存在");
-        }
-        return sysUserVo;
+        return sysUserMapper.getSysUserById(id);
     }
 
     @Override
