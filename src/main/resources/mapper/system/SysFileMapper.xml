@@ -20,6 +20,12 @@
                 and (original_file_name like concat('%',#{keyword},'%')
                 or file_name like concat('%',#{keyword},'%'))
             </if>
+            <if test="createStartTime != null">
+                and date(u.create_time) >= date(#{createStartTime})
+            </if>
+            <if test="createEndTime != null">
+                and date(u.create_time) &lt;= date(#{createEndTime})
+            </if>
         </where>
     </select>
 

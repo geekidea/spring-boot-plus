@@ -7,8 +7,6 @@ import io.geekidea.boot.system.entity.SysFile;
 import io.geekidea.boot.system.query.SysFileQuery;
 import io.geekidea.boot.system.vo.SysFileVo;
 
-import java.util.List;
-
 
 /**
  * 系统文件 服务接口
@@ -53,13 +51,5 @@ public interface SysFileService extends IService<SysFile> {
      * @throws Exception
      */
     Paging<SysFileVo> getSysFilePage(SysFileQuery query) throws Exception;
-
-    /**
-     * 获取系统文件目录列表
-     *
-     * @return
-     * @throws Exception
-     */
-    List<String> getSysFileDirList() throws Exception;
 
 }

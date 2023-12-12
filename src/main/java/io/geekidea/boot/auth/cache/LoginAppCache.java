@@ -12,12 +12,12 @@ import io.geekidea.boot.auth.vo.LoginRedisAppVo;
 public class LoginAppCache {
 
     /**
-     * 当前线程中保存管理后台登录信息
+     * 当前线程中保存APP移动端登录信息
      */
     private static final ThreadLocal<LoginRedisAppVo> APP_LOGIN_CACHE = new ThreadLocal<>();
 
     /**
-     * 设置管理后台登录信息到当前线程中
+     * 设置APP移动端登录信息到当前线程中
      *
      * @param loginRedisAppVo
      */
@@ -26,7 +26,7 @@ public class LoginAppCache {
     }
 
     /**
-     * 从当前线程获取管理后台登录信息
+     * 从当前线程获取APP移动端登录信息
      *
      * @return
      */
@@ -35,7 +35,7 @@ public class LoginAppCache {
     }
 
     /**
-     * 从当前线程中移除管理后台登录信息
+     * 从当前线程中移除APP移动端登录信息
      */
     public static void remove() {
         APP_LOGIN_CACHE.remove();

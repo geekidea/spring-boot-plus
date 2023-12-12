@@ -1,8 +1,8 @@
 package io.geekidea.boot.system.controller;
 
-import io.geekidea.boot.framework.annotation.Log;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.common.enums.SysLogType;
+import io.geekidea.boot.framework.annotation.Log;
 import io.geekidea.boot.framework.page.Paging;
 import io.geekidea.boot.framework.response.ApiResult;
 import io.geekidea.boot.system.dto.SysFileDto;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * 系统文件 控制器
@@ -93,20 +92,6 @@ public class SysFileController {
     public ApiResult<SysFileVo> getSysFilePage(@Valid @RequestBody SysFileQuery query) throws Exception {
         Paging<SysFileVo> paging = sysFileService.getSysFilePage(query);
         return ApiResult.success(paging);
-    }
-
-    /**
-     * 获取系统文件目录列表
-     *
-     * @return
-     * @throws Exception
-     */
-    @PostMapping("/getSysFileDirList")
-    @Operation(summary = "获取系统文件目录列表")
-    @Permission("sys:file:dir-list")
-    public ApiResult<String> getSysFileDirList() throws Exception {
-        List<String> list = sysFileService.getSysFileDirList();
-        return ApiResult.success(list);
     }
 
 }
