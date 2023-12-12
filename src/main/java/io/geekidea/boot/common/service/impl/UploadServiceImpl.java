@@ -6,17 +6,21 @@ import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.geekidea.boot.auth.util.LoginCommonUtil;
 import io.geekidea.boot.common.constant.UploadConstant;
+import io.geekidea.boot.common.enums.FileServerType;
 import io.geekidea.boot.common.enums.SysFileType;
 import io.geekidea.boot.common.enums.SystemType;
 import io.geekidea.boot.common.enums.UploadType;
 import io.geekidea.boot.common.service.UploadService;
 import io.geekidea.boot.common.vo.UploadVo;
 import io.geekidea.boot.config.properties.FileProperties;
-import io.geekidea.boot.common.enums.FileServerType;
+import io.geekidea.boot.config.properties.LocalFileProperties;
 import io.geekidea.boot.framework.exception.UploadException;
 import io.geekidea.boot.system.entity.SysFile;
 import io.geekidea.boot.system.service.SysFileService;
-import io.geekidea.boot.util.*;
+import io.geekidea.boot.util.IpRegionUtil;
+import io.geekidea.boot.util.IpUtil;
+import io.geekidea.boot.util.SystemTypeUtil;
+import io.geekidea.boot.util.TraceIdUtil;
 import io.geekidea.boot.util.api.OssApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -44,11 +48,17 @@ public class UploadServiceImpl implements UploadService {
     private FileProperties fileProperties;
 
     @Autowired
+    private LocalFileProperties localFileProperties;
+
+    @Autowired
     private SysFileService sysFileService;
 
     @Override
     public UploadVo upload(String type, MultipartFile multipartFile) throws Exception {
         log.info("文件上传开始");
+        if (StringUtils.isBlank(type)) {
+            type = UploadType.ANY.getType();
+        }
         String originalFilename = multipartFile.getOriginalFilename();
         log.info("originalFilename:" + originalFilename);
         String contentType = multipartFile.getContentType();
@@ -77,7 +87,7 @@ public class UploadServiceImpl implements UploadService {
             url = OssApi.upload(inputStream, uploadDirName, newFileName);
         } else {
             // 本地文件上传路径
-            String uploadPath = fileProperties.getUploadPath();
+            String uploadPath = localFileProperties.getUploadPath();
             File uploadRootDir = new File(uploadPath);
             // 上传目录不存在，则直接创建
             if (!uploadRootDir.exists()) {
@@ -92,7 +102,7 @@ public class UploadServiceImpl implements UploadService {
             log.info("uploadFile:" + uploadFile);
             multipartFile.transferTo(uploadFile);
             // 返回本地文件访问路径
-            url = fileProperties.getAccessUrl() + "/" + uploadDirName + "/" + newFileName;
+            url = localFileProperties.getAccessUrl() + "/" + uploadDirName + "/" + newFileName;
             log.info("url:" + url);
         }
         // 保存文件记录

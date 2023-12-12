@@ -25,6 +25,18 @@ public class LoginVo implements Serializable {
     @Schema(description = "用户昵称")
     private String nickname;
 
+    @Schema(description = "手机号码")
+    private String phone;
+
+    @Schema(description = "电子邮件")
+    private String email;
+
+    @Schema(description = "性别，0：未知，1：男，2：女，默认0")
+    private Integer gender;
+
+    @Schema(description = "头像")
+    private String head;
+
     @Schema(description = "是否是管理员")
     private boolean admin;
 
@@ -42,5 +54,8 @@ public class LoginVo implements Serializable {
 
     @Schema(description = "系统类型 1：管理后台，2：用户端")
     private Integer systemType;
+
+    @Schema(description = "创建时间")
+    private Date createTime;
 
 }

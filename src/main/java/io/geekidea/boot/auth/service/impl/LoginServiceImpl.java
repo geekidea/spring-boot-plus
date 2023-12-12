@@ -7,6 +7,7 @@ import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.auth.vo.LoginTokenVo;
 import io.geekidea.boot.auth.vo.LoginVo;
 import io.geekidea.boot.common.enums.SystemType;
+import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.exception.LoginException;
 import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.entity.SysUser;
@@ -49,7 +50,7 @@ public class LoginServiceImpl implements LoginService {
         String username = loginDto.getUsername();
         SysUser sysUser = sysUserMapper.getSysUserByUsername(username);
         if (sysUser == null) {
-            throw new LoginException("用户信息不存在");
+            throw new BusinessException("用户信息不存在");
         }
         // 校验密码
         String dbPassword = sysUser.getPassword();
@@ -57,18 +58,18 @@ public class LoginServiceImpl implements LoginService {
         String password = loginDto.getPassword();
         String encryptPassword = PasswordUtil.encrypt(password, dbSalt);
         if (!encryptPassword.equals(dbPassword)) {
-            throw new LoginException("账号密码错误");
+            throw new BusinessException("账号密码错误");
         }
         // 校验用户状态
         Boolean status = sysUser.getStatus();
         if (status == false) {
-            throw new LoginException("用户已禁用");
+            throw new BusinessException("用户已禁用");
         }
         // 查询用户角色
         Long roleId = sysUser.getRoleId();
         SysRole sysRole = sysRoleMapper.selectById(roleId);
         if (sysRole == null) {
-            throw new LoginException("该用户不存在可用的角色");
+            throw new BusinessException("该用户不存在可用的角色");
         }
         // 设置登录用户对象
         LoginVo loginVo = new LoginVo();

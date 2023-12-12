@@ -11,27 +11,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2023/06/18
  **/
 @Data
-@ConfigurationProperties(prefix = "file.local")
+@ConfigurationProperties(prefix = "file")
 public class FileProperties {
-
-    /**
-     * 上传文件访问路径
-     */
-    private String accessPath;
-
-    /**
-     * 上传文件保存路径
-     */
-    private String uploadPath;
 
     /**
      * 文件服务类型
      */
-    private FileServerType fileServerType = FileServerType.LOCAL;
-
-    /**
-     * 上传文件访问URL前缀
-     */
-    private String accessUrl;
+    private FileServerType fileServerType;
 
 }

@@ -47,10 +47,14 @@ public class LoginCommonUtil {
      * @throws Exception
      */
     public static Long getUserId(SystemType systemType) throws Exception {
-        if (SystemType.ADMIN == systemType) {
-            return LoginUtil.getUserId();
-        } else if (SystemType.APP == systemType) {
-            return LoginAppUtil.getUserId();
+        try {
+            if (SystemType.ADMIN == systemType) {
+                return LoginUtil.getUserId();
+            } else if (SystemType.APP == systemType) {
+                return LoginAppUtil.getUserId();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }

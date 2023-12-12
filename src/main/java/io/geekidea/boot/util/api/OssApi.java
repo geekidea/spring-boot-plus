@@ -12,6 +12,7 @@ import com.aliyun.oss.model.PutObjectResult;
 import io.geekidea.boot.config.properties.OssProperties;
 import io.geekidea.boot.framework.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import java.io.InputStream;
 
 /**
  * OSS接口调用工具类
+ *
  * @author geekidea
  * @date 2023/11/26
  **/
@@ -52,7 +54,13 @@ public class OssApi {
 
     public static String upload(InputStream inputStream, String dirName, String fileName) throws Exception {
         try {
-            String fileKey = dirName + "/" + fileName;
+            String rootDir = ossProperties.getRootDir();
+            String fileKey = "";
+            if (StringUtils.isNotBlank(rootDir)) {
+                fileKey = rootDir + "/";
+            }
+            fileKey = fileKey + dirName + "/" + fileName;
+            log.info("OSS上传文件fileKey：" + fileKey);
             PutObjectRequest putObjectRequest = new PutObjectRequest(ossProperties.getBucketName(), fileKey, inputStream);
             PutObjectResult result = ossClient.putObject(putObjectRequest);
             log.info("OSS上传文件结果：" + JSON.toJSONString(result));

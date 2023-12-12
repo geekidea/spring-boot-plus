@@ -40,15 +40,22 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private LoginCommonProperties loginCommonProperties;
 
     @Autowired
-    private FileProperties fileProperties;
+    private LocalFileProperties localFileProperties;
 
     @Autowired
     private XssProperties xssProperties;
 
+    @Autowired
+    private NotAuthProperties notAuthProperties;
 
     @Bean
     public ExcludePathInterceptor excludePathInterceptor() {
         return new ExcludePathInterceptor();
+    }
+
+    @Bean
+    public NotAuthInterceptor notAuthInterceptor() {
+        return new NotAuthInterceptor();
     }
 
     @Bean
@@ -122,14 +129,21 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 虚拟目录文件映射
-        registry.addResourceHandler(fileProperties.getAccessPath())
-                .addResourceLocations("file:" + fileProperties.getUploadPath());
+        registry.addResourceHandler(localFileProperties.getAccessPath())
+                .addResourceLocations("file:" + localFileProperties.getUploadPath());
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 加入的顺序就是拦截器执行的顺序
         registry.addInterceptor(excludePathInterceptor());
+        // 没有权限的拦截器，直接返回无权限
+        boolean enableNotAuth = notAuthProperties.isEnable();
+        if (enableNotAuth) {
+            List<String> includePaths = notAuthProperties.getIncludePaths();
+            registry.addInterceptor(notAuthInterceptor()).addPathPatterns(includePaths);
+        }
+
         // token拦截器
         registry.addInterceptor(tokenInterceptor()).excludePathPatterns("/admin/login", "/app/login");
         // 管理后台登录拦截器配置
@@ -153,7 +167,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         // 系统公共请求拦截器，子拦截/common/开头的请求
         boolean enableCommonInterceptor = loginCommonProperties.isEnable();
-        if (enableCommonInterceptor){
+        if (enableCommonInterceptor) {
             registry.addInterceptor(loginCommonInterceptor()).addPathPatterns(loginCommonProperties.getIncludePaths());
         }
 

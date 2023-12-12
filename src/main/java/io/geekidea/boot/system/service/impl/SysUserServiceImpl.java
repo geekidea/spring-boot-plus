@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.boot.auth.service.LoginRedisService;
+import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.page.OrderByItem;
 import io.geekidea.boot.framework.page.Paging;
@@ -130,8 +131,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean updatePassword(SysUserUpdatePasswordDto sysUserUpdatePasswordDto) throws Exception {
-        Long id = sysUserUpdatePasswordDto.getId();
-        log.info("用户修改密码：" + id);
+        Long id = LoginUtil.getUserId();
         SysUser sysUser = getById(id);
         if (sysUser == null) {
             throw new BusinessException("用户信息不存在");
@@ -149,6 +149,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String confirmPassword = sysUserUpdatePasswordDto.getConfirmPassword();
         if (!password.equals(confirmPassword)) {
             throw new BusinessException("两次输入的密码不一致");
+        }
+        // 新密码不能与旧密码一致
+        String newPassword = PasswordUtil.encrypt(password, dbSalt);
+        if (dbPassword.equals(newPassword)) {
+            throw new BusinessException("新密码不能与旧密码一致");
         }
         return handleUpdatePassword(id, password);
     }

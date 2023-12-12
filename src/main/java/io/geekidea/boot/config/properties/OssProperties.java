@@ -34,6 +34,11 @@ public class OssProperties {
     private String bucketName;
 
     /**
+     * 根目录
+     */
+    private String rootDir;
+
+    /**
      * 访问域名
      */
     private String accessDomain;

@@ -16,11 +16,13 @@ import org.springframework.context.annotation.Configuration;
         LoginAppProperties.class,
         LoginCommonProperties.class,
         FileProperties.class,
+        LocalFileProperties.class,
         OpenApiProperties.class,
         XssProperties.class,
         WxMpProperties.class,
         OssProperties.class,
-        MerchantLineProperties.class
+        MerchantLineProperties.class,
+        NotAuthProperties.class
 })
 public class PropertiesConfig {
 

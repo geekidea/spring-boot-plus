@@ -36,6 +36,8 @@ public class GlobalExceptionHandler {
     public static ApiResult handle(Throwable exception) {
         if (exception instanceof LoginException) {
             return ApiResult.fail(ApiCode.TOKEN_EXCEPTION, exception.getMessage());
+        } else if (exception instanceof NotAuthException) {
+            return ApiResult.fail(exception.getMessage());
         } else if (exception instanceof BusinessException) {
             return ApiResult.fail(exception.getMessage());
         } else if (exception instanceof MethodArgumentNotValidException) {
