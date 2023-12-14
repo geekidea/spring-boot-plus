@@ -1,9 +1,6 @@
 package io.geekidea.boot.auth.service;
 
 import io.geekidea.boot.auth.vo.LoginVo;
-import io.geekidea.boot.auth.vo.LoginVo;
-
-import java.util.List;
 
 /**
  * @author geekidea

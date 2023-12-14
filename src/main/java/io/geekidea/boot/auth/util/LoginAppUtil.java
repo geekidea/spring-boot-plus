@@ -4,7 +4,6 @@ import io.geekidea.boot.auth.cache.LoginAppCache;
 import io.geekidea.boot.auth.service.LoginRedisAppService;
 import io.geekidea.boot.auth.vo.LoginAppVo;
 import io.geekidea.boot.framework.exception.BusinessException;
-import io.geekidea.boot.util.TokenUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 

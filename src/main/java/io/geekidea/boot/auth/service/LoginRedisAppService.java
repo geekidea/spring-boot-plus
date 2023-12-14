@@ -1,7 +1,6 @@
 package io.geekidea.boot.auth.service;
 
 import io.geekidea.boot.auth.vo.LoginAppVo;
-import io.geekidea.boot.auth.vo.LoginAppVo;
 
 /**
  * @author geekidea

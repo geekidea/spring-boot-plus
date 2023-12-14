@@ -2,7 +2,6 @@ package io.geekidea.boot.auth.service.impl;
 
 import io.geekidea.boot.auth.service.LoginRedisService;
 import io.geekidea.boot.auth.vo.LoginVo;
-import io.geekidea.boot.auth.vo.LoginVo;
 import io.geekidea.boot.common.constant.RedisKey;
 import io.geekidea.boot.config.properties.LoginAdminProperties;
 import io.geekidea.boot.framework.exception.LoginException;
@@ -15,7 +14,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**

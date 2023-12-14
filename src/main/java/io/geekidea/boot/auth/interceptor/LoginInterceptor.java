@@ -4,7 +4,6 @@ import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.auth.cache.LoginCache;
 import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.auth.vo.LoginVo;
-import io.geekidea.boot.auth.vo.LoginVo;
 import io.geekidea.boot.config.properties.LoginAdminProperties;
 import io.geekidea.boot.framework.exception.LoginException;
 import io.geekidea.boot.framework.exception.LoginTokenException;
