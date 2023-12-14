@@ -3,7 +3,6 @@ package io.geekidea.boot.auth.util;
 import io.geekidea.boot.auth.cache.LoginAppCache;
 import io.geekidea.boot.auth.service.LoginRedisAppService;
 import io.geekidea.boot.auth.vo.LoginAppVo;
-import io.geekidea.boot.auth.vo.LoginRedisAppVo;
 import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.util.TokenUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -29,13 +28,12 @@ public class LoginAppUtil {
      * @return
      * @throws Exception
      */
-    public static LoginRedisAppVo getLoginRedisVo(String token) throws Exception {
+    public static LoginAppVo getLoginVo(String token) throws Exception {
         if (StringUtils.isBlank(token)) {
             return null;
         }
-        TokenUtil.checkAppToken(token);
-        LoginRedisAppVo loginRedisAppVo = loginRedisAppService.getLoginRedisVo(token);
-        return loginRedisAppVo;
+        LoginAppVo loginAppVo = loginRedisAppService.getLoginVo(token);
+        return loginAppVo;
     }
 
     /**
@@ -43,22 +41,8 @@ public class LoginAppUtil {
      *
      * @return
      */
-    public static LoginRedisAppVo getLoginRedisVo() throws Exception {
-        return LoginAppCache.get();
-    }
-
-    /**
-     * 获取登录信息
-     *
-     * @return
-     */
     public static LoginAppVo getLoginVo() throws Exception {
-        LoginRedisAppVo loginRedisAppVo = getLoginRedisVo();
-        if (loginRedisAppVo != null) {
-            LoginAppVo loginAppVo = loginRedisAppVo.getLoginVo();
-            return loginAppVo;
-        }
-        return null;
+        return LoginAppCache.get();
     }
 
     /**
@@ -67,13 +51,11 @@ public class LoginAppUtil {
      * @return
      */
     public static Long getUserId() throws Exception {
-        String token = TokenUtil.getToken();
-        if (StringUtils.isBlank(token)) {
-            return null;
-        }
         LoginAppVo loginAppVo = getLoginVo();
-        Long userId = loginAppVo.getUserId();
-        return userId;
+        if (loginAppVo != null) {
+            return loginAppVo.getUserId();
+        }
+        return null;
     }
 
     /**
@@ -110,8 +92,10 @@ public class LoginAppUtil {
      */
     public static boolean isVip() throws Exception {
         LoginAppVo loginAppVo = getLoginVo();
-        boolean vip = loginAppVo.isVip();
-        return vip;
+        if (loginAppVo != null) {
+            return loginAppVo.isVip();
+        }
+        return false;
     }
 
     /**

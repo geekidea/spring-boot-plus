@@ -42,6 +42,9 @@ public class SysUserVo implements Serializable {
     @Schema(description = "状态，0：禁用，1：启用")
     private Boolean status;
 
+    @Schema(description = "角色ID")
+    private Long roleId;
+
     @Schema(description = "角色名称")
     private String roleName;
 

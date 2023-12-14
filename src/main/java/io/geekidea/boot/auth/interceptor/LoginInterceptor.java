@@ -3,7 +3,7 @@ package io.geekidea.boot.auth.interceptor;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.auth.cache.LoginCache;
 import io.geekidea.boot.auth.util.LoginUtil;
-import io.geekidea.boot.auth.vo.LoginRedisVo;
+import io.geekidea.boot.auth.vo.LoginVo;
 import io.geekidea.boot.auth.vo.LoginVo;
 import io.geekidea.boot.config.properties.LoginAdminProperties;
 import io.geekidea.boot.framework.exception.LoginException;
@@ -32,24 +32,31 @@ public class LoginInterceptor extends BaseExcludeMethodInterceptor {
 
     @Override
     protected boolean preHandleMethod(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
+        // 如果token
+        String token = TokenUtil.getToken();
+        LoginVo loginVo = null;
+        if (StringUtils.isNotBlank(token)) {
+            // 获取登录用户信息
+            loginVo = LoginUtil.getLoginVo(token);
+            if (loginVo != null) {
+                // 将管理后台的登录信息保存到当前线程中
+                LoginCache.set(loginVo);
+            }
+        }
         // 判断是否存在@IgnoreLogin，存在，则跳过
         boolean existIgnoreLoginAnnotation = isExistIgnoreLoginAnnotation(handlerMethod);
         if (existIgnoreLoginAnnotation) {
             return true;
         }
-        String token = TokenUtil.getToken();
+        // 校验登录
         if (StringUtils.isBlank(token)) {
             throw new LoginTokenException("请登录后再操作");
         }
-        // 获取登录用户信息
-        LoginRedisVo loginRedisVo = LoginUtil.getLoginRedisVo(token);
-        if (loginRedisVo == null) {
+        // 校验登录用户信息
+        if (loginVo == null) {
             throw new LoginTokenException("登录已过期或登录信息不存在，请重新登录");
         }
-        // 将管理后台的登录信息保存到当前线程中
-        LoginCache.set(loginRedisVo);
         // 获取登录信息判断
-        LoginVo loginVo = loginRedisVo.getLoginVo();
         String roleCode = loginVo.getRoleCode();
         boolean loginPermission = loginAdminProperties.isLoginPermission();
         boolean admin = loginVo.isAdmin();
@@ -57,7 +64,7 @@ public class LoginInterceptor extends BaseExcludeMethodInterceptor {
             Permission permission = handlerMethod.getMethodAnnotation(Permission.class);
             if (permission != null) {
                 // 从redis中获取权限列表
-                List<String> permissions = loginRedisVo.getPermissions();
+                List<String> permissions = loginVo.getPermissions();
                 if (CollectionUtils.isEmpty(permissions)) {
                     throw new LoginException("当前用户未设置权限");
                 }

@@ -4,7 +4,6 @@ import io.geekidea.boot.auth.annotation.Vip;
 import io.geekidea.boot.auth.cache.LoginAppCache;
 import io.geekidea.boot.auth.util.LoginAppUtil;
 import io.geekidea.boot.auth.vo.LoginAppVo;
-import io.geekidea.boot.auth.vo.LoginRedisAppVo;
 import io.geekidea.boot.framework.exception.AuthException;
 import io.geekidea.boot.framework.exception.LoginTokenException;
 import io.geekidea.boot.framework.interceptor.BaseExcludeMethodInterceptor;
@@ -26,25 +25,30 @@ public class LoginAppInterceptor extends BaseExcludeMethodInterceptor {
 
     @Override
     protected boolean preHandleMethod(HttpServletRequest request, HttpServletResponse response, HandlerMethod handlerMethod) throws Exception {
+        // 获取token
+        String token = TokenUtil.getToken();
+        LoginAppVo loginAppVo = null;
+        if (StringUtils.isNotBlank(token)) {
+            // 获取登录用户信息
+            loginAppVo = LoginAppUtil.getLoginVo(token);
+            if (loginAppVo != null) {
+                // 将APP移动端的登录信息保存到当前线程中
+                LoginAppCache.set(loginAppVo);
+            }
+        }
         // 如果不存在@Login注解，则跳过
         boolean existLoginAnnotation = isExistLoginAnnotation(handlerMethod);
         if (!existLoginAnnotation) {
             return true;
         }
-        // 移动端登录校验
-        String token = TokenUtil.getToken();
+        // 登录校验
         if (StringUtils.isBlank(token)) {
             throw new LoginTokenException("请登录后再操作");
         }
-        // 获取登录用户信息
-        LoginRedisAppVo loginRedisAppVo = LoginAppUtil.getLoginRedisVo(token);
-        if (loginRedisAppVo == null) {
+        // 校验登录用户信息
+        if (loginAppVo == null) {
             throw new LoginTokenException("登录已过期或登录信息不存在，请重新登录");
         }
-        // 将APP移动端的登录信息保存到当前线程中
-        LoginAppCache.set(loginRedisAppVo);
-        // 获取登录信息判断
-        LoginAppVo loginAppVo = loginRedisAppVo.getLoginVo();
         // 校验VIP等级
         Vip vip = handlerMethod.getMethodAnnotation(Vip.class);
         if (vip != null) {

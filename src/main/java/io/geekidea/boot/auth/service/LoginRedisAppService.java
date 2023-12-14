@@ -1,6 +1,6 @@
 package io.geekidea.boot.auth.service;
 
-import io.geekidea.boot.auth.vo.LoginRedisAppVo;
+import io.geekidea.boot.auth.vo.LoginAppVo;
 import io.geekidea.boot.auth.vo.LoginAppVo;
 
 /**
@@ -16,7 +16,7 @@ public interface LoginRedisAppService {
      * @return
      * @throws Exception
      */
-    String getLoginTokenRedisKey(String token) throws Exception;
+    String getLoginRedisKey(String token) throws Exception;
 
     /**
      * 设置登录用户信息到redis
@@ -25,7 +25,7 @@ public interface LoginRedisAppService {
      * @param loginAppVo
      * @throws Exception
      */
-    void setLoginRedisVo(String token, LoginAppVo loginAppVo) throws Exception;
+    void setLoginVo(String token, LoginAppVo loginAppVo) throws Exception;
 
     /**
      * 获取redis中的登录用户信息
@@ -34,7 +34,7 @@ public interface LoginRedisAppService {
      * @return
      * @throws Exception
      */
-    LoginRedisAppVo getLoginRedisVo(String token) throws Exception;
+    LoginAppVo getLoginVo(String token) throws Exception;
 
     /**
      * 删除redis中的登录用户信息
@@ -42,7 +42,7 @@ public interface LoginRedisAppService {
      * @param token
      * @throws Exception
      */
-    void deleteLoginRedisVo(String token) throws Exception;
+    void deleteLoginVo(String token) throws Exception;
 
     /**
      * 刷新token

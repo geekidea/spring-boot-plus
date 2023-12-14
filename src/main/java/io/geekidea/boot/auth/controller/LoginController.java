@@ -80,5 +80,4 @@ public class LoginController {
         return ApiResult.success();
     }
 
-
 }

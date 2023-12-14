@@ -9,12 +9,14 @@ import io.geekidea.boot.auth.vo.LoginAppVo;
 import io.geekidea.boot.auth.vo.LoginTokenVo;
 import io.geekidea.boot.common.constant.SysDictConstant;
 import io.geekidea.boot.common.enums.SystemType;
+import io.geekidea.boot.framework.exception.BusinessException;
 import io.geekidea.boot.framework.exception.LoginException;
 import io.geekidea.boot.system.service.SysDictService;
 import io.geekidea.boot.user.entity.User;
 import io.geekidea.boot.user.service.UserService;
 import io.geekidea.boot.util.IpRegionUtil;
 import io.geekidea.boot.util.IpUtil;
+import io.geekidea.boot.util.PasswordUtil;
 import io.geekidea.boot.util.TokenUtil;
 import io.geekidea.boot.util.api.WxMpApi;
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +45,8 @@ public class LoginAppServiceImpl implements LoginAppService {
     private LoginRedisAppService loginRedisAppService;
 
     @Override
-    public LoginTokenVo login(LoginAppDto loginAppDto) throws Exception {
-        String code = loginAppDto.getCode();
+    public LoginTokenVo login(LoginAppDto dto) throws Exception {
+        String code = dto.getCode();
         // 获取微信openid
         String openid = WxMpApi.getOpenid(code);
         // 根据openid获取用户信息
@@ -74,9 +76,17 @@ public class LoginAppServiceImpl implements LoginAppService {
     }
 
     @Override
-    public LoginTokenVo accountLogin(AccountLoginAppDto loginAccountAppDto) throws Exception {
-        String username = loginAccountAppDto.getUsername();
+    public LoginTokenVo accountLogin(AccountLoginAppDto dto) throws Exception {
+        String username = dto.getUsername();
         User user = userService.getUserByUsername(username);
+        // 校验密码
+        String dbPassword = user.getPassword();
+        String dbSalt = user.getSalt();
+        String password = dto.getPassword();
+        String encryptPassword = PasswordUtil.encrypt(password, dbSalt);
+        if (!encryptPassword.equals(dbPassword)) {
+            throw new BusinessException("账号密码错误");
+        }
         return login(user);
     }
 
@@ -85,29 +95,45 @@ public class LoginAppServiceImpl implements LoginAppService {
         if (user == null) {
             throw new LoginException("用户信息不存在");
         }
-        // 校验用户状态
-        Boolean status = user.getStatus();
-        if (status == false) {
-            throw new LoginException("用户已禁用");
-        }
-
+        Long userId = user.getId();
+        // 生成token
+        String token = TokenUtil.generateAppToken(userId);
+        // 最后一次登录时间
+        Date lastLoginTime = new Date();
+        // 刷新登录信息
+        refreshLoginInfo(user, token, lastLoginTime);
         // 设置登录信息
         String requestIp = IpUtil.getRequestIp();
         String ipAreaDesc = IpRegionUtil.getIpAreaDesc(requestIp);
         // 设置最后登录时间
-        user.setLastLoginTime(new Date());
+        user.setLastLoginTime(lastLoginTime);
         // 设置最后登录IP
         user.setLastLoginIp(requestIp);
         // 设置最后登录IP区域
         user.setLastLoginIpArea(ipAreaDesc);
         userService.updateById(user);
+
         // TODO 添加用户登录日志
 
+        // 返回token
+        LoginTokenVo loginTokenVo = new LoginTokenVo();
+        loginTokenVo.setToken(token);
+        return loginTokenVo;
+    }
+
+    @Override
+    public LoginAppVo refreshLoginInfo(User user, String token, Date lastLoginTime) throws Exception {
+        Long userId = user.getId();
+        // 校验用户状态
+        Boolean status = user.getStatus();
+        if (status == false) {
+            throw new LoginException("用户已禁用");
+        }
         // 设置登录用户对象
         LoginAppVo loginAppVo = new LoginAppVo();
         BeanUtils.copyProperties(user, loginAppVo);
-        Long userId = user.getId();
         loginAppVo.setUserId(userId);
+        loginAppVo.setLastLoginTime(lastLoginTime);
         // 系统类型 1：管理后台，2：用户端
         loginAppVo.setSystemType(SystemType.APP.getCode());
         loginAppVo.setVip(user.getIsVip());
@@ -116,19 +142,24 @@ public class LoginAppServiceImpl implements LoginAppService {
             String vipName = sysDictService.getSysDictLabelByValue(SysDictConstant.VIP_LEVEL, vipLevel);
             loginAppVo.setVipName(vipName);
         }
-        // 生成token
-        String token = TokenUtil.generateAppToken(userId);
         // 保存登录信息到redis中
-        loginRedisAppService.setLoginRedisVo(token, loginAppVo);
-        // 返回token
-        LoginTokenVo loginTokenVo = new LoginTokenVo();
-        loginTokenVo.setToken(token);
-        return loginTokenVo;
+        loginRedisAppService.setLoginVo(token, loginAppVo);
+        return loginAppVo;
     }
 
     @Override
     public LoginAppVo getLoginUserInfo() throws Exception {
-        return LoginAppUtil.getLoginVo();
+        LoginAppVo loginAppVo = LoginAppUtil.getLoginVo();
+        if (loginAppVo == null) {
+            throw new LoginException("请先登录");
+        }
+        Long userId = loginAppVo.getUserId();
+        User user = userService.getById(userId);
+        // 刷新用户登录信息
+        String token = TokenUtil.getToken();
+        Date lastLoginTime = loginAppVo.getLastLoginTime();
+        loginAppVo = refreshLoginInfo(user, token, lastLoginTime);
+        return loginAppVo;
     }
 
     @Override
@@ -136,6 +167,6 @@ public class LoginAppServiceImpl implements LoginAppService {
         // 获取token
         String token = TokenUtil.getToken();
         // 删除缓存
-        loginRedisAppService.deleteLoginRedisVo(token);
+        loginRedisAppService.deleteLoginVo(token);
     }
 }

@@ -1,6 +1,6 @@
 package io.geekidea.boot.auth.cache;
 
-import io.geekidea.boot.auth.vo.LoginRedisAppVo;
+import io.geekidea.boot.auth.vo.LoginAppVo;
 
 /**
  * 在当前线程中缓存token
@@ -14,15 +14,15 @@ public class LoginAppCache {
     /**
      * 当前线程中保存APP移动端登录信息
      */
-    private static final ThreadLocal<LoginRedisAppVo> APP_LOGIN_CACHE = new ThreadLocal<>();
+    private static final ThreadLocal<LoginAppVo> APP_LOGIN_CACHE = new ThreadLocal<>();
 
     /**
      * 设置APP移动端登录信息到当前线程中
      *
-     * @param loginRedisAppVo
+     * @param loginAppVo
      */
-    public static void set(LoginRedisAppVo loginRedisAppVo) {
-        APP_LOGIN_CACHE.set(loginRedisAppVo);
+    public static void set(LoginAppVo loginAppVo) {
+        APP_LOGIN_CACHE.set(loginAppVo);
     }
 
     /**
@@ -30,7 +30,7 @@ public class LoginAppCache {
      *
      * @return
      */
-    public static LoginRedisAppVo get() {
+    public static LoginAppVo get() {
         return APP_LOGIN_CACHE.get();
     }
 

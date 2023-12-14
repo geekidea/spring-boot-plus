@@ -46,20 +46,36 @@ public class LoginServiceImpl implements LoginService {
 
 
     @Override
-    public LoginTokenVo login(LoginDto loginDto) throws Exception {
-        String username = loginDto.getUsername();
+    public LoginTokenVo login(LoginDto dto) throws Exception {
+        String username = dto.getUsername();
         SysUser sysUser = sysUserMapper.getSysUserByUsername(username);
         if (sysUser == null) {
             throw new BusinessException("用户信息不存在");
         }
+        // 用户ID
+        Long userId = sysUser.getId();
         // 校验密码
         String dbPassword = sysUser.getPassword();
         String dbSalt = sysUser.getSalt();
-        String password = loginDto.getPassword();
+        String password = dto.getPassword();
         String encryptPassword = PasswordUtil.encrypt(password, dbSalt);
         if (!encryptPassword.equals(dbPassword)) {
             throw new BusinessException("账号密码错误");
         }
+        // 生成token
+        String token = TokenUtil.generateAdminToken(userId);
+        // 刷新登录信息
+        refreshLoginInfo(sysUser, token, new Date());
+        // 返回token
+        LoginTokenVo loginTokenVo = new LoginTokenVo();
+        loginTokenVo.setToken(token);
+        return loginTokenVo;
+    }
+
+    @Override
+    public LoginVo refreshLoginInfo(SysUser sysUser, String token, Date loginTime) throws Exception {
+        // 用户ID
+        Long userId = sysUser.getId();
         // 校验用户状态
         Boolean status = sysUser.getStatus();
         if (status == false) {
@@ -74,9 +90,8 @@ public class LoginServiceImpl implements LoginService {
         // 设置登录用户对象
         LoginVo loginVo = new LoginVo();
         BeanUtils.copyProperties(sysUser, loginVo);
-        Long userId = sysUser.getId();
         loginVo.setUserId(userId);
-        loginVo.setLoginTime(new Date());
+        loginVo.setLoginTime(loginTime);
         loginVo.setAdmin(sysUser.getIsAdmin());
         loginVo.setRoleCode(sysRole.getCode());
         loginVo.setRoleName(sysRole.getName());
@@ -84,19 +99,30 @@ public class LoginServiceImpl implements LoginService {
         loginVo.setSystemType(SystemType.ADMIN.getCode());
         // 获取登录用户的权限编码
         List<String> permissions = sysMenuMapper.getPermissionCodesByUserId(userId);
-        // 生成token
-        String token = TokenUtil.generateAdminToken(userId);
+        loginVo.setPermissions(permissions);
         // 保存登录信息到redis中
-        loginRedisService.setLoginRedisVo(token, loginVo, permissions);
-        // 返回token
-        LoginTokenVo loginTokenVo = new LoginTokenVo();
-        loginTokenVo.setToken(token);
-        return loginTokenVo;
+        loginRedisService.setLoginVo(token, loginVo);
+        return loginVo;
     }
 
     @Override
     public LoginVo getLoginUserInfo() throws Exception {
-        return LoginUtil.getLoginVo();
+        LoginVo loginVo = LoginUtil.getLoginVo();
+        if (loginVo == null) {
+            throw new LoginException("清先登录");
+        }
+        // 根据用户ID获取用户信息
+        Long userId = loginVo.getUserId();
+        // 获取用户登录时间
+        Date loginTime = loginVo.getLoginTime();
+        SysUser sysUser = sysUserMapper.selectById(userId);
+        if (sysUser == null) {
+            throw new BusinessException("用户信息不存在");
+        }
+        // 刷新登录信息
+        String token = TokenUtil.getToken();
+        loginVo = refreshLoginInfo(sysUser, token, loginTime);
+        return loginVo;
     }
 
     @Override
@@ -104,6 +130,6 @@ public class LoginServiceImpl implements LoginService {
         // 获取token
         String token = TokenUtil.getToken();
         // 删除缓存
-        loginRedisService.deleteLoginRedisVo(token);
+        loginRedisService.deleteLoginVo(token);
     }
 }

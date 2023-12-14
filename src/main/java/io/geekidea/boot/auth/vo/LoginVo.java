@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author geekidea
@@ -57,5 +58,8 @@ public class LoginVo implements Serializable {
 
     @Schema(description = "创建时间")
     private Date createTime;
+
+    @Schema(description = "权限code集合")
+    private List<String> permissions;
 
 }

@@ -1,6 +1,6 @@
 package io.geekidea.boot.auth.cache;
 
-import io.geekidea.boot.auth.vo.LoginRedisVo;
+import io.geekidea.boot.auth.vo.LoginVo;
 
 /**
  * 在当前线程中缓存管理后台登录信息
@@ -14,15 +14,15 @@ public class LoginCache {
     /**
      * 当前线程中保存管理后台登录信息
      */
-    private static final ThreadLocal<LoginRedisVo> LOGIN_CACHE = new ThreadLocal<>();
+    private static final ThreadLocal<LoginVo> LOGIN_CACHE = new ThreadLocal<>();
 
     /**
      * 设置管理后台登录信息到当前线程中
      *
-     * @param loginRedisVo
+     * @param loginVo
      */
-    public static void set(LoginRedisVo loginRedisVo) {
-        LOGIN_CACHE.set(loginRedisVo);
+    public static void set(LoginVo loginVo) {
+        LOGIN_CACHE.set(loginVo);
     }
 
     /**
@@ -30,7 +30,7 @@ public class LoginCache {
      *
      * @return
      */
-    public static LoginRedisVo get() {
+    public static LoginVo get() {
         return LOGIN_CACHE.get();
     }
 

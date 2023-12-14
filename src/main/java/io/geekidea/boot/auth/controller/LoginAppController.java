@@ -1,5 +1,6 @@
 package io.geekidea.boot.auth.controller;
 
+import io.geekidea.boot.auth.annotation.Login;
 import io.geekidea.boot.auth.dto.AccountLoginAppDto;
 import io.geekidea.boot.auth.dto.LoginAppDto;
 import io.geekidea.boot.auth.service.LoginAppService;
@@ -75,6 +76,7 @@ public class LoginAppController {
      * @return
      * @throws Exception
      */
+    @Login
     @PostMapping("/getLoginUserInfo")
     @Operation(summary = "获取APP登录用户信息")
     public ApiResult<LoginAppVo> getLoginUserInfo() throws Exception {
@@ -88,6 +90,7 @@ public class LoginAppController {
      * @return
      * @throws Exception
      */
+    @Login
     @PostMapping("/logout")
     @Operation(summary = "APP退出")
     public ApiResult<Boolean> logout(HttpServletRequest request, HttpServletResponse response) throws Exception {

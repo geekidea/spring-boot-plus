@@ -1,7 +1,7 @@
 package io.geekidea.boot.auth.service.impl;
 
 import io.geekidea.boot.auth.service.LoginRedisService;
-import io.geekidea.boot.auth.vo.LoginRedisVo;
+import io.geekidea.boot.auth.vo.LoginVo;
 import io.geekidea.boot.auth.vo.LoginVo;
 import io.geekidea.boot.common.constant.RedisKey;
 import io.geekidea.boot.config.properties.LoginAdminProperties;
@@ -43,13 +43,13 @@ public class LoginRedisServiceImpl implements LoginRedisService {
     }
 
     @Override
-    public String getLoginTokenRedisKey(String token) throws Exception {
+    public String getLoginRedisKey(String token) throws Exception {
         String loginRedisKey = String.format(RedisKey.LOGIN_TOKEN, token);
         return loginRedisKey;
     }
 
     @Override
-    public void setLoginRedisVo(String token, LoginVo loginVo, List<String> permissions) throws Exception {
+    public void setLoginVo(String token, LoginVo loginVo) throws Exception {
         if (loginVo == null) {
             throw new LoginException("登录用户信息不能为空");
         }
@@ -58,29 +58,26 @@ public class LoginRedisServiceImpl implements LoginRedisService {
             deleteLoginInfoByToken(token);
         }
         // 用户信息
-        String loginTokenRedisKey = getLoginTokenRedisKey(token);
-        LoginRedisVo loginRedisVo = new LoginRedisVo();
-        loginRedisVo.setLoginVo(loginVo);
-        loginRedisVo.setPermissions(permissions);
-        redisTemplate.opsForValue().set(loginTokenRedisKey, loginRedisVo, tokenExpireMinutes, TOKEN_TIME_UNIT);
+        String loginTokenRedisKey = getLoginRedisKey(token);
+        redisTemplate.opsForValue().set(loginTokenRedisKey, loginVo, tokenExpireMinutes, TOKEN_TIME_UNIT);
     }
 
     @Override
-    public LoginRedisVo getLoginRedisVo(String token) throws Exception {
+    public LoginVo getLoginVo(String token) throws Exception {
         if (StringUtils.isBlank(token)) {
             throw new LoginTokenException("token不能为空");
         }
-        String loginRedisKey = getLoginTokenRedisKey(token);
-        LoginRedisVo loginRedisVo = (LoginRedisVo) redisTemplate.opsForValue().get(loginRedisKey);
-        return loginRedisVo;
+        String loginRedisKey = getLoginRedisKey(token);
+        LoginVo loginVo = (LoginVo) redisTemplate.opsForValue().get(loginRedisKey);
+        return loginVo;
     }
 
     @Override
-    public void deleteLoginRedisVo(String token) throws Exception {
+    public void deleteLoginVo(String token) throws Exception {
         if (StringUtils.isBlank(token)) {
             throw new LoginTokenException("token不能为空");
         }
-        String loginTokenRedisKey = getLoginTokenRedisKey(token);
+        String loginTokenRedisKey = getLoginRedisKey(token);
         redisTemplate.delete(loginTokenRedisKey);
     }
 
@@ -92,7 +89,7 @@ public class LoginRedisServiceImpl implements LoginRedisService {
             return;
         }
         // 刷新key的过期时间
-        String loginTokenRedisKey = getLoginTokenRedisKey(token);
+        String loginTokenRedisKey = getLoginRedisKey(token);
         redisTemplate.expire(loginTokenRedisKey, tokenExpireMinutes, TOKEN_TIME_UNIT);
     }
 

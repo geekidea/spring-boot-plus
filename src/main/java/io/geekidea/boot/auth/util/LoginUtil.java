@@ -2,10 +2,8 @@ package io.geekidea.boot.auth.util;
 
 import io.geekidea.boot.auth.cache.LoginCache;
 import io.geekidea.boot.auth.service.LoginRedisService;
-import io.geekidea.boot.auth.vo.LoginRedisVo;
 import io.geekidea.boot.auth.vo.LoginVo;
 import io.geekidea.boot.framework.exception.BusinessException;
-import io.geekidea.boot.util.TokenUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -31,13 +29,12 @@ public class LoginUtil {
      * @return
      * @throws Exception
      */
-    public static LoginRedisVo getLoginRedisVo(String token) throws Exception {
+    public static LoginVo getLoginVo(String token) throws Exception {
         if (StringUtils.isBlank(token)) {
             return null;
         }
-        TokenUtil.checkAdminToken(token);
-        LoginRedisVo loginRedisVo = loginRedisService.getLoginRedisVo(token);
-        return loginRedisVo;
+        LoginVo loginVo = loginRedisService.getLoginVo(token);
+        return loginVo;
     }
 
     /**
@@ -45,7 +42,7 @@ public class LoginUtil {
      *
      * @return
      */
-    public static LoginRedisVo getLoginRedisVo() throws Exception {
+    public static LoginVo getLoginVo() throws Exception {
         return LoginCache.get();
     }
 
@@ -54,24 +51,10 @@ public class LoginUtil {
      *
      * @return
      */
-    public static LoginVo getLoginVo() throws Exception {
-        LoginRedisVo loginRedisVo = getLoginRedisVo();
-        if (loginRedisVo != null) {
-            LoginVo loginVo = loginRedisVo.getLoginVo();
-            return loginVo;
-        }
-        return null;
-    }
-
-    /**
-     * 获取登录信息
-     *
-     * @return
-     */
     public static List<String> getPermissions() throws Exception {
-        LoginRedisVo loginRedisVo = getLoginRedisVo();
-        if (loginRedisVo != null) {
-            return loginRedisVo.getPermissions();
+        LoginVo loginVo = getLoginVo();
+        if (loginVo != null) {
+            return loginVo.getPermissions();
         }
         return null;
     }
@@ -82,13 +65,12 @@ public class LoginUtil {
      * @return
      */
     public static Long getUserId() throws Exception {
-        String token = TokenUtil.getToken();
-        if (StringUtils.isBlank(token)) {
-            return null;
-        }
         LoginVo loginVo = getLoginVo();
-        Long userId = loginVo.getUserId();
-        return userId;
+        if (loginVo != null) {
+            Long userId = loginVo.getUserId();
+            return userId;
+        }
+        return null;
     }
 
     /**
@@ -125,8 +107,10 @@ public class LoginUtil {
      */
     public static boolean isAdmin() throws Exception {
         LoginVo loginVo = getLoginVo();
-        boolean admin = loginVo.isAdmin();
-        return admin;
+        if (loginVo != null) {
+            return loginVo.isAdmin();
+        }
+        return false;
     }
 
     /**
