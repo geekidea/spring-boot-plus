@@ -18,7 +18,7 @@ import io.geekidea.boot.config.properties.LogAopProperties;
 import io.geekidea.boot.framework.annotation.Log;
 import io.geekidea.boot.framework.exception.GlobalExceptionHandler;
 import io.geekidea.boot.framework.response.ApiResult;
-import io.geekidea.boot.framework.vo.IpRegion;
+import io.geekidea.boot.framework.bean.IpRegion;
 import io.geekidea.boot.system.entity.SysLog;
 import io.geekidea.boot.system.mapper.SysLogMapper;
 import io.geekidea.boot.util.*;

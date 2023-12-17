@@ -13,6 +13,7 @@ server:
 # spring配置
 spring:
   application:
+    name: spring-boot-plus
   # 当前项目maven激活环境，例如：dev/test/prod
   profiles:
     active: dev
@@ -24,8 +25,8 @@ spring:
     location: classpath:banner.txt
   servlet:
     multipart:
-      max-file-size: 20MB
-      max-request-size: 200MB
+      max-file-size: 50MB
+      max-request-size: 500MB
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -167,6 +168,16 @@ redis:
 file:
   # 文件服务类型 本地还是OSS
   file-server-type: LOCAL
+  # 本地上传服务配置
+  local:
+    # 上传文件访问路径
+    access-path: /file/**
+    # 上传文件保存路径，注意：最后带上反斜杠
+    # 示例：/Users/mrliu/upload/boot/
+    upload-path:
+    # 上传文件访问URL前缀
+    # 示例：http://localhost:8888/api/file
+    access-url: http://localhost:${server.port}/api/file
   # OSS配置
   oss:
     accessKeyId:

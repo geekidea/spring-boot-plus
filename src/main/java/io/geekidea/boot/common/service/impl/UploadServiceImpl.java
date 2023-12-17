@@ -74,7 +74,7 @@ public class UploadServiceImpl implements UploadService {
         checkUploadType(type, sizeMb, extension);
         // 上传目录名称：年月
         String uploadDirName = DateUtil.format(new Date(), DatePattern.SIMPLE_MONTH_PATTERN);
-        // 文件名称：年月日时分秒+14为唯一ID
+        // 文件名称：年月日时分秒+15位唯一ID
         String formatDate = DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN);
         String newFileName = formatDate + IdWorker.getId() + "." + extension;
         log.info("newFileName:" + newFileName);

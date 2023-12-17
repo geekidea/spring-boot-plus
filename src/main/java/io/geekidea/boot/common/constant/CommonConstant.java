@@ -29,6 +29,11 @@ public interface CommonConstant {
     String SYSTEM_PACKAGE_NAME = PACKAGE_NAME + ".system";
 
     /**
+     * APP用户管理包名称
+     */
+    String USER_PACKAGE_NAME = PACKAGE_NAME + ".user";
+
+    /**
      * demo包名称
      */
     String DEMO_PACKAGE_NAME = PACKAGE_NAME + ".demo";

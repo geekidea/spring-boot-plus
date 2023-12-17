@@ -182,6 +182,12 @@
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>3.17.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>6.4.1</version>
+        </dependency>
+
 
     </dependencies>
 

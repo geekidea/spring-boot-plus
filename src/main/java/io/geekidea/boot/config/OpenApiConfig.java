@@ -57,15 +57,21 @@ public class OpenApiConfig {
     }
 
     @Bean
+    public GroupedOpenApi userApi() {
+        String[] packagedToMatch = {CommonConstant.USER_PACKAGE_NAME};
+        return api("3.App用户模块接口文档", packagedToMatch);
+    }
+
+    @Bean
     public GroupedOpenApi commonApi() {
         String[] packagedToMatch = {CommonConstant.COMMON_PACKAGE_NAME};
-        return api("3.公共服务接口文档", packagedToMatch);
+        return api("4.公共服务接口文档", packagedToMatch);
     }
 
     @Bean
     public GroupedOpenApi appApi() {
         String[] packagedToMatch = {CommonConstant.DEMO_PACKAGE_NAME};
-        return api("4.Demo接口文档", packagedToMatch);
+        return api("5.Demo接口文档", packagedToMatch);
     }
 
     /**

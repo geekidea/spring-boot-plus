@@ -71,6 +71,10 @@ public class LoginAppServiceImpl implements LoginAppService {
             if (!flag) {
                 throw new Exception("注册异常");
             }
+            // 获取用户ID
+            Long userId = user.getId();
+            // 根据用户ID获取用户下信息
+            user = userService.getById(userId);
         }
         return login(user);
     }

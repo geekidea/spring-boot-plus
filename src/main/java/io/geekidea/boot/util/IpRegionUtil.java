@@ -1,6 +1,6 @@
 package io.geekidea.boot.util;
 
-import io.geekidea.boot.framework.vo.IpRegion;
+import io.geekidea.boot.framework.bean.IpRegion;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.lionsoul.ip2region.xdb.Searcher;

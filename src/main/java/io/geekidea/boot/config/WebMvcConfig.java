@@ -7,6 +7,7 @@ import io.geekidea.boot.framework.filter.TraceIdLogFilter;
 import io.geekidea.boot.framework.interceptor.PageHelperClearInterceptor;
 import io.geekidea.boot.framework.xss.XssFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -128,9 +129,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 虚拟目录文件映射
-        registry.addResourceHandler(localFileProperties.getAccessPath())
-                .addResourceLocations("file:" + localFileProperties.getUploadPath());
+        // 上传文件访问路径
+        String accessPath = localFileProperties.getAccessPath();
+        // 上传文件保存路径
+        String uploadPath = localFileProperties.getUploadPath();
+        if (StringUtils.isNotBlank(accessPath) && StringUtils.isNotBlank(uploadPath)) {
+            // 虚拟目录文件映射
+            registry.addResourceHandler(accessPath)
+                    .addResourceLocations("file:" + uploadPath);
+        }
     }
 
     @Override

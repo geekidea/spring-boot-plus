@@ -1,4 +1,4 @@
-package io.geekidea.boot.framework.vo;
+package io.geekidea.boot.framework.bean;
 
 import lombok.Data;
 
