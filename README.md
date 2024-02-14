@@ -337,7 +337,7 @@ QQ群 625301326| 微信公众号 geekideaio|
 
 微信技术交流群| 业务咨询商务合作|
 -|-|
-![微信群](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/company-wechat-group-small.jpeg) | ![业务咨询商务合作](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/business-small.png) |
+![微信群](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/wechat-group.png) | ![业务咨询商务合作](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/business-small.png) |
 
 
 ## License
