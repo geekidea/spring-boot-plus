@@ -1,0 +1,47 @@
+import {http} from '@/utils/http'
+
+// $!{addCnComment}
+export function $!{addMethodName}(data:any) {
+    return http.post<any>('$!{controllerRequestPath}$!{addRequestPath}', data)
+}
+
+// $!{updateCnComment}
+export function $!{updateMethodName}(data:any) {
+    return http.post<any>('$!{controllerRequestPath}$!{updateRequestPath}', data)
+}
+
+// $!{deleteCnComment}
+export function $!{deleteMethodName}(id:string) {
+    return http.post<any>('$!{controllerRequestPath}$!{deleteRequestPath}'+id)
+}
+
+// $!{infoCnComment}
+export function $!{infoMethodName}(id:any) {
+    return http.post<any>('$!{controllerRequestPath}$!{infoRequestPath}'+id)
+}
+
+// $!{pageCnComment}
+export function $!{pageMethodName}(data:any) {
+    return http.post<any>('$!{controllerRequestPath}$!{pageRequestPath}', data)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

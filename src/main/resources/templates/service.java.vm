@@ -1,0 +1,91 @@
+package $!{servicePackage};
+
+import $!{superServicePackagePath};
+import $!{pagingPackagePath};
+import $!{dtoPackagePath};
+import $!{entityPackagePath};
+import $!{queryPackagePath};
+import $!{voPackagePath};
+#if($!{generatorAppBackend})
+import $!{appQueryPackagePath};
+import $!{appVoPackagePath};
+#end
+
+#if($!{existsSerializableType})
+import java.io.Serializable;
+#end
+
+/**
+ * $!{tableComment} 服务接口
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+public interface $!{serviceName} extends $!{superServiceName}<$!{entity}> {
+
+    /**
+     * 添加$!{tableComment}
+     *
+     * @param $!{dtoObjectName}
+     * @return
+     * @throws Exception
+     */
+    boolean $!{addMethodName}($!{dtoName} $!{dtoObjectName});
+
+    /**
+     * 修改$!{tableComment}
+     *
+     * @param $!{dtoObjectName}
+     * @return
+     * @throws Exception
+     */
+    boolean $!{updateMethodName}($!{dtoName} $!{dtoObjectName});
+
+    /**
+     * 删除$!{tableComment}
+     *
+     * @param $!{pkIdPropertyName}
+     * @return
+     * @throws Exception
+     */
+    boolean $!{deleteMethodName}($!{pkIdPropertyType} $!{pkIdPropertyName});
+
+    /**
+     * $!{tableComment}详情
+     *
+     * @param $!{pkIdPropertyName}
+     * @return
+     * @throws Exception
+     */
+    $!{voName} $!{infoMethodName}ById($!{pkIdPropertyType} $!{pkIdPropertyName});
+
+    /**
+     * $!{tableComment}分页列表
+     *
+     * @param $!{queryObjectName}
+     * @return
+     * @throws Exception
+     */
+    Paging<$!{voName}> $!{pageMethodName}($!{queryName} $!{queryObjectName});
+
+#if($!{generatorAppBackend})
+    /**
+     * $!{appTableComment}详情
+     *
+     * @param $!{pkIdPropertyName}
+     * @return
+     * @throws Exception
+     */
+    $!{appVoName} $!{appInfoMethodName}ById($!{pkIdPropertyType} $!{pkIdPropertyName});
+
+    /**
+     * $!{appTableComment}分页列表
+     *
+     * @param $!{queryObjectName}
+     * @return
+     * @throws Exception
+     */
+    Paging<$!{appVoName}> $!{appPageMethodName}($!{appQueryName} $!{queryObjectName});
+
+#end
+}

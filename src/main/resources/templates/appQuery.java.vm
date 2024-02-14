@@ -1,0 +1,20 @@
+package $!{queryPackage};
+
+import $!{superPageQueryPackagePath};
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+/**
+ * $!{appTableComment}查询参数
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Data
+@Schema(description = "$!{appTableComment}查询参数")
+public class $!{appQueryName} extends $!{superPageQueryName} {
+
+    private static final long serialVersionUID = 1L;
+
+}
+

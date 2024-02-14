@@ -1,0 +1,114 @@
+package $!{serviceImplPackage};
+
+import $!{superServiceImplPackagePath};
+import $!{businessExceptionPackagePath};
+import $!{orderByItemPackagePath};
+import $!{orderMappingPackagePath};
+import $!{pagingPackagePath};
+import $!{dtoPackagePath};
+import $!{entityPackagePath};
+import ${mapperPackagePath};
+import $!{queryPackagePath};
+import ${servicePackagePath};
+import $!{voPackagePath};
+#if($!{generatorAppBackend})
+import $!{appQueryPackagePath};
+import $!{appVoPackagePath};
+#end
+import $!{pagingUtilPackagePath};
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+#if($!{existsSerializableType})
+import java.io.Serializable;
+#end
+
+import java.util.List;
+
+/**
+ * $!{tableComment} 服务实现类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Slf4j
+@Service
+public class $!{serviceImplName} extends $!{superServiceImplName}<$!{mapperName}, $!{entity}> implements $!{serviceName} {
+
+    @Autowired
+    private $!{mapperName} $!{mapperObjectName};
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean $!{addMethodName}($!{dtoName} $!{dtoObjectName}) {
+        $!{entity} $!{entityObjectName} = new $!{entity}();
+        BeanUtils.copyProperties($!{dtoObjectName}, $!{entityObjectName});
+        return save($!{entityObjectName});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean $!{updateMethodName}($!{dtoName} $!{dtoObjectName}) {
+        $!{pkIdPropertyType} $!{pkIdPropertyName} = $!{dtoObjectName}.get$!{pascalPkIdPropertyName}();
+        $!{entity} $!{entityObjectName} = getById($!{pkIdPropertyName});
+        if ($!{entityObjectName} == null) {
+            throw new BusinessException("$!{tableComment}不存在");
+        }
+        BeanUtils.copyProperties($!{dtoObjectName}, $!{entityObjectName});
+        return updateById($!{entityObjectName});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean $!{deleteMethodName}($!{pkIdPropertyType} $!{pkIdPropertyName}) {
+        return removeById($!{pkIdPropertyName});
+    }
+
+    @Override
+    public $!{voName} $!{infoMethodName}ById($!{pkIdPropertyType} $!{pkIdPropertyName}) {
+        return $!{mapperObjectName}.$!{infoMethodName}ById($!{pkIdPropertyName});
+    }
+
+    @Override
+    public Paging<$!{voName}> $!{pageMethodName}($!{queryName} $!{queryObjectName}) {
+        OrderMapping orderMapping = new OrderMapping();
+        #if($!{existsCreateTime})
+        orderMapping.put("createTime", "create_time");
+        #end
+        #if($!{defaultOrderColumnName})
+        PagingUtil.handlePage(query, orderMapping, OrderByItem.desc("$!{defaultOrderColumnName}"));
+        #else
+        PagingUtil.handlePage(query, orderMapping);
+        #end
+        List<$!{voName}> list = $!{mapperObjectName}.$!{pageMethodName}(query);
+        Paging<$!{voName}> paging = new Paging<>(list);
+        return paging;
+    }
+
+#if($!{generatorAppBackend})
+    @Override
+    public $!{appVoName} $!{appInfoMethodName}ById($!{pkIdPropertyType} $!{pkIdPropertyName}) {
+        return $!{mapperObjectName}.$!{appInfoMethodName}ById($!{pkIdPropertyName});
+    }
+
+    @Override
+    public Paging<$!{appVoName}> $!{appPageMethodName}($!{appQueryName} $!{queryObjectName}) {
+        OrderMapping orderMapping = new OrderMapping();
+        #if($!{existsCreateTime})
+        orderMapping.put("createTime", "create_time");
+        #end
+        #if($!{defaultOrderColumnName})
+        PagingUtil.handlePage(query, orderMapping, OrderByItem.desc("$!{defaultOrderColumnName}"));
+        #else
+        PagingUtil.handlePage(query, orderMapping);
+        #end
+        List<$!{appVoName}> list = $!{mapperObjectName}.$!{appPageMethodName}(query);
+        Paging<$!{appVoName}> paging = new Paging<>(list);
+        return paging;
+    }
+
+#end
+}

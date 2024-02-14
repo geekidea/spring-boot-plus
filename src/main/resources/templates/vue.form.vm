@@ -1,0 +1,178 @@
+<template>
+  <el-dialog :model-value="dialogData.isShow" destroy-on-close :title="dialogData.id?'编辑':'新增'"
+             @close="closeDialog" draggable>
+    <el-form :model="form" ref="formRef" :rules="rules" label-width="90px">
+      <el-row :gutter="10">
+#set($count=0)
+#foreach($column in $!{formColumns})
+    #set($count=$count+1)
+    #set($num=$count != 1 && $count != $!{formColumns.size()} && $count % 2 == 0)
+    #if($!{formLayout} == 1)
+        #set($colSpan=24)
+    #else
+        #set($colSpan=12)
+    #end
+    #set($endRow=$!{formLayout} == 2 && $num)
+    #if($!{column.formType} == 2)
+        <el-col :span="$colSpan">
+          <el-form-item label="$!{column.columnCustomComment}" prop="$!{column.propertyName}">
+            <el-input type="textarea" v-model="form.$!{column.propertyName}" maxlength="$!{column.columnLength}" placeholder="请输入$!{column.columnCustomComment}"/>
+          </el-form-item>
+        </el-col>
+    #elseif($!{column.formType} == 3)
+        <el-col :span="$colSpan">
+          <el-form-item label="$!{column.columnCustomComment}" prop="$!{column.propertyName}">
+            <el-input type="number" v-model="form.$!{column.propertyName}" placeholder="请输入$!{column.columnCustomComment}"/>
+          </el-form-item>
+        </el-col>
+    #elseif($!{column.formType} == 4)
+        <el-col :span="$colSpan">
+          <el-form-item label="$!{column.columnCustomComment}">
+            <el-radio-group v-model="form.$!{column.propertyName}">
+            #foreach($option in $!{column.options})
+              <el-radio :label="$!{option.value}" border>$!{option.label}</el-radio>
+            #end
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+    #elseif($!{column.formType} == 6)
+        <el-col :span="$colSpan">
+          <el-form-item label="$!{column.columnCustomComment}" prop="$!{column.propertyName}">
+            <el-select v-model="form.$!{column.propertyName}" clearable placeholder="请选择$!{column.columnCustomComment}">
+            #foreach($option in $!{column.options})
+              <el-option value="$!{option.value}" label="$!{option.label}"/>
+            #end
+            </el-select>
+          </el-form-item>
+        </el-col>
+    #elseif($!{column.formType} == 7)
+        <el-col :span="$colSpan">
+          <el-form-item label="$!{column.columnCustomComment}">
+            <el-date-picker v-model="form.$!{column.propertyName}" type="date" placeholder="请选择$!{column.columnCustomComment}"/>
+          </el-form-item>
+        </el-col>
+    #elseif($!{column.formType} == 8)
+         <el-col :span="$colSpan">
+           <el-form-item label="$!{column.columnCustomComment}">
+             <el-date-picker v-model="form.$!{column.propertyName}" type="datetime" placeholder="请选择$!{column.columnCustomComment}"/>
+           </el-form-item>
+         </el-col>
+    #else
+         <el-col :span="$colSpan">
+           <el-form-item label="$!{column.columnCustomComment}" prop="$!{column.propertyName}">
+             <el-input v-model="form.$!{column.propertyName}" maxlength="$!{column.columnLength}" placeholder="请输入$!{column.columnCustomComment}"/>
+           </el-form-item>
+         </el-col>
+    #end
+    #if($endRow)
+      </el-row>
+      <el-row :gutter="10">
+    #end
+#end
+      </el-row>
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button type="primary" @click="submit">确定</el-button>
+        <el-button @click="closeDialog">取消</el-button>
+      </div>
+    </template>
+  </el-dialog>
+</template>
+
+<script setup lang="ts">
+import {ElMessage, FormInstance, FormRules} from "element-plus";
+import {$!{addMethodName}, $!{infoMethodName}, $!{updateMethodName}} from "@$!{vueApiPath}";
+
+const formRef = ref<FormInstance>()
+
+const emits = defineEmits<{
+  (event: 'refresh'): void
+}>()
+
+// 表单
+let form: any = ref({
+    $!{pkColumn.propertyName}: null,
+#foreach($column in $!{formColumns})
+    $!{column.propertyName}:#if($!{column.formType} == 4)true#else null#end,
+#end
+});
+
+// 效验规则
+const rules = reactive<FormRules>({
+#foreach($column in $!{columns})
+#if(!$!{commonExcludeFields.contains($!{column.propertyName})})
+#if(!$!{column.isPk} && $!{column.isRequired})
+  $!{column.propertyName}: [
+#if($!{column.formType} == 1 || $!{column.formType} == 2 || $!{column.formType} == 3 || $!{column.formType} == 11)
+    {required: true, message: '请输入$!{column.columnCustomComment}', trigger: 'blur'},
+#else
+    {required: true, message: '请选择$!{column.columnCustomComment}', trigger: 'blur'},
+#end
+  ],
+#end
+#end
+#end
+})
+
+// 获取详情
+const getDetails = (id: string) => {
+  $!{infoMethodName}(id).then(res => {
+    form.value = Object.assign({}, form.value, res);
+  })
+}
+
+// 弹框数据
+const dialogData = reactive({
+  isShow: false,
+  id: null
+})
+
+// 打开弹框
+const openDialog = async (id: string) => {
+  dialogData.isShow = true;
+  dialogData.title = '新增$!{tableComment}';
+  if (id) {
+    dialogData.id = id;
+    dialogData.title = '编辑$!{tableComment}';
+    getDetails(id);
+  }
+}
+
+// 关闭弹框
+const closeDialog = () => {
+  dialogData.isShow = false;
+  form.value = {};
+}
+// 提交
+
+const submit = async () => {
+   if (!formRef.value) return;
+   await formRef.value.validate((valid: any) => {
+   if (valid) {
+       let data = form.value;
+     if (data.id) {
+       $!{updateMethodName}({...data}).then(() => {
+         ElMessage.success('操作成功');
+         closeDialog();
+         emits('refresh');
+       })
+     } else {
+       $!{addMethodName}({...data}).then(() => {
+       ElMessage.success('操作成功');
+       closeDialog();
+       emits('refresh');
+       })
+     }
+   }
+  })
+}
+
+defineExpose({
+  openDialog,
+});
+</script>
+
+<style scoped>
+
+</style>

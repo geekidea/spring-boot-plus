@@ -1,0 +1,267 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /api
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 1000
+      min-spare: 100
+    accept-count: 1000
+    max-connections: 10000
+
+# spring配置
+spring:
+  application:
+    name: spring-boot-plus
+  # 当前项目maven激活环境，例如：dev/test/prod
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+  banner:
+    charset: UTF-8
+    location: classpath:banner.txt
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 500MB
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 10000
+      minimum-idle: 10
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 60000
+  # redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    # 连接超时时间（毫秒）
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池最大连接数
+        max-active: 200
+        # 连接池中的最大空闲连接
+        max-idle: 20
+        # 连接池最大阻塞等待时间
+        max-wait: 10s
+        # 连接池中的最小空闲连接
+        min-idle: 10
+      shutdown-timeout: 3s
+
+# mybatis-plus配置
+mybatis-plus:
+  # 启动时是否检查MyBatis XML文件是否存在
+  check-config-location: true
+  # MyBatis原生配置
+  configuration:
+    # 字段名称下划线转驼峰命名
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      # 全局默认主键类型
+      id-type: ASSIGN_ID
+      # 字段策略枚举类
+      # DEFAULT：默认不修改NULL值，ALWAYS：修改NULL值
+      update-strategy: DEFAULT
+  # mapper xml映射路径
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+
+# 分页
+pagehelper:
+  reasonable: false
+  support-methods-arguments: true
+  params: count=countSql
+
+# 主键ID生成配置
+# 机器码 如果一台服务器部署多个独立服务，需要为每个服务指定不同的 WorkerId
+# 取值0～63
+workerId: 0
+
+# 框架公共配置
+boot:
+  # 排除路径
+  exclude-paths:
+    - /v3/api-docs/**
+    - /swagger-resources/**,/swagger-ui/**,/doc.html
+    - /webjars/**
+    - /favicon.ico
+    - /index.html
+    - /file/**
+
+# 登录权限配置
+login:
+  # 排除路径
+  exclude-paths:
+    -
+  # 管理后台登录配置
+  admin:
+    # 是否启用管理后台登录权限校验
+    enable: true
+    # 是否单次登录
+    single-Login: false
+    # token过期时间，单位为分钟
+    token-expire-minutes: 120
+    # 是否校验目标方法权限
+    login-permission: false
+    # 包含的路径
+    include-paths:
+      - /admin/**
+    # 排除的路径
+    exclude-paths:
+      - /admin/login
+  # 用户端登录配置
+  app:
+    # 是否启用APP移动端登录权限校验
+    enable: true
+    # 是否单次登录
+    single-Login: false
+    # token过期时间，单位为天
+    token-expire-days: 7
+    # 登录拦截策略 LOGIN、IGNORE_LOGIN
+    # LOGIN：也可以在login-paths中指定
+    #   默认拦截include-paths路径开头的所有请求，如：/app/**
+    #   在不需要验证登录的controller方法加上@IgnoreLogin
+    #   表示此方法不需要登录就能调用
+    # IGNORE_LOGIN：也可以在ignore-login-paths中指定
+    #   默认不拦截include-paths路径开头的所有请求，如：/app/**
+    #   在需要登录的controller方法上加上注解@Login
+    #   表示此方法必须登录才能调用
+    login-intercept-strategy: LOGIN
+    # 包含路径
+    include-paths:
+      - /app/**
+    # 排除的路径：完全不需要登录校验，也不需要获取登录信息的路径
+    exclude-paths:
+      - /app/login,/app/accountLogin
+    # 需要登录校验的请求路径，与@Login效果一样
+    check-login-paths:
+      -
+    # 忽略登录校验的请求路径，与@IgnoreLogin效果一样
+    # 可登录也可不登录的情况下均可通过
+    ignore-login-paths:
+      - /app/logout
+  # 系统公共请求
+  common:
+    # 是否启用拦截器
+    enable: true
+    # 包含路径
+    include-paths:
+      - /common/**
+
+# 日志AOP配置
+log-aop:
+  # 是否启用
+  enable: true
+  # 是否打印日志
+  print-log: true
+  # 是否打印请求头
+  print-head-log: false
+  # 响应日志模式：FULL 全部，PART 部分，NONE 无
+  response-log-type: FULL
+  # 排除路径
+  excludePaths:
+    - /sysLog/**
+
+# XSS
+xss:
+  # 是否启用，默认禁用
+  enable: false
+  # 拦截的路径
+  url-patterns: /*
+  # 排序
+  order: 2
+  # 是否支持异步
+  async: true
+
+# redis项目前缀
+redis:
+  # 指定当前项目所有redisKey的前缀，注意：其它key不要以这个开头
+  # 目的为了区分多个项目在同一个db下的redisKey，避免混淆
+  # 例如：_boot_，表示当前项目所有的key都以此开头
+  # 如加上前缀后，当前项目下的所有key都将自动加上：_boot_.前缀
+  # 建议使用下划线开头和结束，目的是和其它key区分开
+  # 注意每个项目的前缀应保持唯一
+  # 可以不指定前缀，此时跟redis默认操作一样
+  # 如之前未指定前缀，后面指定了，则需要将之前的key清空，反之亦然
+  projectPrefix:
+
+# file上传配置
+file:
+  # 文件服务类型 本地还是OSS
+  file-server-type: LOCAL
+  # 本地上传服务配置
+  local:
+    # 上传文件访问路径
+    access-path: /file/**
+    # 上传文件保存路径，注意：最后带上反斜杠
+    # 示例：/Users/mrliu/upload/boot/
+    upload-path:
+    # 上传文件访问URL前缀
+    # 示例：http://localhost:8888/api/file
+    access-url: http://localhost:${server.port}/api/file
+  # OSS配置
+  oss:
+    accessKeyId:
+    accessKeySecret:
+    endpoint:
+    bucketName:
+    rootDir:
+    accessDomain: 
+
+# 微信小程序配置
+wx:
+  mp:
+    # AppID(小程序ID)
+    appid:
+    # AppSecret(小程序密钥)
+    secret:
+
+# 多商户行级数据权限配置
+merchant-line:
+  # 商户ID列名称
+  merchant-id-column: merchant_id
+  # 包含的表名称,自动添加商户ID条件处理
+  include-tables:
+    - demo_product
+
+# swagger配置
+springdoc:
+  swagger-ui:
+    enabled: true
+knife4j:
+  enable: true
+  basic:
+    enable: false
+  setting:
+    # 自定义底部
+    enable-footer: false
+    enable-footer-custom: true
+    footer-custom-content: MIT License | Copyright © 2019-2023 [geekidea](https://geekidea.io)
+openapi:
+  title: Boot API Docs
+  description: spring-boot-plus后台接口文档
+  terms-of-service: https://github.com/geekidea
+  contact-name: geekidea
+  contact-url: https://geekidea.io
+  contact-email: geekidea@qq.com
+  version: 1.0
+  external-description: spring-boot-plus
+  external-url: https://springboot.plus
+
+# 日志配置，logback-spring.xml中会引用以下变量
+logback-spring:
+  # 日志文件目录
+  path: logs
+  # info级别文件名称(包含error日志，方便查看)
+  info-file-name: boot-info
+  # error级别文件名称(只有error日志)
+  error-file-name: boot-error
+

@@ -1,0 +1,61 @@
+package $!{mapperPackage};
+
+import $!{superMapperPackagePath};
+import $!{entityPackagePath};
+import $!{queryPackagePath};
+import $!{voPackagePath};
+#if($!{generatorAppBackend})
+import $!{appQueryPackagePath};
+import $!{appVoPackagePath};
+#end
+import org.apache.ibatis.annotations.Mapper;
+
+#if($!{existsSerializableType})
+import java.io.Serializable;
+#end
+import java.util.List;
+
+/**
+ * $!{tableComment} Mapper 接口
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Mapper
+public interface $!{mapperName} extends $!{superMapperName}<$!{entity}> {
+
+    /**
+     * $!{tableComment}详情
+     *
+     * @param $!{pkIdPropertyName}
+     * @return
+     */
+    $!{voName} $!{infoMethodName}ById($!{pkIdPropertyType} $!{pkIdPropertyName});
+
+    /**
+     * $!{tableComment}分页列表
+     *
+     * @param $!{queryObjectName}
+     * @return
+     */
+    List<$!{voName}> $!{pageMethodName}($!{queryName} $!{queryObjectName});
+
+#if($!{generatorAppBackend})
+    /**
+     * $!{appTableComment}详情
+     *
+     * @param $!{pkIdPropertyName}
+     * @return
+     */
+    $!{appVoName} $!{appInfoMethodName}ById($!{pkIdPropertyType} $!{pkIdPropertyName});
+
+    /**
+     * $!{appTableComment}分页列表
+     *
+     * @param $!{queryObjectName}
+     * @return
+     */
+    List<$!{appVoName}> $!{appPageMethodName}($!{appQueryName} $!{queryObjectName});
+
+#end
+}

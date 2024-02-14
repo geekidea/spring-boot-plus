@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="$!{mapperPackagePath}">
+
+    <select id="$!{infoMethodName}ById" resultType="$!{voPackagePath}">
+        select *
+        from $!{tableName}
+        where $!{pkIdColumnName} = #{$!{pkIdPropertyName}}
+    </select>
+
+    <select id="$!{pageMethodName}" parameterType="$!{queryPackagePath}"
+            resultType="$!{voPackagePath}">
+        select *
+        from $!{tableName}
+        <where>
+    #if($!{keywordColumns.size()} > 0)
+        #set($keywordCount=0)
+            <if test="keyword != null and keyword != ''">
+            #foreach($keywordColumn in $!{keywordColumns})
+                #set($keywordCount=$keywordCount+1)
+                #if($keywordCount==1)                and (#end
+                #if($keywordCount != 1)                or #end$!{keywordColumn.columnName} like concat('%',#{keyword},'%')#if($keywordCount==$!{keywordColumns.size()}))#end
+            #end
+            </if>
+    #end
+    #foreach($column in $!{queryColumns})
+        #if($!{column.propertyType} == "String")
+            #set($condition="$!{column.propertyName} != null and $!{column.propertyName} != ''")
+        #else
+            #set($condition="$!{column.propertyName} != null")
+        #end
+        #if($!{column.queryType} == 1)
+            <if test="$condition">
+                and $!{column.columnName} = #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 2)
+            <if test="$condition">
+                and $!{column.columnName} != #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 3)
+            <if test="$condition">
+                and $!{column.columnName} gt; #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 4)
+            <if test="$condition">
+                and $!{column.columnName} >= #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 5)
+            <if test="$condition">
+                and $!{column.columnName} lt; #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 6)
+            <if test="$condition">
+                and $!{column.columnName} le; #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 7)
+            <if test="$condition">
+                and $!{column.columnName} like concat('%',#{column.propertyName},'%'
+            </if>
+        #elseif($!{column.queryType} == 8)
+            <if test="$!{column.propertyName}Start != null">
+                and date($!{column.columnName}) >= date(#{$!{column.propertyName}Start})
+            </if>
+            <if test="$!{column.propertyName}End != null">
+                and date($!{column.columnName}) &lt;= date(#{$!{column.propertyName}End})
+            </if>
+        #elseif($!{column.queryType} == 9)
+            <if test="$!{column.propertyName}Start != null">
+                and $!{column.columnName} >= #{$!{column.propertyName}Start}
+            </if>
+            <if test="$!{column.propertyName}End != null">
+                and $!{column.columnName} &lt;= #{$!{column.propertyName}End}
+            </if>
+        #end
+    #end
+        </where>
+    </select>
+
+#if($!{generatorAppBackend})
+    <select id="$!{appInfoMethodName}ById" resultType="$!{appVoPackagePath}">
+        select *
+        from $!{tableName}
+        where $!{pkIdColumnName} = #{$!{pkIdPropertyName}}
+    </select>
+
+    <select id="$!{appPageMethodName}" parameterType="$!{appQueryPackagePath}"
+            resultType="$!{appVoPackagePath}">
+        select *
+        from $!{tableName}
+        <where>
+    #if($!{appKeywordColumns.size()} > 0)
+        #set($appKeywordCount=0)
+            <if test="keyword != null and keyword != ''">
+            #foreach($appKeywordColumn in $!{appKeywordColumns})
+                #set($appKeywordCount=$appKeywordCount+1)
+                #if($appKeywordCount==1)                and (#end
+                #if($appKeywordCount != 1)                or #end$!{appKeywordColumn.columnName} like concat('%',#{keyword},'%')#if($appKeywordCount==$!{appKeywordColumns.size()}))#end
+            #end
+            </if>
+    #end
+    #foreach($column in $!{queryColumns})
+        #if($!{column.propertyType} == "String")
+            #set($condition="$!{column.propertyName} != null and $!{column.propertyName} != ''")
+        #else
+            #set($condition="$!{column.propertyName} != null")
+        #end
+        #if($!{column.queryType} == 1)
+            <if test="$condition">
+                and $!{column.columnName} = #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 2)
+            <if test="$condition">
+                and $!{column.columnName} != #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 3)
+            <if test="$condition">
+                and $!{column.columnName} gt; #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 4)
+            <if test="$condition">
+                and $!{column.columnName} >= #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 5)
+            <if test="$condition">
+                and $!{column.columnName} lt; #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 6)
+            <if test="$condition">
+                and $!{column.columnName} le; #{$!{column.propertyName}}
+            </if>
+        #elseif($!{column.queryType} == 7)
+            <if test="$condition">
+                and $!{column.columnName} like concat('%',#{column.propertyName},'%'
+            </if>
+        #elseif($!{column.queryType} == 8)
+            <if test="$!{column.propertyName}Start != null">
+                and date($!{column.columnName}) >= date(#{$!{column.propertyName}Start})
+            </if>
+            <if test="$!{column.propertyName}End != null">
+                and date($!{column.columnName}) &lt;= date(#{$!{column.propertyName}End})
+            </if>
+        #elseif($!{column.queryType} == 9)
+            <if test="$!{column.propertyName}Start != null">
+                and $!{column.columnName} >= #{$!{column.propertyName}Start}
+            </if>
+            <if test="$!{column.propertyName}End != null">
+                and $!{column.columnName} &lt;= #{$!{column.propertyName}End}
+            </if>
+        #end
+    #end
+        </where>
+    </select>
+
+#end
+</mapper>

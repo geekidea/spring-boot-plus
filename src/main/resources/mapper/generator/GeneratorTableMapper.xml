@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.generator.mapper.GeneratorTableMapper">
+
+    <select id="getGeneratorTableByTableName" resultType="io.geekidea.boot.generator.entity.GeneratorTable">
+        select *
+        from generator_table
+        where table_name = #{tableName}
+    </select>
+
+    <select id="getDbTableByTableName" resultType="io.geekidea.boot.generator.vo.GeneratorTableDbVo">
+        select TABLE_NAME, TABLE_COMMENT, CREATE_TIME
+        from information_schema.TABLES
+        where TABLE_SCHEMA = (select database())
+          and TABLE_NAME not like 'generator_%'
+          and TABLE_NAME = #{tableName}
+    </select>
+
+    <select id="getDbTablePage" parameterType="io.geekidea.boot.generator.query.GeneratorTableQuery"
+            resultType="io.geekidea.boot.generator.vo.GeneratorTableDbVo">
+        select it.TABLE_NAME,
+               it.TABLE_COMMENT,
+               it.CREATE_TIME,
+               gt.class_name,
+               gt.update_time,
+               gt.generator_type
+        from information_schema.TABLES it
+                 left join generator_table gt
+                           on it.TABLE_NAME = gt.table_name
+        where it.TABLE_SCHEMA = (select database())
+          and it.TABLE_NAME not like 'generator_%'
+        <if test="keyword != null and keyword != ''">
+            and (it.TABLE_NAME like concat('%',#{keyword},'%') or it.TABLE_COMMENT like concat('%',#{keyword},'%'))
+        </if>
+        order by it.CREATE_TIME desc
+    </select>
+
+</mapper>

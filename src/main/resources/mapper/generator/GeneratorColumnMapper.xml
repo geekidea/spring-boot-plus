@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.generator.mapper.GeneratorColumnMapper">
+
+    <select id="getDbColumnListByTableName" resultType="io.geekidea.boot.generator.vo.GeneratorColumnDbVo">
+        select TABLE_NAME,
+               COLUMN_NAME,
+               COLUMN_COMMENT,
+               DATA_TYPE,
+               COLUMN_TYPE,
+               ORDINAL_POSITION                 columnSort,
+               if(COLUMN_KEY = 'PRI', 1, 0)     isPk,
+               if(IS_NULLABLE = 'NO', 1, 0)     isRequired,
+               if(COLUMN_DEFAULT is null, 0, 1) isDefaultValue
+        from information_schema.COLUMNS
+        where TABLE_SCHEMA = (select database())
+          and TABLE_NAME = #{tableName}
+        order by ORDINAL_POSITION
+    </select>
+
+    <select id="getGeneratorColumnList" resultType="io.geekidea.boot.generator.entity.GeneratorColumn">
+        select *
+        from generator_column
+        where table_name = #{tableName}
+        order by column_sort
+    </select>
+
+</mapper>

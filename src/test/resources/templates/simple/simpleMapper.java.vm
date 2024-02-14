@@ -1,0 +1,14 @@
+package $!{mapperPackage};
+
+import org.springframework.stereotype.Repository;
+
+/**
+ * $!{desc}Mapper
+ * @author $!{author}
+ * @date $!{createDate}
+ **/
+@Repository
+public interface $!{mapperName} {
+
+
+}

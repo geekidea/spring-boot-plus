@@ -1,0 +1,46 @@
+package $!{entityPackage};
+
+import com.baomidou.mybatisplus.annotation.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import java.io.Serializable;
+#if($!{existsBigDecimalType})
+import java.math.BigDecimal;
+#end
+#if($!{existsTimeType})
+import java.sql.Time;
+#end
+#if($!{existsDateType})
+import java.util.Date;
+#end
+
+/**
+ * $!{tableComment}
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Data
+@TableName("$!{tableName}")
+@Schema(description = "$!{tableComment}")
+public class $!{entity} implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+#foreach($column in $!{columns})
+
+    #if($!{column.columnComment} != "")
+    @Schema(description = "$!{column.columnComment}")
+    #end
+    #if($!{column.isPk})
+    @TableId(value = "$!{column.columnName}", type = IdType.$!{idType})
+    #elseif($!{fillInsertFields.contains($!{column.propertyName})})
+    @TableField(fill = FieldFill.INSERT)
+    #elseif($!{fillUpdateFields.contains($!{column.propertyName})})
+    @TableField(fill = FieldFill.UPDATE)
+    #end
+    private $!{column.propertyType} $!{column.propertyName};
+#end
+
+}
+

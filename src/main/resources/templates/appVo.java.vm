@@ -1,0 +1,36 @@
+package $!{voPackage};
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import java.io.Serializable;
+#if($!{existsBigDecimalType})
+import java.math.BigDecimal;
+#end
+#if($!{existsTimeType})
+import java.sql.Time;
+#end
+#if($!{existsDateType})
+import java.util.Date;
+#end
+
+/**
+ * $!{appTableComment}查询结果
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Data
+@Schema(description = "$!{appTableComment}查询结果")
+public class $!{appVoName} implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+#foreach($column in $!{columns})
+
+    #if("$column.columnComment" != "")
+    @Schema(description = "$!{column.columnComment}")
+    #end
+    private $!{column.propertyType} $!{column.propertyName};
+#end
+
+}

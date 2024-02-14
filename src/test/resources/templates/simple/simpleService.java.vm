@@ -1,0 +1,10 @@
+package $!{servicePackage};
+
+/**
+ * $!{desc}服务接口
+ * @author $!{author}
+ * @date $!{createDate}
+ **/
+public interface $!{serviceName} {
+
+}

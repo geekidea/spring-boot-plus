@@ -1,0 +1,46 @@
+# 生成代码默认配置
+generator:
+  # 包名称
+  packageName: io.geekidea.boot
+  # 模块名称
+  moduleName: test
+  # 作者
+  author: geekidea
+  # 生成ID类型： IdType
+  idType: ASSIGN_ID
+  # 排除的表前缀
+  tablePrefixes: tb_,b_,c_,test_
+  # 是否生成后端代码
+  generatorBackend: true
+  # 是否生成App后端代码
+  generatorAppBackend: true
+  # 是否生成前端代码
+  generatorFrontend: true
+  # 是否开启字段校验注解
+  validateField: true
+  # 是否启用日志注解
+  enableLog: true
+  # 是否生成权限编码
+  enablePermission: true
+  # 请求映射风格 DEFAULT、RESTFUL、SMALL_LETTER、HYPHEN、UNDERLINE
+  requestMappingStyle: DEFAULT
+  # 默认降序排列名称，如id、create_time，如果为空，则不指定默认排序
+  defaultOrderColumnName: id
+  # 上级菜单ID
+  parentMenuId: 0
+  # 表单布局方式 ONE：一行一列，TWO：一行两列
+  formLayout: TWO
+  # 生成方式 ZIP：zip压缩包，CUSTOM：自定义路径
+  generatorType: ZIP
+  # 自定义生成后端路径，如果生成方式为自定义路径，为空时，默认当前项目路径
+  customBackendPath:
+  # 自定义生成前端路径
+  customFrontendPath:
+  # 是否显示默认查询条件
+  showDefaultQuery: true
+  # 是否只生成实体类
+  onlyGeneratorEntity: false
+  # 搜索框模糊查询字段
+  keywordFields: name
+
+

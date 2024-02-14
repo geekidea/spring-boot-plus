@@ -1,0 +1,240 @@
+<template>
+  <el-card shadow="never" class="card-box">
+    <el-form :model="queryForm" label-width="80px">
+      <el-row :gutter="20">
+#foreach($column in $!{queryColumns})
+    #if($!{column.formType} == 4 || $!{column.formType} == 6)
+        <el-col :sm="24" :md="12" :lg="8" :xl="6">
+          <el-form-item label="$!{column.columnCustomComment}">
+            <el-select v-model="queryForm.$!{column.propertyName}" clearable placeholder="请选择$!{column.columnCustomComment}">
+            #foreach($option in $!{column.options})
+              <el-option value="$!{option.value}" label="$!{option.label}"/>
+            #end
+            </el-select>
+          </el-form-item>
+        </el-col>
+    #elseif($!{column.formType} == 7 || $!{column.formType} == 8 )
+        <el-col :lg="8" :md="12" :sm="24" :xl="6">
+          <el-form-item label="$!{column.columnCustomComment}">
+            <custom-date-picker type="daterange" v-model:startDate="queryForm.$!{column.propertyName}Start"
+                                v-model:endDate="queryForm.$!{column.propertyName}End"
+                                clearable start-placeholder="开始时间"
+                                end-placeholder="结束时间"/>
+          </el-form-item>
+        </el-col>
+    #else
+        <el-col :sm="24" :md="12" :lg="8" :xl="6">
+          <el-form-item label="$!{column.columnCustomComment}">
+            <el-input v-model="queryForm.$!{column.propertyName}" @keyup.enter="onSearch" clearable placeholder="请输入$!{column.columnCustomComment}"/>
+          </el-form-item>
+        </el-col>
+    #end
+#end
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :sm="24" :md="12" :lg="8" :xl="6">
+          <el-form-item label="搜索">
+            <el-input v-model="queryForm.keyword" @keyup.enter="onSearch" clearable placeholder="请输入名称"/>
+          </el-form-item>
+        </el-col>
+        <el-col :sm="24" :md="12" :lg="8" :xl="6">
+          <el-form-item label-width="0">
+            <el-button type="primary" @click="onSearch">
+              <el-icon>
+                <ele-search/>
+              </el-icon>
+              <span class="search-btn__left">查询</span>
+            </el-button>
+            <el-button @click="onReset">
+              <el-icon>
+                <ele-refresh/>
+              </el-icon>
+              <span class="search-btn__left">重置</span>
+            </el-button>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+#if($!{enablePermission})
+    <div v-auth="'$!{addPermissionCode}'" class="table-btn-box mb10">
+#else
+    <div class="table-btn-box mb10">
+#end
+      <el-button type="primary" @click="openDialog()">
+        <el-icon class="mr5">
+          <ele-circle-plus/>
+        </el-icon>
+        新 增
+      </el-button>
+    </div>
+    <el-table v-loading="tableLoading.status" :data="tableData.data" border row-key="id" @sort-change="sortChange">
+      <el-table-column prop="_tableIndex" label="序号" align="center" width="50px"/>
+    #foreach($column in $!{tableColumns})
+    #if($!{column.formType} == 4)
+      <el-table-column prop="$!{column.propertyName}" label="$!{column.columnCustomComment}" align="center">
+        <template #default="scope">
+        #foreach($option in $!{column.options})
+          #if($!{option.value} == true)
+          <el-tag v-if="scope.row.$!{column.propertyName} == true" type="success" disable-transitions>$!{option.label}</el-tag>
+          #end
+          #if($!{option.value} == false)
+          <el-tag v-if="scope.row.$!{column.propertyName} == false" type="danger" disable-transitions>$!{option.label}</el-tag>
+          #end
+        #end
+        </template>
+      </el-table-column>
+    #elseif($!{column.formType} == 6)
+      <el-table-column prop="$!{column.propertyName}" label="$!{column.columnCustomComment}" align="center">
+        <template #default="scope">
+        #foreach($option in $!{column.options})
+          <span v-if="scope.row.$!{column.propertyName} == $!{option.value}">$!{option.label}</span>
+        #end
+        </template>
+      </el-table-column>
+    #elseif($!{column.formType} == 7)
+      <el-table-column prop="$!{column.propertyName}" label="$!{column.columnCustomComment}" align="center" min-width="150"/>
+    #elseif($!{column.formType} == 8)
+      #if($!{existsCreateTime})
+      <el-table-column prop="$!{column.propertyName}" label="$!{column.columnCustomComment}" align="center" min-width="180" sortable="custom"/>
+      #else
+      <el-table-column prop="$!{column.propertyName}" label="$!{column.columnCustomComment}" align="center" min-width="180"/>
+      #end
+    #else
+      <el-table-column prop="$!{column.propertyName}" label="$!{column.columnCustomComment}" align="center" show-overflow-tooltip/>
+    #end
+    #end
+      <el-table-column label="操作" fixed="right" align="center" min-width="116">
+        <template #default="scope">
+        #if($!{enablePermission})
+          <el-button v-auth="'$!{updatePermissionCode}'" link type="primary" @click="openDialog(scope.row.$!{pkIdPropertyName})">
+        #else
+          <el-button link type="primary" @click="openDialog(scope.row.$!{pkIdPropertyName})">
+        #end
+            <el-icon>
+              <ele-edit/>
+            </el-icon>
+            修改
+          </el-button>
+        #if($!{enablePermission})
+          <el-button v-auth="'$!{deletePermissionCode}'" link type="primary" @click="delTable(scope.row.$!{pkIdPropertyName})">
+        #else
+          <el-button link type="primary" @click="delTable(scope.row.$!{pkIdPropertyName})">
+        #end
+            <el-icon>
+              <ele-delete/>
+            </el-icon>
+            删除
+          </el-button>
+
+        </template>
+      </el-table-column>
+    </el-table>
+    <CustomPagination v-model:currentPage="pagination.pageIndex" v-model:pageSize="pagination.pageSize"
+                      :total="pagination.total" @changePage="changePage"/>
+
+    <TableForm ref="tableDialogRef" @refresh="getTableList"/>
+
+  </el-card>
+</template>
+<script lang="ts" setup>
+import {$!{deleteMethodName}, $!{pageMethodName}} from "@$!{vueApiPath}";
+import {ElMessage, ElMessageBox} from 'element-plus'
+import TableForm from './form.vue'
+import {calcTableIndex} from "@/utils/util";
+
+/** 查询参数 **/
+let queryForm: any = ref({
+    keyword: null,
+#foreach($column in $!{queryColumns})
+    $!{column.propertyName}: null,
+#end
+});
+
+const tableLoading = ref({
+    status: false
+})
+
+// 查询
+const onSearch = () => {
+    pagination.pageIndex = 1;
+    getTableList();
+}
+// 重置
+const onReset = () => {
+    queryForm.value = {}
+    pagination.pageIndex = 1;
+    getTableList();
+}
+
+/** 分页*/
+// 分页数据
+const pagination = reactive({
+    pageIndex: 1,
+    pageSize: 10,
+    total: 0
+})
+// 翻页
+const changePage = (page: number) => {
+    pagination.pageIndex = page;
+    getTableList();
+}
+
+/** 排序*/
+const orderBy = ref({})
+// 排序
+const sortChange = ({column, prop, order}) => {
+    if (order) {
+        orderBy.value.orderByColumn = prop;
+        orderBy.value.orderByAsc = order === "ascending";
+    } else {
+        orderBy.value = {}
+    }
+    pagination.pageIndex = 1;
+    getTableList();
+}
+
+/** 表格*/
+// 表格数据
+const tableData = reactive({
+    data: [],
+})
+// 获取表格列表
+const getTableList = () => {
+    tableLoading.value.status = true;
+    $!{pageMethodName}({...pagination, ...queryForm.value, ...orderBy.value}).then(res => {
+        tableData.data = calcTableIndex(res, pagination);;
+        pagination.total = res.total;
+        tableLoading.value.status = false;
+    })
+}
+// 删除
+const delTable = (id: string) => {
+    ElMessageBox.confirm(
+            '是否确认删除本条数据？',
+            '提示',
+            {
+                confirmButtonText: '确认',
+                cancelButtonText: '取消',
+                type: 'warning',
+            })
+            .then(() => {
+                $!{deleteMethodName}(id).then(() => {
+                    ElMessage.success('删除成功');
+                    getTableList();
+                })
+            }).catch(() => {
+    })
+}
+
+/** 添加，编辑*/
+const tableDialogRef = ref()
+// 打开弹框
+const openDialog = async (id: string) => {
+    await tableDialogRef.value.openDialog(id);
+}
+
+getTableList();
+</script>
+<style scoped>
+
+</style>

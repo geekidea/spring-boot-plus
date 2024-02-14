@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.system.mapper.SysRoleMapper">
+
+    <select id="getSysRoleById" resultType="io.geekidea.boot.system.vo.SysRoleVo">
+        select *
+        from sys_role
+        where id = #{id}
+    </select>
+
+    <select id="getSysRolePage" parameterType="io.geekidea.boot.system.query.SysRoleQuery"
+            resultType="io.geekidea.boot.system.vo.SysRoleVo">
+        select *
+        from sys_role
+        <where>
+            <if test="isSystem != null">
+                and is_system = #{isSystem}
+            </if>
+            <if test="keyword !=null and keyword !=''">
+                and (name like concat('%',#{keyword},'%')
+                or code like concat('%',#{keyword},'%'))
+            </if>
+        </where>
+    </select>
+
+</mapper>

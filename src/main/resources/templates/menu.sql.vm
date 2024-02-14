@@ -1,0 +1,12 @@
+-- 目录菜单
+INSERT INTO sys_menu (id, name, parent_id, type, code, route_url, component_path, route_redirect, icon, sort, is_show, is_cache, status, create_time) VALUES ($!{dirSysMenu.id}, '$!{dirSysMenu.name}', $!{dirSysMenu.parentId}, 1, null, '$!{dirSysMenu.routeUrl}', null, null, null, 0, 1, 0, 1, now());
+
+-- 菜单
+INSERT INTO sys_menu (id, name, parent_id, type, code, route_url, component_path, route_redirect, icon, sort, is_show, is_cache, status, create_time) VALUES ($!{sysMenu.id}, '$!{sysMenu.name}', $!{dirSysMenu.id}, 2, '$!{sysMenu.code}', '$!{sysMenu.routeUrl}', '$!{sysMenu.componentPath}', null, null, 0, 1, 0, 1, now());
+
+-- 权限
+#set($count=0)
+#foreach($menu in $!{permissionSysMenus})
+#set($count=$count+1)
+INSERT INTO sys_menu (id, name, parent_id, type, code, route_url, component_path, route_redirect, icon, sort, is_show, is_cache, status, create_time) VALUES ($!{menu.id}, '$!{menu.name}', $!{sysMenu.id}, 3, '$!{menu.code}', null, null, null, null, $count, 0, 0, 1, now());
+#end

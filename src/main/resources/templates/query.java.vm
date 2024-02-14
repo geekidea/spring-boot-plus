@@ -1,0 +1,44 @@
+package $!{queryPackage};
+
+import $!{superPageQueryPackagePath};
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+#if($!{existsBigDecimalType})
+import java.math.BigDecimal;
+#end
+#if($!{existsTimeType})
+import java.sql.Time;
+#end
+#if($!{existsDateType})
+import java.util.Date;
+#end
+
+/**
+ * $!{tableComment}查询参数
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Data
+@Schema(description = "$!{tableComment}查询参数")
+public class $!{queryName} extends $!{superPageQueryName} {
+
+    private static final long serialVersionUID = 1L;
+
+#foreach($column in $!{queryColumns})
+#if($!{column.queryType} == 8 || $!{column.queryType} == 9)
+    @Schema(description = "开始的$!{column.columnCustomComment}")
+    private Date $!{column.propertyName}Start;
+
+    @Schema(description = "结束的$!{column.columnCustomComment}")
+    private Date $!{column.propertyName}End;
+
+#else
+    @Schema(description = "$!{column.columnCustomComment}")
+    private $!{column.propertyType} $!{column.propertyName};
+
+#end
+#end
+}
+

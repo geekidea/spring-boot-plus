@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.geekidea.boot.system.mapper.SysUserMapper">
+
+    <select id="getSysUserById" resultType="io.geekidea.boot.system.vo.SysUserVo">
+        select u.*, r.name roleName
+        from sys_user u
+                 inner join sys_role r
+                            on u.role_id = r.id
+        where u.id = #{id}
+    </select>
+
+    <select id="getSysUserPage" parameterType="io.geekidea.boot.system.query.SysUserQuery"
+            resultType="io.geekidea.boot.system.vo.SysUserVo">
+        select u.*,
+        r.name roleName,
+        r.is_system roleIsSystem
+        from sys_user u
+        inner join sys_role r
+        on u.role_id = r.id
+        <where>
+            <if test="roleId != null">
+                and r.id = #{roleId}
+            </if>
+            <if test="status != null">
+                and u.status = #{status}
+            </if>
+            <if test="startCreateTime != null">
+                and date(u.create_time) >= date(#{startCreateTime})
+            </if>
+            <if test="endCreateTime != null">
+                and date(u.create_time) &lt;= date(#{endCreateTime})
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and (u.username like concat('%',#{keyword},'%')
+                or u.nickname like concat('%',#{keyword},'%')
+                or u.phone like concat('%',#{keyword},'%')
+                or u.email like concat('%',#{keyword},'%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="getSysUserByUsername" resultType="io.geekidea.boot.system.entity.SysUser">
+        select u.*
+        from sys_user u
+        where u.username = #{username}
+    </select>
+
+    <select id="getCountByRoleId" resultType="java.lang.Integer">
+        select count(1)
+        from sys_user
+        where role_id = #{roleId}
+    </select>
+
+</mapper>

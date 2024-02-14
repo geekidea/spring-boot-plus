@@ -1,0 +1,67 @@
+package $!{appControllerPackage};
+
+import $!{pagingPackagePath};
+import $!{apiResultPackagePath};
+import $!{appQueryPackagePath};
+import $!{servicePackagePath};
+import $!{appVoPackagePath};
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
+#if($!{requestMappingStyle} == 2)
+import $!{parameterObjectPackagePath};
+#end
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+#if($!{existsSerializableType})
+import java.io.Serializable;
+#end
+
+/**
+ * $!{appTableComment} 控制器
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@Slf4j
+@RestController
+@Tag(name = "$!{appTableComment}")
+$!{appControllerRequestMapping}
+public class $!{appControllerName} {
+
+    @Autowired
+    private $!{serviceName} $!{serviceObjectName};
+
+    /**
+     * $!{appInfoCnComment}
+     *
+     * @param $!{pkIdPropertyName}
+     * @return
+     * @throws Exception
+     */
+    @Operation(summary = "$!{appInfoCnComment}")
+    $!{appInfoRequestMapping}
+    public ApiResult<$!{appVoName}> $!{appInfoMethodName}(@PathVariable $!{pkIdPropertyType} $!{pkIdPropertyName}) {
+        log.info("$!{appInfoCnComment}：{}", $!{pkIdPropertyName});
+        $!{appVoName} $!{appVoObjectName} = $!{serviceObjectName}.$!{appInfoMethodName}ById($!{pkIdPropertyName});
+        return ApiResult.success($!{appVoObjectName});
+    }
+
+    /**
+     * $!{appPageCnComment}
+     *
+     * $!{queryObjectName}
+     * @return
+     * @throws Exception
+     */
+    @Operation(summary = "$!{appPageCnComment}")
+    $!{appPageRequestMapping}
+    public ApiResult<$!{appVoName}> $!{appPageMethodName}(@Valid $!{pageParamAnnotation} $!{appQueryName} $!{appQueryObjectName}) {
+        log.info("$!{appPageCnComment}：{}", $!{appQueryObjectName});
+        Paging<$!{appVoName}> paging = $!{serviceObjectName}.$!{appPageMethodName}($!{appQueryObjectName});
+        return ApiResult.success(paging);
+    }
+
+}
