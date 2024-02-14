@@ -4,4 +4,3 @@
 后台字典接口提供按字典类型不分页查询的列表接口
 拦截器handler instanceof HandlerMethod 判断问题，目前发现@RestController正常，@Controller时不会进入
 前端隐藏菜单问题，设置为不显示，还是显示出来了
-同时更新gitee和github代码

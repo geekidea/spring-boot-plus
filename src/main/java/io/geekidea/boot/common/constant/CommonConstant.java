@@ -74,4 +74,30 @@ public interface CommonConstant {
      * xlsx后缀
      */
     String XLSX = "xlsx";
+
+    /**
+     * 当前项目目录
+     */
+    String USER_DIR = System.getProperty("user.dir");
+
+    /**
+     * 文件上传目录
+     */
+    String UPLOAD = "upload";
+
+    /**
+     * 正斜杠
+     */
+    String SLASH = "/";
+
+    /**
+     * 反斜杠
+     */
+    String BACKSLASH = "\\";
+
+    /**
+     * 双反斜杠
+     */
+    String DOUBLE_BACKSLASH = "\\\\";
+
 }

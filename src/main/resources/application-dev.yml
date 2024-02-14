@@ -14,29 +14,16 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-# 文件上传相关配置
+# file上传配置
 file:
-  # 文件服务类型 本地还是OSS
-  file-server-type: OSS
-  oss:
-    accessKeyId:
-    accessKeySecret:
-    endpoint:
-    bucketName:
-    rootDir:
-    accessDomain:
+  # 本地上传服务配置
+  local:
+    # 上传文件访问URL前缀
+    # 需修改为当前环境对外的ip地址
+    # 示例：http://localhost:8888/api/file
+    access-url: http://localhost:${server.port}/api/file
 
 # 日志配置，logback-spring.xml中会引用以下变量
 logback-spring:
   # 日志文件目录
   path: logs
-
-# 微信小程序配置
-wx:
-  mp:
-    # AppID(小程序ID)
-    appid:
-    # AppSecret(小程序密钥)
-    secret:
-
-

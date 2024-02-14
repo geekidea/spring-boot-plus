@@ -202,7 +202,8 @@ file:
     # 上传文件访问路径
     access-path: /file/**
     # 上传文件保存路径，注意：最后带上反斜杠
-    # 示例：/Users/mrliu/upload/boot/
+    # 如果为空，默认为当前项目路径下的upload目录
+    # 示例：/Users/mrliu/geekidea/spring-boot-plus/upload/
     upload-path:
     # 上传文件访问URL前缀
     # 示例：http://localhost:8888/api/file

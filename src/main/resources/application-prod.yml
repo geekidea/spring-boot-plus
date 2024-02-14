@@ -7,13 +7,18 @@ spring:
     host: 127.0.0.1
     port: 6379
     password:
+    database: 0
 
-# 文件上传相关配置
+# file上传配置
 file:
-  # 上传文件访问路径
-  access-path: /file/**
-  # 上传文件保存路径
-  upload-path: /home/upload/
+  # 本地上传服务配置
+  local:
+    # 上传文件保存路径
+    upload-path: /home/upload/
+    # 上传文件访问URL前缀
+    # 需修改为当前环境对外的ip地址
+    # 示例：http://localhost:8888/api/file
+    access-url: http://localhost:${server.port}/api/file
 
 knife4j:
   # 启用账号密码登录
