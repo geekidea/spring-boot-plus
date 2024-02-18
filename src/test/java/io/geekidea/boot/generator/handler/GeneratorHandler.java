@@ -98,7 +98,7 @@ public class GeneratorHandler {
                 }
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -114,7 +114,7 @@ public class GeneratorHandler {
             // 判断代码是否存在
             String userDir = GeneratorConstant.USER_DIR;
             String packageName = config.getPackageName();
-            String packagePath = packageName.replaceAll("\\.", File.separator);
+            String packagePath = packageName.replaceAll("\\.", "/");
             String entityPath = userDir + GeneratorConstant.SRC_MAIN_JAVA + packagePath + "/" + moduleName + "/" + GeneratorConstant.ENTITY_PACKAGE + "/" + className + GeneratorConstant.DOT_JAVA;
             File file = new File(entityPath);
             if (file.exists()) {

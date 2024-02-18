@@ -45,8 +45,8 @@ public class RenameHandler {
         }
         String projectPath = System.getProperty("user.dir" );
         log.info("projectPath = " + projectPath);
-        String currentPackagePath = currentPackageName.replaceAll("\\.", File.separator);
-        String targetPackagePath = targetPackageName.replaceAll("\\.", File.separator);
+        String currentPackagePath = currentPackageName.replaceAll("\\.", "/");
+        String targetPackagePath = targetPackageName.replaceAll("\\.", "/");
         log.info("currentPackagePath = " + currentPackagePath);
 
         // 替换pom.xml内容

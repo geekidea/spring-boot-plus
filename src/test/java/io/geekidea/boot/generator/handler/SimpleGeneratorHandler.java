@@ -83,7 +83,7 @@ public class SimpleGeneratorHandler {
         } else {
             controllerPackage = PACKAGE_NAME + CONTROLLER_PACKAGE_NAME;
         }
-        String controllerPackagePath = controllerPackage.replaceAll("\\.", File.separator);
+        String controllerPackagePath = controllerPackage.replaceAll("\\.", "/");
         String controllerOutFileDir = projectDir + JAVA_DIR + controllerPackagePath;
         String controllerOutFileName = controllerName + DOT_JAVA;
         // service
@@ -95,7 +95,7 @@ public class SimpleGeneratorHandler {
         } else {
             servicePackage = PACKAGE_NAME + SERVICE_PACKAGE_NAME;
         }
-        String servicePackagePath = servicePackage.replaceAll("\\.", File.separator);
+        String servicePackagePath = servicePackage.replaceAll("\\.", "/");
         String serviceOutFileDir = projectDir + JAVA_DIR + servicePackagePath;
         String serviceOutFileName = serviceName + DOT_JAVA;
         // serviceImpl
@@ -106,7 +106,7 @@ public class SimpleGeneratorHandler {
         } else {
             serviceImplPackage = PACKAGE_NAME + SERVICE_IMPL_PACKAGE_NAME;
         }
-        String serviceImplPackagePath = serviceImplPackage.replaceAll("\\.", File.separator);
+        String serviceImplPackagePath = serviceImplPackage.replaceAll("\\.", "/");
         String serviceImplOutFileDir = projectDir + JAVA_DIR + serviceImplPackagePath;
         String serviceImplOutFileName = serviceImplName + DOT_JAVA;
         // mapper
@@ -118,7 +118,7 @@ public class SimpleGeneratorHandler {
         } else {
             mapperPackage = PACKAGE_NAME + MAPPER_PACKAGE_NAME;
         }
-        String mapperPackagePath = mapperPackage.replaceAll("\\.", File.separator);
+        String mapperPackagePath = mapperPackage.replaceAll("\\.", "/");
         String mapperOutFileDir = projectDir + JAVA_DIR + mapperPackagePath;
         String mapperOutFileName = mapperName + DOT_JAVA;
         // mapper xml
