@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="dialogData.isShow" destroy-on-close :title="dialogData.id?'编辑':'新增'"
+  <el-dialog :model-value="dialogData.isShow" :title="dialogData.id?'编辑':'新增'"
              @close="closeDialog" draggable>
     <el-form :model="form" ref="formRef" :rules="rules" label-width="90px">
       <el-row :gutter="10">
