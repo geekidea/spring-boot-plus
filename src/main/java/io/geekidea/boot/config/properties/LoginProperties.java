@@ -2,7 +2,6 @@ package io.geekidea.boot.config.properties;
 
 import io.geekidea.boot.util.YamlUtil;
 import lombok.Data;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

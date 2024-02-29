@@ -1,9 +1,9 @@
 package io.geekidea.boot.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.geekidea.boot.system.vo.SysLogVo;
 import io.geekidea.boot.system.entity.SysLog;
 import io.geekidea.boot.system.query.SysLogQuery;
+import io.geekidea.boot.system.vo.SysLogVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

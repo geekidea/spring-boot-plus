@@ -11,11 +11,10 @@ import io.geekidea.boot.system.service.SysDictService;
 import io.geekidea.boot.system.vo.SysDictVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * 字典数据 控制器

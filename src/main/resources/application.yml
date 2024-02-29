@@ -37,24 +37,26 @@ spring:
       maximum-pool-size: 20
       idle-timeout: 30000
       max-lifetime: 60000
-  # redis配置
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password:
-    # 连接超时时间（毫秒）
-    timeout: 10s
-    lettuce:
-      pool:
-        # 连接池最大连接数
-        max-active: 200
-        # 连接池中的最大空闲连接
-        max-idle: 20
-        # 连接池最大阻塞等待时间
-        max-wait: 10s
-        # 连接池中的最小空闲连接
-        min-idle: 10
-      shutdown-timeout: 3s
+  data:
+    # redis配置
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      database: 0
+      # 连接超时时间
+      timeout: 10s
+      lettuce:
+        pool:
+          # 连接池最大连接数
+          max-active: 200
+          # 连接池中的最大空闲连接
+          max-idle: 20
+          # 连接池最大阻塞等待时间
+          max-wait: 10s
+          # 连接池中的最小空闲连接
+          min-idle: 10
+        shutdown-timeout: 3s
 
 # mybatis-plus配置
 mybatis-plus:

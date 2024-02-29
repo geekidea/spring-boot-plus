@@ -2,10 +2,10 @@ package io.geekidea.boot.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.geekidea.boot.system.entity.SysDict;
-import io.geekidea.boot.system.query.SysDictQuery;
-import io.geekidea.boot.system.vo.SysDictVo;
 import io.geekidea.boot.system.query.SysDictAppQuery;
+import io.geekidea.boot.system.query.SysDictQuery;
 import io.geekidea.boot.system.vo.AppSysDictVo;
+import io.geekidea.boot.system.vo.SysDictVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

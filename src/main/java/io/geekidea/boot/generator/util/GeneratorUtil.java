@@ -6,7 +6,6 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.google.common.base.CaseFormat;
 import io.geekidea.boot.auth.annotation.Permission;
 import io.geekidea.boot.common.constant.SystemConstant;
@@ -38,7 +37,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springdoc.api.annotations.ParameterObject;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
 
 import java.io.File;
@@ -1349,7 +1348,7 @@ public class GeneratorUtil {
     }
 
     /**
-     * 下划线专程驼峰命名
+     * 下划线转换成驼峰命名
      * sys_user --> sysUser
      *
      * @param underline
@@ -1357,7 +1356,7 @@ public class GeneratorUtil {
      */
     public static String underlineToCamel(String underline) {
         if (StringUtils.isNotBlank(underline)) {
-            return NamingStrategy.underlineToCamel(underline);
+            return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, underline);
         }
         return null;
     }
@@ -1371,10 +1370,11 @@ public class GeneratorUtil {
      */
     public static String underlineToPascal(String underline) {
         if (StringUtils.isNotBlank(underline)) {
-            return NamingStrategy.capitalFirst(NamingStrategy.underlineToCamel(underline));
+            return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, underline);
         }
         return null;
     }
+
 
     /**
      * 骆驼转换成帕斯卡命名
@@ -1385,7 +1385,7 @@ public class GeneratorUtil {
      */
     public static String camelToPascal(String camel) {
         if (StringUtils.isNotBlank(camel)) {
-            return NamingStrategy.capitalFirst(camel);
+            return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, camel);
         }
         return null;
     }
@@ -1414,7 +1414,7 @@ public class GeneratorUtil {
      */
     public static String pascalToCamel(String pascal) {
         if (StringUtils.isNotBlank(pascal)) {
-            return pascal.substring(0, 1).toLowerCase() + pascal.substring(1);
+            return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, pascal);
         }
         return pascal;
     }
@@ -1461,6 +1461,7 @@ public class GeneratorUtil {
         }
         return null;
     }
+
 
     /**
      * 转换成反斜杠

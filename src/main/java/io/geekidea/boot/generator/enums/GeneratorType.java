@@ -14,29 +14,20 @@ public enum GeneratorType {
     ZIP(1, "zip压缩包"),
     CUSTOM(2, "自定义路径");
 
-    private Integer code;
-
-    private String desc;
-
-    GeneratorType(Integer code, String desc) {
-        this.code = code;
-        this.desc = desc;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
     private static final Map<Integer, GeneratorType> map = new HashMap<>();
 
     static {
         for (GeneratorType type : values()) {
             map.put(type.code, type);
         }
+    }
+
+    private Integer code;
+    private String desc;
+
+    GeneratorType(Integer code, String desc) {
+        this.code = code;
+        this.desc = desc;
     }
 
     public static Integer getCode(GeneratorType type) {
@@ -60,6 +51,14 @@ public enum GeneratorType {
             return null;
         }
         return type.getDesc();
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getDesc() {
+        return desc;
     }
 
 }

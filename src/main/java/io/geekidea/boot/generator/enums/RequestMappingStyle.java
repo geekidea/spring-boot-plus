@@ -17,29 +17,20 @@ public enum RequestMappingStyle {
     HYPHEN(4, "中横线连接符"),
     UNDERLINE(5, "下划线");
 
-    private Integer code;
-
-    private String desc;
-
-    RequestMappingStyle(Integer code, String desc) {
-        this.code = code;
-        this.desc = desc;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
     private static final Map<Integer, RequestMappingStyle> map = new HashMap<>();
 
     static {
         for (RequestMappingStyle style : values()) {
             map.put(style.code, style);
         }
+    }
+
+    private Integer code;
+    private String desc;
+
+    RequestMappingStyle(Integer code, String desc) {
+        this.code = code;
+        this.desc = desc;
     }
 
     public static Integer getCode(RequestMappingStyle type) {
@@ -63,6 +54,14 @@ public enum RequestMappingStyle {
             return null;
         }
         return style.getDesc();
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getDesc() {
+        return desc;
     }
 
 }

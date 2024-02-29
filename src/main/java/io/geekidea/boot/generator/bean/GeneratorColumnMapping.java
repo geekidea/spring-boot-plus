@@ -10,16 +10,16 @@ import lombok.Data;
  * @date 2023/12/31
  **/
 @Data
-@Schema(description = "生成列类型映射" )
+@Schema(description = "生成列类型映射")
 public class GeneratorColumnMapping {
 
-    @Schema(description = "列类型" )
+    @Schema(description = "列类型")
     private String dataType;
 
-    @Schema(description = "属性类型" )
+    @Schema(description = "属性类型")
     private String propertyType;
 
-    @Schema(description = "属性包名" )
+    @Schema(description = "属性包名")
     private String packageName;
 
     public GeneratorColumnMapping() {

@@ -1,10 +1,9 @@
 package io.geekidea.boot.framework.interceptor;
 
 import io.geekidea.boot.common.constant.CommonConstant;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author geekidea

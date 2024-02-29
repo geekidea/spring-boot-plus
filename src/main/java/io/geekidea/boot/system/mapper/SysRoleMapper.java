@@ -1,9 +1,9 @@
 package io.geekidea.boot.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.geekidea.boot.system.vo.SysRoleVo;
 import io.geekidea.boot.system.entity.SysRole;
 import io.geekidea.boot.system.query.SysRoleQuery;
+import io.geekidea.boot.system.vo.SysRoleVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

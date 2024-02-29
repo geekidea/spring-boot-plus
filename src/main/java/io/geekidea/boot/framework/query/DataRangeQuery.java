@@ -1,9 +1,9 @@
 package io.geekidea.boot.framework.query;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
 
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**

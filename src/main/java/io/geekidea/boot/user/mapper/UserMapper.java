@@ -2,10 +2,10 @@ package io.geekidea.boot.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.geekidea.boot.user.entity.User;
-import io.geekidea.boot.user.query.UserQuery;
-import io.geekidea.boot.user.vo.UserVo;
 import io.geekidea.boot.user.query.AppUserQuery;
+import io.geekidea.boot.user.query.UserQuery;
 import io.geekidea.boot.user.vo.AppUserVo;
+import io.geekidea.boot.user.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -9,5 +9,5 @@ ${AnsiColor.BLUE}
      |_|                 |___/                                    |_|
 
 ${AnsiColor.YELLOW}      :: Spring Boot ::             ${AnsiColor.WHITE}(v${spring-boot.version})
-${AnsiColor.YELLOW}      :: spring-boot-plus ::        ${AnsiColor.WHITE}(v2.7.18)
+${AnsiColor.YELLOW}      :: spring-boot-plus ::        ${AnsiColor.WHITE}(v3.2.3)
       https://springboot.plus

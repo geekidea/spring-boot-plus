@@ -3,11 +3,11 @@ package io.geekidea.boot.framework.filter;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.geekidea.boot.common.constant.CommonConstant;
 import io.geekidea.boot.util.IpUtil;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**

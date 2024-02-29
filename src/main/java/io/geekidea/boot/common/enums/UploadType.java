@@ -21,6 +21,14 @@ public enum UploadType {
     HEAD("head", 10, Arrays.asList("jpg", "jpeg", "png"), "用户头像上传");
     // 更多自定义即可
 
+    private static final Map<String, UploadType> map = new HashMap<>();
+
+    static {
+        for (UploadType uploadType : values()) {
+            map.put(uploadType.type, uploadType);
+        }
+    }
+
     private String type;
     private Integer maxSizeMb;
     /**
@@ -34,30 +42,6 @@ public enum UploadType {
         this.maxSizeMb = maxSizeMb;
         this.extensions = extensions;
         this.desc = desc;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public Integer getMaxSizeMb() {
-        return maxSizeMb;
-    }
-
-    public List<String> getExtensions() {
-        return extensions;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    private static final Map<String, UploadType> map = new HashMap<>();
-
-    static {
-        for (UploadType uploadType : values()) {
-            map.put(uploadType.type, uploadType);
-        }
     }
 
     public static String getCode(UploadType type) {
@@ -81,6 +65,22 @@ public enum UploadType {
             return null;
         }
         return uploadType.getDesc();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Integer getMaxSizeMb() {
+        return maxSizeMb;
+    }
+
+    public List<String> getExtensions() {
+        return extensions;
+    }
+
+    public String getDesc() {
+        return desc;
     }
 
 }

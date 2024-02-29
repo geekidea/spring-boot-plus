@@ -43,11 +43,12 @@ public interface MerchantLineHandler {
     /**
      * 根据登录信息判断是否忽略拼接多商户条件
      * 默认都不进行解析拼接多商户条件
+     *
      * @return
      */
-   default boolean ignoreMerchantId(){
+    default boolean ignoreMerchantId() {
         return true;
-   }
+    }
 
     /**
      * 忽略插入商户字段逻辑

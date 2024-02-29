@@ -2,11 +2,10 @@ package io.geekidea.boot.auth.interceptor;
 
 import io.geekidea.boot.framework.exception.NotAuthException;
 import io.geekidea.boot.framework.interceptor.BaseExcludeMethodInterceptor;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 没权限拦截器，项目演示用，生成项目根据情况而定

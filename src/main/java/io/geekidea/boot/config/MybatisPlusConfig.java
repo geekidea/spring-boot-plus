@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerIntercep
 import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionInterceptor;
 import io.geekidea.boot.auth.util.LoginUtil;
 import io.geekidea.boot.config.properties.MerchantLineProperties;
-import io.geekidea.boot.framework.mybatis.plugins.MerchantLineInnerInterceptor;
 import io.geekidea.boot.framework.mybatis.plugins.handler.DataScopeHandler;
 import io.geekidea.boot.framework.mybatis.plugins.handler.MerchantLineHandler;
 import io.geekidea.boot.util.SystemTypeUtil;

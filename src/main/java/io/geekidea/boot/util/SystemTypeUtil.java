@@ -3,9 +3,8 @@ package io.geekidea.boot.util;
 import io.geekidea.boot.auth.util.TokenUtil;
 import io.geekidea.boot.common.constant.LoginConstant;
 import io.geekidea.boot.common.enums.SystemType;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author geekidea

@@ -16,28 +16,20 @@ public enum SysFileType {
     OFFICE(3, "文档"),
     FILE(4, "文件");
 
-    private Integer code;
-    private String desc;
-
-    SysFileType(Integer code, String desc) {
-        this.code = code;
-        this.desc = desc;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
     private static final Map<Integer, SysFileType> map = new HashMap<>();
 
     static {
         for (SysFileType type : values()) {
             map.put(type.code, type);
         }
+    }
+
+    private Integer code;
+    private String desc;
+
+    SysFileType(Integer code, String desc) {
+        this.code = code;
+        this.desc = desc;
     }
 
     public static Integer getCode(SysFileType type) {
@@ -61,6 +53,14 @@ public enum SysFileType {
             return null;
         }
         return type.getDesc();
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getDesc() {
+        return desc;
     }
 
 }

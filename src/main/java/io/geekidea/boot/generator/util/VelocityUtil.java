@@ -1,6 +1,5 @@
 package io.geekidea.boot.generator.util;
 
-import com.baomidou.mybatisplus.generator.config.ConstVal;
 import io.geekidea.boot.generator.constant.GeneratorConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -44,7 +43,7 @@ public class VelocityUtil {
     public static String writer(String templatePath, Map<String, Object> dataMap) {
         VelocityEngine velocityEngine = new VelocityEngine(properties);
         StringWriter writer = new StringWriter();
-        Template template = velocityEngine.getTemplate(templatePath, ConstVal.UTF8);
+        Template template = velocityEngine.getTemplate(templatePath, GeneratorConstant.UTF8);
         template.merge(new VelocityContext(dataMap), writer);
         String content = writer.toString();
         IOUtils.closeQuietly(writer);

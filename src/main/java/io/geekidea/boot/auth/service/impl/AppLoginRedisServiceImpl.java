@@ -7,6 +7,7 @@ import io.geekidea.boot.common.constant.RedisKey;
 import io.geekidea.boot.config.properties.LoginAppProperties;
 import io.geekidea.boot.framework.exception.LoginException;
 import io.geekidea.boot.framework.exception.LoginTokenException;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 

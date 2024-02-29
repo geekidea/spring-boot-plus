@@ -32,7 +32,7 @@ public class GeneratorColumnDbVo implements Serializable {
     @Schema(description = "字段类型")
     private String columnType;
 
-    @Schema(description = "列顺序" )
+    @Schema(description = "列顺序")
     private Integer columnSort;
 
     @Schema(description = "是否主键")

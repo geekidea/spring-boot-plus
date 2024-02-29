@@ -3,12 +3,11 @@ package io.geekidea.boot.auth.interceptor;
 import io.geekidea.boot.auth.cache.TokenCache;
 import io.geekidea.boot.auth.util.TokenUtil;
 import io.geekidea.boot.framework.interceptor.BaseExcludeMethodInterceptor;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Token拦截器

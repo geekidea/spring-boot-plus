@@ -26,12 +26,6 @@ public interface LoginConstant {
     String ADMIN_TOKEN_PREFIX = TOKEN_PREFIX + "admin.";
 
     /**
-     * 移动端token前缀
-     * boot.app.
-     */
-    String APP_TOKEN_PREFIX = TOKEN_PREFIX + "app.";
-
-    /**
      * cookie.
      */
     String COOKIE_PREFIX = "cookie.";
@@ -41,7 +35,11 @@ public interface LoginConstant {
      * boot.admin.cookie.token
      */
     String ADMIN_COOKIE_TOKEN_NAME = ADMIN_TOKEN_PREFIX + COOKIE_PREFIX + TOKEN_NAME;
-
+    /**
+     * 移动端token前缀
+     * boot.app.
+     */
+    String APP_TOKEN_PREFIX = TOKEN_PREFIX + "app.";
     /**
      * 移动端cookie token名称
      * boot.app.cookie.token

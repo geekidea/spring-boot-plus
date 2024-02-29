@@ -3,11 +3,12 @@ spring:
     url: jdbc:mysql://localhost:3306/spring_boot_plus?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: root
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password:
-    database: 0
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      database: 0
 
 # 打印SQL语句和结果集，本地开发环境可开启，线上注释掉
 mybatis-plus:

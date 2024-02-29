@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 操作系统信息
+ *
  * @author geekidea
  * @date 2023/12/17
  **/
@@ -26,5 +27,5 @@ public class OperatingSystemInfo implements Serializable {
     private String version;
 
     @Schema(description = "IP地址")
-   private String address;
+    private String address;
 }

@@ -11,13 +11,13 @@ import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 import io.geekidea.boot.config.properties.OssProperties;
 import io.geekidea.boot.framework.exception.BusinessException;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.io.InputStream;
 
 /**
@@ -37,19 +37,6 @@ public class OssApi {
 
     public OssApi(OssProperties ossProperties) {
         OssApi.ossProperties = ossProperties;
-    }
-
-    @PostConstruct
-    public void initOssClient() {
-        try {
-            DefaultCredentialProvider credentialsProvider = CredentialsProviderFactory.newDefaultCredentialProvider(ossProperties.getAccessKeyId(), ossProperties.getAccessKeySecret());
-            // 创建OSSClient实例
-            ossClient = new OSSClientBuilder().build(ossProperties.getEndpoint(), credentialsProvider);
-            log.info("OSS实例初始化成功：" + JSON.toJSONString(ossProperties));
-        } catch (Exception e) {
-            log.error("OSS实例初始化异常：" + JSON.toJSONString(ossProperties));
-            e.printStackTrace();
-        }
     }
 
     public static String upload(InputStream inputStream, String dirName, String fileName) {
@@ -77,6 +64,19 @@ public class OssApi {
             throw new BusinessException("OSS连接异常");
         } catch (Exception e) {
             throw e;
+        }
+    }
+
+    @PostConstruct
+    public void initOssClient() {
+        try {
+            DefaultCredentialProvider credentialsProvider = CredentialsProviderFactory.newDefaultCredentialProvider(ossProperties.getAccessKeyId(), ossProperties.getAccessKeySecret());
+            // 创建OSSClient实例
+            ossClient = new OSSClientBuilder().build(ossProperties.getEndpoint(), credentialsProvider);
+            log.info("OSS实例初始化成功：" + JSON.toJSONString(ossProperties));
+        } catch (Exception e) {
+            log.error("OSS实例初始化异常：" + JSON.toJSONString(ossProperties));
+            e.printStackTrace();
         }
     }
 

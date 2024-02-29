@@ -1,11 +1,11 @@
 package io.geekidea.boot.framework.filter;
 
 import io.geekidea.boot.common.constant.CommonConstant;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**

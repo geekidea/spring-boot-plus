@@ -13,18 +13,18 @@ import java.util.Date;
  * @since 2023-12-29
  */
 @Data
-@Schema(description = "数据库中的表Vo" )
+@Schema(description = "数据库中的表Vo")
 public class GeneratorTableDbVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "表名称" )
+    @Schema(description = "表名称")
     private String tableName;
 
-    @Schema(description = "表注释" )
+    @Schema(description = "表注释")
     private String tableComment;
 
-    @Schema(description = "创建时间" )
+    @Schema(description = "创建时间")
     private Date createTime;
 
     @Schema(description = "类名称")
