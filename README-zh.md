@@ -39,8 +39,8 @@
 ## 微信交流群
 ![微信群](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/wechat-group.png)
 
-## 业务咨询
-![业务咨询](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/service.png)
+## 项目外包业务咨询
+![项目外包业务咨询](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/service.png)
 
 
 ### 主要特性
@@ -106,10 +106,8 @@ lombok | 1.18.30 | 注解生成Java Bean等工具 |
 #### 个人中心
 ![个人中心](https://geekidea.oss-cn-chengdu.aliyuncs.com/spring-boot-plus/img/profile.png)
 
-## 联系
-QQ群 625301326| 微信公众号 geekideaio|
--|-|
-![spring-boot-plus QQ Group](https://spring-boot-plus.gitee.io/img/spring-boot-plus-qq-group.png) | ![Wechat Official Account](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/geekidea-wechat-official.jpg) |
+## 微信联系
+![Wechat](https://geekidea.oss-cn-chengdu.aliyuncs.com/geekidea/qywx-geekidea-small.png)
 
 
 ## License
